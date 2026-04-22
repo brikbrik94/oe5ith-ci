@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typografie — Ist-Stand</title>
+<style>
+:root{--bg:#1a1a1a;--muted:#888;--accent:#3b82f6;--border:#333}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:var(--bg);color:#e0e0e0;padding:32px;line-height:1.6}
+.row{display:flex;align-items:baseline;gap:20px;padding:16px 0;border-bottom:1px solid #1e1e1e}
+.row:last-child{border-bottom:none}
+.meta{width:160px;flex-shrink:0}
+.meta-name{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;display:block;margin-bottom:3px}
+.meta-spec{font-size:10px;font-family:monospace;color:#444;line-height:1.7;display:block}
+.sample{flex:1;min-width:0}
+</style>
+</head>
+<body>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">H1 — Seitentitel</span>
+    <span class="meta-spec">2.0rem · weight 300<br>Akzent-Span bold</span>
+  </div>
+  <div class="sample">
+    <h1 style="font-size:2rem;font-weight:300;color:#fff">System <span style="font-weight:700;color:#3b82f6">Overview</span></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">H2 — Abschnitt</span>
+    <span class="meta-spec">1.3rem · weight 600</span>
+  </div>
+  <div class="sample">
+    <h2 style="font-size:1.3rem;font-weight:600;color:#fff">Routing API</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">H3 — Untertitel</span>
+    <span class="meta-spec">1.0rem · weight 600<br>border-bottom: 1px</span>
+  </div>
+  <div class="sample">
+    <h3 style="font-size:1rem;font-weight:600;color:#ddd;padding-bottom:8px;border-bottom:1px solid #333">Service Information</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">Body</span>
+    <span class="meta-spec">0.9rem · weight 400<br>color: --muted · lh 1.5</span>
+  </div>
+  <div class="sample">
+    <p style="font-size:.9rem;color:#888;line-height:1.5">OpenRouteService mit aktiven Profilen für Routing und Navigation. Zugriff über die API-Endpunkte mit validem API-Key.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">Small / Meta</span>
+    <span class="meta-spec">0.78rem · weight 400<br>color: #555</span>
+  </div>
+  <div class="sample">
+    <p style="font-size:.78rem;color:#555">Zuletzt aktualisiert: 22.04.2026 · v1.4.2 · 3 aktive Dienste</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">Section Label</span>
+    <span class="meta-spec">0.65rem · weight 700<br>uppercase · #555 · ls 1.2px</span>
+  </div>
+  <div class="sample">
+    <span style="font-size:.65rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#555">Navigation</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">Brand / Topbar</span>
+    <span class="meta-spec">1.2rem · weight 700<br>letter-spacing 1px · CAPS</span>
+  </div>
+  <div class="sample">
+    <span style="font-size:1.2rem;font-weight:700;letter-spacing:1px;color:#fff">INTERNAL ADMIN</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">Inline Code</span>
+    <span class="meta-spec">0.85rem · monospace<br>bg #2a2a2a · radius 4px</span>
+  </div>
+  <div class="sample">
+    <p style="font-size:.9rem;color:#888">Endpunkt: <code style="background:#2a2a2a;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:.85rem;color:#e6e6e6">https://ors.oe5ith.at</code></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="meta">
+    <span class="meta-name">Code Block</span>
+    <span class="meta-spec">0.82rem · monospace<br>bg #000 · green · radius 6px</span>
+  </div>
+  <div class="sample">
+    <pre style="background:#000;color:#4ade80;padding:10px 14px;border-radius:6px;font-size:.82rem;border:1px solid #222;overflow-x:auto;white-space:pre">curl -X POST "https://ors.oe5ith.at/directions" \
+  -H "Authorization: API_KEY"</pre>
+  </div>
+</div>
+
+</body>
+</html>

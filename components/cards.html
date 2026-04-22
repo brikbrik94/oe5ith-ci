@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Cards</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg:           #1a1a1a;
+  --card-bg:      #252525;
+  --text:         #e0e0e0;
+  --muted:        #888;
+  --accent:       #3b82f6;
+  --accent-hover: #2563eb;
+  --border:       #333;
+  --success:      #22c55e;
+
+  --card-radius:  12px;
+  --card-padding: 20px;
+  --card-gap:     20px;
+
+  --topbar-height: 60px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════
+   TOPBAR (minimal)
+   ═══════════════════════════════════════ */
+.topbar {
+  background: var(--card-bg);
+  height: var(--topbar-height);
+  border-bottom: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.brand {
+  display: flex; align-items: center; gap: 9px;
+  color: #fff; font-weight: 700; font-size: 1.2rem;
+  letter-spacing: 1px; text-decoration: none;
+}
+.brand img { width: 26px; height: 26px; }
+
+/* ═══════════════════════════════════════
+   CARD BASE
+   Alle Cards teilen diese Basis.
+   ═══════════════════════════════════════ */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);   /* 12px */
+  padding: var(--card-padding);        /* 20px */
+  position: relative;
+  /* Overflow-Schutz: Inhalt darf nie aus der Card herausstehen */
+  overflow: hidden;
+  min-width: 0;                        /* verhindert Grid-Overflow */
+}
+
+/* ── Text-Overflow Schutz ──
+   Gilt für alle direkten Textkinder in Cards.
+   URLs, lange Strings, Code werden abgeschnitten. */
+.card h2,
+.card h3,
+.card h4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;    /* max. 3 Zeilen, dann ... */
+  -webkit-box-orient: vertical;
+}
+
+/* Einzeilige Felder (z.B. URLs, Pfade) */
+.card-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════
+   CARD GRID
+   Desktop: 3 Spalten
+   Tablet 769–1024px: 2 Spalten
+   Mobile ≤768px: 1 Spalte
+   ═══════════════════════════════════════ */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));  /* minmax(0) verhindert Overflow */
+  gap: var(--card-gap);
+}
+
+@media (max-width: 1024px) {
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════
+   TYP 1 — NAVIGATION CARD
+   Verwendet auf: Landing Page
+   Klickbar, Hover-Effekt, Icon, Button.
+   Status-Dot nur auf auth-geschützten Seiten.
+   ═══════════════════════════════════════ */
+.card-nav {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.card-nav:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  border-color: var(--accent);
+}
+
+/* Disabled — zukünftige Features */
+.card-nav.disabled {
+  opacity: 0.55;
+  pointer-events: none;
+  cursor: default;
+}
+
+.card-nav-icon {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.card-nav h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.card-nav p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.card-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  align-self: flex-start;
+  transition: background 0.2s;
+  min-height: 36px;
+  pointer-events: none; /* Button ist Dekoration — die Card selbst ist klickbar */
+}
+
+.card-nav:hover .card-nav-btn {
+  background: var(--accent-hover);
+}
+
+.card-nav.disabled .card-nav-btn {
+  background: #444;
+  color: #666;
+}
+
+/* ═══════════════════════════════════════
+   TYP 2 — DASHBOARD CARD (Kachel)
+   Verwendet auf: Internal Dashboard
+   Zeigt Service-Status.
+   Klickbar (Verlinkung zu Detail-Views):
+   Hover identisch zu Nav-Card + Pfeil on hover.
+   Nicht klickbare Kacheln: keine .card-dashboard-link Klasse.
+   ═══════════════════════════════════════ */
+.card-dashboard {
+  /* Basis — keine Interaktion */
+}
+
+.card-dashboard h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.card-dashboard p {
+  font-size: 0.78rem;
+  color: var(--muted);
+  -webkit-line-clamp: 2;
+}
+
+/* Klickbare Dashboard-Card (Verlinkung zu Detail-View)
+   Gleicher Hover wie Nav-Card + Pfeil erscheint on hover */
+.card-dashboard-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.card-dashboard-link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  border-color: var(--accent);
+}
+
+/* Pfeil-Icon — nur on hover sichtbar */
+.card-dashboard-arrow {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  font-size: 0.72rem;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.card-dashboard-link:hover .card-dashboard-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Status-Dot — Position immer top-right */
+.card-status-dot {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.card-status-dot.online  { background: var(--success); box-shadow: 0 0 5px var(--success); }
+.card-status-dot.offline { background: #ef4444; box-shadow: 0 0 5px rgba(239,68,68,0.5); }
+.card-status-dot.unknown { background: #f59e0b; box-shadow: 0 0 5px rgba(245,158,11,0.5); }
+
+/* ═══════════════════════════════════════
+   TYP 3 — CONTENT CARD
+   Verwendet auf: Tiles Registry, etc.
+   Badge oben rechts (immer grau/muted).
+   URL-Felder werden abgeschnitten.
+   ═══════════════════════════════════════ */
+.card-content-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.card-content-header h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  flex: 1;
+  min-width: 0;        /* erlaubt ellipsis */
+}
+
+/* Badge — immer grau, nur Info, keine Semantik */
+.card-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.04);
+  color: #666;
+  border: 1px solid #2a2a2a;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-content p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 12px;
+  -webkit-line-clamp: 2;
+}
+
+/* URL / Code-Feld — immer abschneiden */
+.card-url {
+  font-family: 'Consolas', monospace;
+  font-size: 0.72rem;
+  color: #4ade80;
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 4px;
+  padding: 6px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════
+   TYP 4 — INFO / HINWEIS CARD
+   Verwendet für: Warnungen, Hinweise, Tipps.
+   Nicht im Card-Grid — standalone, volle Breite.
+   ═══════════════════════════════════════ */
+.card-info {
+  border-left: 3px solid var(--accent);
+  background: rgba(59,130,246,0.05);
+  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  color: #b8d4f8;
+  line-height: 1.6;
+}
+
+.card-info strong { color: var(--accent); font-weight: 600; }
+
+.card-warn {
+  border-left: 3px solid #eab308;
+  background: rgba(234,179,8,0.05);
+  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  color: #fcd34d;
+  line-height: 1.6;
+}
+
+.card-warn strong { color: #eab308; font-weight: 600; }
+
+/* ═══════════════════════════════════════
+   DEMO / REFERENZ STYLES
+   ═══════════════════════════════════════ */
+.page-content { padding: 40px; max-width: 1000px; }
+
+.demo-section { margin-bottom: 48px; }
+
+.demo-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #222;
+}
+
+.demo-section-desc {
+  font-size: 0.82rem;
+  color: #555;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.demo-section-desc code {
+  background: #1e1e1e;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: #7ba8d4;
+}
+
+.bp-indicator {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .page-content { padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>CI</span>
+  </a>
+</header>
+
+<div class="page-content">
+
+  <div class="bp-indicator" id="bp-indicator"></div>
+
+  <!-- ═══ TYP 1: NAVIGATION CARDS ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Typ 1 — Navigation Card</div>
+    <div class="demo-section-desc">
+      Landing Page. Klickbar, Hover-Effekt. Icon + Titel + Beschreibung + Button.
+      Disabled-Variante für zukünftige Features (<code>opacity: 0.55</code>).
+      Kein Status-Dot auf öffentlichen Seiten.
+    </div>
+
+    <div class="card-grid">
+
+      <a href="#" class="card card-nav">
+        <div class="card-nav-icon">
+          <i class="fa-solid fa-map-location-dot"></i>
+        </div>
+        <h3>Tileserver Registry</h3>
+        <p>Vektorkarten, Styles, Schriftarten und Icon-Sprites.</p>
+        <span class="card-nav-btn">
+          <i class="fa-solid fa-arrow-right" style="font-size:.75rem"></i>
+          Öffnen
+        </span>
+      </a>
+
+      <a href="#" class="card card-nav">
+        <div class="card-nav-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <h3>Live Karte</h3>
+        <p>Interaktive Karte mit ADS-B, AIS und Layer-Auswahl.</p>
+        <span class="card-nav-btn">
+          <i class="fa-solid fa-arrow-right" style="font-size:.75rem"></i>
+          Öffnen
+        </span>
+      </a>
+
+      <a href="#" class="card card-nav disabled">
+        <div class="card-nav-icon">
+          <i class="fa-solid fa-folder-open"></i>
+        </div>
+        <h3>File Cloud</h3>
+        <p>Dateispeicher und Kollaboration (Nextcloud).</p>
+        <span class="card-nav-btn">Demnächst</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ═══ TYP 2: DASHBOARD CARDS ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Typ 2 — Dashboard Card (Kachel)</div>
+    <div class="demo-section-desc">
+      Internal Dashboard. Status-Dot top-right (grün/rot/gelb).
+      Klickbare Kacheln (Verlinkung zu Detail-View): <code>.card-dashboard-link</code> —
+      gleicher Hover wie Nav-Card, Pfeil erscheint on hover.
+      Nicht klickbare Kacheln: kein Hover, kein Pfeil.
+    </div>
+
+    <div class="card-grid">
+
+      <!-- Klickbar — mit Hover + Pfeil -->
+      <a href="#" class="card card-dashboard card-dashboard-link">
+        <div class="card-status-dot online" title="Online"></div>
+        <h3>Reverse Proxy</h3>
+        <p>Nginx · SSL Termination · alle Domains</p>
+        <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
+      </a>
+
+      <!-- Klickbar — offline -->
+      <a href="#" class="card card-dashboard card-dashboard-link">
+        <div class="card-status-dot offline" title="Offline"></div>
+        <h3>OpenRouteService</h3>
+        <p>Routing API · driving-car · nicht erreichbar</p>
+        <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
+      </a>
+
+      <!-- Nicht klickbar — reine Infoanzeige, kein Hover -->
+      <div class="card card-dashboard">
+        <div class="card-status-dot unknown" title="Unbekannt"></div>
+        <h3>Nominatim</h3>
+        <p>Geocoding API · Status unbekannt</p>
+      </div>
+
+      <!-- Klickbar -->
+      <a href="#" class="card card-dashboard card-dashboard-link">
+        <div class="card-status-dot online" title="Online"></div>
+        <h3>Authentik</h3>
+        <p>SSO · OIDC · Session-Management</p>
+        <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
+      </a>
+
+      <!-- Nicht klickbar -->
+      <div class="card card-dashboard">
+        <div class="card-status-dot online" title="Online"></div>
+        <h3>InfluxDB</h3>
+        <p>Zeitreihendaten · MQTT · ADS-B</p>
+      </div>
+
+      <!-- Klickbar — offline -->
+      <a href="#" class="card card-dashboard card-dashboard-link">
+        <div class="card-status-dot offline" title="Offline"></div>
+        <h3>Overpass API</h3>
+        <p>OSM-Daten · Import läuft</p>
+        <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ═══ TYP 3: CONTENT CARDS ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Typ 3 — Content Card</div>
+    <div class="demo-section-desc">
+      Tiles Registry, API-Dokumentation. Badge top-right immer in <code>color: #666</code> (grau, nur Info).
+      URLs und lange Strings werden mit <code>text-overflow: ellipsis</code> abgeschnitten — nie über Card-Rand.
+    </div>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-content-header">
+          <h3>Basemap Austria</h3>
+          <span class="card-badge">Basemap</span>
+        </div>
+        <p class="card-content">Vollständige Vektorkarte Österreich im PMTiles-Format. Alle Verwaltungsebenen, Straßennetz, POIs.</p>
+        <span class="card-url">pmtiles://tiles.oe5ith.at/pmtiles/basemap-austria.pmtiles</span>
+      </div>
+
+      <div class="card">
+        <div class="card-content-header">
+          <h3>Hillshade Alpen</h3>
+          <span class="card-badge">Overlay</span>
+        </div>
+        <p class="card-content">Geländeschummerung für Terrain-Darstellung. Elevation-Daten aus SRTM-Höhenmodell.</p>
+        <span class="card-url">pmtiles://tiles.oe5ith.at/pmtiles/hillshade-alpen.pmtiles</span>
+      </div>
+
+      <div class="card">
+        <div class="card-content-header">
+          <h3>Elevation DEM</h3>
+          <span class="card-badge">Elevation</span>
+        </div>
+        <p class="card-content">Digitales Höhenmodell, Terrarium RGB-Encoding. Für 3D-Terrain und Hillshade.</p>
+        <span class="card-url">pmtiles://tiles.oe5ith.at/pmtiles/elevation-dem-austria.pmtiles</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ TYP 4: INFO / HINWEIS ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Typ 4 — Info / Hinweis Card</div>
+    <div class="demo-section-desc">
+      Standalone, volle Breite — nicht im Card-Grid. Für Hinweise, Warnungen, kontextuelle Infos.
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="card-info">
+        <strong>Info:</strong> Dieser Dienst erfordert einen gültigen API-Key im Header
+        <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.82em">X-API-Key</code>.
+      </div>
+      <div class="card-warn">
+        <strong>Hinweis:</strong> Dropdown-Optionen in der Topbar sollten nicht länger als ~24 Zeichen sein,
+        damit das Layout stabil bleibt.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function updateBp() {
+  const w = window.innerWidth;
+  const el = document.getElementById('bp-indicator');
+  if (w <= 768) {
+    el.textContent = `Mobile — 1 Spalte (${w}px)`;
+    el.style.cssText = 'color:#eab308;border:1px solid #eab30844;background:#eab30812;border-radius:4px;padding:4px 10px;font-size:.75rem;font-weight:700;display:inline-flex;margin-bottom:32px';
+  } else if (w <= 1024) {
+    el.textContent = `Tablet — 2 Spalten (${w}px)`;
+    el.style.cssText = 'color:#22c55e;border:1px solid #22c55e44;background:#22c55e12;border-radius:4px;padding:4px 10px;font-size:.75rem;font-weight:700;display:inline-flex;margin-bottom:32px';
+  } else {
+    el.textContent = `Desktop — 3 Spalten (${w}px)`;
+    el.style.cssText = 'color:#3b82f6;border:1px solid #3b82f644;background:#3b82f612;border-radius:4px;padding:4px 10px;font-size:.75rem;font-weight:700;display:inline-flex;margin-bottom:32px';
+  }
+}
+updateBp();
+window.addEventListener('resize', updateBp);
+</script>
+</body>
+</html>

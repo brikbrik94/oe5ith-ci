@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Farben & Tokens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   ALLE DESIGN TOKENS — MASTER DEFINITION
+   Dies ist die einzige Quelle der Wahrheit.
+   shared/assets/common.css erbt von hier.
+   ═══════════════════════════════════════ */
+:root {
+
+  /* ── FARBEN: Basis ── */
+  --bg:               #1a1a1a;   /* Haupt-Hintergrund */
+  --card-bg:          #252525;   /* Cards, Topbar, Sidebar-Footer */
+  --panel:            #202020;   /* Sidebar, tiefere Panels */
+  --panel-deep:       #161616;   /* Tiefstes Panel, Code-Blöcke */
+  --text:             #e0e0e0;   /* Primärtext */
+  --muted:            #888888;   /* Sekundärtext, Beschreibungen */
+  --subtle:           #555555;   /* Labels, Section-Titles */
+  --border:           #333333;   /* Alle Borders */
+  --border-strong:    #444444;   /* Hover-Borders, aktive Elemente */
+
+  /* ── FARBEN: Akzent ── */
+  --accent:           #3b82f6;   /* Primär-Blau — Buttons, Icons, Hover */
+  --accent-hover:     #2563eb;   /* Hover-State für Accent-Elemente */
+  --accent-subtle:    rgba(59,130,246,0.07);   /* Aktive Nav-Items, Tab-Toggle */
+  --accent-subtle-md: rgba(59,130,246,0.10);   /* Badge-Hintergrund, Button-Secondary */
+  --accent-border:    rgba(59,130,246,0.25);   /* Badge-Border, Tab-Toggle-Border */
+
+  /* ── FARBEN: Semantisch ── */
+  --success:          #22c55e;   /* Online, OK, Aktiv */
+  --success-subtle:   rgba(34,197,94,0.10);
+  --success-border:   rgba(34,197,94,0.25);
+
+  --warning:          #eab308;   /* Warnung, Auth required, Pending */
+  --warning-subtle:   rgba(234,179,8,0.10);
+  --warning-border:   rgba(234,179,8,0.25);
+
+  --danger:           #ef4444;   /* Fehler, Offline, Destruktiv */
+  --danger-subtle:    rgba(239,68,68,0.10);
+  --danger-border:    rgba(239,68,68,0.25);
+
+  --auth:             #a78bfa;   /* Auth/Security — Authentik, SSO, OIDC */
+  --auth-subtle:      rgba(139,92,246,0.10);
+  --auth-border:      rgba(139,92,246,0.25);
+
+  /* ── FARBEN: Code/Terminal ── */
+  --code-bg:          #000000;
+  --code-text:        #4ade80;   /* Terminal-Grün */
+  --code-inline-bg:   #2a2a2a;
+  --code-inline-text: #e6e6e6;
+  --url-bg:           #0d0d0d;
+  --url-text:         #4ade80;
+
+  /* ── TYPOGRAFIE ── */
+  --font-sans:        'Segoe UI', system-ui, sans-serif;
+  --font-mono:        'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+
+  /* ── SPACING & LAYOUT ── */
+  --topbar-height:    60px;
+  --topbar-height-mobile: 52px;
+  --sidebar-width:    260px;
+  --container-max:    1000px;
+  --card-radius:      12px;
+  --card-padding:     20px;
+  --card-gap:         20px;
+  --btn-radius:       6px;
+  --badge-radius:     4px;
+
+  /* ── Z-INDEX ── */
+  --z-content:        1;
+  --z-topbar:         100;
+  --z-sidebar:        50;
+  --z-sidebar-tab:    10;
+  --z-backdrop:       40;
+  --z-dropdown:       200;
+  --z-overlay:        90;
+  --z-controls-overlay: 90;
+  --z-modal:          500;
+
+  /* ── TRANSITIONS ── */
+  --transition-fast:  0.15s ease;
+  --transition-base:  0.20s ease;
+  --transition-slow:  0.25s ease;
+
+  /* ── SHADOWS ── */
+  --shadow-card:      0 10px 20px rgba(0,0,0,0.30);   /* Card hover */
+  --shadow-sidebar:   4px 0 20px rgba(0,0,0,0.50);    /* Sidebar mobile overlay */
+  --shadow-dropdown:  0 8px 20px rgba(0,0,0,0.40);    /* Dropdowns, Menus */
+  --shadow-topbar:    0 2px 10px rgba(0,0,0,0.20);    /* Topbar */
+}
+
+/* ── BASIS-RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════
+   TOPBAR (minimal)
+   ═══════════════════════════════════════ */
+.topbar {
+  background: var(--card-bg);
+  height: var(--topbar-height);
+  border-bottom: 2px solid var(--accent);
+  box-shadow: var(--shadow-topbar);
+  display: flex; align-items: center;
+  padding: 0 20px; position: sticky; top: 0;
+  z-index: var(--z-topbar);
+}
+.brand {
+  display: flex; align-items: center; gap: 9px;
+  color: #fff; font-weight: 700; font-size: 1.2rem;
+  letter-spacing: 1px; text-decoration: none;
+}
+.brand img { width: 26px; height: 26px; }
+
+/* ═══════════════════════════════════════
+   DEMO STYLES
+   ═══════════════════════════════════════ */
+.page-content { padding: 40px; max-width: 960px; }
+
+.section { margin-bottom: 48px; }
+
+.section-title {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--subtle); margin-bottom: 16px;
+  padding-bottom: 8px; border-bottom: 1px solid #222;
+}
+
+/* Farb-Swatches Grid */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.swatch {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.swatch-color {
+  height: 56px;
+}
+
+.swatch-info {
+  background: var(--panel-deep);
+  padding: 8px 10px;
+}
+
+.swatch-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text);
+  display: block;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swatch-token {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--subtle);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swatch-hex {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: #444;
+  display: block;
+}
+
+/* Token Tabelle */
+.token-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.token-table th {
+  text-align: left;
+  padding: 7px 12px;
+  background: var(--panel-deep);
+  color: var(--subtle);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.token-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
+}
+
+.token-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.token-table td:first-child {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #7ba8d4;
+}
+
+.token-table td:last-child {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--subtle);
+}
+
+.token-desc { color: var(--muted); font-size: 0.78rem; }
+
+/* Subtle Varianten Gruppe */
+.subtle-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.subtle-chip {
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid;
+}
+
+@media (max-width: 768px) {
+  .page-content { padding: 20px 16px; }
+  .swatch-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>CI</span>
+  </a>
+</header>
+
+<div class="page-content">
+
+  <!-- ═══ BASIS-FARBEN ═══ -->
+  <div class="section">
+    <div class="section-title">Basis-Farben</div>
+    <div class="swatch-grid">
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1a1a1a"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Background</span>
+          <span class="swatch-token">--bg</span>
+          <span class="swatch-hex">#1a1a1a</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#252525"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Card Background</span>
+          <span class="swatch-token">--card-bg</span>
+          <span class="swatch-hex">#252525</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#202020"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Panel</span>
+          <span class="swatch-token">--panel</span>
+          <span class="swatch-hex">#202020</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#161616"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Panel Deep</span>
+          <span class="swatch-token">--panel-deep</span>
+          <span class="swatch-hex">#161616</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e0e0e0"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Text</span>
+          <span class="swatch-token">--text</span>
+          <span class="swatch-hex">#e0e0e0</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#888888"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Muted</span>
+          <span class="swatch-token">--muted</span>
+          <span class="swatch-hex">#888888</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#555555"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Subtle</span>
+          <span class="swatch-token">--subtle</span>
+          <span class="swatch-hex">#555555</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#333333"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Border</span>
+          <span class="swatch-token">--border</span>
+          <span class="swatch-hex">#333333</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ AKZENT ═══ -->
+  <div class="section">
+    <div class="section-title">Akzent-Farben</div>
+    <div class="swatch-grid">
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3b82f6"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Accent</span>
+          <span class="swatch-token">--accent</span>
+          <span class="swatch-hex">#3b82f6</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2563eb"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Accent Hover</span>
+          <span class="swatch-token">--accent-hover</span>
+          <span class="swatch-hex">#2563eb</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(59,130,246,0.07)"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Accent Subtle</span>
+          <span class="swatch-token">--accent-subtle</span>
+          <span class="swatch-hex">rgba(accent, 7%)</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(59,130,246,0.10)"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Accent Subtle Md</span>
+          <span class="swatch-token">--accent-subtle-md</span>
+          <span class="swatch-hex">rgba(accent, 10%)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Subtle Verwendung -->
+    <div style="margin-top:12px">
+      <div class="subtle-row">
+        <span class="subtle-chip" style="background:rgba(59,130,246,0.07);color:#3b82f6;border-color:rgba(59,130,246,0.25)">Nav-Item aktiv</span>
+        <span class="subtle-chip" style="background:rgba(59,130,246,0.07);color:#3b82f6;border-color:rgba(59,130,246,0.25)">Sidebar-Tab</span>
+        <span class="subtle-chip" style="background:rgba(59,130,246,0.10);color:#3b82f6;border-color:rgba(59,130,246,0.25)">Badge</span>
+        <span class="subtle-chip" style="background:rgba(59,130,246,0.10);color:#3b82f6;border-color:rgba(59,130,246,0.25)">Button Secondary</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SEMANTISCH ═══ -->
+  <div class="section">
+    <div class="section-title">Semantische Farben</div>
+    <div class="swatch-grid">
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#22c55e"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Success</span>
+          <span class="swatch-token">--success</span>
+          <span class="swatch-hex">#22c55e</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#eab308"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Warning</span>
+          <span class="swatch-token">--warning</span>
+          <span class="swatch-hex">#eab308</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ef4444"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Danger</span>
+          <span class="swatch-token">--danger</span>
+          <span class="swatch-hex">#ef4444</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#a78bfa"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Auth / Security</span>
+          <span class="swatch-token">--auth</span>
+          <span class="swatch-hex">#a78bfa</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Subtle Varianten -->
+    <div style="margin-top:12px">
+      <div class="subtle-row">
+        <span class="subtle-chip" style="background:rgba(34,197,94,.10);color:#22c55e;border-color:rgba(34,197,94,.25)">Success subtle</span>
+        <span class="subtle-chip" style="background:rgba(234,179,8,.10);color:#eab308;border-color:rgba(234,179,8,.25)">Warning subtle</span>
+        <span class="subtle-chip" style="background:rgba(239,68,68,.10);color:#ef4444;border-color:rgba(239,68,68,.25)">Danger subtle</span>
+        <span class="subtle-chip" style="background:rgba(139,92,246,.10);color:#a78bfa;border-color:rgba(139,92,246,.25)">Auth subtle</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CODE FARBEN ═══ -->
+  <div class="section">
+    <div class="section-title">Code / Terminal Farben</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#000000;border-bottom:1px solid #1a1a1a"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Code Block BG</span>
+          <span class="swatch-token">--code-bg</span>
+          <span class="swatch-hex">#000000</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#4ade80"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Terminal Text</span>
+          <span class="swatch-token">--code-text</span>
+          <span class="swatch-hex">#4ade80</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2a2a2a"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Inline Code BG</span>
+          <span class="swatch-token">--code-inline-bg</span>
+          <span class="swatch-hex">#2a2a2a</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e6e6e6"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Inline Code Text</span>
+          <span class="swatch-token">--code-inline-text</span>
+          <span class="swatch-hex">#e6e6e6</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SPACING ═══ -->
+  <div class="section">
+    <div class="section-title">Spacing & Layout Tokens</div>
+    <table class="token-table">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Wert</th>
+          <th>Verwendung</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>--topbar-height</td><td>60px</td><td class="token-desc">Topbar Desktop + Tablet</td></tr>
+        <tr><td>--topbar-height-mobile</td><td>52px</td><td class="token-desc">Topbar Mobile ≤768px</td></tr>
+        <tr><td>--sidebar-width</td><td>260px</td><td class="token-desc">Sidebar, alle Breakpoints</td></tr>
+        <tr><td>--container-max</td><td>1000px</td><td class="token-desc">Max-width Content-Container</td></tr>
+        <tr><td>--card-radius</td><td>12px</td><td class="token-desc">Cards, Modals</td></tr>
+        <tr><td>--card-padding</td><td>20px</td><td class="token-desc">Innenabstand Cards</td></tr>
+        <tr><td>--card-gap</td><td>20px</td><td class="token-desc">Grid-Gap zwischen Cards</td></tr>
+        <tr><td>--btn-radius</td><td>6px</td><td class="token-desc">Buttons</td></tr>
+        <tr><td>--badge-radius</td><td>4px</td><td class="token-desc">Badges — eckig</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ Z-INDEX ═══ -->
+  <div class="section">
+    <div class="section-title">Z-Index Tokens</div>
+    <table class="token-table">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Wert</th>
+          <th>Element</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>--z-content</td><td>1</td><td class="token-desc">Normaler Seiteninhalt</td></tr>
+        <tr><td>--z-sidebar-tab</td><td>10</td><td class="token-desc">Sidebar Tab-Toggle</td></tr>
+        <tr><td>--z-sidebar</td><td>50</td><td class="token-desc">Sidebar (Mobile Overlay)</td></tr>
+        <tr><td>--z-backdrop</td><td>40</td><td class="token-desc">Sidebar Backdrop, Controls Backdrop</td></tr>
+        <tr><td>--z-overlay</td><td>90</td><td class="token-desc">Controls Overlay Panel</td></tr>
+        <tr><td>--z-topbar</td><td>100</td><td class="token-desc">Topbar (sticky)</td></tr>
+        <tr><td>--z-dropdown</td><td>200</td><td class="token-desc">Dropdowns, Menus</td></tr>
+        <tr><td>--z-modal</td><td>500</td><td class="token-desc">Modals, Overlays</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ TRANSITIONS ═══ -->
+  <div class="section">
+    <div class="section-title">Transition Tokens</div>
+    <table class="token-table">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Wert</th>
+          <th>Verwendung</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>--transition-fast</td><td>0.15s ease</td><td class="token-desc">Buttons, Badges, Hover-Farben</td></tr>
+        <tr><td>--transition-base</td><td>0.20s ease</td><td class="token-desc">Cards hover (transform), Nav-Items</td></tr>
+        <tr><td>--transition-slow</td><td>0.25s ease</td><td class="token-desc">Sidebar ein/ausklappen</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ SHADOWS ═══ -->
+  <div class="section">
+    <div class="section-title">Shadow Tokens</div>
+    <table class="token-table">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Wert</th>
+          <th>Verwendung</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>--shadow-topbar</td><td>0 2px 10px rgba(0,0,0,0.20)</td><td class="token-desc">Topbar</td></tr>
+        <tr><td>--shadow-card</td><td>0 10px 20px rgba(0,0,0,0.30)</td><td class="token-desc">Card hover-Zustand</td></tr>
+        <tr><td>--shadow-dropdown</td><td>0 8px 20px rgba(0,0,0,0.40)</td><td class="token-desc">Dropdowns, Overlay-Menus</td></tr>
+        <tr><td>--shadow-sidebar</td><td>4px 0 20px rgba(0,0,0,0.50)</td><td class="token-desc">Sidebar Mobile Overlay</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Shadow Vorschau -->
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px">
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;font-size:.8rem;color:var(--muted);box-shadow:var(--shadow-topbar)">shadow-topbar</div>
+      <div style="background:var(--card-bg);border:1px solid var(--accent);border-radius:12px;padding:16px 20px;font-size:.8rem;color:var(--muted);box-shadow:var(--shadow-card)">shadow-card</div>
+      <div style="background:#1f1f1f;border:1px solid #4b5563;border-radius:8px;padding:16px 20px;font-size:.8rem;color:var(--muted);box-shadow:var(--shadow-dropdown)">shadow-dropdown</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Buttons</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --bg:           #1a1a1a;
+  --card-bg:      #252525;
+  --text:         #e0e0e0;
+  --muted:        #888;
+  --accent:       #3b82f6;
+  --accent-hover: #2563eb;
+  --border:       #333;
+  --success:      #22c55e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 40px;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════
+   DEMO LAYOUT
+   ═══════════════════════════════════════ */
+.page { max-width: 800px; }
+
+.section { margin-bottom: 48px; }
+
+.section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #222;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.hint code {
+  background: #1e1e1e;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #7ba8d4;
+}
+
+/* ═══════════════════════════════════════
+   BUTTON BASE
+   ═══════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  text-decoration: none;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn i { font-size: 0.8rem; }
+
+/* ═══════════════════════════════════════
+   VARIANTEN
+   ═══════════════════════════════════════ */
+
+/* Primary */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+/* Secondary */
+.btn-secondary {
+  background: rgba(59, 130, 246, 0.10);
+  color: var(--accent);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+.btn-secondary:hover {
+  background: rgba(59, 130, 246, 0.18);
+  border-color: rgba(59, 130, 246, 0.40);
+}
+
+/* Ghost */
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+  color: var(--text);
+  border-color: #555;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Danger */
+.btn-danger {
+  background: rgba(239, 68, 68, 0.10);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.20);
+}
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.20);
+  border-color: rgba(239, 68, 68, 0.40);
+}
+
+/* ═══════════════════════════════════════
+   GRÖSSEN
+   ═══════════════════════════════════════ */
+.btn-sm {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 0.75rem;
+  border-radius: 5px;
+}
+
+/* Default = 36px (keine extra Klasse) */
+
+.btn-lg {
+  height: 44px;
+  padding: 0 22px;
+  font-size: 0.95rem;
+}
+
+/* ═══════════════════════════════════════
+   DISABLED
+   ═══════════════════════════════════════ */
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════
+   LOADING
+   ═══════════════════════════════════════ */
+.btn.loading {
+  pointer-events: none;
+  color: transparent;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+}
+
+.btn-secondary.loading::after,
+.btn-ghost.loading::after {
+  border-color: rgba(59, 130, 246, 0.20);
+  border-top-color: var(--accent);
+}
+
+.btn-danger.loading::after {
+  border-color: rgba(239, 68, 68, 0.20);
+  border-top-color: #ef4444;
+}
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════
+   EVENT LOG
+   ═══════════════════════════════════════ */
+.event-log {
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.8rem;
+  color: #4ade80;
+  min-height: 120px;
+  max-height: 200px;
+  overflow-y: auto;
+  line-height: 1.9;
+}
+
+.log-muted { color: #333; }
+.log-variant { color: #7ba8d4; }
+.log-text { color: #555; }
+.log-success { color: var(--success); }
+.log-loading { color: #f59e0b; }
+
+/* ═══════════════════════════════════════
+   STATE MATRIX — visuelle Übersicht
+   ═══════════════════════════════════════ */
+.matrix {
+  display: grid;
+  grid-template-columns: 80px repeat(4, 1fr);
+  gap: 1px;
+  background: #222;
+  border: 1px solid #222;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 0.75rem;
+}
+
+.matrix-cell {
+  background: var(--bg);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.matrix-header {
+  background: #1a1a1a;
+  color: #555;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.matrix-row-label {
+  background: #161616;
+  color: #555;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  justify-content: flex-start;
+  padding-left: 12px;
+}
+
+/* ═══════════════════════════════════════
+   SEKTIONS-TRENNLINIE
+   ═══════════════════════════════════════ */
+.divider {
+  height: 1px;
+  background: #1e1e1e;
+  margin: 8px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ═══ SEKTION 1: VARIANTEN ═══ -->
+  <div class="section">
+    <div class="section-title">1 — Varianten (hover testen)</div>
+    <div class="row">
+      <button class="btn btn-primary"   data-label="primary">Primary</button>
+      <button class="btn btn-secondary" data-label="secondary">Secondary</button>
+      <button class="btn btn-ghost"     data-label="ghost">Ghost</button>
+      <button class="btn btn-danger"    data-label="danger">Danger</button>
+    </div>
+    <div class="hint">
+      <strong style="color:#ccc">Primary:</strong> <code>--accent</code> → hover <code>--accent-hover</code> &nbsp;·&nbsp;
+      <strong style="color:#ccc">Secondary:</strong> <code>rgba(accent, 10%)</code> → hover <code>18%</code><br>
+      <strong style="color:#ccc">Ghost:</strong> transparent → hover <code>rgba(white, 4%)</code> + Border heller &nbsp;·&nbsp;
+      <strong style="color:#ccc">Danger:</strong> <code>rgba(red, 10%)</code> → hover <code>20%</code>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ SEKTION 2: MIT ICON ═══ -->
+  <div class="section">
+    <div class="section-title">2 — Mit Icon</div>
+    <div class="row">
+      <button class="btn btn-primary"   data-label="primary+icon">
+        <i class="fa-solid fa-eye"></i> Vorschau
+      </button>
+      <button class="btn btn-secondary" data-label="secondary+icon">
+        <i class="fa-solid fa-copy"></i> Kopieren
+      </button>
+      <button class="btn btn-ghost"     data-label="ghost+icon">
+        <i class="fa-solid fa-arrow-left"></i> Zurück
+      </button>
+      <button class="btn btn-danger"    data-label="danger+icon">
+        <i class="fa-solid fa-trash"></i> Löschen
+      </button>
+    </div>
+    <div class="hint">
+      Icon links vom Text &nbsp;·&nbsp; <code>font-size: 0.8rem</code> &nbsp;·&nbsp; <code>gap: 7px</code>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ SEKTION 3: GRÖSSEN ═══ -->
+  <div class="section">
+    <div class="section-title">3 — Größen</div>
+    <div class="row">
+      <button class="btn btn-primary btn-sm"  data-label="primary-sm">
+        <i class="fa-solid fa-plus"></i> Small
+      </button>
+      <button class="btn btn-primary"         data-label="primary-default">
+        <i class="fa-solid fa-plus"></i> Default
+      </button>
+      <button class="btn btn-primary btn-lg"  data-label="primary-lg">
+        <i class="fa-solid fa-plus"></i> Large
+      </button>
+    </div>
+    <div class="hint">
+      Small: <code>28px</code> &nbsp;·&nbsp;
+      Default: <code>36px</code> &nbsp;·&nbsp;
+      Large: <code>44px</code> — Touch-sicher auf Mobile (min. Tap-Target)
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ SEKTION 4: DISABLED ═══ -->
+  <div class="section">
+    <div class="section-title">4 — Disabled</div>
+    <div class="row">
+      <button class="btn btn-primary"   disabled>Primary</button>
+      <button class="btn btn-secondary" disabled>Secondary</button>
+      <button class="btn btn-ghost"     disabled>Ghost</button>
+      <button class="btn btn-danger"    disabled>Danger</button>
+    </div>
+    <div class="hint">
+      <code>opacity: 0.4</code> &nbsp;·&nbsp; <code>pointer-events: none</code> &nbsp;·&nbsp;
+      Gleich für alle Varianten — keine eigene Farbe nötig
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ SEKTION 5: LOADING ═══ -->
+  <div class="section">
+    <div class="section-title">5 — Loading (klicken zum Testen)</div>
+    <div class="row">
+      <button class="btn btn-primary"   data-label="primary-loading"   onclick="triggerLoad(this, 2000)">
+        <i class="fa-solid fa-floppy-disk"></i> Speichern
+      </button>
+      <button class="btn btn-secondary" data-label="secondary-loading" onclick="triggerLoad(this, 2000)">
+        <i class="fa-solid fa-rotate"></i> Aktualisieren
+      </button>
+      <button class="btn btn-ghost"     data-label="ghost-loading"     onclick="triggerLoad(this, 2000)">
+        <i class="fa-solid fa-download"></i> Exportieren
+      </button>
+      <button class="btn btn-danger"    data-label="danger-loading"    onclick="triggerLoad(this, 2000)">
+        <i class="fa-solid fa-trash"></i> Löschen
+      </button>
+    </div>
+    <div class="hint">
+      Spinner ersetzt Text &nbsp;·&nbsp; Button gesperrt während Loading &nbsp;·&nbsp;
+      Spinner-Farbe passend zur Variante &nbsp;·&nbsp; nach 2s automatisch zurück
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ STATE MATRIX ═══ -->
+  <div class="section">
+    <div class="section-title">Übersicht — alle Zustände</div>
+    <div class="matrix">
+      <!-- Header -->
+      <div class="matrix-cell matrix-header"></div>
+      <div class="matrix-cell matrix-header">Primary</div>
+      <div class="matrix-cell matrix-header">Secondary</div>
+      <div class="matrix-cell matrix-header">Ghost</div>
+      <div class="matrix-cell matrix-header">Danger</div>
+      <!-- Default -->
+      <div class="matrix-cell matrix-row-label">Default</div>
+      <div class="matrix-cell"><button class="btn btn-primary"   style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-secondary" style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-ghost"     style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-danger"    style="pointer-events:none">Label</button></div>
+      <!-- Hover simulation -->
+      <div class="matrix-cell matrix-row-label">Hover</div>
+      <div class="matrix-cell"><button class="btn" style="background:#2563eb;color:#fff;pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn" style="background:rgba(59,130,246,.18);color:#3b82f6;border:1px solid rgba(59,130,246,.4);pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn" style="background:rgba(255,255,255,.04);color:#e0e0e0;border:1px solid #555;pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn" style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);pointer-events:none">Label</button></div>
+      <!-- Disabled -->
+      <div class="matrix-cell matrix-row-label">Disabled</div>
+      <div class="matrix-cell"><button class="btn btn-primary"   disabled style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-secondary" disabled style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-ghost"     disabled style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-danger"    disabled style="pointer-events:none">Label</button></div>
+      <!-- Loading -->
+      <div class="matrix-cell matrix-row-label">Loading</div>
+      <div class="matrix-cell"><button class="btn btn-primary   loading" style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-secondary loading" style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-ghost     loading" style="pointer-events:none">Label</button></div>
+      <div class="matrix-cell"><button class="btn btn-danger    loading" style="pointer-events:none">Label</button></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ EVENT LOG ═══ -->
+  <div class="section">
+    <div class="section-title">Event Log</div>
+    <div class="event-log" id="event-log">
+      <div class="log-muted">// hover oder klicke auf einen Button oben</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const log = document.getElementById('event-log');
+
+function addLog(html) {
+  const d = document.createElement('div');
+  d.innerHTML = html;
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+}
+
+// Hover + Click logging für alle interaktiven Buttons
+document.querySelectorAll('.btn[data-label]').forEach(btn => {
+  btn.addEventListener('mouseenter', () => {
+    addLog(`<span class="log-muted">[hover]</span>  <span class="log-variant">.btn-${btn.dataset.label}</span>`);
+  });
+  btn.addEventListener('click', () => {
+    if (btn.classList.contains('loading')) return;
+    addLog(`<span class="log-muted">[click]</span>  <span class="log-variant">.btn-${btn.dataset.label}</span>  <span class="log-text">→ Aktion ausgelöst</span>`);
+  });
+});
+
+// Loading Trigger
+function triggerLoad(btn, duration) {
+  const original = btn.innerHTML;
+  btn.classList.add('loading');
+  addLog(`<span class="log-loading">[loading]</span> <span class="log-variant">.btn-${btn.dataset.label}</span>  <span class="log-text">gesperrt für ${duration/1000}s...</span>`);
+
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    btn.innerHTML = original;
+    addLog(`<span class="log-success">[done]</span>    <span class="log-variant">.btn-${btn.dataset.label}</span>  <span class="log-text">bereit</span>`);
+  }, duration);
+}
+</script>
+</body>
+</html>

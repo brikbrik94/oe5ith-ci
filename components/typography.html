@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Typografie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --bg:            #1a1a1a;
+  --card-bg:       #252525;
+  --text:          #e0e0e0;
+  --muted:         #888;
+  --accent:        #3b82f6;
+  --border:        #333;
+  --topbar-height: 60px;
+  --font-sans:     'Segoe UI', system-ui, sans-serif;
+  --font-mono:     'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* TOPBAR */
+.topbar {
+  background: var(--card-bg); height: var(--topbar-height);
+  border-bottom: 2px solid var(--accent);
+  display: flex; align-items: center; padding: 0 20px;
+  position: sticky; top: 0; z-index: 100;
+}
+.brand {
+  display: flex; align-items: center; gap: 9px; color: #fff;
+  font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; text-decoration: none;
+}
+.brand img { width: 26px; height: 26px; }
+
+/* ═══════════════════════════════════
+   TYPOGRAFIE-SYSTEM
+   ═══════════════════════════════════ */
+
+/* H1 */
+h1, .t-h1 {
+  font-family: var(--font-sans);
+  font-size: 2.0rem; font-weight: 300;
+  color: #fff; line-height: 1.2;
+}
+h1 span, .t-h1 span { font-weight: 700; color: var(--accent); }
+
+/* H2 */
+h2, .t-h2 {
+  font-family: var(--font-sans);
+  font-size: 1.3rem; font-weight: 600;
+  color: #fff; line-height: 1.3;
+}
+
+/* H3 */
+h3, .t-h3 {
+  font-family: var(--font-sans);
+  font-size: 1.0rem; font-weight: 600;
+  color: #ddd; line-height: 1.4;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+
+/* Body */
+p, .t-body {
+  font-family: var(--font-sans);
+  font-size: 0.9rem; color: var(--muted); line-height: 1.5;
+}
+
+/* Small */
+.t-small {
+  font-family: var(--font-sans);
+  font-size: 0.8rem; color: var(--muted); line-height: 1.5;
+}
+
+/* Label */
+.t-label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: #555;
+}
+
+/* Brand */
+.t-brand {
+  font-family: var(--font-sans);
+  font-size: 1.2rem; font-weight: 700;
+  letter-spacing: 1px; color: #fff;
+}
+
+/* Inline Code */
+code, .t-code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem; background: #2a2a2a;
+  color: #e6e6e6; padding: 2px 6px; border-radius: 4px; line-height: 1;
+}
+
+/* Code Block */
+pre, .t-code-block {
+  font-family: var(--font-mono);
+  font-size: 0.82rem; background: #000; color: #4ade80;
+  padding: 14px 16px; border-radius: 6px;
+  border: 1px solid #1a1a1a; overflow-x: auto;
+  line-height: 1.7; white-space: pre;
+}
+
+/* URL / Pfad */
+.t-url {
+  font-family: var(--font-mono);
+  font-size: 0.78rem; color: #4ade80;
+  background: #0d0d0d; border: 1px solid #1a1a1a;
+  border-radius: 4px; padding: 6px 10px;
+  display: block; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ═══════════════════════════════════
+   DEMO LAYOUT
+   ═══════════════════════════════════ */
+.page-content { padding: 40px; max-width: 860px; }
+
+.section-title {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: #555; margin-bottom: 0;
+  padding-bottom: 8px; border-bottom: 1px solid #222;
+  margin-top: 36px;
+}
+.section-title:first-child { margin-top: 0; }
+
+.type-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 20px; align-items: start;
+  padding: 18px 0; border-bottom: 1px solid #1a1a1a;
+}
+.type-row:last-child { border-bottom: none; }
+
+.type-meta-name {
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  color: #444; margin-bottom: 5px;
+}
+
+.type-token {
+  font-family: var(--font-mono);
+  font-size: 0.65rem; color: #333; display: block;
+  line-height: 1.7;
+}
+.type-token b { color: #4a4a4a; }
+
+/* Kontext Card */
+.demo-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px; max-width: 500px;
+  margin-top: 16px; display: flex; flex-direction: column; gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .page-content { padding: 20px 16px; }
+  .type-row { grid-template-columns: 1fr; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>CI</span>
+  </a>
+</header>
+
+<div class="page-content">
+
+  <!-- SCHRIFTFAMILIEN -->
+  <div class="section-title">Schriftfamilien</div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">Sans-Serif</div>
+      <span class="type-token"><b>--font-sans</b></span>
+      <span class="type-token">'Segoe UI'</span>
+      <span class="type-token">system-ui</span>
+      <span class="type-token">sans-serif</span>
+    </div>
+    <div>
+      <p style="font-size:1rem;color:#fff;margin-bottom:6px;font-family:var(--font-sans)">Basis-Schrift für alle UI-Texte.</p>
+      <span class="t-small">System-native — kein Webfont-Download. Segoe UI auf Windows, system-ui auf macOS/Linux.</span>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">Monospace</div>
+      <span class="type-token"><b>--font-mono</b></span>
+      <span class="type-token">'JetBrains Mono'</span>
+      <span class="type-token">'Consolas' (Fallback)</span>
+      <span class="type-token">monospace (Fallback)</span>
+    </div>
+    <div>
+      <code>driving-car · X-API-Key · v2.8.5</code>
+      <span class="t-small" style="display:block;margin-top:8px">Für Code, Terminal, URLs und Pfade. Google Fonts (400/500 weight).</span>
+    </div>
+  </div>
+
+  <!-- HEADINGS -->
+  <div class="section-title">Headings</div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">H1 — Seitentitel</div>
+      <span class="type-token">2.0rem</span>
+      <span class="type-token">weight 300 (leicht)</span>
+      <span class="type-token">line-height 1.2</span>
+      <span class="type-token">span → 700 + --accent</span>
+    </div>
+    <h1>System <span>Overview</span></h1>
+  </div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">H2 — Abschnittstitel</div>
+      <span class="type-token">1.3rem</span>
+      <span class="type-token">weight 600</span>
+      <span class="type-token">line-height 1.3</span>
+      <span class="type-token">color #fff</span>
+    </div>
+    <h2>Routing API</h2>
+  </div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">H3 — Unterabschnitt</div>
+      <span class="type-token">1.0rem</span>
+      <span class="type-token">weight 600</span>
+      <span class="type-token">color #ddd</span>
+      <span class="type-token">border-bottom: 1px</span>
+    </div>
+    <h3>Service Information</h3>
+  </div>
+
+  <!-- BODY TEXT -->
+  <div class="section-title">Body Text</div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">Body — Fließtext</div>
+      <span class="type-token">0.9rem</span>
+      <span class="type-token">weight 400</span>
+      <span class="type-token">--muted (#888)</span>
+      <span class="type-token">line-height 1.5</span>
+    </div>
+    <p>OpenRouteService mit aktiven Profilen für Routing in Österreich. Zugriff über API-Endpunkte mit validem Key im Header.</p>
+  </div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">Small — Metadaten</div>
+      <span class="type-token">0.8rem</span>
+      <span class="type-token">weight 400</span>
+      <span class="type-token">--muted (#888)</span>
+      <span class="type-token">line-height 1.5</span>
+    </div>
+    <span class="t-small">Zuletzt aktualisiert: 2026-04-22 · 1.2 GB · Live-Daten · Import läuft</span>
+  </div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">Label — Section-Labels</div>
+      <span class="type-token">0.65rem</span>
+      <span class="type-token">weight 700</span>
+      <span class="type-token">uppercase</span>
+      <span class="type-token">letter-spacing 1.2px</span>
+      <span class="type-token">color #555</span>
+    </div>
+    <span class="t-label">Navigation &nbsp;·&nbsp; System &nbsp;·&nbsp; Tools &nbsp;·&nbsp; SDR</span>
+  </div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">Brand — Topbar</div>
+      <span class="type-token">1.2rem</span>
+      <span class="type-token">weight 700</span>
+      <span class="type-token">letter-spacing 1px</span>
+      <span class="type-token">color #fff</span>
+    </div>
+    <span class="t-brand">INTERNAL ADMIN</span>
+  </div>
+
+  <!-- CODE -->
+  <div class="section-title">Code &amp; Monospace</div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">Inline Code</div>
+      <span class="type-token">--font-mono</span>
+      <span class="type-token">0.85rem</span>
+      <span class="type-token">bg #2a2a2a</span>
+      <span class="type-token">color #e6e6e6</span>
+      <span class="type-token">radius 4px</span>
+    </div>
+    <p>Profil: <code>driving-car</code> · Header: <code>X-API-Key</code> · Version: <code>v2.8.5</code></p>
+  </div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">Code Block</div>
+      <span class="type-token">--font-mono</span>
+      <span class="type-token">0.82rem</span>
+      <span class="type-token">bg #000</span>
+      <span class="type-token">color #4ade80</span>
+      <span class="type-token">line-height 1.7</span>
+    </div>
+    <pre>curl -X POST "https://ors.oe5ith.at/directions" \
+  -H "X-API-Key: DEIN_KEY" \
+  -H "Content-Type: application/json"</pre>
+  </div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">URL / Pfad</div>
+      <span class="type-token">--font-mono</span>
+      <span class="type-token">0.78rem</span>
+      <span class="type-token">bg #0d0d0d</span>
+      <span class="type-token">color #4ade80</span>
+      <span class="type-token">ellipsis</span>
+    </div>
+    <span class="t-url">pmtiles://tiles.oe5ith.at/pmtiles/basemap-austria-vollstaendig-mit-langem-namen.pmtiles</span>
+  </div>
+
+  <!-- KONTEXT DEMO -->
+  <div class="section-title">Kontext — alle Ebenen in einer Card</div>
+
+  <div class="demo-card">
+    <div>
+      <h1 style="font-size:1.6rem">GIS <span>Services</span></h1>
+      <span class="t-small">Zuletzt aktualisiert: 2026-04-22 · v1.4.2</span>
+    </div>
+    <h3>Routing API</h3>
+    <p>OpenRouteService mit aktivem Profil <code>driving-car</code>. Zugriff mit validem API-Key.</p>
+    <span class="t-url">https://ors.oe5ith.at/directions/driving-car</span>
+    <span class="t-small">Endpunkt erfordert Header <code>X-API-Key</code>. Rate-Limit: 10 req/s.</span>
+  </div>
+
+</div>
+</body>
+</html>

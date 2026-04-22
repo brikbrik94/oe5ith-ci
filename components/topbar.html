@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Topbar</title>
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg:             #1a1a1a;
+  --card-bg:        #252525;
+  --text:           #e0e0e0;
+  --muted:          #888;
+  --accent:         #3b82f6;
+  --accent-hover:   #2563eb;
+  --border:         #333;
+  --success:        #22c55e;
+
+  --topbar-height-desktop: 60px;
+  --topbar-height-mobile:  52px;
+
+  --sidebar-width:  260px;
+  --sidebar-tab-bg: rgba(59,130,246,0.07);
+  --sidebar-tab-border: rgba(59,130,246,0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════
+   TOPBAR — BASE
+   ═══════════════════════════════════════ */
+.topbar {
+  background: var(--card-bg);
+  height: var(--topbar-height-desktop);
+  border-bottom: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 0;
+}
+
+/* Three zones */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.topbar-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  min-width: 0;
+}
+
+.topbar-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+/* ═══════════════════════════════════════
+   BRAND (topbar-left)
+   ═══════════════════════════════════════ */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.brand-logo {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  /* Desktop + Tablet: sichtbar */
+}
+
+/* ═══════════════════════════════════════
+   CENTER — DROPDOWN
+   ═══════════════════════════════════════ */
+.topbar-dropdown {
+  position: relative;
+}
+
+.topbar-dropdown-toggle {
+  background: #2a2a2a;
+  border: 1px solid #4b5563;
+  border-radius: 5px;
+  color: #d1d5db;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 36px;
+  /* FIXE BREITE — orientiert am längsten Options-Text + Padding + Chevron.
+     Bei dynamischen Dropdowns muss diese Breite vorab definiert werden,
+     damit die Topbar beim Wechsel der Auswahl nicht springt.
+     Faustregel: längster Text in px (ca. 7px/Zeichen bei 0.82rem) + 24px Padding + 20px Chevron */
+  width: 140px;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.topbar-dropdown-toggle:hover {
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Label-Text nimmt verfügbaren Platz, Chevron bleibt rechts */
+.dropdown-label {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar-dropdown-toggle .chevron {
+  font-size: 0.65rem;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.topbar-dropdown-toggle.open .chevron {
+  transform: rotate(180deg);
+}
+
+.topbar-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #1f1f1f;
+  border: 1px solid #4b5563;
+  border-radius: 6px;
+  min-width: 180px;
+  z-index: 200;
+  padding: 4px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.topbar-dropdown-menu.open {
+  display: block;
+}
+
+.topbar-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.topbar-dropdown-item:hover {
+  background: rgba(59,130,246,0.1);
+  color: #fff;
+}
+
+.topbar-dropdown-item.active {
+  color: var(--accent);
+}
+
+/* ═══════════════════════════════════════
+   CENTER — TOGGLE BUTTON
+   ═══════════════════════════════════════ */
+.topbar-toggle {
+  background: #2a2a2a;
+  border: 1px solid #4b5563;
+  border-radius: 5px;
+  color: #d1d5db;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  user-select: none;
+}
+
+.topbar-toggle:hover {
+  border-color: rgba(59,130,246,0.5);
+  color: #fff;
+}
+
+.topbar-toggle.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.topbar-toggle-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.topbar-toggle.active .topbar-toggle-indicator {
+  background: rgba(255,255,255,0.8);
+}
+
+/* ═══════════════════════════════════════
+   CENTER — SEARCHBAR
+   ═══════════════════════════════════════ */
+.topbar-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.topbar-search-input {
+  background: #2a2a2a;
+  border: 1px solid #4b5563;
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 0.82rem;
+  padding: 6px 36px 6px 12px;
+  height: 36px;
+  width: 200px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.topbar-search-input::placeholder {
+  color: #555;
+}
+
+.topbar-search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+.topbar-search-btn {
+  position: absolute;
+  right: 6px;
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  transition: color 0.15s;
+  font-size: 0.8rem;
+  padding: 0;
+}
+
+.topbar-search-btn:hover {
+  color: var(--accent);
+}
+
+.topbar-search-result {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #1f1f1f;
+  border: 1px solid #4b5563;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: none;
+  z-index: 200;
+}
+
+.topbar-search-result.visible {
+  display: block;
+}
+
+/* ═══════════════════════════════════════
+   RIGHT — NAV LINKS
+   ═══════════════════════════════════════ */
+.topbar-nav-link {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.topbar-nav-link:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.05);
+}
+
+.topbar-nav-link.active {
+  color: var(--accent);
+}
+
+/* ═══════════════════════════════════════
+   SIDEBAR + TAB TOGGLE
+   ═══════════════════════════════════════ */
+.layout {
+  display: flex;
+  min-height: calc(100vh - var(--topbar-height-desktop));
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: #202020;
+  border-right: 1px solid var(--border);
+  position: relative;
+  flex-shrink: 0;
+  transition: width 0.25s ease;
+}
+
+.sidebar.collapsed {
+  width: 0;
+  border-right: none;
+  overflow: visible;
+}
+
+.sidebar-inner {
+  padding: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: var(--sidebar-width);
+}
+
+/* Halbkreis Tab an der rechten Kante */
+.sidebar-tab {
+  position: absolute;
+  right: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 36px;
+  background: var(--sidebar-tab-bg);
+  border: 1px solid var(--sidebar-tab-border);
+  border-left: none;
+  border-radius: 0 7px 7px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  z-index: 10;
+  user-select: none;
+}
+
+.sidebar-tab:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Sidebar Overlay-Backdrop (Mobile) */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: var(--topbar-height-desktop) 0 0 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 40;
+}
+
+.sidebar-backdrop.visible {
+  display: block;
+}
+
+.page-content {
+  flex: 1;
+  padding: 40px;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════
+   MOBILE TOOLS PANEL
+   ═══════════════════════════════════════ */
+.controls-panel {
+  /* Desktop: inline in topbar-center, immer sichtbar */
+  display: contents;
+}
+
+.controls-toggle {
+  /* Desktop: ausgeblendet */
+  display: none;
+  background: #2a2a2a;
+  border: 1px solid #4b5563;
+  border-radius: 5px;
+  color: #d1d5db;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  font-family: inherit;
+}
+
+.controls-overlay {
+  display: none;
+  position: absolute;
+  top: var(--topbar-height-desktop);
+  left: 0;
+  right: 0;
+  background: #202020;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  z-index: 90;
+  gap: 10px;
+  flex-direction: column;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.controls-overlay.open {
+  display: flex;
+}
+
+.controls-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+}
+
+.controls-backdrop.visible {
+  display: block;
+}
+
+/* Slider icon for tools button */
+.slider-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 14px;
+  flex-shrink: 0;
+}
+
+.slider-icon span {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.slider-icon span:nth-child(2) { width: 65%; }
+
+/* ═══════════════════════════════════════
+   BREAKPOINTS
+   ═══════════════════════════════════════ */
+
+/* Tablet: 769px – 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Controls zusammenfassen */
+  .controls-panel { display: none; }
+  .controls-toggle {
+    display: flex;
+  }
+  .controls-overlay {
+    top: var(--topbar-height-desktop);
+  }
+  /* Max 2 nav links */
+  .topbar-nav-link:nth-child(n+3) { display: none; }
+}
+
+/* Mobile: ≤768px */
+@media (max-width: 768px) {
+  .topbar {
+    height: var(--topbar-height-mobile);
+    padding: 0 14px;
+  }
+
+  .layout {
+    min-height: calc(100vh - var(--topbar-height-mobile));
+  }
+
+  /* Brand: nur Text, kein Logo */
+  .brand-logo { display: none; }
+  .brand { font-size: 1rem; letter-spacing: 0.5px; }
+
+  /* Mitte: leer, Controls als Button rechts */
+  .topbar-center { display: none; }
+  .controls-toggle {
+    display: flex;
+    /* Bei Tool-Seiten: in topbar-right eingebunden */
+  }
+  .controls-toggle .controls-toggle-text { display: none; }
+  .controls-overlay {
+    top: var(--topbar-height-mobile);
+  }
+
+  /* Alle Nav-Links ausblenden */
+  .topbar-nav-link { display: none; }
+
+  /* Sidebar: standardmäßig geschlossen (Overlay) */
+  .sidebar {
+    position: fixed;
+    top: var(--topbar-height-mobile);
+    left: 0;
+    height: calc(100vh - var(--topbar-height-mobile));
+    z-index: 50;
+    width: var(--sidebar-width);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+  }
+
+  /* Tab bleibt an der Sidebar-Kante */
+  .sidebar-tab {
+    right: -13px;
+    top: 50%;
+  }
+
+  .sidebar-backdrop.visible {
+    display: block;
+  }
+
+  .page-content {
+    padding: 20px 16px;
+  }
+}
+
+/* ═══════════════════════════════════════
+   DEMO CONTENT STYLES
+   ═══════════════════════════════════════ */
+.demo-content {
+  max-width: 600px;
+}
+
+.demo-title {
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.demo-title strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.demo-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.event-log {
+  background: #0d0d0d;
+  border: 1px solid #222;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.8rem;
+  color: #4ade80;
+  min-height: 100px;
+  max-height: 200px;
+  overflow-y: auto;
+  line-height: 1.8;
+}
+
+.event-log .log-muted {
+  color: #444;
+}
+
+.bp-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.sidebar-nav-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+  margin-bottom: 2px;
+}
+
+.sidebar-nav-item:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+}
+
+.sidebar-nav-item.active {
+  color: var(--accent);
+  background: rgba(59,130,246,0.07);
+  border-left-color: var(--accent);
+}
+
+.sidebar-nav-item svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.sidebar-nav-item.active svg {
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<!-- BACKDROP für Sidebar (Mobile) -->
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<!-- CONTROLS BACKDROP -->
+<div class="controls-backdrop" id="controls-backdrop"></div>
+
+<!-- ═══════════ TOPBAR ═══════════ -->
+<header class="topbar" id="topbar">
+
+  <!-- LINKS: Logo + Seitenname -->
+  <div class="topbar-left">
+    <a href="#" class="brand" id="brand-link" title="Zur Startseite">
+      <img src="assets/logo.svg" alt="Logo" class="brand-logo" width="26" height="26">
+      <span class="brand-text">CI</span>
+    </a>
+  </div>
+
+  <!-- MITTE: Controls (Desktop inline, Tablet/Mobile als Panel) -->
+  <div class="topbar-center">
+
+    <!-- Controls Toggle — nur Tablet/Mobile sichtbar -->
+    <button class="controls-toggle" id="controls-toggle" aria-expanded="false" aria-controls="controls-overlay">
+      <div class="slider-icon">
+        <span></span><span></span><span></span>
+      </div>
+      <span class="controls-toggle-text">Tools</span>
+    </button>
+
+    <!-- Controls Panel — Desktop inline, Tablet/Mobile als Overlay -->
+    <div class="controls-panel" id="controls-panel">
+
+      <!-- Dropdown -->
+      <!-- BREITE: width ist fix definiert (hier 140px).
+           Orientiert sich am längsten Options-Text. Nie dynamisch durch Inhalt bestimmen lassen. -->
+      <div class="topbar-dropdown" id="dropdown-wrap">
+        <button class="topbar-dropdown-toggle" id="dropdown-toggle" aria-haspopup="listbox" aria-expanded="false">
+          <span class="dropdown-label">Option 1</span>
+          <span class="chevron">▾</span>
+        </button>
+        <div class="topbar-dropdown-menu" id="dropdown-menu" role="listbox">
+          <div class="topbar-dropdown-item active" data-value="option-1">Option 1</div>
+          <div class="topbar-dropdown-item" data-value="option-2">Option 2</div>
+          <div class="topbar-dropdown-item" data-value="option-3">Option 3</div>
+        </div>
+      </div>
+
+      <!-- Toggle Button -->
+      <button class="topbar-toggle" id="btn1" aria-pressed="false">
+        <span class="topbar-toggle-indicator"></span>
+        Button 1
+      </button>
+
+      <!-- Searchbar -->
+      <div class="topbar-search" id="search-wrap">
+        <input
+          type="text"
+          class="topbar-search-input"
+          id="search-input"
+          placeholder="Searchbar"
+          autocomplete="off"
+          aria-label="Suchfeld"
+        >
+        <button class="topbar-search-btn" id="search-btn" aria-label="Suche starten">
+          <!-- Search icon SVG -->
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/>
+            <line x1="9.5" y1="9.5" x2="13" y2="13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="topbar-search-result" id="search-result"></div>
+      </div>
+
+    </div><!-- /controls-panel -->
+  </div><!-- /topbar-center -->
+
+  <!-- RECHTS: Nav Links -->
+  <div class="topbar-right">
+    <a href="#" class="topbar-nav-link" data-link="1">Link 1</a>
+    <a href="#" class="topbar-nav-link" data-link="2">Link 2</a>
+    <a href="#" class="topbar-nav-link active" data-link="3">Link 3</a>
+  </div>
+
+</header>
+
+<!-- CONTROLS OVERLAY (Tablet/Mobile) -->
+<div class="controls-overlay" id="controls-overlay" aria-hidden="true">
+  <!-- Kopie der Controls — wird per JS befüllt -->
+</div>
+
+<!-- ═══════════ LAYOUT ═══════════ -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar" aria-label="Navigation">
+    <div class="sidebar-inner">
+      <div class="sidebar-nav-label">Navigation</div>
+
+      <div class="sidebar-nav-item active">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="2" width="5" height="5" rx="1"/>
+          <rect x="9" y="2" width="5" height="5" rx="1"/>
+          <rect x="2" y="9" width="5" height="5" rx="1"/>
+          <rect x="9" y="9" width="5" height="5" rx="1"/>
+        </svg>
+        Dashboard
+      </div>
+
+      <div class="sidebar-nav-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="8" cy="8" r="5.5"/>
+          <path d="M8 5v3l2 2"/>
+        </svg>
+        Services
+      </div>
+
+      <div class="sidebar-nav-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 4h12M4 8h8M6 12h4"/>
+        </svg>
+        Settings
+      </div>
+    </div>
+
+    <!-- Tab Toggle -->
+    <div class="sidebar-tab" id="sidebar-tab" role="button" aria-label="Sidebar ein-/ausblenden" tabindex="0">
+      ‹
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="page-content">
+    <div class="demo-content">
+
+      <div class="bp-indicator" id="bp-indicator">
+        <!-- wird per JS gesetzt -->
+      </div>
+
+      <h1 class="demo-title">Topbar <strong>Reference</strong></h1>
+      <p class="demo-desc">
+        Generische Referenzseite für das OE5ITH CI Design System.
+        Alle Topbar-Elemente sind funktional — Aktionen werden im Event-Log unten angezeigt.
+        Verkleinere das Browserfenster um Tablet- und Mobile-Breakpoints zu sehen.
+      </p>
+
+      <div class="event-log" id="event-log">
+        <span class="log-muted">// Event Log — bereit</span>
+      </div>
+
+    </div>
+  </main>
+
+</div><!-- /layout -->
+
+<script>
+/* ═══════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+
+function log(msg) {
+  const el = $('event-log');
+  const line = document.createElement('div');
+  const time = new Date().toLocaleTimeString('de-AT', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  line.textContent = `[${time}] ${msg}`;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+}
+
+function getBreakpoint() {
+  const w = window.innerWidth;
+  if (w <= 768)  return { label: 'Mobile', detail: `≤768px (${w}px)`, color: '#eab308' };
+  if (w <= 1024) return { label: 'Tablet', detail: `769–1024px (${w}px)`, color: '#22c55e' };
+  return          { label: 'Desktop', detail: `≥1025px (${w}px)`, color: '#3b82f6' };
+}
+
+function updateBpIndicator() {
+  const bp = getBreakpoint();
+  const el = $('bp-indicator');
+  el.textContent = `${bp.label} — ${bp.detail}`;
+  el.style.color = bp.color;
+  el.style.borderColor = bp.color + '44';
+  el.style.background = bp.color + '12';
+}
+
+/* ═══════════════════════════════════════
+   SIDEBAR TOGGLE
+   ═══════════════════════════════════════ */
+let sidebarOpen = window.innerWidth > 768;
+
+function setSidebar(open, silent) {
+  sidebarOpen = open;
+  const sidebar = $('sidebar');
+  const tab = $('sidebar-tab');
+  const backdrop = $('sidebar-backdrop');
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    sidebar.classList.toggle('open', open);
+    backdrop.classList.toggle('visible', open);
+    sidebar.classList.remove('collapsed');
+  } else {
+    sidebar.classList.toggle('collapsed', !open);
+    backdrop.classList.remove('visible');
+  }
+
+  tab.textContent = open ? '‹' : '›';
+  tab.setAttribute('aria-label', open ? 'Sidebar schließen' : 'Sidebar öffnen');
+
+  if (!silent) log(`Sidebar ${open ? 'geöffnet' : 'geschlossen'}`);
+}
+
+$('sidebar-tab').addEventListener('click', () => setSidebar(!sidebarOpen));
+$('sidebar-tab').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSidebar(!sidebarOpen); }});
+$('sidebar-backdrop').addEventListener('click', () => setSidebar(false));
+
+/* ═══════════════════════════════════════
+   DROPDOWN
+   ═══════════════════════════════════════ */
+let dropdownOpen = false;
+
+function setDropdown(open) {
+  dropdownOpen = open;
+  $('dropdown-toggle').classList.toggle('open', open);
+  $('dropdown-menu').classList.toggle('open', open);
+  $('dropdown-toggle').setAttribute('aria-expanded', open);
+}
+
+$('dropdown-toggle').addEventListener('click', e => {
+  e.stopPropagation();
+  setDropdown(!dropdownOpen);
+  if (dropdownOpen) log('Dropdown geöffnet');
+});
+
+document.querySelectorAll('.topbar-dropdown-item').forEach(item => {
+  item.addEventListener('click', e => {
+    e.stopPropagation();
+    document.querySelectorAll('.topbar-dropdown-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    const selected = item.textContent.trim();
+    // Nur Label wechseln — width bleibt fix durch CSS
+    $('dropdown-toggle').querySelector('.dropdown-label').textContent = selected;
+    log(`Dropdown → "${selected}" gewählt`);
+    setDropdown(false);
+  });
+});
+
+document.addEventListener('click', e => {
+  if (!$('dropdown-wrap').contains(e.target)) setDropdown(false);
+});
+
+/* ═══════════════════════════════════════
+   TOGGLE BUTTON
+   ═══════════════════════════════════════ */
+let btn1Active = false;
+
+$('btn1').addEventListener('click', () => {
+  btn1Active = !btn1Active;
+  $('btn1').classList.toggle('active', btn1Active);
+  $('btn1').setAttribute('aria-pressed', btn1Active);
+  log(`Button 1 → ${btn1Active ? 'aktiviert' : 'deaktiviert'}`);
+});
+
+/* ═══════════════════════════════════════
+   SEARCHBAR
+   ═══════════════════════════════════════ */
+function runSearch() {
+  const q = $('search-input').value.trim();
+  if (!q) return;
+  const result = $('search-result');
+  result.textContent = `Ergebnis für: "${q}"`;
+  result.classList.add('visible');
+  log(`Suche → "${q}"`);
+  setTimeout(() => result.classList.remove('visible'), 3000);
+}
+
+$('search-btn').addEventListener('click', runSearch);
+$('search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runSearch();
+  if (e.key === 'Escape') {
+    $('search-result').classList.remove('visible');
+    $('search-input').blur();
+  }
+});
+
+/* ═══════════════════════════════════════
+   NAV LINKS
+   ═══════════════════════════════════════ */
+document.querySelectorAll('.topbar-nav-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.topbar-nav-link').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    log(`Nav → "Link ${link.dataset.link}" geklickt`);
+  });
+});
+
+/* ═══════════════════════════════════════
+   CONTROLS TOGGLE (Tablet/Mobile)
+   ═══════════════════════════════════════ */
+let controlsOpen = false;
+
+function setControls(open) {
+  controlsOpen = open;
+  $('controls-overlay').classList.toggle('open', open);
+  $('controls-backdrop').classList.toggle('visible', open);
+  $('controls-toggle').setAttribute('aria-expanded', open);
+  if (open) log('Controls-Panel geöffnet');
+}
+
+$('controls-toggle').addEventListener('click', e => {
+  e.stopPropagation();
+  setControls(!controlsOpen);
+});
+
+$('controls-backdrop').addEventListener('click', () => setControls(false));
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (controlsOpen) setControls(false);
+    if (sidebarOpen && window.innerWidth <= 768) setSidebar(false);
+    if (dropdownOpen) setDropdown(false);
+  }
+});
+
+/* Controls Overlay mit Klonen der Controls befüllen */
+function buildControlsOverlay() {
+  const overlay = $('controls-overlay');
+  overlay.innerHTML = '';
+
+  // Dropdown clone
+  const ddClone = document.createElement('div');
+  ddClone.innerHTML = `<select style="background:#2a2a2a;border:1px solid #4b5563;border-radius:5px;color:#d1d5db;font-size:.82rem;padding:8px 12px;width:100%;font-family:inherit">
+    <option>Option 1</option>
+    <option>Option 2</option>
+    <option>Option 3</option>
+  </select>`;
+  ddClone.querySelector('select').addEventListener('change', e => log(`Dropdown → "${e.target.value}" gewählt`));
+  overlay.appendChild(ddClone);
+
+  // Toggle clone
+  const tClone = document.createElement('button');
+  tClone.textContent = 'Button 1';
+  tClone.className = 'topbar-toggle';
+  tClone.style.cssText = 'width:100%;justify-content:center';
+  tClone.addEventListener('click', () => {
+    btn1Active = !btn1Active;
+    $('btn1').classList.toggle('active', btn1Active);
+    tClone.classList.toggle('active', btn1Active);
+    log(`Button 1 → ${btn1Active ? 'aktiviert' : 'deaktiviert'}`);
+  });
+  overlay.appendChild(tClone);
+
+  // Search clone
+  const sClone = document.createElement('div');
+  sClone.innerHTML = `<input type="text" placeholder="Searchbar" style="width:100%;background:#2a2a2a;border:1px solid #4b5563;border-radius:5px;color:#e0e0e0;font-size:.82rem;padding:8px 12px;font-family:inherit;outline:none">`;
+  const inp = sClone.querySelector('input');
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { log(`Suche → "${inp.value}"`); setControls(false); }});
+  overlay.appendChild(sClone);
+}
+
+buildControlsOverlay();
+
+/* ═══════════════════════════════════════
+   RESIZE + INIT
+   ═══════════════════════════════════════ */
+function onResize() {
+  updateBpIndicator();
+  const isMobile = window.innerWidth <= 768;
+  // Sidebar-State anpassen
+  if (!isMobile && window.innerWidth > 768) {
+    $('sidebar').classList.remove('open');
+    $('sidebar-backdrop').classList.remove('visible');
+    if (!sidebarOpen) $('sidebar').classList.add('collapsed');
+    else $('sidebar').classList.remove('collapsed');
+  }
+  // Controls schließen bei Resize nach Desktop
+  if (window.innerWidth > 1024 && controlsOpen) setControls(false);
+}
+
+window.addEventListener('resize', onResize);
+
+// Init
+updateBpIndicator();
+setSidebar(window.innerWidth > 768, true);
+log('Seite geladen — bereit');
+</script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Badges</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg:           #1a1a1a;
+  --card-bg:      #252525;
+  --text:         #e0e0e0;
+  --muted:        #888;
+  --accent:       #3b82f6;
+  --border:       #333;
+  --success:      #22c55e;
+  --topbar-height: 60px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════
+   TOPBAR (minimal)
+   ═══════════════════════════════════════ */
+.topbar {
+  background: var(--card-bg);
+  height: var(--topbar-height);
+  border-bottom: 2px solid var(--accent);
+  display: flex; align-items: center;
+  padding: 0 20px; position: sticky; top: 0; z-index: 100;
+}
+.brand {
+  display: flex; align-items: center; gap: 9px;
+  color: #fff; font-weight: 700; font-size: 1.2rem;
+  letter-spacing: 1px; text-decoration: none;
+}
+.brand img { width: 26px; height: 26px; }
+
+/* ═══════════════════════════════════════
+   BADGE — BASE
+   Alle Badges teilen diese Basis.
+   ═══════════════════════════════════════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;       /* eckig — kein Pill */
+  border: 1px solid;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* ── Dot (inline, CSS-only) ── */
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ── Icon (Font Awesome) ── */
+.badge i {
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   BADGE FARBEN — 6 Varianten
+   ═══════════════════════════════════════ */
+
+/* Blau — Info, allgemein */
+.badge-blue {
+  background: rgba(59,130,246, 0.10);
+  color: #3b82f6;
+  border-color: rgba(59,130,246, 0.25);
+}
+
+/* Grün — OK, Online, Aktiv */
+.badge-green {
+  background: rgba(34,197,94, 0.10);
+  color: #22c55e;
+  border-color: rgba(34,197,94, 0.25);
+}
+
+/* Gelb — Warnung, Auth required, Pending */
+.badge-yellow {
+  background: rgba(234,179,8, 0.10);
+  color: #eab308;
+  border-color: rgba(234,179,8, 0.25);
+}
+
+/* Rot — Fehler, Offline */
+.badge-red {
+  background: rgba(239,68,68, 0.10);
+  color: #ef4444;
+  border-color: rgba(239,68,68, 0.25);
+}
+
+/* Grau — Typ-Info, keine Semantik (z.B. "Basemap", "v1.4.2") */
+.badge-gray {
+  background: rgba(255,255,255, 0.04);
+  color: #666;
+  border-color: #2a2a2a;
+}
+
+/* Lila — Auth / Security (Authentik, SSO, OIDC) */
+.badge-purple {
+  background: rgba(139,92,246, 0.10);
+  color: #a78bfa;
+  border-color: rgba(139,92,246, 0.25);
+}
+
+/* ═══════════════════════════════════════
+   DEMO / REFERENZ STYLES
+   ═══════════════════════════════════════ */
+.page-content { padding: 40px; max-width: 900px; }
+
+.demo-section { margin-bottom: 44px; }
+
+.demo-section-title {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: #555; margin-bottom: 6px;
+  padding-bottom: 8px; border-bottom: 1px solid #222;
+}
+
+.demo-section-desc {
+  font-size: 0.82rem; color: #555;
+  margin-bottom: 16px; line-height: 1.6;
+}
+.demo-section-desc code {
+  background: #1e1e1e; padding: 1px 5px; border-radius: 3px;
+  font-family: monospace; font-size: 0.78rem; color: #7ba8d4;
+}
+
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+
+/* Kontext-Demo: Badge in Card */
+.demo-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px; max-width: 320px;
+}
+.demo-card-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 10px; margin-bottom: 8px;
+}
+.demo-card-header h3 {
+  font-size: 0.9rem; font-weight: 600; color: #fff;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;
+}
+.demo-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+/* Topbar-Kontext Demo */
+.demo-topbar-strip {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-top: 2px solid var(--accent); border-radius: 8px;
+  padding: 0 16px; height: 48px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.8rem; color: var(--muted);
+}
+
+/* Sidebar-Kontext Demo */
+.demo-sidebar-strip {
+  background: #202020; border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+  max-width: 220px;
+}
+.demo-nav-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.82rem; color: var(--muted);
+  padding: 6px 8px; border-radius: 5px;
+}
+.demo-nav-item.active {
+  color: var(--accent); background: rgba(59,130,246,.07);
+  border-left: 2px solid var(--accent);
+}
+
+@media (max-width: 768px) {
+  .page-content { padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>CI</span>
+  </a>
+</header>
+
+<div class="page-content">
+
+  <!-- ═══ ALLE FARBEN ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Alle Badge-Farben</div>
+    <div class="demo-section-desc">
+      6 Varianten. Semantische Farben tragen Bedeutung — Grau ist bedeutungslos (nur Typ-Info).
+      Lila ausschließlich für Auth/Security-Kontext (Authentik, SSO, OIDC).
+    </div>
+    <div class="row">
+      <span class="badge badge-blue">Blau — Info</span>
+      <span class="badge badge-green">Grün — OK</span>
+      <span class="badge badge-yellow">Gelb — Warnung</span>
+      <span class="badge badge-red">Rot — Fehler</span>
+      <span class="badge badge-gray">Grau — Typ</span>
+      <span class="badge badge-purple">Lila — Auth</span>
+    </div>
+  </div>
+
+  <!-- ═══ MIT DOT ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Mit Dot — für Status-Anzeigen</div>
+    <div class="demo-section-desc">
+      CSS-Dot (<code>.badge-dot</code>) — kein Font Awesome nötig.
+      Verwendet für Online/Offline-Status, Service-Health.
+    </div>
+    <div class="row">
+      <span class="badge badge-green">
+        <span class="badge-dot"></span> Online
+      </span>
+      <span class="badge badge-red">
+        <span class="badge-dot"></span> Offline
+      </span>
+      <span class="badge badge-yellow">
+        <span class="badge-dot"></span> Pending
+      </span>
+      <span class="badge badge-blue">
+        <span class="badge-dot"></span> Aktiv
+      </span>
+      <span class="badge badge-purple">
+        <span class="badge-dot"></span> Logged in
+      </span>
+    </div>
+  </div>
+
+  <!-- ═══ MIT ICON ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Mit Icon — für kontextuelle Labels</div>
+    <div class="demo-section-desc">
+      Font Awesome Icon. Verwendet für Auth-Hinweise, Service-Typ, Feature-Labels.
+    </div>
+    <div class="row">
+      <span class="badge badge-yellow">
+        <i class="fa-solid fa-key"></i> API Key required
+      </span>
+      <span class="badge badge-purple">
+        <i class="fa-solid fa-shield-halved"></i> Authentik
+      </span>
+      <span class="badge badge-purple">
+        <i class="fa-solid fa-lock"></i> SSO
+      </span>
+      <span class="badge badge-blue">
+        <i class="fa-solid fa-circle-info"></i> Info
+      </span>
+      <span class="badge badge-gray">
+        <i class="fa-solid fa-map"></i> Overlay
+      </span>
+      <span class="badge badge-gray">
+        <i class="fa-solid fa-code-branch"></i> v1.4.2
+      </span>
+    </div>
+  </div>
+
+  <!-- ═══ NUR TEXT ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Nur Text — für Typ-Labels</div>
+    <div class="demo-section-desc">
+      Kein Dot, kein Icon. Für einfache Typ-Kennzeichnung in Cards (z.B. Tile-Typ, Kategorie).
+      Immer in Grau — keine Semantik.
+    </div>
+    <div class="row">
+      <span class="badge badge-gray">Basemap</span>
+      <span class="badge badge-gray">Overlay</span>
+      <span class="badge badge-gray">Elevation</span>
+      <span class="badge badge-gray">Docker</span>
+      <span class="badge badge-gray">Nativ</span>
+    </div>
+  </div>
+
+  <!-- ═══ KONTEXT: IN CARD ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Kontext — Badge in Content Card</div>
+    <div class="demo-section-desc">
+      Badge top-right in Content Cards immer in Grau (<code>.badge-gray</code>) — kein semantisches Grün/Rot/Blau.
+      Semantische Badges nur außerhalb von Cards als standalone Labels.
+    </div>
+    <div class="row">
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>Basemap Austria</h3>
+          <span class="badge badge-gray">Basemap</span>
+        </div>
+        <p>Vollständige Vektorkarte Österreich, PMTiles-Format.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>Routing API</h3>
+          <span class="badge badge-gray">ORS</span>
+        </div>
+        <p>OpenRouteService · driving-car · foot-walking</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ KONTEXT: TOPBAR ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Kontext — Badge in der Topbar / Sidebar</div>
+    <div class="demo-section-desc">
+      Semantische Badges als Kontext-Labels, z.B. Auth-Hinweis, Service-Status.
+    </div>
+    <div class="demo-topbar-strip">
+      <span style="font-weight:700;color:#fff;font-size:.9rem;letter-spacing:.5px">INTERNAL ADMIN</span>
+      <span class="badge badge-purple" style="margin-left:10px">
+        <i class="fa-solid fa-shield-halved"></i> Authentik
+      </span>
+    </div>
+
+    <div style="margin-top:12px">
+      <div class="demo-sidebar-strip">
+        <div class="demo-nav-item active">
+          <i class="fa-solid fa-route" style="width:14px;font-size:.8rem"></i>
+          Routing API
+          <span class="badge badge-yellow" style="margin-left:auto;padding:2px 5px;font-size:.6rem">
+            <i class="fa-solid fa-key" style="font-size:.55rem"></i> Key
+          </span>
+        </div>
+        <div class="demo-nav-item">
+          <i class="fa-solid fa-magnifying-glass-location" style="width:14px;font-size:.8rem"></i>
+          Geocoding
+          <span class="badge badge-green" style="margin-left:auto;padding:2px 5px;font-size:.6rem">
+            <span class="badge-dot" style="width:5px;height:5px"></span> ok
+          </span>
+        </div>
+        <div class="demo-nav-item">
+          <i class="fa-solid fa-server" style="width:14px;font-size:.8rem"></i>
+          Overpass
+          <span class="badge badge-yellow" style="margin-left:auto;padding:2px 5px;font-size:.6rem">
+            <span class="badge-dot" style="width:5px;height:5px"></span> import
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

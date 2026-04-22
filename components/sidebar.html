@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Sidebar</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg:             #1a1a1a;
+  --card-bg:        #252525;
+  --text:           #e0e0e0;
+  --muted:          #888;
+  --accent:         #3b82f6;
+  --accent-hover:   #2563eb;
+  --border:         #333;
+  --success:        #22c55e;
+
+  --topbar-height:  60px;
+  --sidebar-width:  260px;
+  --sidebar-bg:     #202020;
+  --sidebar-tab-bg: rgba(59,130,246,0.07);
+  --sidebar-tab-border: rgba(59,130,246,0.25);
+  --nav-active-bg:  rgba(59,130,246,0.07);
+  --nav-active-border: var(--accent);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════
+   TOPBAR (minimal, nur für Kontext)
+   ═══════════════════════════════════════ */
+.topbar {
+  background: var(--card-bg);
+  height: var(--topbar-height);
+  border-bottom: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.brand img { width: 26px; height: 26px; }
+
+/* ═══════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════ */
+.layout {
+  display: flex;
+  min-height: calc(100vh - var(--topbar-height));
+}
+
+/* ═══════════════════════════════════════
+   SIDEBAR
+   ═══════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-width);       /* fix auf allen Breakpoints */
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-shrink: 0;
+  transition: width 0.25s ease;
+}
+
+/* Zusammengeklappt (Desktop/Tablet — via Tab-Toggle) */
+.sidebar.collapsed {
+  width: 0;
+  border-right: none;
+  overflow: visible;  /* Tab bleibt sichtbar */
+}
+
+/* Mobile: Overlay */
+.sidebar.mobile-open {
+  position: fixed;
+  top: var(--topbar-height);
+  left: 0;
+  height: calc(100vh - var(--topbar-height));
+  z-index: 50;
+  width: var(--sidebar-width);
+  transform: translateX(0);
+  box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+}
+
+/* ── Sidebar Inner (scrollbarer Bereich) ── */
+.sidebar-inner {
+  flex: 1;
+  padding: 20px 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: var(--sidebar-width);  /* verhindert Kollaps beim Transition */
+}
+
+/* ── Section Label ──
+   Nur anzeigen wenn mehrere Gruppen vorhanden.
+   Bei einer einzigen Gruppe weglassen. */
+.sidebar-section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #555;
+  padding: 0 6px;
+  margin-bottom: 6px;
+  margin-top: 4px;
+}
+
+.sidebar-section-label:first-child {
+  margin-top: 0;
+}
+
+/* ── Trenner zwischen Gruppen ── */
+.sidebar-sep {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 0;
+}
+
+/* ── Nav Item ──
+   Höhe durch Padding definiert (~36px gesamt).
+   Kein min-height — Padding ist ausreichend. */
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;           /* → ca. 36px Gesamthöhe */
+  border-radius: 5px;
+  border-left: 2px solid transparent;
+  font-size: 0.85rem;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-nav-item:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+}
+
+/* Aktiver Zustand */
+.sidebar-nav-item.active {
+  color: var(--accent);
+  background: var(--nav-active-bg);
+  border-left-color: var(--nav-active-border);
+}
+
+/* Icon — Font Awesome bevorzugt, SVG inline erlaubt */
+.sidebar-nav-item .nav-icon {
+  width: 16px;
+  text-align: center;
+  font-size: 0.85em;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.sidebar-nav-item.active .nav-icon {
+  opacity: 1;
+}
+
+/* Status-Dot (rechts im Nav-Item, z.B. für Service-Health) */
+.sidebar-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #444;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-status-dot.online {
+  background: var(--success);
+  box-shadow: 0 0 4px var(--success);
+}
+
+.sidebar-status-dot.offline {
+  background: #ef4444;
+  box-shadow: 0 0 4px rgba(239,68,68,0.5);
+}
+
+/* ── Externe Links ──
+   Gleiche Struktur wie interne Nav-Items,
+   aber in --muted Farbe und mit externem Link-Icon. */
+.sidebar-nav-item.external {
+  color: #666;   /* dunkler als --muted (#888), signalisiert "sekundär" */
+}
+
+.sidebar-nav-item.external:hover {
+  color: var(--muted);
+}
+
+.sidebar-nav-item.external .external-icon {
+  font-size: 0.65em;
+  margin-left: auto;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   SIDEBAR TAB-TOGGLE
+   ═══════════════════════════════════════ */
+.sidebar-tab {
+  position: absolute;
+  right: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 36px;
+  background: var(--sidebar-tab-bg);
+  border: 1px solid var(--sidebar-tab-border);
+  border-left: none;
+  border-radius: 0 7px 7px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  z-index: 10;
+  user-select: none;
+}
+
+.sidebar-tab:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ═══════════════════════════════════════
+   SIDEBAR FOOTER
+   Immer sichtbar wenn Sidebar sichtbar.
+   Drei Varianten je nach Seitentyp (s.u.)
+   ═══════════════════════════════════════ */
+.sidebar-footer {
+  border-top: 1px solid var(--border);
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sidebar-footer-version {
+  font-size: 0.65rem;
+  font-family: 'Consolas', monospace;
+  color: #444;
+  white-space: nowrap;
+}
+
+/* Status-Bereich (nur bei Live- und Auth-Seiten) */
+.sidebar-footer-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  white-space: nowrap;
+}
+
+.footer-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.footer-dot.green { background: var(--success); box-shadow: 0 0 4px var(--success); }
+.footer-dot.red   { background: #ef4444; box-shadow: 0 0 4px rgba(239,68,68,0.5); }
+
+.footer-status-text.green { color: #4a7c59; }
+.footer-status-text.red   { color: #7c4a4a; }
+
+/* ═══════════════════════════════════════
+   SIDEBAR BACKDROP (Mobile)
+   ═══════════════════════════════════════ */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: var(--topbar-height) 0 0 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 40;
+}
+
+.sidebar-backdrop.visible { display: block; }
+
+/* ═══════════════════════════════════════
+   PAGE CONTENT
+   ═══════════════════════════════════════ */
+.page-content {
+  flex: 1;
+  padding: 40px;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════
+   BREAKPOINTS
+   ═══════════════════════════════════════ */
+
+/* Mobile ≤768px: Sidebar als Overlay, standardmäßig geschlossen */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: var(--topbar-height);
+    left: 0;
+    height: calc(100vh - var(--topbar-height));
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    width: var(--sidebar-width);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+  }
+
+  /* collapsed-Klasse hat auf Mobile keine Wirkung */
+  .sidebar.collapsed {
+    width: var(--sidebar-width);
+    border-right: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .page-content { padding: 20px 16px; }
+}
+
+/* ═══════════════════════════════════════
+   DEMO / REFERENZ STYLES
+   ═══════════════════════════════════════ */
+.demo-title {
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.demo-title strong { font-weight: 700; color: var(--accent); }
+
+.demo-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  max-width: 560px;
+}
+
+.event-log {
+  background: #0d0d0d;
+  border: 1px solid #222;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.8rem;
+  color: #4ade80;
+  min-height: 80px;
+  max-height: 180px;
+  overflow-y: auto;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.log-muted { color: #444; }
+
+.bp-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+/* Seitentyp-Switcher */
+.type-switcher {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.type-btn {
+  background: #2a2a2a;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.type-btn:hover { border-color: #555; color: var(--text); }
+
+.type-btn.active-static  { background: rgba(136,136,136,0.1); color: #888; border-color: #555; }
+.type-btn.active-live    { background: rgba(59,130,246,0.1);  color: var(--accent); border-color: rgba(59,130,246,0.3); }
+.type-btn.active-auth    { background: rgba(34,197,94,0.1);   color: var(--success); border-color: rgba(34,197,94,0.3); }
+
+.type-info {
+  font-size: 0.82rem;
+  color: var(--muted);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>CI</span>
+  </a>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <nav class="sidebar" id="sidebar" aria-label="Hauptnavigation">
+    <div class="sidebar-inner" id="sidebar-inner">
+
+      <!-- Gruppe 1: SYSTEM (Section-Label nur bei mehreren Gruppen) -->
+      <div class="sidebar-section-label" id="label-system">SYSTEM</div>
+
+      <a href="#" class="sidebar-nav-item active" data-view="dashboard">
+        <i class="fa-solid fa-gauge-high nav-icon"></i>
+        Dashboard
+      </a>
+      <a href="#" class="sidebar-nav-item" data-view="services">
+        <i class="fa-solid fa-server nav-icon"></i>
+        Services
+        <span class="sidebar-status-dot online" title="Online"></span>
+      </a>
+      <a href="#" class="sidebar-nav-item" data-view="settings">
+        <i class="fa-solid fa-sliders nav-icon"></i>
+        Settings
+      </a>
+
+      <!-- Trenner -->
+      <div class="sidebar-sep"></div>
+
+      <!-- Gruppe 2: TOOLS -->
+      <div class="sidebar-section-label" id="label-tools">TOOLS</div>
+
+      <a href="#" class="sidebar-nav-item" data-view="api">
+        <i class="fa-solid fa-code nav-icon"></i>
+        API Docs
+      </a>
+      <a href="#" class="sidebar-nav-item" data-view="logs">
+        <i class="fa-solid fa-terminal nav-icon"></i>
+        Logs
+        <span class="sidebar-status-dot offline" title="Offline"></span>
+      </a>
+
+      <!-- Trenner vor externen Links -->
+      <div class="sidebar-sep"></div>
+
+      <!-- Externe Links — gleiche Struktur, aber color: #666 -->
+      <a href="#" class="sidebar-nav-item external" data-external="portainer">
+        <i class="fa-brands fa-docker nav-icon"></i>
+        Portainer
+        <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+      </a>
+      <a href="#" class="sidebar-nav-item external" data-external="status">
+        <i class="fa-solid fa-heart-pulse nav-icon"></i>
+        Uptime Kuma
+        <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+      </a>
+
+    </div>
+
+    <!-- ═══ SIDEBAR FOOTER ═══ -->
+    <!-- data-type: "static" | "live" | "auth"
+         Bestimmt welcher Status-Bereich angezeigt wird. -->
+    <div class="sidebar-footer" id="sidebar-footer" data-type="static">
+      <span class="sidebar-footer-version" id="footer-version">v1.0.0</span>
+      <span class="sidebar-footer-status" id="footer-status" style="display:none">
+        <span class="footer-dot" id="footer-dot"></span>
+        <span class="footer-status-text" id="footer-status-text"></span>
+      </span>
+    </div>
+
+    <!-- Tab-Toggle -->
+    <div class="sidebar-tab" id="sidebar-tab" role="button"
+         aria-label="Sidebar schließen" tabindex="0">‹</div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="page-content">
+    <div class="bp-indicator" id="bp-indicator"></div>
+
+    <h1 class="demo-title">Sidebar <strong>Reference</strong></h1>
+    <p class="demo-desc">
+      Generische Referenzseite für die Sidebar-Komponente. Tab-Toggle öffnet/schließt die Sidebar.
+      Wähle den Seitentyp um den Footer-Status zu testen.
+    </p>
+
+    <!-- Seitentyp-Switcher -->
+    <div class="type-switcher">
+      <button class="type-btn active-static" data-type="static">Statisch</button>
+      <button class="type-btn" data-type="live-online">Live — online</button>
+      <button class="type-btn" data-type="live-offline">Live — offline</button>
+      <button class="type-btn" data-type="auth-in">Auth — logged in</button>
+      <button class="type-btn" data-type="auth-out">Auth — logged out</button>
+    </div>
+
+    <div class="type-info" id="type-info">
+      <strong>Statisch:</strong> Seite ruft einmalig Daten ab (z.B. Landing, Tiles, Docs).
+      Footer zeigt nur Versionsinfo — kein Status-Dot.
+    </div>
+
+    <div class="event-log" id="event-log">
+      <span class="log-muted">// Event Log — bereit</span>
+    </div>
+  </main>
+
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+/* ── Logging ── */
+function log(msg) {
+  const el = $('event-log');
+  const d = document.createElement('div');
+  const t = new Date().toLocaleTimeString('de-AT', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  d.textContent = `[${t}] ${msg}`;
+  el.appendChild(d);
+  el.scrollTop = el.scrollHeight;
+}
+
+/* ── Breakpoint ── */
+function updateBp() {
+  const w = window.innerWidth;
+  const el = $('bp-indicator');
+  if (w <= 768) {
+    el.textContent = `Mobile — ≤768px (${w}px)`;
+    el.style.cssText = 'color:#eab308;border-color:#eab30844;background:#eab30812';
+  } else if (w <= 1024) {
+    el.textContent = `Tablet — 769–1024px (${w}px)`;
+    el.style.cssText = 'color:#22c55e;border-color:#22c55e44;background:#22c55e12';
+  } else {
+    el.textContent = `Desktop — ≥1025px (${w}px)`;
+    el.style.cssText = 'color:#3b82f6;border-color:#3b82f644;background:#3b82f612';
+  }
+}
+
+/* ── Sidebar Toggle ── */
+let sidebarOpen = window.innerWidth > 768;
+
+function setSidebar(open, silent) {
+  sidebarOpen = open;
+  const sb = $('sidebar');
+  const tab = $('sidebar-tab');
+  const bd = $('sidebar-backdrop');
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    sb.classList.toggle('mobile-open', open);
+    bd.classList.toggle('visible', open);
+    sb.classList.remove('collapsed');
+  } else {
+    sb.classList.toggle('collapsed', !open);
+    bd.classList.remove('visible');
+  }
+
+  tab.textContent = open ? '‹' : '›';
+  tab.setAttribute('aria-label', open ? 'Sidebar schließen' : 'Sidebar öffnen');
+  if (!silent) log(`Sidebar ${open ? 'geöffnet' : 'geschlossen'}`);
+}
+
+$('sidebar-tab').addEventListener('click', () => setSidebar(!sidebarOpen));
+$('sidebar-tab').addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSidebar(!sidebarOpen); }
+});
+$('sidebar-backdrop').addEventListener('click', () => setSidebar(false));
+
+/* ── Nav Items ── */
+document.querySelectorAll('.sidebar-nav-item:not(.external)').forEach(item => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    log(`Nav → "${item.dataset.view}" aktiviert`);
+    if (window.innerWidth <= 768) setSidebar(false);
+  });
+});
+
+document.querySelectorAll('.sidebar-nav-item.external').forEach(item => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    log(`Extern → "${item.dataset.external}" geöffnet (neuer Tab)`);
+  });
+});
+
+/* ── Footer Seitentyp-Switcher ── */
+const typeConfig = {
+  'static': {
+    label: 'Statisch',
+    info: '<strong>Statisch:</strong> Einmaliger Seitenaufruf (Landing, Tiles, Docs). Footer zeigt nur Versionsinfo — kein Status-Dot.',
+    showStatus: false
+  },
+  'live-online': {
+    label: 'Live — online',
+    info: '<strong>Live:</strong> Aktiver Datenabruf ohne Login (Karte, ADS-B, AIS). Server erreichbar.',
+    showStatus: true, dotClass: 'green', text: 'online', textClass: 'green'
+  },
+  'live-offline': {
+    label: 'Live — offline',
+    info: '<strong>Live:</strong> Aktiver Datenabruf ohne Login. API nicht erreichbar oder Timeout.',
+    showStatus: true, dotClass: 'red', text: 'offline', textClass: 'red'
+  },
+  'auth-in': {
+    label: 'Auth — logged in',
+    info: '<strong>Auth:</strong> Login erforderlich (Internal). Authentik-Session gültig.',
+    showStatus: true, dotClass: 'green', text: 'logged in', textClass: 'green'
+  },
+  'auth-out': {
+    label: 'Auth — logged out',
+    info: '<strong>Auth:</strong> Login erforderlich. Session abgelaufen oder nicht eingeloggt.',
+    showStatus: true, dotClass: 'red', text: 'logged out', textClass: 'red'
+  }
+};
+
+function setFooterType(type) {
+  const cfg = typeConfig[type];
+  if (!cfg) return;
+
+  const statusEl = $('footer-status');
+  const dotEl    = $('footer-dot');
+  const textEl   = $('footer-status-text');
+
+  if (cfg.showStatus) {
+    statusEl.style.display = 'flex';
+    dotEl.className = `footer-dot ${cfg.dotClass}`;
+    textEl.className = `footer-status-text ${cfg.textClass}`;
+    textEl.textContent = cfg.text;
+  } else {
+    statusEl.style.display = 'none';
+  }
+
+  $('type-info').innerHTML = cfg.info;
+
+  document.querySelectorAll('.type-btn').forEach(btn => {
+    btn.className = 'type-btn';
+    if (btn.dataset.type === type) {
+      if (type === 'static')               btn.classList.add('active-static');
+      else if (type.startsWith('live'))    btn.classList.add('active-live');
+      else if (type.startsWith('auth'))    btn.classList.add('active-auth');
+    }
+  });
+
+  log(`Footer-Typ → "${cfg.label}"`);
+}
+
+document.querySelectorAll('.type-btn').forEach(btn => {
+  btn.addEventListener('click', () => setFooterType(btn.dataset.type));
+});
+
+/* ── Resize ── */
+window.addEventListener('resize', () => {
+  updateBp();
+  if (window.innerWidth > 768 && $('sidebar').classList.contains('mobile-open')) {
+    $('sidebar').classList.remove('mobile-open');
+    $('sidebar-backdrop').classList.remove('visible');
+    if (sidebarOpen) $('sidebar').classList.remove('collapsed');
+  }
+});
+
+/* ── Init ── */
+updateBp();
+setSidebar(window.innerWidth > 768, true);
+setFooterType('static');
+log('Seite geladen — bereit');
+</script>
+</body>
+</html>
