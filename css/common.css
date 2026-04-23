@@ -68,14 +68,18 @@
   --badge-radius:         4px;
 
   /* ── Z-INDEX ── */
+  /* Z-Index Kaskade
+   * Werte sind für Karten-Applikationen ausgelegt:
+   * Leaflet/MapLibre Controls liegen bei 400–1000, Popups bei 700.
+   * CI-Elemente beginnen bei 1000+ damit sie immer darüber liegen. */
   --z-content:        1;
-  --z-sidebar-tab:    10;
-  --z-backdrop:       40;
-  --z-sidebar:        50;
-  --z-overlay:        90;
-  --z-topbar:         100;
-  --z-dropdown:       200;
-  --z-modal:          500;
+  --z-sidebar-tab:    1010;
+  --z-backdrop:       1040;
+  --z-sidebar:        1050;
+  --z-overlay:        1090;
+  --z-topbar:         1100;
+  --z-dropdown:       1200;
+  --z-modal:          1500;
 
   /* ── TRANSITIONS ── */
   --transition-fast:  0.15s ease;

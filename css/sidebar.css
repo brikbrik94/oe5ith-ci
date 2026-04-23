@@ -11,12 +11,23 @@
 }
 .sidebar.collapsed { width: 0; border-right: none; overflow: visible; }
 
+/* Inhalt beim Collapse ausblenden — verhindert "Ausbluten" nach rechts.
+ * overflow: visible bleibt damit der Tab-Toggle sichtbar bleibt,
+ * aber der Inhalt selbst wird unsichtbar und nicht klickbar. */
+.sidebar.collapsed .sidebar-inner {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
 .sidebar-inner {
   flex: 1;                                      /* wächst, lässt Footer am Boden */
   padding: 16px 12px;
   overflow-y: auto;                             /* scrollt wenn Inhalt länger als Sidebar */
   overflow-x: hidden;
   min-width: var(--sidebar-width);
+  opacity: 1;
+  transition: opacity var(--transition-fast);   /* animiert beim Collapse */
 }
 
 /* Section Label */
