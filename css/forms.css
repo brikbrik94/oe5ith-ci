@@ -11,19 +11,6 @@
  */
 
 
-/* → common.css */
-
-/* TOPBAR */
-.topbar {
-  background: var(--card-bg); height: var(--topbar-height);
-  border-bottom: 2px solid var(--accent);
-  display: flex; align-items: center; padding: 0 20px;
-  position: sticky; top: 0; z-index: 100;
-}
-.brand { display: flex; align-items: center; gap: 9px; color: #fff;
-         font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; text-decoration: none; }
-.brand img { width: 26px; height: 26px; }
-
 /* ═══════════════════════════════════════
    FORM FIELD — BASIS
    Alle Formularelemente teilen diese
@@ -262,23 +249,6 @@
 
 /* ═══════════════════════════════════════
    ═══════════════════════════════════════ */
-
-
-.demo-section-desc code {
-  background: #1e1e1e; padding: 1px 5px; border-radius: 3px;
-  font-family: monospace; font-size: 0.78rem; color: #7ba8d4;
-}
-
-/* Zwei-Spalten Demo-Layout */
-
-
-/* Sidebar-Kontext Box */
-
-
-/* Divider im Sidebar-Kontext */
-.ctx-sep { height: 1px; background: var(--border); margin: 2px 0; }
-
-/* Event Log */
 
 
 /* Einzelne Demos */

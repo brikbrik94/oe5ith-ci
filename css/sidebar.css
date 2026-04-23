@@ -1,6 +1,13 @@
-/* .layout + .page-content → common.css */
-
-transition: width var(--transition-slow);
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-shrink: 0;
+  height: 100%;
+  transition: width var(--transition-slow);
 }
 .sidebar.collapsed { width: 0; border-right: none; overflow: visible; }
 
@@ -108,9 +115,7 @@ transition: width var(--transition-slow);
 }
 .acc-ctrl-btn:hover { background: var(--accent-subtle); color: var(--accent); border-color: var(--accent-border); }
 
-.acc-/* → common.css */
-.acc-group.open .acc-/* → common.css */
-
+.acc-group.open 
 .acc-item {
   display: flex; align-items: center; gap: 9px;
   padding: 5px 10px 5px 24px;

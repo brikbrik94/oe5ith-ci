@@ -5,38 +5,92 @@ Design System für das OE5ITH Cloud Portal.
 ## Struktur
 
 ```
-ci-repo/
+oe5ith-ci/
+├── css/                        # Produktions-CSS (in Sites einbinden)
+│   ├── index.css               # Master-Import (alle Komponenten)
+│   ├── common.css              # Tokens & Reset — immer zuerst einbinden
+│   ├── topbar.css
+│   ├── sidebar.css             # inkl. Accordion
+│   ├── cards.css
+│   ├── buttons.css
+│   ├── badges.css
+│   ├── forms.css               # Input, Select, Service-Selector, Segmented
+│   ├── modal.css               # Modal + Karten-Popup + Leaflet/MapLibre Overrides
+│   ├── typography.css
+│   └── tokens.css
 ├── assets/
-│   └── logo.svg              # System-Logo (SVG, monochrom blau)
-├── components/
-│   └── topbar.html           # Generische Referenzseite: Topbar
-└── docs/
-    └── topbar.md             # Topbar-Spezifikation
+│   └── logo.svg
+├── components/                 # Interaktive Referenz-HTMLs (live testbar)
+│   ├── topbar.html
+│   ├── sidebar.html
+│   ├── cards.html
+│   ├── buttons.html
+│   ├── buttons-demo.html
+│   ├── badges.html
+│   ├── forms.html
+│   ├── modal.html
+│   ├── typography.html
+│   ├── typography-preview.html
+│   └── tokens.html
+├── docs/                       # Spezifikationen
+│   ├── topbar.md
+│   ├── sidebar.md
+│   ├── cards.md
+│   ├── buttons.md
+│   ├── badges.md
+│   ├── forms.md
+│   ├── modal.md
+│   ├── typography.md
+│   ├── tokens.md
+│   └── cli.md
+└── scripts/cli/
+    ├── utils.sh
+    └── utils.py
 ```
 
-## Prinzip
+## CSS einbinden
 
-Jedes UI-Element besteht aus zwei Dateien:
+### Alle Komponenten auf einmal
+```html
+<link rel="stylesheet" href="css/index.css">
+```
 
-| Datei | Inhalt |
-|---|---|
-| `components/<element>.html` | Generische, funktionale Referenzseite mit allen Platzhaltern. Zeigt alle Breakpoints live. |
-| `docs/<element>.md` | Vollständige Spezifikation: Tokens, Verhalten, CSS, Accessibility, Seitentypen-Matrix. |
+### Selektiv — nur was gebraucht wird
+```html
+<!-- Tokens zuerst — immer Pflicht -->
+<link rel="stylesheet" href="css/common.css">
 
-## Workflow
+<!-- Dann die benötigten Komponenten -->
+<link rel="stylesheet" href="css/topbar.css">
+<link rel="stylesheet" href="css/sidebar.css">
+<link rel="stylesheet" href="css/buttons.css">
+```
 
-1. Element in `docs/<element>.md` spezifizieren
-2. In `components/<element>.html` visuell umsetzen und testen
-3. Aus der Referenz in die jeweiligen Site-Templates übertragen
+### Empfohlene Reihenfolge
+1. `common.css` — Tokens & Reset
+2. `typography.css`, `badges.css`, `buttons.css`, `cards.css`
+3. `topbar.css`, `sidebar.css`
+4. `forms.css`, `modal.css`
 
 ## Status
 
-| Element | Spec | Referenz-HTML |
-|---|---|---|
-| Topbar | ✅ | ✅ |
-| Sidebar | ✅ | ✅ |
-| Cards | ✅ | ✅ |
-| Buttons | ✅ | ✅ |
-| Badges | ✅ | ✅ |
-| Typografie | ✅ | ✅ |
-| Farben/Tokens | ✅ | ✅ |
+| Element | Spec | Referenz-HTML | CSS |
+|---|---|---|---|
+| Topbar | ✅ | ✅ | ✅ |
+| Sidebar + Accordion | ✅ | ✅ | ✅ |
+| Cards | ✅ | ✅ | ✅ |
+| Buttons | ✅ | ✅ | ✅ |
+| Badges | ✅ | ✅ | ✅ |
+| Forms | ✅ | ✅ | ✅ |
+| Modal + Karten-Popup | ✅ | ✅ | ✅ |
+| Typografie | ✅ | ✅ | ✅ |
+| Farben/Tokens | ✅ | ✅ | ✅ |
+| CLI Terminal | ✅ | — | — |
+
+## Token-Regeln
+
+1. **Nie hardcoden** — immer Token verwenden
+2. **Nie duplizieren** — `css/common.css` ist die einzige Quelle
+3. **Semantic gilt** — `--success` nur für positive Zustände
+4. **Subtle für Hintergründe** — Vollton nur für Text und Icons
+5. **Z-Index nur via Token** — `z-index: 999` ist verboten

@@ -17,20 +17,6 @@
 
 /* ═══════════════════════════════════════
    ═══════════════════════════════════════ */
-.page { max-width: 800px; }
-
-.section { margin-bottom: 48px; }
-
-.section-title {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: #555;
-  margin-bottom: 6px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #222;
-}
 
 
 .hint code {
@@ -181,11 +167,6 @@
    EVENT LOG
    ═══════════════════════════════════════ */
 
-
-.log-variant { color: #7ba8d4; }
-.log-text { color: #555; }
-.log-success { color: var(--success); }
-.log-loading { color: #f59e0b; }
 
 /* ═══════════════════════════════════════
    STATE MATRIX — visuelle Übersicht

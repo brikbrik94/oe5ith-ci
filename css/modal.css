@@ -13,17 +13,6 @@
 
 /* → common.css */
 
-/* TOPBAR */
-.topbar {
-  background: var(--card-bg); height: var(--topbar-height);
-  border-bottom: 2px solid var(--accent);
-  display: flex; align-items: center; padding: 0 20px;
-  position: sticky; top: 0; z-index: 100;
-}
-.brand { display: flex; align-items: center; gap: 9px; color: #fff;
-         font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; text-decoration: none; }
-.brand img { width: 26px; height: 26px; }
-
 /* ═══════════════════════════════════════
    MODAL BACKDROP
    ═══════════════════════════════════════ */
@@ -93,7 +82,12 @@
 .modal-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* Modal Body — scrollbar wenn Inhalt zu lang */
-.modal-/* → common.css */
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
 
 /* ═══════════════════════════════════════
    MODAL CONTENT TYPEN
@@ -347,15 +341,8 @@
    ═══════════════════════════════════════ */
 
 
-.demo-section-desc code {
-  background: #1e1e1e; padding: 1px 5px; border-radius: 3px;
-  font-family: monospace; font-size: 0.78rem; color: #7ba8d4;
-}
-
-
 /* Trigger-Buttons */
 
-.demo-trigger:hover { background: var(--accent-hover); }
 
 /* Fake-Map Kontext */
 

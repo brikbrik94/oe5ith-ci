@@ -14,24 +14,9 @@
    DESIGN TOKENS
    ═══════════════════════════════════════ */
 
-/* → common.css */
-
 /* ═══════════════════════════════════════
    TOPBAR (minimal)
    ═══════════════════════════════════════ */
-.topbar {
-  background: var(--card-bg);
-  height: var(--topbar-height);
-  border-bottom: 2px solid var(--accent);
-  display: flex; align-items: center;
-  padding: 0 20px; position: sticky; top: 0; z-index: 100;
-}
-.brand {
-  display: flex; align-items: center; gap: 9px;
-  color: #fff; font-weight: 700; font-size: 1.2rem;
-  letter-spacing: 1px; text-decoration: none;
-}
-.brand img { width: 26px; height: 26px; }
 
 /* ═══════════════════════════════════════
    BADGE — BASE
@@ -117,49 +102,8 @@
    ═══════════════════════════════════════ */
 
 
-.demo-section-desc code {
-  background: #1e1e1e; padding: 1px 5px; border-radius: 3px;
-  font-family: monospace; font-size: 0.78rem; color: #7ba8d4;
-}
-
-
-/* Kontext-Demo: Badge in Card */
-
-.demo-card-header {
-  display: flex; align-items: flex-start;
-  justify-content: space-between; gap: 10px; margin-bottom: 8px;
-}
-.demo-card-header h3 {
-  font-size: 0.9rem; font-weight: 600; color: #fff;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;
-}
-.demo-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
-
-/* Topbar-Kontext Demo */
-.demo-topbar-strip {
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-top: 2px solid var(--accent); border-radius: 8px;
-  padding: 0 16px; height: 48px;
-  display: flex; align-items: center; gap: 10px;
-  font-size: 0.8rem; color: var(--muted);
-}
-
 /* Sidebar-Kontext Demo */
-.demo-sidebar-strip {
-  background: #202020; border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px 14px;
-  display: flex; flex-direction: column; gap: 6px;
-  max-width: 220px;
-}
-.demo-nav-item {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 0.82rem; color: var(--muted);
-  padding: 6px 8px; border-radius: 5px;
-}
-.demo-nav-item.active {
-  color: var(--accent); background: rgba(59,130,246,.07);
-  border-left: 2px solid var(--accent);
-}
+
 
 @media (max-width: 768px) {
   

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Forms</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --bg:               #1a1a1a;
+  --card-bg:          #252525;
+  --panel:            #202020;
+  --panel-deep:       #161616;
+  --text:             #e0e0e0;
+  --muted:            #888888;
+  --subtle:           #555555;
+  --border:           #333333;
+  --border-strong:    #444444;
+  --accent:           #3b82f6;
+  --accent-hover:     #2563eb;
+  --accent-subtle:    rgba(59,130,246,0.07);
+  --accent-subtle-md: rgba(59,130,246,0.10);
+  --accent-border:    rgba(59,130,246,0.25);
+  --success:          #22c55e;
+  --success-subtle:   rgba(34,197,94,0.10);
+  --success-border:   rgba(34,197,94,0.25);
+  --danger:           #ef4444;
+  --danger-subtle:    rgba(239,68,68,0.10);
+  --danger-border:    rgba(239,68,68,0.25);
+  --font-sans:        'Segoe UI', system-ui, sans-serif;
+  --font-mono:        'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+  --topbar-height:    60px;
+  --transition-fast:  0.15s ease;
+  --transition-base:  0.20s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* TOPBAR */
+.topbar {
+  background: var(--card-bg); height: var(--topbar-height);
+  border-bottom: 2px solid var(--accent);
+  display: flex; align-items: center; padding: 0 20px;
+  position: sticky; top: 0; z-index: 100;
+}
+.brand { display: flex; align-items: center; gap: 9px; color: #fff;
+         font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; text-decoration: none; }
+.brand img { width: 26px; height: 26px; }
+
+/* ═══════════════════════════════════════
+   FORM FIELD — BASIS
+   Alle Formularelemente teilen diese
+   Grundstruktur: Label + Control
+   ═══════════════════════════════════════ */
+
+/* Field-Wrapper */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Field-Label (über dem Control) */
+.form-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+/* Field-Hint (unter dem Control, optional) */
+.form-hint {
+  font-size: 0.72rem;
+  color: var(--subtle);
+  line-height: 1.4;
+}
+
+/* Field-Error */
+.form-error {
+  font-size: 0.72rem;
+  color: var(--danger);
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════
+   TEXT INPUT
+   Für Geocoder, Koordinaten, Freitext
+   ═══════════════════════════════════════ */
+.form-input {
+  width: 100%;
+  background: var(--panel-deep);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 0.82rem;
+  font-family: inherit;
+  padding: 0 10px;
+  height: 34px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.form-input::placeholder { color: var(--subtle); }
+.form-input:hover  { border-color: var(--border-strong); }
+.form-input:focus  {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+}
+.form-input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+/* Fehler-State */
+.form-input.error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 2px rgba(239,68,68,0.12);
+}
+
+/* Input mit Icon links */
+.form-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.form-input-wrap .form-input {
+  padding-left: 30px;
+}
+.form-input-wrap .form-input-icon {
+  position: absolute;
+  left: 10px;
+  font-size: 0.75rem;
+  color: var(--subtle);
+  pointer-events: none;
+}
+.form-input-wrap .form-input:focus ~ .form-input-icon,
+.form-input-wrap .form-input:focus + .form-input-icon { color: var(--accent); }
+
+/* Mono-Variante (Koordinaten) */
+.form-input.mono {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.3px;
+}
+
+/* ═══════════════════════════════════════
+   SELECT / DROPDOWN
+   Label darüber, volle Breite, nativer
+   <select> mit Custom-Styling
+   ═══════════════════════════════════════ */
+.form-select {
+  width: 100%;
+  background: var(--panel-deep);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 0.82rem;
+  font-family: inherit;
+  padding: 0 30px 0 10px;
+  height: 34px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.form-select:hover { border-color: var(--border-strong); }
+.form-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+}
+.form-select:disabled { opacity: 0.45; cursor: not-allowed; }
+.form-select option { background: var(--panel-deep); color: var(--text); }
+
+/* ═══════════════════════════════════════
+   SERVICE SELECTOR
+   Auswahl zwischen Dienst-Endpunkten.
+   Jeder Eintrag: Status-Dot + Name + Beschreibung.
+   Genau einer aktiv (Radio-Verhalten).
+   ═══════════════════════════════════════ */
+.service-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.service-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  user-select: none;
+}
+.service-option:hover {
+  background: rgba(255,255,255,0.03);
+  border-color: var(--border);
+}
+.service-option.active {
+  background: var(--accent-subtle);
+  border-color: var(--accent-border);
+}
+.service-option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Status-Dot (online/offline) */
+.service-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px; /* visuell an erster Textzeile ausrichten */
+}
+.service-dot.online  { background: var(--success); box-shadow: 0 0 5px rgba(34,197,94,0.5); }
+.service-dot.offline { background: var(--danger);  box-shadow: 0 0 5px rgba(239,68,68,0.4); }
+.service-dot.unknown { background: #555; }
+
+/* Text-Block */
+.service-option-text { flex: 1; min-width: 0; }
+
+.service-option-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.service-option.active .service-option-name { color: var(--accent); }
+
+.service-option-desc {
+  font-size: 0.72rem;
+  color: var(--subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+
+/* ═══════════════════════════════════════
+   SEGMENTED CONTROL
+   Modus-Auswahl, immer genau einer aktiv.
+   Kompakt, eine Zeile.
+   ═══════════════════════════════════════ */
+.segmented {
+  display: flex;
+  background: var(--panel-deep);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.segmented-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 5px 8px;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+  text-align: center;
+}
+.segmented-btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.segmented-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+.segmented-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ═══════════════════════════════════════
+   DEMO / REFERENZ STYLES
+   ═══════════════════════════════════════ */
+.page-content { padding: 40px; max-width: 860px; }
+
+.demo-section { margin-bottom: 48px; }
+.demo-section-title {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--subtle);
+  margin-bottom: 6px; padding-bottom: 8px; border-bottom: 1px solid #222;
+}
+.demo-section-desc {
+  font-size: 0.82rem; color: #555; margin-bottom: 20px; line-height: 1.6;
+}
+.demo-section-desc code {
+  background: #1e1e1e; padding: 1px 5px; border-radius: 3px;
+  font-family: monospace; font-size: 0.78rem; color: #7ba8d4;
+}
+
+/* Zwei-Spalten Demo-Layout */
+.demo-cols {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Sidebar-Kontext Box */
+.sidebar-ctx {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sidebar-ctx-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+/* Divider im Sidebar-Kontext */
+.ctx-sep { height: 1px; background: var(--border); margin: 2px 0; }
+
+/* Event Log */
+.event-log {
+  background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 6px;
+  padding: 12px 14px; font-family: var(--font-mono); font-size: 0.78rem;
+  color: #4ade80; min-height: 80px; max-height: 160px; overflow-y: auto; line-height: 1.9;
+  margin-top: 20px;
+}
+.log-muted { color: #444; }
+
+/* Einzelne Demos */
+.demo-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 16px; }
+.demo-item { display: flex; flex-direction: column; gap: 8px; }
+.demo-item-label {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; color: #444; margin-bottom: 2px;
+}
+
+@media (max-width: 768px) {
+  .page-content { padding: 20px 16px; }
+  .demo-cols { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>CI</span>
+  </a>
+</header>
+
+<div class="page-content">
+
+  <!-- ═══ KONTEXT: ROUTING SIDEBAR ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Kontext — Routing-Panel in der Sidebar</div>
+    <div class="demo-section-desc">
+      Alle vier Form-Elemente im Zusammenspiel. Der Service-Selector wählt den Endpunkt —
+      das Profil-Dropdown zeigt die verfügbaren Profile des gewählten Endpunkts.
+    </div>
+
+    <div class="demo-cols">
+
+      <!-- Sidebar-Kontext -->
+      <div class="sidebar-ctx">
+        <div class="sidebar-ctx-title">Routing</div>
+
+        <!-- Service-Selector -->
+        <div class="form-field">
+          <span class="form-label">Routing-Dienst</span>
+          <div class="service-selector" id="service-selector" role="radiogroup" aria-label="Routing-Dienst wählen">
+            <div class="service-option active" tabindex="0" role="radio" aria-checked="true"
+                 data-service="ors-proxy" onclick="selectService(this)" onkeydown="handleServiceKey(event, this)">
+              <span class="service-dot online" title="Online"></span>
+              <div class="service-option-text">
+                <div class="service-option-name">ORS-Proxy</div>
+                <div class="service-option-desc">Standard-Endpunkt</div>
+              </div>
+            </div>
+            <div class="service-option" tabindex="0" role="radio" aria-checked="false"
+                 data-service="remote-engine" onclick="selectService(this)" onkeydown="handleServiceKey(event, this)">
+              <span class="service-dot online" title="Online"></span>
+              <div class="service-option-text">
+                <div class="service-option-name">Remote-Engine (Proxy)</div>
+                <div class="service-option-desc">Selbstgehostete Instanz via Proxy</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctx-sep"></div>
+
+        <!-- Profil-Select -->
+        <div class="form-field">
+          <label class="form-label" for="profil-select">Profil</label>
+          <select class="form-select" id="profil-select" onchange="log('Profil → ' + this.value)">
+            <option value="driving-car">driving-car (PKW)</option>
+            <option value="driving-hgv">driving-hgv (LKW)</option>
+            <option value="foot-walking">foot-walking</option>
+            <option value="cycling-regular">cycling-regular</option>
+          </select>
+        </div>
+
+        <div class="ctx-sep"></div>
+
+        <!-- Segmented Control -->
+        <div class="form-field">
+          <span class="form-label">Modus</span>
+          <div class="segmented" role="group" aria-label="Modus wählen">
+            <button class="segmented-btn active" data-mode="ab"  onclick="selectMode(this)" aria-pressed="true">A → B</button>
+            <button class="segmented-btn"        data-mode="sew" onclick="selectMode(this)" aria-pressed="false">SEW</button>
+            <button class="segmented-btn"        data-mode="nef" onclick="selectMode(this)" aria-pressed="false">NEF</button>
+          </div>
+          <span class="form-hint" id="mode-hint">Berechnet eine Route zwischen Start- und Zielkoordinaten.</span>
+        </div>
+
+        <div class="ctx-sep"></div>
+
+        <!-- Text-Inputs -->
+        <div class="form-field">
+          <label class="form-label" for="input-start">Start (Lat, Lon)</label>
+          <div class="form-input-wrap">
+            <i class="fa-solid fa-location-dot form-input-icon"></i>
+            <input type="text" class="form-input mono" id="input-start"
+                   placeholder="48.3064, 14.2858"
+                   onchange="log('Start → ' + this.value)"
+                   aria-label="Startkoordinaten eingeben">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="input-ziel">Ziel (Lat, Lon)</label>
+          <div class="form-input-wrap">
+            <i class="fa-solid fa-flag-checkered form-input-icon"></i>
+            <input type="text" class="form-input mono" id="input-ziel"
+                   placeholder="Ziel (Lat, Lon)"
+                   onchange="log('Ziel → ' + this.value)"
+                   aria-label="Zielkoordinaten eingeben">
+          </div>
+        </div>
+
+        <!-- Primary Button -->
+        <button class="form-submit" onclick="log('Routing gestartet')">
+          <i class="fa-solid fa-route"></i> Start
+        </button>
+
+      </div><!-- /sidebar-ctx -->
+
+      <!-- State-Beschreibungen -->
+      <div>
+        <div id="context-desc" style="font-size:.82rem;color:var(--muted);line-height:1.7">
+          Klicke auf einen Service oder ändere den Modus.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ SERVICE SELECTOR ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Service-Selector — alle Zustände</div>
+    <div class="demo-section-desc">
+      Auswahl zwischen Dienst-Endpunkten. Genau einer aktiv (Radio-Verhalten).
+      Status-Dot zeigt <code>online</code> / <code>offline</code> / <code>unknown</code>.
+    </div>
+
+    <div class="demo-row">
+      <div class="demo-item" style="min-width:220px">
+        <div class="demo-item-label">Standard</div>
+        <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:8px">
+          <div class="service-selector">
+            <div class="service-option active">
+              <span class="service-dot online"></span>
+              <div class="service-option-text">
+                <div class="service-option-name">ORS-Proxy</div>
+                <div class="service-option-desc">Standard-Endpunkt</div>
+              </div>
+            </div>
+            <div class="service-option">
+              <span class="service-dot online"></span>
+              <div class="service-option-text">
+                <div class="service-option-name">Remote-Engine</div>
+                <div class="service-option-desc">ors.oe5ith.at</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-item" style="min-width:220px">
+        <div class="demo-item-label">Mit offline Dienst</div>
+        <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:8px">
+          <div class="service-selector">
+            <div class="service-option active">
+              <span class="service-dot online"></span>
+              <div class="service-option-text">
+                <div class="service-option-name">ORS-Proxy</div>
+                <div class="service-option-desc">Standard-Endpunkt</div>
+              </div>
+            </div>
+            <div class="service-option">
+              <span class="service-dot offline"></span>
+              <div class="service-option-text">
+                <div class="service-option-name">Remote-Engine</div>
+                <div class="service-option-desc">Nicht erreichbar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SELECT ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Select / Dropdown — Zustände</div>
+    <div class="demo-section-desc">
+      Natives <code>&lt;select&gt;</code> mit Custom-Styling. Label darüber, volle Breite.
+      Für Profil-Auswahl, Kategorien, sortierte Listen.
+    </div>
+    <div class="demo-row">
+      <div class="demo-item" style="width:200px">
+        <div class="demo-item-label">Default</div>
+        <div class="form-field">
+          <label class="form-label" for="sel-demo">Profil</label>
+          <select class="form-select" id="sel-demo">
+            <option>driving-car (PKW)</option>
+            <option>foot-walking</option>
+          </select>
+        </div>
+      </div>
+      <div class="demo-item" style="width:200px">
+        <div class="demo-item-label">Disabled</div>
+        <div class="form-field">
+          <label class="form-label">Profil</label>
+          <select class="form-select" disabled>
+            <option>— kein Profil —</option>
+          </select>
+          <span class="form-hint">Wähle zuerst einen Dienst.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SEGMENTED CONTROL ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Segmented Control — Modus-Auswahl</div>
+    <div class="demo-section-desc">
+      Immer genau einer aktiv. Für Modus-Auswahl mit 2–5 Optionen.
+      Mehr als 5 Optionen → Select verwenden.
+    </div>
+    <div class="demo-row">
+      <div class="demo-item" style="width:220px">
+        <div class="demo-item-label">3 Optionen</div>
+        <div class="form-field">
+          <span class="form-label">Modus</span>
+          <div class="segmented" role="group">
+            <button class="segmented-btn active">A → B</button>
+            <button class="segmented-btn">SEW</button>
+            <button class="segmented-btn">NEF</button>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item" style="width:180px">
+        <div class="demo-item-label">2 Optionen</div>
+        <div class="form-field">
+          <span class="form-label">Ansicht</span>
+          <div class="segmented" role="group">
+            <button class="segmented-btn active">Karte</button>
+            <button class="segmented-btn">Liste</button>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item" style="width:280px">
+        <div class="demo-item-label">4 Optionen</div>
+        <div class="form-field">
+          <span class="form-label">Zeitraum</span>
+          <div class="segmented" role="group">
+            <button class="segmented-btn">1h</button>
+            <button class="segmented-btn active">6h</button>
+            <button class="segmented-btn">24h</button>
+            <button class="segmented-btn">7d</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TEXT INPUT ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Text-Input — Varianten</div>
+    <div class="demo-section-desc">
+      Standard-Texteingabe. Mono-Variante für Koordinaten und technische Werte.
+      Mit Icon links für kontextuelle Hinweise.
+    </div>
+    <div class="demo-row">
+      <div class="demo-item" style="width:200px">
+        <div class="demo-item-label">Standard</div>
+        <div class="form-field">
+          <label class="form-label" for="in-std">Suchbegriff</label>
+          <input class="form-input" id="in-std" placeholder="Suche…" type="text">
+        </div>
+      </div>
+      <div class="demo-item" style="width:200px">
+        <div class="demo-item-label">Mit Icon</div>
+        <div class="form-field">
+          <label class="form-label" for="in-icon">Start</label>
+          <div class="form-input-wrap">
+            <i class="fa-solid fa-location-dot form-input-icon"></i>
+            <input class="form-input" id="in-icon" placeholder="Ort oder Adresse" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="demo-item" style="width:200px">
+        <div class="demo-item-label">Koordinaten (Mono)</div>
+        <div class="form-field">
+          <label class="form-label" for="in-coord">Koordinaten</label>
+          <input class="form-input mono" id="in-coord" placeholder="48.3064, 14.2858" type="text">
+        </div>
+      </div>
+      <div class="demo-item" style="width:200px">
+        <div class="demo-item-label">Fehler-State</div>
+        <div class="form-field">
+          <label class="form-label" for="in-err">Koordinaten</label>
+          <input class="form-input mono error" id="in-err" value="ungültig" type="text">
+          <span class="form-error">Kein gültiges Koordinatenformat.</span>
+        </div>
+      </div>
+      <div class="demo-item" style="width:200px">
+        <div class="demo-item-label">Disabled</div>
+        <div class="form-field">
+          <label class="form-label" for="in-dis">Ziel</label>
+          <input class="form-input" id="in-dis" placeholder="—" type="text" disabled>
+          <span class="form-hint">Nur bei Modus A→B verfügbar.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Log -->
+  <div class="event-log" id="event-log">
+    <span class="log-muted">// Interagiere mit den Elementen oben</span>
+  </div>
+
+</div>
+
+<style>
+/* Submit-Button (hier lokal, gehört zu buttons.html) */
+.form-submit {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  height: 36px; padding: 0 16px; border-radius: 6px;
+  font-size: 0.85rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; border: none; width: 100%;
+  background: var(--accent); color: #fff;
+  transition: background var(--transition-fast);
+}
+.form-submit:hover { background: var(--accent-hover); }
+</style>
+
+<script>
+function log(msg) {
+  const el = document.getElementById('event-log');
+  const d = document.createElement('div');
+  const t = new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  d.textContent = `[${t}] ${msg}`;
+  el.appendChild(d);
+  el.scrollTop = el.scrollHeight;
+}
+
+/* Service-Selector */
+const modeHints = {
+  'ab':  'Berechnet eine Route zwischen Start- und Zielkoordinaten.',
+  'sew': 'Schnelleinsatzwagen — optimierte Einsatzroute.',
+  'nef': 'Notarzteinsatzfahrzeug — optimierte Einsatzroute.'
+};
+
+function selectService(el) {
+  const selector = el.closest('.service-selector');
+  selector.querySelectorAll('.service-option').forEach(o => {
+    o.classList.remove('active');
+    o.setAttribute('aria-checked', 'false');
+    o.setAttribute('tabindex', '-1');
+  });
+  el.classList.add('active');
+  el.setAttribute('aria-checked', 'true');
+  el.setAttribute('tabindex', '0');
+  log('Dienst → ' + el.dataset.service);
+}
+
+function handleServiceKey(e, el) {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectService(el); }
+  // Pfeiltasten: zwischen Optionen navigieren
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    const opts = [...el.closest('.service-selector').querySelectorAll('.service-option')];
+    const idx = opts.indexOf(el);
+    const next = e.key === 'ArrowDown' ? opts[idx + 1] : opts[idx - 1];
+    if (next) { next.focus(); selectService(next); }
+  }
+}
+
+/* Segmented Control */
+function selectMode(btn) {
+  const group = btn.closest('.segmented');
+  group.querySelectorAll('.segmented-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+  if (btn.dataset.mode) {
+    document.getElementById('mode-hint').textContent = modeHints[btn.dataset.mode] || '';
+    log('Modus → ' + btn.dataset.mode);
+  }
+}
+
+/* Segmented Keyboard */
+document.querySelectorAll('.segmented').forEach(seg => {
+  seg.querySelectorAll('.segmented-btn').forEach(btn => {
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const btns = [...seg.querySelectorAll('.segmented-btn')];
+        const idx = btns.indexOf(btn);
+        const next = e.key === 'ArrowRight' ? btns[idx + 1] : btns[idx - 1];
+        if (next) { next.focus(); selectMode(next); }
+      }
+    });
+  });
+});
+
+/* Select */
+document.getElementById('profil-select').addEventListener('change', function() {
+  log('Profil → ' + this.value);
+});
+</script>
+</body>
+</html>

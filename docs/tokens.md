@@ -230,3 +230,26 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
 | Datum | Änderung |
 |---|---|
 | 2026-04-22 | Initiale vollständige Token-Definition. Alle Farben aus Badges/Buttons als Tokens. Z-Index, Transitions, Shadows ergänzt. |
+
+---
+
+## Layout-Klassen
+
+`common.css` enthält neben den Tokens auch die grundlegenden Layout-Klassen die auf allen Seiten benötigt werden.
+
+| Klasse | Verwendung |
+|---|---|
+| `.layout` | Flex-Container für Sidebar + Content. `height: calc(100vh - --topbar-height)`, `overflow: hidden` |
+| `.page-content` | Haupt-Content-Bereich. `flex: 1`, `overflow-y: auto`, `padding: 40px` (Mobile: 20px 16px) |
+
+```css
+.layout {
+  display: flex;
+  height: calc(100vh - var(--topbar-height));
+  overflow: hidden;
+}
+.page-content {
+  flex: 1; padding: 40px; min-width: 0;
+  overflow-y: auto; height: 100%;
+}
+```

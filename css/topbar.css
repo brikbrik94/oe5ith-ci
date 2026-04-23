@@ -15,7 +15,7 @@
    ═══════════════════════════════════════ */
 .topbar {
   background: var(--card-bg);
-  height: var(--topbar-height-desktop);
+  height: var(--topbar-height);
   border-bottom: 2px solid var(--accent);
   display: flex;
   align-items: center;
@@ -351,9 +351,6 @@
   border-color: var(--accent);
 }
 
-/* Sidebar Overlay-Backdrop (Mobile) */
-
-
 /* ═══════════════════════════════════════
    MOBILE TOOLS PANEL
    ═══════════════════════════════════════ */
@@ -382,7 +379,7 @@
 .controls-overlay {
   display: none;
   position: absolute;
-  top: var(--topbar-height-desktop);
+  top: var(--topbar-height);
   left: 0;
   right: 0;
   background: #202020;
@@ -439,7 +436,7 @@
     display: flex;
   }
   .controls-overlay {
-    top: var(--topbar-height-desktop);
+    top: var(--topbar-height);
   }
   /* Max 2 nav links */
   .topbar-nav-link:nth-child(n+3) { display: none; }
@@ -471,9 +468,6 @@
   /* Alle Nav-Links ausblenden */
   .topbar-nav-link { display: none; }
 
-  /* Sidebar: standardmäßig geschlossen (Overlay) */
-  
-  
   /* Tab bleibt an der Sidebar-Kante */
   .sidebar-tab {
     right: -13px;
@@ -486,57 +480,5 @@
 /* ═══════════════════════════════════════
    DEMO CONTENT STYLES
    ═══════════════════════════════════════ */
-.demo-content {
-  max-width: 600px;
-}
 
-.demo-title {
-  font-size: 1.6rem;
-  font-weight: 300;
-  color: #fff;
-  margin-bottom: 8px;
-}
 
-.demo-title strong {
-  font-weight: 700;
-  color: var(--accent);
-}
-
-.demo-desc {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
-.event-log {
-  background: #0d0d0d;
-  border: 1px solid #222;
-  border-radius: 6px;
-  padding: 14px 16px;
-  font-family: 'Consolas', monospace;
-  font-size: 0.8rem;
-  color: #4ade80;
-  min-height: 100px;
-  max-height: 200px;
-  overflow-y: auto;
-  line-height: 1.8;
-}
-
-.event-log .log-muted {
-  color: #444;
-}
-
-.bp-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 4px;
-  background: rgba(59,130,246,0.08);
-  border: 1px solid rgba(59,130,246,0.2);
-  color: var(--accent);
-  margin-bottom: 20px;
-}
