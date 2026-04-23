@@ -1,0 +1,32 @@
+/*
+ * OE5ITH CI — index.css
+ * Master-Import: bindet alle Komponenten in der richtigen Reihenfolge ein.
+ *
+ * Verwendung (alle Komponenten auf einmal):
+ *   <link rel="stylesheet" href="css/index.css">
+ *
+ * Oder einzeln selektiv:
+ *   <link rel="stylesheet" href="css/common.css">
+ *   <link rel="stylesheet" href="css/topbar.css">
+ *   <link rel="stylesheet" href="css/sidebar.css">
+ *   ...
+ *
+ * Reihenfolge: Tokens zuerst, dann Komponenten
+ */
+
+/* 1. Tokens & Reset (Pflicht — immer zuerst) */
+@import "common.css";
+
+/* 2. Basis-Komponenten */
+@import "typography.css";
+@import "badges.css";
+@import "buttons.css";
+@import "cards.css";
+
+/* 3. Layout-Komponenten */
+@import "topbar.css";
+@import "sidebar.css";
+
+/* 4. Interaktions-Komponenten */
+@import "forms.css";
+@import "modal.css";
