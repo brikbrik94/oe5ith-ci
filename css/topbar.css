@@ -62,15 +62,15 @@
   text-decoration: none;
   color: #fff;
   font-weight: 700;
-  font-size: 1.2rem;
-  letter-spacing: 1px;
+  font-size: 1.4rem;
+  letter-spacing: 1.5px;
   white-space: nowrap;
   user-select: none;
 }
 
 .brand-logo {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   flex-shrink: 0;
 }
 
@@ -327,18 +327,18 @@
   right: -13px;
   top: 50%;
   transform: translateY(-50%);
-  width: 13px;
-  height: 36px;
-  background: var(--sidebar-tab-bg);
-  border: 1px solid var(--sidebar-tab-border);
+  width: 16px;
+  height: 44px;
+  background: rgba(59,130,246,0.15);       /* 15% statt 7% — besser sichtbar */
+  border: 1px solid rgba(59,130,246,0.35); /* 35% statt 25% — besser sichtbar */
   border-left: none;
-  border-radius: 0 7px 7px 0;
+  border-radius: 0 8px 8px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: var(--accent);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
   z-index: 10;
@@ -352,56 +352,122 @@
 }
 
 /* ═══════════════════════════════════════
-   MOBILE TOOLS PANEL
+   TOOLS PANEL — Tablet & Mobile
+   ═══════════════════════════════════════
+   Desktop:  Controls inline in .topbar-center, immer sichtbar
+   Tablet:   Controls ausgeblendet → Toggle-Button mit Icon + Text
+             → öffnet .controls-overlay unter der Topbar
+   Mobile:   Controls ausgeblendet → Toggle-Button nur Icon (kein Text)
+             → öffnet .controls-overlay unter der Topbar
    ═══════════════════════════════════════ */
+
+/* Desktop: Controls direkt inline — kein Toggle nötig */
 .controls-panel {
-  /* Desktop: inline in topbar-center, immer sichtbar */
-  display: contents;
+  display: contents;  /* verhält sich nicht als eigener Container */
 }
 
+/* Toggle-Button — Desktop: unsichtbar */
 .controls-toggle {
-  /* Desktop: ausgeblendet */
   display: none;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 6px 12px;
   background: #2a2a2a;
   border: 1px solid #4b5563;
   border-radius: 5px;
   color: #d1d5db;
   font-size: 0.82rem;
   font-weight: 600;
-  padding: 6px 12px;
-  cursor: pointer;
-  align-items: center;
-  gap: 7px;
-  height: 36px;
   font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.controls-toggle:hover {
+  border-color: var(--accent);
+  color: #fff;
+}
+.controls-toggle.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
 }
 
+/* Text-Label im Toggle — Tablet: sichtbar, Mobile: ausgeblendet */
+.controls-toggle-text {
+  display: inline;  /* Tablet default */
+}
+
+/* Overlay-Panel — öffnet sich unter der Topbar, volle Breite */
 .controls-overlay {
   display: none;
   position: absolute;
-  top: var(--topbar-height);
   left: 0;
   right: 0;
-  background: #202020;
+  top: var(--topbar-height);      /* direkt unter Topbar */
+  background: var(--panel);
   border-bottom: 1px solid var(--border);
   padding: 12px 16px;
-  z-index: 90;
-  gap: 10px;
+  z-index: var(--z-overlay);
   flex-direction: column;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  gap: 10px;
+  box-shadow: var(--shadow-dropdown);
 }
-
 .controls-overlay.open {
   display: flex;
 }
 
+/* ── Controls im Overlay: Layout-Regeln ──
+   Dropdowns/Selects: volle Breite, immer oben
+   Buttons: ab 2 Stück im 2er-Grid nebeneinander
+   Trenner zwischen Dropdown-Gruppe und Button-Gruppe */
+
+/* Dropdowns und Inputs: immer volle Breite */
+.controls-overlay .form-field              { width: 100%; }
+.controls-overlay .form-select             { width: 100%; }
+.controls-overlay .form-input              { width: 100%; }
+.controls-overlay .topbar-dropdown-toggle  { width: 100%; }
+.controls-overlay .segmented               { width: 100%; }
+
+/* Eingabefelder (Geocoder, Suche): volle Breite */
+.controls-overlay .form-input              { width: 100%; }
+.controls-overlay .form-input-wrap         { width: 100%; }
+
+/* Trenner zwischen Dropdown-Gruppe und Button-Gruppe */
+.controls-overlay .controls-sep {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+/* Button-Grid: ab 2 Buttons → 2 Spalten */
+.controls-overlay .controls-btn-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+/* 1 Button allein: volle Breite */
+.controls-overlay .controls-btn-group.single {
+  grid-template-columns: 1fr;
+}
+
+/* Buttons im Grid: volle Breite, zentriert */
+.controls-overlay .controls-btn-group .topbar-toggle,
+.controls-overlay .controls-btn-group .topbar-nav-link {
+  width: 100%;
+  justify-content: center;
+  height: 36px;
+}
+
+/* Backdrop — schließt Overlay bei Klick außerhalb */
 .controls-backdrop {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 80;
+  z-index: var(--z-backdrop);
 }
-
 .controls-backdrop.visible {
   display: block;
 }
@@ -428,51 +494,45 @@
    BREAKPOINTS
    ═══════════════════════════════════════ */
 
-/* Tablet: 769px – 1024px */
+/* ── Tablet: 769px–1024px ──
+   Controls-Panel ausblenden → Toggle mit Icon + Text einblenden
+   Max. 2 Nav-Links in der Topbar-Right Zone */
 @media (min-width: 769px) and (max-width: 1024px) {
-  /* Controls zusammenfassen */
-  .controls-panel { display: none; }
-  .controls-toggle {
-    display: flex;
-  }
-  .controls-overlay {
-    top: var(--topbar-height);
-  }
-  /* Max 2 nav links */
+  .controls-panel       { display: none; }
+  .controls-toggle      { display: flex; }
+  .controls-toggle-text { display: inline; }
+  .controls-overlay     { top: var(--topbar-height); }
+
+  /* Overlay beginnt rechts neben der Sidebar — Sidebar bleibt bedienbar */
+  .controls-overlay     { left: var(--sidebar-width); }
+
+  /* Sidebar eingeklappt: Overlay wieder volle Breite ab left: 0 */
+  body.sidebar-collapsed .controls-overlay { left: 0; }
+
+  /* Ab dem 3. Nav-Link ausblenden */
   .topbar-nav-link:nth-child(n+3) { display: none; }
 }
 
-/* Mobile: ≤768px */
+/* ── Mobile: ≤768px ──
+   Topbar kompakter, nur Icon im Toggle, keine Nav-Links */
 @media (max-width: 768px) {
-  .topbar {
-    height: var(--topbar-height-mobile);
-    padding: 0 14px;
-  }
+  /* Topbar kompakter */
+  .topbar { height: var(--topbar-height-mobile); padding: 0 14px; }
 
-  
-  /* Brand: nur Text, kein Logo */
+  /* Brand: kein Logo, kleinere Schrift */
   .brand-logo { display: none; }
-  .brand { font-size: 1rem; letter-spacing: 0.5px; }
+  .brand      { font-size: 1.1rem; letter-spacing: 1px; }
 
-  /* Mitte: leer, Controls als Button rechts */
+  /* Topbar-Center (Desktop-Controls) komplett ausblenden */
   .topbar-center { display: none; }
-  .controls-toggle {
-    display: flex;
-    /* Bei Tool-Seiten: in topbar-right eingebunden */
-  }
-  .controls-toggle .controls-toggle-text { display: none; }
-  .controls-overlay {
-    top: var(--topbar-height-mobile);
-  }
 
-  /* Alle Nav-Links ausblenden */
-  .topbar-nav-link { display: none; }
+  /* Toggle: nur Icon, kein Text */
+  .controls-toggle      { display: flex; }
+  .controls-toggle-text { display: none !important; } /* kein Text auf Mobile */
+  .controls-overlay     { top: var(--topbar-height-mobile); }
 
-  /* Tab bleibt an der Sidebar-Kante */
-  .sidebar-tab {
-    right: -13px;
-    top: 50%;
-  }
+  /* Sidebar-Tab Position */
+  .sidebar-tab { right: -13px; top: 50%; }
 
   
   }
@@ -481,4 +541,43 @@
    DEMO CONTENT STYLES
    ═══════════════════════════════════════ */
 
+/* ═══════════════════════════════════════
+   BREAKPOINT-HILFSKLASSEN
+   Für Elemente die nur auf einem bestimmten
+   Breakpoint sichtbar sein sollen.
+   ═══════════════════════════════════════ */
 
+/* Nur auf Tablet sichtbar (769px–1024px) */
+.tablet-only {
+  display: none;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tablet-only { display: flex; }
+}
+
+/* Nur auf Mobile sichtbar (≤768px) */
+.mobile-only {
+  display: none;
+}
+@media (max-width: 768px) {
+  .mobile-only { display: flex; }
+}
+
+/* Nur auf Desktop sichtbar (≥1025px) */
+.desktop-only {
+  display: flex;
+}
+@media (max-width: 1024px) {
+  .desktop-only { display: none; }
+}
+
+/* ═══════════════════════════════════════
+   STRIKTES MOBILE NAV-HIDING
+   Überschreibt flex/inline-flex Layout-Regeln
+   damit Nav-Links auf Mobile garantiert
+   verschwinden — unabhängig von anderen Styles.
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .topbar-nav-link { display: none !important; }
+  .topbar .nav-list { display: none !important; }
+}

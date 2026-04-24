@@ -14,7 +14,8 @@
 /* Inhalt beim Collapse ausblenden — verhindert "Ausbluten" nach rechts.
  * overflow: visible bleibt damit der Tab-Toggle sichtbar bleibt,
  * aber der Inhalt selbst wird unsichtbar und nicht klickbar. */
-.sidebar.collapsed .sidebar-inner {
+.sidebar.collapsed .sidebar-inner,
+.sidebar.collapsed .sidebar-footer {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition-fast);
@@ -126,7 +127,21 @@
 }
 .acc-ctrl-btn:hover { background: var(--accent-subtle); color: var(--accent); border-color: var(--accent-border); }
 
-.acc-group.open 
+/* ── Accordion Body ──
+   Geschlossen: max-height: 0, kein overflow sichtbar
+   Geöffnet: max-height wird per JS auf scrollHeight gesetzt
+   → verhindert Abschneiden langer Listen (kein statischer Wert) */
+.acc-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-slow);
+}
+
+.acc-group.open .acc-body {
+  /* Wird per JS gesetzt: body.style.setProperty('--acc-body-height', body.scrollHeight + 'px') */
+  max-height: var(--acc-body-height, 9999px);
+}
+
 .acc-item {
   display: flex; align-items: center; gap: 9px;
   padding: 5px 10px 5px 24px;

@@ -100,13 +100,17 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
 | Token | Wert | Element |
 |---|---|---|
 | `--z-content` | `1` | Normaler Seiteninhalt |
-| `--z-sidebar-tab` | `10` | Sidebar Tab-Toggle |
-| `--z-backdrop` | `40` | Sidebar + Controls Backdrop |
-| `--z-sidebar` | `50` | Sidebar Mobile Overlay |
-| `--z-overlay` | `90` | Controls Overlay Panel |
-| `--z-topbar` | `100` | Topbar (sticky) |
-| `--z-dropdown` | `200` | Dropdowns, Menus |
-| `--z-modal` | `500` | Modals |
+| `--z-sidebar-tab` | `1010` | Sidebar Tab-Toggle |
+| `--z-backdrop` | `1040` | Sidebar + Controls Backdrop |
+| `--z-sidebar` | `1050` | Sidebar Mobile Overlay |
+| `--z-overlay` | `1090` | Controls Overlay Panel |
+| `--z-topbar` | `1100` | Topbar (sticky) |
+| `--z-dropdown` | `1200` | Dropdowns, Menus |
+| `--z-modal` | `1500` | Modals |
+
+> **Karten-Applikationen:** Leaflet und MapLibre setzen ihre Controls bei 400–1000,
+> Popups bei 700. Die CI-Tokens beginnen bei 1000+ damit Sidebar, Topbar und Modals
+> immer über der Karten-Engine liegen.
 
 ---
 

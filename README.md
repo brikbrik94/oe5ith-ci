@@ -14,6 +14,7 @@ oe5ith-ci/
 │   ├── cards.css
 │   ├── buttons.css
 │   ├── badges.css
+│   ├── page.css             # Page-Header, Content-Body, Panel, Tabelle, Column-Groups
 │   ├── forms.css               # Input, Select, Service-Selector, Segmented
 │   ├── modal.css               # Modal + Karten-Popup + Leaflet/MapLibre Overrides
 │   ├── typography.css
@@ -38,6 +39,8 @@ oe5ith-ci/
 │   ├── cards.md
 │   ├── buttons.md
 │   ├── badges.md
+│   ├── page.md
+│   ├── page-types.md       # Entscheidungshilfe: welchen Seitentyp verwenden?
 │   ├── forms.md
 │   ├── modal.md
 │   ├── typography.md
@@ -81,6 +84,7 @@ oe5ith-ci/
 | Cards | ✅ | ✅ | ✅ |
 | Buttons | ✅ | ✅ | ✅ |
 | Badges | ✅ | ✅ | ✅ |
+| Seitenstruktur (Page-Header, Panel, Tabelle) | ✅ | — | ✅ |
 | Forms | ✅ | ✅ | ✅ |
 | Modal + Karten-Popup | ✅ | ✅ | ✅ |
 | Typografie | ✅ | ✅ | ✅ |

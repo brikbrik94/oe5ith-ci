@@ -56,6 +56,29 @@ Viewport
     └── .page-content (flex: 1, overflow-y: auto)       ← scrollt unabhängig
 ```
 
+### Collapsed — Inhalt ausblenden
+
+Bei `width: 0` muss der Inhalt explizit ausgeblendet werden.
+Ohne `opacity: 0` "blutet" `.sidebar-inner` nach rechts aus dem 0px-Container heraus,
+da `overflow: visible` für den sichtbaren Tab-Toggle benötigt wird.
+
+```css
+.sidebar.collapsed .sidebar-inner,
+.sidebar.collapsed .sidebar-footer {
+  opacity: 0;
+  pointer-events: none;       /* verhindert Klicks auf unsichtbaren Inhalt */
+  transition: opacity 0.15s ease;
+}
+
+/* sidebar-inner braucht opacity: 1 als Ausgangszustand für die Transition */
+.sidebar-inner {
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+```
+
+---
+
 ```css
 /* Layout-Container: feste Höhe, kein Scroll auf Seiten-Ebene */
 .layout {

@@ -206,6 +206,217 @@ Stattdessen: Halbkreis-Tab an der rechten Kante der Sidebar.
 
 ---
 
+## Controls-Panel — Verhalten nach Breakpoint
+
+Das Controls-Panel enthält die Werkzeuge einer Tool-Seite (Dropdowns, Toggles, Suche).
+Es verhält sich je nach Breakpoint anders:
+
+| Breakpoint | Controls-Panel | Toggle-Button | Overlay |
+|---|---|---|---|
+| Desktop ≥1025px | Inline in `.topbar-center` | ausgeblendet | — |
+| Tablet 769–1024px | ausgeblendet | Icon + Text | öffnet sich unter Topbar |
+| Mobile ≤768px | ausgeblendet | nur Icon | öffnet sich unter Topbar |
+
+### HTML-Struktur
+
+```html
+<!-- Toggle-Button — wird auf Tablet/Mobile eingeblendet -->
+<button class="controls-toggle tablet-only" id="controls-toggle">
+  <div class="slider-icon">
+    <span></span><span></span><span></span>
+  </div>
+  <span class="controls-toggle-text">Tools</span>  <!-- Mobile: display:none -->
+</button>
+
+<!-- Overlay — öffnet sich unter der Topbar, volle Breite -->
+<div class="controls-overlay" id="controls-overlay">
+  <!-- Kopie / Variante der Controls für Tablet/Mobile -->
+  <!-- Alle Elemente hier: volle Breite, vertikal gestapelt -->
+  <div class="form-field">
+    <label class="form-label">Hintergrundkarte</label>
+    <select class="form-select">...</select>
+  </div>
+  <button class="topbar-toggle">Labels</button>
+</div>
+
+<!-- Backdrop — schließt Overlay bei Klick außerhalb -->
+<div class="controls-backdrop" id="controls-backdrop"></div>
+```
+
+### Controls im Overlay — Layout-Regeln
+
+| Inhalt | Regel |
+|---|---|
+| Dropdown / Select | Volle Breite, immer oben |
+| Eingabefeld (Geocoder, Suche) | Volle Breite, mit oder ohne Icon |
+| 1 Button | Volle Breite |
+| 2+ Buttons | 2er Grid (2 Spalten) |
+| Trenner | `.controls-sep` zwischen jeder inhaltlichen Gruppe |
+
+#### HTML-Struktur
+
+```html
+<div class="controls-overlay" id="controls-overlay">
+
+  <!-- 1. Dropdowns/Selects: volle Breite, oben -->
+  <div class="form-field">
+    <label class="form-label">Hintergrundkarte</label>
+    <select class="form-select">
+      <option>OSM Standard</option>
+      <option>OSM DE</option>
+    </select>
+  </div>
+
+  <!-- Trenner -->
+  <div class="controls-sep"></div>
+
+  <!-- Eingabefeld (Geocoder / Suche): volle Breite -->
+  <div class="form-field">
+    <div class="form-input-wrap">
+      <i class="fa-solid fa-magnifying-glass form-input-icon"></i>
+      <input class="form-input" type="text" placeholder="Ort oder Adresse suchen…">
+    </div>
+  </div>
+
+  <!-- Trenner -->
+  <div class="controls-sep"></div>
+
+  <!-- Buttons: ab 2 Stück im 2er-Grid -->
+  <div class="controls-btn-group">
+    <button class="topbar-toggle">Zoom</button>
+    <button class="topbar-toggle active">Legende</button>
+    <button class="topbar-toggle">Labels: an</button>
+    <button class="topbar-toggle">Info</button>
+  </div>
+
+  <!-- 1 Button allein: .single für volle Breite -->
+  <!-- <div class="controls-btn-group single">
+    <button class="topbar-toggle">Zoom</button>
+  </div> -->
+
+</div>
+```
+
+#### Beispiele nach Anzahl
+
+| Buttons | Ergebnis |
+|---|---|
+| 1 | `.controls-btn-group.single` → volle Breite |
+| 2 | 2er Grid → 2 nebeneinander |
+| 3 | 2er Grid → 2 + 1 (letzte Zeile links) |
+| 4 | 2er Grid → 2 × 2 |
+| 5+ | 2er Grid → mehrere Zeilen |
+
+### Slider-Icon (Tools-Button)
+
+Das Icon für den Controls-Toggle besteht aus drei CSS-Linien:
+
+```html
+<div class="slider-icon">
+  <span></span>  <!-- volle Breite -->
+  <span></span>  <!-- 65% Breite — signalisiert "Filter/Einstellungen" -->
+  <span></span>  <!-- volle Breite -->
+</div>
+```
+
+```css
+.slider-icon { display: flex; flex-direction: column; gap: 3px; width: 14px; }
+.slider-icon span { display: block; height: 2px; background: currentColor; border-radius: 1px; }
+.slider-icon span:nth-child(2) { width: 65%; }
+```
+
+### JavaScript
+
+```js
+let controlsOpen = false;
+
+function setControls(open) {
+  controlsOpen = open;
+  document.getElementById('controls-overlay').classList.toggle('open', open);
+  document.getElementById('controls-backdrop').classList.toggle('visible', open);
+  document.getElementById('controls-toggle').setAttribute('aria-expanded', open);
+}
+
+document.getElementById('controls-toggle').addEventListener('click', () => setControls(!controlsOpen));
+document.getElementById('controls-backdrop').addEventListener('click', () => setControls(false));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') setControls(false); });
+
+// Bei Resize auf Desktop: Overlay schließen
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 1024 && controlsOpen) setControls(false);
+});
+```
+
+#### Sidebar-Zustand für Overlay-Position
+
+Damit das Overlay auf Tablet korrekt neben der Sidebar startet,
+muss `body.sidebar-collapsed` beim Sidebar-Toggle gesetzt werden:
+
+```js
+function setSidebar(open) {
+  // ... bestehende Sidebar-Logik ...
+
+  // body-Klasse für Overlay-Positionierung auf Tablet
+  document.body.classList.toggle('sidebar-collapsed', !open);
+}
+```
+
+**Verhalten nach Zustand:**
+
+| Breakpoint | Sidebar offen | Sidebar eingeklappt |
+|---|---|---|
+| Desktop ≥1025px | Overlay nicht vorhanden | Overlay nicht vorhanden |
+| Tablet 769–1024px | `left: var(--sidebar-width)` | `left: 0` |
+| Mobile ≤768px | Sidebar als Overlay, nicht relevant | `left: 0` |
+
+
+---
+
+## Breakpoint-Hilfsklassen
+
+Für Elemente die nur auf einem bestimmten Breakpoint sichtbar sein sollen.
+Verhindert dass z.B. ein Tablet-Button gleichzeitig mit einem Mobile-Button angezeigt wird.
+
+```html
+<!-- Nur auf Tablet -->
+<button class="tablet-only controls-toggle">Tools</button>
+
+<!-- Nur auf Mobile -->
+<button class="mobile-only controls-toggle">
+  <div class="slider-icon">...</div>
+</button>
+
+<!-- Nur auf Desktop -->
+<div class="desktop-only controls-panel">...</div>
+```
+
+```css
+.tablet-only  { display: none; }
+@media (min-width: 769px) and (max-width: 1024px) { .tablet-only  { display: flex; } }
+
+.mobile-only  { display: none; }
+@media (max-width: 768px)                         { .mobile-only  { display: flex; } }
+
+.desktop-only { display: flex; }
+@media (max-width: 1024px)                        { .desktop-only { display: none; } }
+```
+
+---
+
+## Striktes Mobile Nav-Hiding
+
+Nav-Links werden auf Mobile mit `!important` ausgeblendet um Layout-Konflikte
+mit `display: flex` aus anderen Regeln zu verhindern.
+
+```css
+@media (max-width: 768px) {
+  .topbar-nav-link { display: none !important; }
+  .topbar .nav-list { display: none !important; }
+}
+```
+
+---
+
 ## Änderungshistorie
 
 | Datum | Änderung |

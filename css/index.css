@@ -25,6 +25,9 @@
 @import "topbar.css";
 @import "sidebar.css";
 
-/* 4. Interaktion */
+/* 4. Seitenstruktur */
+@import "page.css";
+
+/* 5. Interaktion */
 @import "forms.css";
 @import "modal.css";
