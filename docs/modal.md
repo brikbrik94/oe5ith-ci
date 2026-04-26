@@ -296,8 +296,118 @@ In `app.css` der jeweiligen Seite einfügen:
 
 ---
 
+## Copyright-Modal
+
+Standard-Modal für Copyright/Lizenz-Informationen.
+Wird über den `©`-Button im Sidebar-Footer und den `ⓘ`-Button
+in der Karten-Attribution geöffnet.
+
+### HTML
+
+```html
+<div class="modal-backdrop" id="copyright-modal-backdrop"
+     role="dialog" aria-modal="true" aria-labelledby="copyright-modal-title"
+     onclick="handleBackdropClick(event)">
+  <div class="modal">
+
+    <div class="modal-header">
+      <span class="modal-title" id="copyright-modal-title">
+        Copyright &amp; Lizenzen
+      </span>
+      <button class="modal-close" onclick="closeCopyrightModal()" aria-label="Schließen">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <h2>Kartendaten</h2>
+      <ul>
+        <li><strong>OpenStreetMap</strong>: © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap contributors</a> — ODbL 1.0</li>
+        <li><strong>basemap.at</strong>: © <a href="https://basemap.at" target="_blank">basemap.at</a> — CC BY 4.0</li>
+      </ul>
+
+      <h2>Karten-Bibliothek</h2>
+      <ul>
+        <li><strong>Leaflet</strong>: © <a href="https://leafletjs.com" target="_blank">Vladimir Agafonkin</a> — BSD 2-Clause</li>
+        <li><strong>MapLibre GL JS</strong>: © <a href="https://maplibre.org" target="_blank">MapLibre contributors</a> — BSD 3-Clause</li>
+      </ul>
+
+      <h2>Icons &amp; Schriften</h2>
+      <ul>
+        <li><strong>Font Awesome Free</strong>: © <a href="https://fontawesome.com" target="_blank">Fonticons, Inc.</a> — Icons CC BY 4.0, Code MIT</li>
+        <li><strong>JetBrains Mono</strong>: © <a href="https://www.jetbrains.com/lp/mono/" target="_blank">JetBrains s.r.o.</a> — OFL 1.1</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+```
+
+### JavaScript
+
+```js
+function openCopyrightModal() {
+  const bd = document.getElementById('copyright-modal-backdrop');
+  bd.classList.add('open');
+  bd.querySelector('.modal-close').focus();
+}
+
+function closeCopyrightModal() {
+  document.getElementById('copyright-modal-backdrop').classList.remove('open');
+}
+
+function handleBackdropClick(e) {
+  if (e.target.id === 'copyright-modal-backdrop') closeCopyrightModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeCopyrightModal();
+});
+```
+
+### Auslöser
+
+**Sidebar-Footer (alle Seiten mit Sidebar):**
+
+```html
+<div class="sidebar-footer">
+  <span class="sidebar-footer-version">v1.0.0</span>
+  <!-- Status-Dot (optional) -->
+  <span class="sidebar-footer-status" id="footer-status">...</span>
+  <!-- © Button — immer ganz rechts -->
+  <button class="sidebar-footer-copyright"
+          onclick="openCopyrightModal()"
+          title="Copyright &amp; Lizenzen">©</button>
+</div>
+```
+
+**Karten-Attribution (Karten-Seiten):**
+
+```html
+<!-- Ersetzt die native Leaflet/MapLibre Attribution -->
+<div class="map-attribution">
+  © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>
+  <span class="map-attribution-sep">|</span>
+  © <a href="https://leafletjs.com" target="_blank">Leaflet</a>
+  <span class="map-attribution-sep">|</span>
+  © <a href="https://basemap.at" target="_blank">basemap.at</a>
+  <button class="map-attribution-info"
+          onclick="openCopyrightModal()"
+          title="Alle Copyright-Informationen">ⓘ</button>
+</div>
+```
+
+> **Wichtig:** `.leaflet-control-attribution` und `.maplibregl-ctrl-attrib` werden
+> durch `page.css` ausgeblendet wenn `.map-attribution` verwendet wird —
+> um doppelte Attribution zu vermeiden. OSM/Leaflet bleiben aber im
+> `.map-attribution` Block sichtbar — die Lizenzpflicht bleibt erfüllt.
+
+
+---
+
 ## Änderungshistorie
 
 | Datum | Änderung |
 |---|---|
+| 2026-04-24 | Copyright-Modal, Sidebar-Footer © Button, Karten-Attribution ⓘ Button. |
 | 2026-04-22 | Initiale Definition. Modal (Info-Variante), Karten-Popup kompakt + detailliert. Leaflet + MapLibre Overrides. |

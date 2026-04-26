@@ -20,7 +20,11 @@ oe5ith-ci/
 │   ├── typography.css
 │   └── tokens.css
 ├── assets/
-│   └── logo.svg
+│   ├── logo.svg
+│   ├── favicon.svg          # CI-konformes SVG-Favicon
+│   ├── favicon.ico          # ICO 16+32+48px (Browser-Kompatibilität)
+│   ├── favicon-32.png       # PNG 32×32
+│   └── favicon-16.png       # PNG 16×16
 ├── components/                 # Interaktive Referenz-HTMLs (live testbar)
 │   ├── topbar.html
 │   ├── sidebar.html
@@ -28,8 +32,11 @@ oe5ith-ci/
 │   ├── buttons.html
 │   ├── buttons-demo.html
 │   ├── badges.html
+│   ├── context-menu.html  # Context-Menu (Rechtsklick) + Action-Menu (⋮)
 │   ├── forms.html
 │   ├── modal.html
+│   ├── page-types.html     # Visuelle Mockups aller Seitentypen
+│   ├── sidebar-types.html  # Visuelle Mockups aller Sidebar-Typen
 │   ├── typography.html
 │   ├── typography-preview.html
 │   └── tokens.html
@@ -41,10 +48,15 @@ oe5ith-ci/
 │   ├── badges.md
 │   ├── page.md
 │   ├── page-types.md       # Entscheidungshilfe: welchen Seitentyp verwenden?
+│   ├── sidebar-types.md    # Entscheidungshilfe: welchen Sidebar-Typ verwenden?
 │   ├── forms.md
 │   ├── modal.md
 │   ├── typography.md
 │   ├── tokens.md
+│   ├── copyright.md        # Lizenzen aller verwendeten Ressourcen
+│   ├── context-menu.md    # Context-Menu + Action-Menu Spec
+│   ├── copyright-display.md # Wo und wie Copyright auf Webseiten darstellen
+│   ├── resources.md        # Self-Hosting Anleitung für alle externen Ressourcen
 │   └── cli.md
 └── scripts/cli/
     ├── utils.sh
@@ -87,6 +99,7 @@ oe5ith-ci/
 | Seitenstruktur (Page-Header, Panel, Tabelle) | ✅ | — | ✅ |
 | Forms | ✅ | ✅ | ✅ |
 | Modal + Karten-Popup | ✅ | ✅ | ✅ |
+| Context-Menu + Action-Menu | ✅ | ✅ | ✅ |
 | Typografie | ✅ | ✅ | ✅ |
 | Farben/Tokens | ✅ | ✅ | ✅ |
 | CLI Terminal | ✅ | — | — |

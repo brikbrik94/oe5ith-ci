@@ -295,12 +295,31 @@ function handleItemKey(e, item) {
 ## Sidebar Footer
 
 Immer sichtbar wenn die Sidebar sichtbar ist.
+Der `©`-Button ist auf **allen** Seiten mit Sidebar vorhanden — ganz rechts im Footer.
 
 | Typ | Inhalt |
 |---|---|
-| **Statisch** | Nur Versionsinfo. Kein Dot. |
-| **Live** | Version + Dot: `online` (grün) / `offline` (rot) |
-| **Auth** | Version + Dot: `logged in` (grün) / `logged out` (rot) |
+| **Statisch** | Version · © |
+| **Live** | Version · Status-Dot + Text · © |
+| **Auth** | Version · Status-Dot + Text · © |
+
+```html
+<div class="sidebar-footer">
+  <span class="sidebar-footer-version">v1.0.0</span>
+  <!-- Status (optional, nur bei Live/Auth-Seiten) -->
+  <span class="sidebar-footer-status" id="footer-status" style="display:none">
+    <span class="footer-dot"></span>
+    <span class="footer-status-text"></span>
+  </span>
+  <!-- © Button — immer, öffnet Copyright-Modal -->
+  <button class="sidebar-footer-copyright"
+          onclick="openCopyrightModal()"
+          title="Copyright &amp; Lizenzen">©</button>
+</div>
+```
+
+`margin-left: auto` auf `.sidebar-footer-copyright` drückt den Button immer
+an den rechten Rand — unabhängig davon ob Status-Info vorhanden ist oder nicht.
 
 ---
 
@@ -348,4 +367,5 @@ Symbol: `‹` (offen) / `›` (geschlossen)
 |---|---|
 | 2026-04-22 | v1.0: Initiale Definition. |
 | 2026-04-22 | v1.1: Accordion als Sidebar-Element integriert. Dot-Farben aus Accordion entfernt — site-spezifisch. Elementübersicht ergänzt. accordion.md aufgelöst. |
+| 2026-04-24 | v1.3: © Button im Footer. Karten-Attribution ⓘ Button in page.css. |
 | 2026-04-22 | v1.2: Höhe & Scroll-Verhalten definiert. Layout `height` statt `min-height`. Sidebar `height: 100%`, inner `flex: 1 / overflow-y: auto`, Footer `flex-shrink: 0`. |

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Sidebar-Typen</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --bg:#1a1a1a; --card-bg:#252525; --panel:#202020; --panel-deep:#161616;
+  --text:#e0e0e0; --muted:#888; --subtle:#555; --border:#333;
+  --accent:#3b82f6; --accent-hover:#2563eb;
+  --accent-subtle:rgba(59,130,246,0.07); --accent-subtle-md:rgba(59,130,246,0.10);
+  --accent-border:rgba(59,130,246,0.25);
+  --success:#22c55e; --success-subtle:rgba(34,197,94,0.10); --success-border:rgba(34,197,94,0.25);
+  --warning:#eab308; --warning-subtle:rgba(234,179,8,0.10); --warning-border:rgba(234,179,8,0.25);
+  --danger:#ef4444; --danger-subtle:rgba(239,68,68,0.10); --danger-border:rgba(239,68,68,0.25);
+  --auth:#a78bfa; --auth-subtle:rgba(139,92,246,0.10); --auth-border:rgba(139,92,246,0.25);
+  --font-sans:'Segoe UI',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono','Consolas',monospace;
+  --sidebar-width:260px;
+  --topbar-height:44px;
+  --transition-fast:0.15s ease;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--font-sans); background:var(--bg); color:var(--text); padding:40px; }
+
+.page-title { font-size:1.6rem; font-weight:300; color:#fff; margin-bottom:6px; }
+.page-title strong { font-weight:700; color:var(--accent); }
+.page-desc { font-size:0.85rem; color:var(--muted); margin-bottom:48px; max-width:640px; line-height:1.6; }
+
+/* ── Sections ── */
+.section { margin-bottom:56px; }
+.section-label {
+  font-size:0.68rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+  color:var(--subtle); margin-bottom:6px; padding-bottom:8px; border-bottom:1px solid #222;
+}
+.section-desc { font-size:0.82rem; color:#444; margin-bottom:16px; line-height:1.6; }
+.annotation { font-size:0.8rem; color:var(--subtle); margin-top:10px; line-height:1.6; max-width:860px; }
+.annotation code { background:#1e1e1e; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:0.75rem; color:#7ba8d4; }
+.annotation strong { color:var(--muted); font-weight:600; }
+
+/* ── Screen-Rahmen ── */
+.screen {
+  background:var(--bg); border:1px solid var(--border); border-radius:8px;
+  overflow:hidden; display:flex; flex-direction:column;
+}
+
+/* ── Mini-Topbar ── */
+.m-tb {
+  background:var(--card-bg); height:var(--topbar-height);
+  border-bottom:2px solid var(--accent);
+  display:flex; align-items:center; padding:0 14px; gap:8px; flex-shrink:0;
+}
+.m-brand { color:#fff; font-weight:700; font-size:1.1rem; letter-spacing:1.2px; display:flex; align-items:center; gap:7px; }
+.m-brand img { width:20px; height:20px; }
+.m-nav { margin-left:auto; display:flex; gap:10px; }
+.m-nav a { font-size:0.72rem; color:var(--muted); text-decoration:none; }
+.m-nav a.active { color:var(--accent); }
+
+/* ── Layout ── */
+.m-layout { display:flex; }
+.m-map-bg { flex:1; background:#2d3a2d; display:flex; align-items:center; justify-content:center; }
+.m-map-label { font-size:0.62rem; color:rgba(255,255,255,0.15); }
+
+/* ══════════════════════════════════════
+   DIE SIDEBAR — echtes CSS, keine Platzhalter
+   ══════════════════════════════════════ */
+.sidebar {
+  width:var(--sidebar-width);
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  display:flex; flex-direction:column;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.sidebar-inner {
+  flex:1; padding:14px 12px;
+  overflow-y:auto; overflow-x:hidden;
+}
+.sidebar-footer {
+  border-top:1px solid var(--border);
+  padding:7px 12px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+  font-size:0.62rem; font-family:var(--font-mono); color:#444;
+}
+.sidebar-footer-dot { width:6px; height:6px; border-radius:50%; background:var(--success); box-shadow:0 0 3px var(--success); }
+
+/* Section-Label */
+.sb-label {
+  font-size:0.62rem; font-weight:700; letter-spacing:1.2px;
+  text-transform:uppercase; color:#555;
+  padding:0 4px; margin-bottom:5px; margin-top:10px;
+}
+.sb-label:first-child { margin-top:0; }
+.sb-sep { height:1px; background:var(--border); margin:8px 0; }
+
+/* Nav-Items */
+.sb-nav {
+  display:flex; align-items:center; gap:9px;
+  padding:7px 8px; border-radius:4px;
+  border-left:2px solid transparent;
+  font-size:0.82rem; color:var(--muted);
+  text-decoration:none; margin-bottom:2px;
+  transition:color var(--transition-fast), background var(--transition-fast);
+  cursor:pointer;
+}
+.sb-nav:hover { color:var(--text); background:rgba(255,255,255,0.03); }
+.sb-nav.active { color:var(--accent); background:var(--accent-subtle); border-left-color:var(--accent); }
+.sb-nav i { font-size:0.78rem; width:14px; text-align:center; flex-shrink:0; opacity:0.7; }
+.sb-nav.active i { opacity:1; }
+.sb-nav .ext { font-size:0.6rem; margin-left:auto; opacity:0.4; }
+.sb-dot { width:6px; height:6px; border-radius:50%; margin-left:auto; flex-shrink:0; }
+.sb-dot.on { background:var(--success); box-shadow:0 0 3px var(--success); }
+.sb-dot.off { background:var(--danger); }
+.sb-nav.ext-link { color:#555; }
+.sb-nav.ext-link:hover { color:var(--muted); }
+
+/* ══════════════════════════════════════
+   ACCORDION
+   ══════════════════════════════════════ */
+.acc-filter {
+  display:flex; align-items:center; gap:7px;
+  background:var(--panel-deep); border:1px solid var(--border);
+  border-radius:4px; padding:0 9px; height:30px; margin-bottom:7px;
+}
+.acc-filter input {
+  flex:1; background:transparent; border:none; outline:none;
+  font-size:0.78rem; color:var(--text); font-family:inherit;
+}
+.acc-filter input::placeholder { color:var(--subtle); }
+.acc-filter i { color:var(--subtle); font-size:0.7rem; }
+
+.accordion { display:flex; flex-direction:column; gap:2px; }
+.acc-group { background:var(--panel); border:1px solid var(--border); border-radius:5px; overflow:hidden; }
+.acc-header {
+  display:flex; align-items:center; gap:7px;
+  padding:7px 9px; cursor:pointer; min-height:34px;
+  transition:background var(--transition-fast);
+}
+.acc-header:hover { background:rgba(255,255,255,0.03); }
+.acc-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.acc-title { font-size:0.82rem; font-weight:600; color:var(--text); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.acc-status {
+  font-size:0.58rem; font-weight:700; letter-spacing:0.3px; text-transform:uppercase;
+  padding:2px 5px; border-radius:3px; white-space:nowrap; flex-shrink:0;
+}
+.acc-status.unloaded { background:rgba(255,255,255,0.04); color:#555; border:1px solid #2a2a2a; }
+.acc-status.partial { background:var(--accent-subtle-md); color:var(--accent); border:1px solid var(--accent-border); }
+.acc-status.all-on { background:var(--success-subtle); color:var(--success); border:1px solid var(--success-border); }
+.acc-chevron { font-size:0.6rem; color:var(--subtle); transition:transform 0.20s ease; flex-shrink:0; }
+.acc-group.open .acc-chevron { transform:rotate(180deg); }
+.acc-controls { display:none; padding:0 9px 7px; gap:5px; }
+.acc-group.open .acc-controls { display:flex; }
+.acc-ctrl { font-size:0.65rem; font-weight:600; padding:2px 7px; border-radius:3px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; font-family:inherit; }
+.acc-body { max-height:0; overflow:hidden; transition:max-height 0.25s ease; }
+.acc-group.open .acc-body { max-height:300px; }
+.acc-item {
+  display:flex; align-items:center; gap:8px;
+  padding:4px 9px 4px 22px; cursor:pointer; min-height:28px;
+  transition:background var(--transition-fast);
+}
+.acc-item:last-child { padding-bottom:7px; }
+.acc-item:hover { background:rgba(255,255,255,0.02); }
+.acc-cb {
+  width:13px; height:13px; border-radius:3px;
+  border:1px solid var(--border); background:transparent;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.acc-item.checked .acc-cb { background:var(--accent); border-color:var(--accent); }
+.acc-item.checked .acc-cb::after {
+  content:''; width:7px; height:4px;
+  border-left:1.5px solid #fff; border-bottom:1.5px solid #fff;
+  transform:rotate(-45deg) translateY(-1px); display:block;
+}
+.acc-item-label { font-size:0.78rem; color:var(--muted); flex:1; }
+.acc-item.checked .acc-item-label { color:var(--text); }
+
+/* ══════════════════════════════════════
+   TOOL-PANEL (Formular in Sidebar)
+   ══════════════════════════════════════ */
+.tool-panel-title {
+  font-size:1.0rem; font-weight:600; color:#fff; margin-bottom:12px;
+}
+
+/* Service-Selector */
+.service-selector { display:flex; flex-direction:column; gap:3px; margin-bottom:2px; }
+.service-option {
+  display:flex; align-items:center; gap:8px;
+  padding:7px 8px; border-radius:4px; border:1px solid transparent;
+  cursor:pointer; transition:background var(--transition-fast), border-color var(--transition-fast);
+}
+.service-option:hover { background:rgba(255,255,255,0.03); border-color:var(--border); }
+.service-option.active { background:var(--accent-subtle); border-color:var(--accent-border); }
+.svc-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.svc-dot.on { background:var(--success); box-shadow:0 0 4px rgba(34,197,94,0.5); }
+.svc-name { font-size:0.82rem; font-weight:600; color:var(--text); }
+.service-option.active .svc-name { color:var(--accent); }
+.svc-desc { font-size:0.68rem; color:var(--subtle); margin-top:1px; }
+
+/* Form fields */
+.form-field { display:flex; flex-direction:column; gap:4px; }
+.form-label { font-size:0.62rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:var(--subtle); }
+.form-select {
+  width:100%; height:32px; padding:0 26px 0 9px;
+  background:var(--panel-deep); border:1px solid var(--border); border-radius:4px;
+  color:var(--text); font-size:0.78rem; font-family:inherit;
+  appearance:none; outline:none; cursor:pointer;
+}
+.form-input {
+  width:100%; height:32px; padding:0 9px;
+  background:var(--panel-deep); border:1px solid var(--border); border-radius:4px;
+  color:var(--text); font-size:0.78rem; font-family:var(--font-mono); outline:none;
+}
+.form-input::placeholder { color:var(--subtle); }
+
+/* Segmented */
+.segmented {
+  display:flex; background:var(--panel-deep); border:1px solid var(--border);
+  border-radius:4px; padding:2px; gap:2px;
+}
+.seg-btn {
+  flex:1; background:transparent; border:none; border-radius:3px;
+  color:var(--muted); font-size:0.76rem; font-weight:600; font-family:inherit;
+  padding:4px 6px; cursor:pointer; text-align:center;
+  transition:background var(--transition-fast), color var(--transition-fast);
+}
+.seg-btn.active { background:var(--accent); color:#fff; }
+
+/* Tool Sep */
+.tool-sep { height:1px; background:var(--border); margin:10px 0; }
+
+/* Submit */
+.btn-primary {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  width:100%; height:34px; border-radius:5px;
+  font-size:0.82rem; font-weight:600; font-family:inherit;
+  border:none; cursor:pointer; background:var(--accent); color:#fff;
+  transition:background var(--transition-fast);
+}
+.btn-primary:hover { background:var(--accent-hover); }
+
+/* ══════════════════════════════════════
+   ERGEBNIS-LISTE
+   ══════════════════════════════════════ */
+.result-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:8px; padding:0 2px;
+}
+.result-count { font-size:0.72rem; color:var(--success); font-weight:600; }
+.result-label { font-size:0.72rem; color:var(--muted); font-weight:600; }
+
+.result-list { display:flex; flex-direction:column; gap:4px; }
+
+.result-item {
+  background:var(--card-bg); border:1px solid var(--border);
+  border-radius:6px; padding:9px 10px;
+  cursor:pointer; position:relative;
+  transition:border-color var(--transition-fast), background var(--transition-fast);
+}
+.result-item:hover { border-color:var(--accent-border); background:rgba(59,130,246,0.03); }
+.result-item.active { border-color:var(--accent); background:var(--accent-subtle); }
+
+/* Nummer-Badge */
+.result-num {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:18px; height:18px; border-radius:3px;
+  background:var(--accent-subtle-md); color:var(--accent);
+  font-size:0.65rem; font-weight:700;
+  flex-shrink:0;
+}
+.result-item.active .result-num { background:var(--accent); color:#fff; }
+
+.result-item-header { display:flex; align-items:flex-start; gap:7px; margin-bottom:4px; }
+.result-item-title { font-size:0.82rem; font-weight:600; color:var(--text); flex:1; line-height:1.3; }
+.result-item-sub { font-size:0.72rem; color:var(--muted); margin-bottom:5px; padding-left:25px; }
+
+/* Key-Value Zeile */
+.result-kv { display:flex; gap:12px; padding-left:25px; margin-bottom:5px; }
+.result-kv-item { display:flex; flex-direction:column; gap:1px; }
+.result-kv-label { font-size:0.58rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--subtle); }
+.result-kv-value { font-size:0.78rem; font-weight:600; color:var(--text); }
+
+/* Auge-Icon Button (rechts unten) */
+.result-action {
+  position:absolute; bottom:7px; right:8px;
+  width:22px; height:22px; border-radius:4px;
+  background:transparent; border:1px solid transparent;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--subtle);
+  transition:background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  font-size:0.65rem;
+}
+.result-action:hover { background:var(--accent-subtle-md); color:var(--accent); border-color:var(--accent-border); }
+.result-item.active .result-action { color:var(--accent); }
+
+/* Einfachere Variante (NAH — kein Badge, kein Button) */
+.result-item-simple {
+  background:transparent; border:none; border-bottom:1px solid #222;
+  border-radius:0; padding:10px 4px;
+  cursor:pointer;
+  transition:background var(--transition-fast);
+}
+.result-item-simple:last-child { border-bottom:none; }
+.result-item-simple:hover { background:rgba(255,255,255,0.02); }
+.result-item-simple.active { background:var(--accent-subtle); border-radius:4px; border-bottom-color:transparent; }
+.result-simple-title { font-size:0.82rem; font-weight:600; color:var(--text); margin-bottom:2px; }
+.result-simple-org { font-size:0.72rem; color:var(--accent); margin-bottom:4px; }
+.result-simple-meta { font-size:0.70rem; color:var(--muted); }
+
+/* ══════════════════════════════════════
+   STATUS-PANEL
+   ══════════════════════════════════════ */
+.status-panel { display:flex; flex-direction:column; gap:6px; }
+.status-row {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px; padding:6px 8px; border-radius:4px;
+  background:var(--panel-deep); border:1px solid var(--border);
+}
+.status-row-left { display:flex; align-items:center; gap:8px; min-width:0; }
+.status-row-icon { font-size:0.72rem; color:var(--muted); width:14px; text-align:center; flex-shrink:0; }
+.status-row-name { font-size:0.78rem; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.status-row-right { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+.status-row-value { font-size:0.72rem; color:var(--muted); font-family:var(--font-mono); }
+.status-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.status-dot.on { background:var(--success); box-shadow:0 0 4px var(--success); }
+.status-dot.off { background:var(--danger); box-shadow:0 0 4px rgba(239,68,68,0.5); }
+.status-dot.warn { background:var(--warning); box-shadow:0 0 4px rgba(234,179,8,0.5); }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Sidebar-Typen <strong>Reference</strong></h1>
+<p class="page-desc">
+  Alle definierten Sidebar-Panel-Typen. Panels können gestapelt werden —
+  z.B. Tool-Panel + Ergebnis-Liste. Entscheidungshilfe: <code>docs/sidebar-types.md</code>
+</p>
+
+<!-- ═══ TYP 1: NAV-LISTE ═══ -->
+<div class="section">
+  <div class="section-label">Typ 1 — Nav-Liste</div>
+  <div class="section-desc">internal.oe5ith.at. Kategorisierte Navigation mit Section-Labels, internen Links und externen Links.</div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a class="active">Internal</a><a>Karte</a><a>Tiles</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:340px">
+        <div class="sidebar-inner">
+          <div class="sb-label">System</div>
+          <a class="sb-nav active"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+          <div class="sb-sep"></div>
+          <div class="sb-label">GIS Services</div>
+          <a class="sb-nav"><i class="fa-solid fa-route"></i> Routing API <span class="sb-dot on"></span></a>
+          <a class="sb-nav"><i class="fa-solid fa-magnifying-glass-location"></i> Geocoding API <span class="sb-dot on"></span></a>
+          <div class="sb-sep"></div>
+          <div class="sb-label">SDR</div>
+          <a class="sb-nav"><i class="fa-solid fa-chart-line"></i> Spectrum</a>
+          <a class="sb-nav"><i class="fa-solid fa-tower-broadcast"></i> POCSAG</a>
+          <div class="sb-sep"></div>
+          <div class="sb-label">External Tools</div>
+          <a class="sb-nav ext-link"><i class="fa-brands fa-docker"></i> Portainer <span class="ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></span></a>
+          <a class="sb-nav ext-link"><i class="fa-solid fa-heart-pulse"></i> Uptime Kuma <span class="ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></span></a>
+          <a class="sb-nav ext-link"><i class="fa-solid fa-server"></i> Netdata <span class="ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></span></a>
+        </div>
+        <div class="sidebar-footer"><span>v1.0.0</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Hauptinhalt</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Wann:</strong> Seiten mit fester Navigation (internal, tiles).
+    Section-Labels nur bei mehreren Gruppen. Status-Dots für Live-Services.
+    Externe Links immer in eigener Gruppe am Ende, color #666.
+  </p>
+</div>
+
+<!-- ═══ TYP 2: LAYER-STEUERUNG ═══ -->
+<div class="section">
+  <div class="section-label">Typ 2 — Layer-Steuerung (Accordion)</div>
+  <div class="section-desc">karte.oe5ith.at. Aufklappbare Gruppen mit Checkboxen für Karten-Layer.</div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a><a>Legende</a><a class="active">Labels: an</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:340px">
+        <div class="sidebar-inner">
+          <div style="font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:3px">Kategorien</div>
+          <div style="font-size:0.68rem;color:var(--subtle);margin-bottom:10px">Layer werden beim Aktivieren geladen.</div>
+          <div class="acc-filter">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input placeholder="Layer filtern…">
+          </div>
+          <div class="accordion">
+            <div class="acc-group">
+              <div class="acc-header">
+                <span class="acc-dot" style="background:#eab308"></span>
+                <span class="acc-title">Anfahrtszeit · Linz</span>
+                <span class="acc-status unloaded">nicht geladen</span>
+                <i class="fa-solid fa-chevron-down acc-chevron"></i>
+              </div>
+            </div>
+            <div class="acc-group open">
+              <div class="acc-header">
+                <span class="acc-dot" style="background:#22c55e"></span>
+                <span class="acc-title">RD-Dienststellen</span>
+                <span class="acc-status partial">2 Layer</span>
+                <i class="fa-solid fa-chevron-down acc-chevron"></i>
+              </div>
+              <div class="acc-controls">
+                <button class="acc-ctrl">Alle an</button>
+                <button class="acc-ctrl">Alle aus</button>
+              </div>
+              <div class="acc-body" style="max-height:300px">
+                <div class="acc-item checked"><span class="acc-cb"></span><span class="acc-item-label">RD-OO-SEW</span></div>
+                <div class="acc-item checked"><span class="acc-cb"></span><span class="acc-item-label">RD-OO-NEF</span></div>
+                <div class="acc-item"><span class="acc-cb"></span><span class="acc-item-label">BRD-OOE</span></div>
+                <div class="acc-item"><span class="acc-cb"></span><span class="acc-item-label">RD-BY</span></div>
+              </div>
+            </div>
+            <div class="acc-group">
+              <div class="acc-header">
+                <span class="acc-dot" style="background:#3b82f6"></span>
+                <span class="acc-title">Bezirke</span>
+                <span class="acc-status unloaded">nicht geladen</span>
+                <i class="fa-solid fa-chevron-down acc-chevron"></i>
+              </div>
+            </div>
+            <div class="acc-group">
+              <div class="acc-header">
+                <span class="acc-dot" style="background:#a78bfa"></span>
+                <span class="acc-title">Straßen · Autobahnen</span>
+                <span class="acc-status all-on">alle aktiv</span>
+                <i class="fa-solid fa-chevron-down acc-chevron"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Wann:</strong> Karten-Seiten mit Layer-Auswahl. Dot-Farbe site-spezifisch.
+    Filter-Feld nur bei &gt;5 Gruppen. Badge: unloaded / partial / alle aktiv.
+  </p>
+</div>
+
+<!-- ═══ TYP 3: TOOL-PANEL ═══ -->
+<div class="section">
+  <div class="section-label">Typ 3 — Tool-Panel (Formular)</div>
+  <div class="section-desc">Routing-Seite, NAH-Stützpunkte. Formular mit Service-Selector, Profil, Modus und Eingabefeldern.</div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a><a>Legende</a><a>Info</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:420px">
+        <div class="sidebar-inner">
+          <div class="tool-panel-title">Routing</div>
+
+          <div class="form-field" style="margin-bottom:8px">
+            <span class="form-label">Routing-Dienst</span>
+            <div class="service-selector">
+              <div class="service-option active">
+                <span class="svc-dot on"></span>
+                <div><div class="svc-name">ORS-Proxy</div><div class="svc-desc">Standard-Endpunkt</div></div>
+              </div>
+              <div class="service-option">
+                <span class="svc-dot on"></span>
+                <div><div class="svc-name">Remote-Engine (Proxy)</div><div class="svc-desc">Selbstgehostete Instanz</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-sep"></div>
+
+          <div class="form-field" style="margin-bottom:8px">
+            <label class="form-label">Profil</label>
+            <select class="form-select"><option>driving-car (PKW)</option></select>
+          </div>
+
+          <div class="form-field" style="margin-bottom:8px">
+            <span class="form-label">Modus</span>
+            <div class="segmented">
+              <button class="seg-btn active">A → B</button>
+              <button class="seg-btn">SEW</button>
+              <button class="seg-btn">NEF</button>
+            </div>
+          </div>
+
+          <div class="tool-sep"></div>
+
+          <div class="form-field" style="margin-bottom:6px">
+            <label class="form-label">Start (Lat, Lon)</label>
+            <input class="form-input" placeholder="48.3064, 14.2858">
+          </div>
+          <div class="form-field" style="margin-bottom:10px">
+            <label class="form-label">Ziel (Lat, Lon)</label>
+            <input class="form-input" placeholder="Ziel (Lat, Lon)">
+          </div>
+
+          <button class="btn-primary"><i class="fa-solid fa-route"></i> Start</button>
+        </div>
+        <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Wann:</strong> Karten-Seiten mit Berechnungs-Tool. Formular-Elemente aus
+    <code>forms.css</code>. Submit-Button immer ganz unten, volle Breite.
+  </p>
+</div>
+
+<!-- ═══ TYP 4: TOOL + ERGEBNIS (GESTAPELT) ═══ -->
+<div class="section">
+  <div class="section-label">Typ 4 — Tool-Panel + Ergebnis-Liste (gestapelt)</div>
+  <div class="section-desc">Routing SEW/NEF: Formular oben, Ergebnisse direkt darunter. Klick auf Item → Zoom auf Karte. Auge-Icon → Route anzeigen.</div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a><a>Info</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:520px">
+        <div class="sidebar-inner">
+          <div class="tool-panel-title">Routing</div>
+
+          <div class="form-field" style="margin-bottom:7px">
+            <span class="form-label">Profil</span>
+            <select class="form-select"><option>driving-car (PKW)</option></select>
+          </div>
+          <div class="form-field" style="margin-bottom:7px">
+            <span class="form-label">Modus</span>
+            <div class="segmented">
+              <button class="seg-btn">A → B</button>
+              <button class="seg-btn active">SEW</button>
+              <button class="seg-btn">NEF</button>
+            </div>
+          </div>
+          <div class="form-field" style="margin-bottom:7px">
+            <label class="form-label">Start (Lat, Lon)</label>
+            <input class="form-input" value="48.29564, 14.23965">
+          </div>
+          <button class="btn-primary" style="margin-bottom:10px"><i class="fa-solid fa-route"></i> Start</button>
+
+          <!-- Trenner zwischen Tool und Ergebnissen -->
+          <div class="tool-sep"></div>
+
+          <!-- Ergebnis-Header -->
+          <div class="result-header">
+            <span class="result-count"><i class="fa-solid fa-check-circle"></i> 5 Standorte gefunden</span>
+          </div>
+          <div style="font-size:0.72rem;font-weight:600;color:var(--muted);margin-bottom:8px">Nächste RD-Dienststellen (SEW)</div>
+
+          <div class="result-list">
+
+            <div class="result-item active">
+              <div class="result-item-header">
+                <span class="result-num">1</span>
+                <span class="result-item-title">Rotes Kreuz Ortsstelle Leonding</span>
+              </div>
+              <div class="result-item-sub">0620</div>
+              <div class="result-kv">
+                <div class="result-kv-item"><span class="result-kv-label">Dauer</span><span class="result-kv-value">3 min</span></div>
+                <div class="result-kv-item"><span class="result-kv-label">Distanz</span><span class="result-kv-value">4.4 km</span></div>
+              </div>
+              <button class="result-action" title="Route anzeigen"><i class="fa-solid fa-eye"></i></button>
+            </div>
+
+            <div class="result-item">
+              <div class="result-item-header">
+                <span class="result-num">2</span>
+                <span class="result-item-title">Samariterbund Linz-Keferfeld</span>
+              </div>
+              <div class="result-item-sub">ASB Linz Keferfeld</div>
+              <div class="result-kv">
+                <div class="result-kv-item"><span class="result-kv-label">Dauer</span><span class="result-kv-value">10 min</span></div>
+                <div class="result-kv-item"><span class="result-kv-label">Distanz</span><span class="result-kv-value">5.8 km</span></div>
+              </div>
+              <button class="result-action" title="Route anzeigen"><i class="fa-solid fa-eye"></i></button>
+            </div>
+
+            <div class="result-item">
+              <div class="result-item-header">
+                <span class="result-num">3</span>
+                <span class="result-item-title">Samariterbund Linz-Reindlstraße</span>
+              </div>
+              <div class="result-item-sub">ASB Linz Reindlstraße</div>
+              <div class="result-kv">
+                <div class="result-kv-item"><span class="result-kv-label">Dauer</span><span class="result-kv-value">12 min</span></div>
+                <div class="result-kv-item"><span class="result-kv-label">Distanz</span><span class="result-kv-value">7.1 km</span></div>
+              </div>
+              <button class="result-action" title="Route anzeigen"><i class="fa-solid fa-eye"></i></button>
+            </div>
+
+          </div>
+        </div>
+        <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Gestapelt:</strong> Tool-Panel + Ergebnis-Liste scrollen gemeinsam in <code>.sidebar-inner</code>.
+    Trenner (<code>.tool-sep</code>) zwischen Formular und Ergebnissen.
+    <strong>Klick auf Item</strong> → Zoom auf Karte (aktiver Zustand).
+    <strong>Auge-Icon</strong> rechts unten → Route einzeichnen (separater Action).
+    Nummer-Badge wird beim aktiven Item gefüllt (accent).
+  </p>
+</div>
+
+<!-- ═══ TYP 5: ERGEBNIS-LISTE EINFACH ═══ -->
+<div class="section">
+  <div class="section-label">Typ 5 — Ergebnis-Liste einfach (NAH-Variante)</div>
+  <div class="section-desc">NAH-Stützpunkte. Kein Formular in der Sidebar — nur Ergebnisliste. Keine Badges, kein Button — Klick auf ganzes Item.</div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a><a>Legende</a><a>Linien: an</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:400px">
+        <div class="sidebar-inner">
+          <div style="font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:12px">Nächste Stützpunkte</div>
+
+          <div class="result-list">
+            <div class="result-item-simple active" style="padding:8px 6px;cursor:pointer">
+              <div class="result-simple-title">ÖAMTC Luftrettungsstation Hörsching-Linz</div>
+              <div class="result-simple-org">Christophorus Flugrettungsverein</div>
+              <div class="result-simple-meta">5.06 km · Anflugzeit ca. 3 min · Ankunft ca. 14:49</div>
+            </div>
+            <div class="result-item-simple" style="padding:8px 6px;cursor:pointer">
+              <div class="result-simple-title">Martin Luftrettungsstation Scharnstein</div>
+              <div class="result-simple-org">Heli Austria GmbH, Martin Flugrettung</div>
+              <div class="result-simple-meta">45.57 km · Anflugzeit ca. 14 min · Ankunft ca. 15:00</div>
+            </div>
+            <div class="result-item-simple" style="padding:8px 6px;cursor:pointer">
+              <div class="result-simple-title">ÖAMTC/ADAC Luftrettungsstation Suben</div>
+              <div class="result-simple-org">Christophorus Flugrettungsverein, ADAC Luftrettung</div>
+              <div class="result-simple-meta">54.27 km · Anflugzeit ca. 16 min · Ankunft ca. 15:02</div>
+            </div>
+            <div class="result-item-simple" style="padding:8px 6px;cursor:pointer">
+              <div class="result-simple-title">ÖAMTC Luftrettungsstation Ybbsitz</div>
+              <div class="result-simple-org">Christophorus Flugrettungsverein</div>
+              <div class="result-simple-meta">67.39 km · Anflugzeit ca. 20 min · Ankunft ca. 15:05</div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Wann:</strong> Nur Ergebnisse, kein Formular. Kein Badge, kein Auge-Icon.
+    Trennlinien statt Card-Rahmen. Org-Name in Accent-Farbe.
+    Ganzes Item klickbar → Zoom auf Karte.
+  </p>
+</div>
+
+<!-- ═══ TYP 6: STATUS-PANEL ═══ -->
+<div class="section">
+  <div class="section-label">Typ 6 — Status-Panel (read-only)</div>
+  <div class="section-desc">Live-Stats, ADS-B/AIS Zähler, Server-Health. Nur Anzeige — keine Interaktion.</div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a><a class="active">Labels: an</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:300px">
+        <div class="sidebar-inner">
+          <div style="font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:12px">Live Status</div>
+
+          <div class="status-panel">
+            <div class="status-row">
+              <div class="status-row-left">
+                <i class="fa-solid fa-plane status-row-icon"></i>
+                <span class="status-row-name">ADS-B Flugzeuge</span>
+              </div>
+              <div class="status-row-right">
+                <span class="status-row-value">42</span>
+                <span class="status-dot on"></span>
+              </div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left">
+                <i class="fa-solid fa-ship status-row-icon"></i>
+                <span class="status-row-name">AIS Schiffe</span>
+              </div>
+              <div class="status-row-right">
+                <span class="status-row-value">8</span>
+                <span class="status-dot on"></span>
+              </div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left">
+                <i class="fa-solid fa-tower-broadcast status-row-icon"></i>
+                <span class="status-row-name">POCSAG Empfang</span>
+              </div>
+              <div class="status-row-right">
+                <span class="status-row-value">168.075 MHz</span>
+                <span class="status-dot on"></span>
+              </div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left">
+                <i class="fa-solid fa-database status-row-icon"></i>
+                <span class="status-row-name">InfluxDB</span>
+              </div>
+              <div class="status-row-right">
+                <span class="status-row-value">2.4 GB</span>
+                <span class="status-dot warn"></span>
+              </div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left">
+                <i class="fa-solid fa-route status-row-icon"></i>
+                <span class="status-row-name">ORS API</span>
+              </div>
+              <div class="status-row-right">
+                <span class="status-row-value">Offline</span>
+                <span class="status-dot off"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Wann:</strong> Live-Daten die nur angezeigt werden (keine Eingabe).
+    Icon links, Name, Wert + Status-Dot rechts. Kein Hover/Klick-Verhalten.
+    Aktualisierung per JS im Hintergrund.
+  </p>
+</div>
+
+</body>
+</html>

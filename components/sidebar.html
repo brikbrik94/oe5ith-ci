@@ -467,6 +467,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
         <span class="footer-dot" id="footer-dot"></span>
         <span class="footer-status-text" id="footer-status-text"></span>
       </span>
+      <button class="sidebar-footer-copyright" onclick="openCopyrightModal()" title="Copyright &amp; Lizenzen">©</button>
     </div>
 
     <div class="sidebar-tab" id="sidebar-tab" role="button" aria-label="Sidebar schließen" tabindex="0">&#8249;</div>
@@ -817,6 +818,8 @@ window.addEventListener('resize', () => {
 updateBp();
 setSidebar(window.innerWidth > 768, true);
 log('Bereit');
+
+function openCopyrightModal() { log('Copyright-Modal geöffnet (hier: kein Modal in dieser Demo)'); }
 </script>
 </body>
 </html>

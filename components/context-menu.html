@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Context-Menu & Action-Menu</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --bg:#1a1a1a; --card-bg:#252525; --panel:#202020; --panel-deep:#161616;
+  --text:#e0e0e0; --muted:#888; --subtle:#555; --border:#333; --border-strong:#444;
+  --accent:#3b82f6; --accent-hover:#2563eb;
+  --accent-subtle:rgba(59,130,246,0.07); --accent-subtle-md:rgba(59,130,246,0.10);
+  --accent-border:rgba(59,130,246,0.25);
+  --success:#22c55e; --danger:#ef4444; --danger-subtle:rgba(239,68,68,0.10);
+  --font-sans:'Segoe UI',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono','Consolas',monospace;
+  --shadow-dropdown:0 8px 20px rgba(0,0,0,0.40);
+  --transition-fast:0.15s ease;
+  --z-dropdown:1200;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--font-sans); background:var(--bg); color:var(--text); min-height:100vh; }
+
+/* Topbar */
+.topbar { background:var(--card-bg); height:60px; border-bottom:2px solid var(--accent); display:flex; align-items:center; padding:0 20px; position:sticky; top:0; z-index:100; }
+.brand { display:flex; align-items:center; gap:9px; color:#fff; font-weight:700; font-size:1.4rem; letter-spacing:1.5px; text-decoration:none; }
+.brand img { width:30px; height:30px; }
+
+.page-content { padding:40px; max-width:900px; }
+.demo-section { margin-bottom:48px; }
+.demo-section-title { font-size:0.7rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--subtle); margin-bottom:6px; padding-bottom:8px; border-bottom:1px solid #222; }
+.demo-section-desc { font-size:0.82rem; color:#555; margin-bottom:20px; line-height:1.6; }
+.demo-section-desc code { background:#1e1e1e; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:0.78rem; color:#7ba8d4; }
+.annotation { font-size:0.8rem; color:var(--subtle); margin-top:10px; line-height:1.6; }
+.annotation code { background:#1e1e1e; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:0.75rem; color:#7ba8d4; }
+
+/* ═══ CONTEXT-MENU ═══ */
+.ctx-menu {
+  position: fixed;
+  background: var(--card-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: var(--shadow-dropdown);
+  padding: 4px;
+  min-width: 180px;
+  max-width: 260px;
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  transform: scale(0.96);
+  transform-origin: top left;
+  pointer-events: none;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.ctx-menu.open { opacity:1; transform:scale(1); pointer-events:all; }
+.ctx-menu.flip-x { transform-origin:top right; }
+.ctx-menu.flip-y { transform-origin:bottom left; }
+.ctx-menu.flip-x.flip-y { transform-origin:bottom right; }
+
+.ctx-item {
+  display:flex; align-items:center; gap:9px;
+  padding:7px 10px; border-radius:4px;
+  font-size:0.82rem; color:var(--text);
+  cursor:pointer; user-select:none;
+  transition:background var(--transition-fast), color var(--transition-fast);
+  white-space:nowrap;
+}
+.ctx-item:hover { background:var(--accent-subtle-md); color:var(--accent); }
+.ctx-item i { font-size:0.76rem; width:14px; text-align:center; flex-shrink:0; opacity:0.7; }
+.ctx-item:hover i { opacity:1; }
+.ctx-item.danger:hover { background:var(--danger-subtle); color:var(--danger); }
+.ctx-item.disabled { opacity:0.4; cursor:not-allowed; pointer-events:none; }
+
+.ctx-sep { height:1px; background:var(--border); margin:4px 0; }
+
+.ctx-label {
+  padding:4px 10px 3px;
+  font-size:0.62rem; font-weight:700; letter-spacing:0.8px;
+  text-transform:uppercase; color:var(--subtle); user-select:none;
+}
+
+.ctx-item-value {
+  margin-left:auto; font-family:var(--font-mono);
+  font-size:0.68rem; color:var(--subtle); flex-shrink:0;
+}
+.ctx-item:hover .ctx-item-value { color:var(--accent); opacity:0.7; }
+
+/* ═══ ACTION-MENU ═══ */
+.action-menu-btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:24px; height:24px; border-radius:4px;
+  border:none; background:transparent; color:var(--subtle);
+  font-size:0.82rem; cursor:pointer;
+  transition:background var(--transition-fast), color var(--transition-fast);
+  flex-shrink:0;
+}
+.action-menu-btn:hover { background:var(--accent-subtle-md); color:var(--accent); }
+
+.action-menu-wrap {
+  position:relative; display:inline-flex;
+}
+.action-menu-wrap .ctx-menu {
+  position:absolute; top:calc(100% + 4px); right:0;
+  transform-origin:top right;
+}
+
+/* ═══ DEMO-ELEMENTE ═══ */
+/* Fake-Karte */
+.fake-map {
+  background:#2d3a2d; border:1px solid var(--border); border-radius:8px;
+  height:200px; position:relative; cursor:crosshair;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden; user-select:none;
+}
+.fake-map-label { font-size:0.78rem; color:rgba(255,255,255,0.2); pointer-events:none; }
+.fake-map-hint { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); font-size:0.7rem; color:rgba(255,255,255,0.25); pointer-events:none; white-space:nowrap; }
+
+/* Tabelle */
+.ci-table { width:100%; border-collapse:collapse; font-size:0.82rem; background:var(--panel); }
+.ci-table thead tr { border-bottom:1px solid var(--border); }
+.ci-table th { padding:8px 14px; font-size:0.68rem; font-weight:700; text-transform:uppercase; color:var(--subtle); text-align:left; }
+.ci-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.03); transition:background var(--transition-fast); }
+.ci-table tbody tr:last-child { border-bottom:none; }
+.ci-table tbody tr:hover { background:rgba(255,255,255,0.025); }
+.ci-table td { padding:8px 14px; color:var(--muted); vertical-align:middle; }
+.ci-table td:first-child { color:var(--text); font-family:var(--font-mono); font-size:0.76rem; }
+.ci-table td.actions { padding:4px 10px; text-align:right; }
+
+.panel { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.panel-header { padding:10px 16px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.panel-title { font-size:0.88rem; font-weight:600; color:#fff; display:flex; align-items:center; gap:8px; }
+.panel-title i { font-size:0.82rem; color:var(--accent); }
+
+/* Event Log */
+.event-log { background:#0d0d0d; border:1px solid #1a1a1a; border-radius:6px; padding:12px 14px; font-family:var(--font-mono); font-size:0.78rem; color:#4ade80; min-height:80px; max-height:160px; overflow-y:auto; line-height:1.9; margin-top:20px; }
+.log-muted { color:#444; }
+</style>
+</head>
+<body>
+
+<!-- Context-Menu (shared, wird per JS positioniert) -->
+<div class="ctx-menu" id="map-ctx-menu" role="menu">
+  <div class="ctx-label" id="map-ctx-coords">48.3064, 14.2858</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" onclick="ctxAction('route-from')" role="menuitem">
+    <i class="fa-solid fa-location-dot"></i> Route von hier
+  </div>
+  <div class="ctx-item" onclick="ctxAction('route-to')" role="menuitem">
+    <i class="fa-solid fa-flag-checkered"></i> Route nach hier
+  </div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" onclick="ctxAction('marker')" role="menuitem">
+    <i class="fa-solid fa-map-pin"></i> Marker setzen
+  </div>
+  <div class="ctx-item" onclick="ctxAction('copy-coords')" role="menuitem">
+    <i class="fa-regular fa-copy"></i> Koordinaten kopieren
+    <span class="ctx-item-value" id="map-ctx-coords-short">48.31, 14.29</span>
+  </div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" onclick="ctxAction('zoom-in')" role="menuitem">
+    <i class="fa-solid fa-magnifying-glass-plus"></i> Hier einzoomen
+  </div>
+</div>
+
+<!-- Action-Menu für Tabellen-Zeilen -->
+<div class="ctx-menu" id="row-action-menu" role="menu">
+  <div class="ctx-item" onclick="rowAction('zoom')" role="menuitem">
+    <i class="fa-solid fa-eye"></i> Auf Karte anzeigen
+  </div>
+  <div class="ctx-item" onclick="rowAction('route')" role="menuitem">
+    <i class="fa-solid fa-route"></i> Route berechnen
+  </div>
+  <div class="ctx-item" onclick="rowAction('copy')" role="menuitem">
+    <i class="fa-regular fa-copy"></i> ID kopieren
+  </div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item danger" onclick="rowAction('delete')" role="menuitem">
+    <i class="fa-solid fa-trash"></i> Eintrag löschen
+  </div>
+</div>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="OE5ITH" width="30" height="30">
+    OESITH
+  </a>
+</header>
+
+<div class="page-content">
+
+  <!-- ═══ CONTEXT-MENU: KARTE ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Context-Menu — Karte</div>
+    <div class="demo-section-desc">
+      Rechtsklick auf die Karte öffnet das Context-Menu an der Mausposition.
+      Zeigt Koordinaten als Label oben, dann Aktionen.
+    </div>
+
+    <div class="fake-map" id="fake-map" oncontextmenu="openMapCtx(event)">
+      <span class="fake-map-label">Leaflet / MapLibre Karte</span>
+      <span class="fake-map-hint">Rechtsklick für Context-Menu</span>
+    </div>
+    <p class="annotation">
+      Koordinaten im Label werden aus dem Klick-Event berechnet.
+      Menü flippt automatisch wenn es über den Viewport-Rand gehen würde.
+    </p>
+  </div>
+
+  <!-- ═══ ACTION-MENU: TABELLE ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Action-Menu — Tabellen-Zeile (⋮ Button)</div>
+    <div class="demo-section-desc">
+      Jede Tabellenzeile hat einen <code>⋮</code>-Button rechts.
+      Öffnet ein kontextspezifisches Aktions-Menü.
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <i class="fa-solid fa-table-list"></i> POCSAG Nachrichten
+        </div>
+      </div>
+      <table class="ci-table">
+        <thead>
+          <tr>
+            <th>Zeitstempel</th>
+            <th>RIC/ADR</th>
+            <th>Nachricht</th>
+            <th style="width:40px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>24.4.2026 13:46</td>
+            <td>1056019</td>
+            <td style="color:var(--text)">BH Jurist benötigt 4020 Linz…</td>
+            <td class="actions">
+              <div class="action-menu-wrap">
+                <button class="action-menu-btn" onclick="openRowMenu(event, '1056019')" title="Aktionen" aria-haspopup="true">
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>24.4.2026 13:38</td>
+            <td>160311</td>
+            <td style="color:var(--subtle)">–</td>
+            <td class="actions">
+              <div class="action-menu-wrap">
+                <button class="action-menu-btn" onclick="openRowMenu(event, '160311')" title="Aktionen" aria-haspopup="true">
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>24.4.2026 13:37</td>
+            <td>160310</td>
+            <td style="color:var(--subtle)">–</td>
+            <td class="actions">
+              <div class="action-menu-wrap">
+                <button class="action-menu-btn" onclick="openRowMenu(event, '160310')" title="Aktionen" aria-haspopup="true">
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="annotation">
+      <code>.action-menu-wrap</code> ist der Anker — das Menü positioniert sich
+      relativ dazu (<code>position: absolute; right: 0</code>).
+      Unterschied zum Context-Menu: <code>position: absolute</code> statt <code>fixed</code>.
+    </p>
+  </div>
+
+  <!-- ═══ ALLE VARIANTEN ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Alle Item-Varianten</div>
+    <div class="demo-section-desc">
+      Standard, mit Wert rechts, Separator, Label, Danger, Disabled.
+    </div>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+
+      <!-- Statisch gerendert für Übersicht -->
+      <div class="ctx-menu" style="position:relative;opacity:1;transform:none;pointer-events:all;display:block">
+        <div class="ctx-label">Karten-Aktionen</div>
+        <div class="ctx-item"><i class="fa-solid fa-location-dot"></i> Route von hier</div>
+        <div class="ctx-item"><i class="fa-solid fa-flag-checkered"></i> Route nach hier</div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item">
+          <i class="fa-regular fa-copy"></i> Koordinaten kopieren
+          <span class="ctx-item-value">48.31, 14.29</span>
+        </div>
+        <div class="ctx-item"><i class="fa-solid fa-map-pin"></i> Marker setzen</div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item disabled"><i class="fa-solid fa-draw-polygon"></i> Bereich messen</div>
+        <div class="ctx-item danger"><i class="fa-solid fa-trash"></i> Marker löschen</div>
+      </div>
+
+      <div class="ctx-menu" style="position:relative;opacity:1;transform:none;pointer-events:all;display:block">
+        <div class="ctx-item"><i class="fa-solid fa-eye"></i> Auf Karte anzeigen</div>
+        <div class="ctx-item"><i class="fa-solid fa-route"></i> Route berechnen</div>
+        <div class="ctx-item"><i class="fa-regular fa-copy"></i> ID kopieren</div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item danger"><i class="fa-solid fa-trash"></i> Eintrag löschen</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Event Log -->
+  <div class="demo-section">
+    <div class="demo-section-title">Event Log</div>
+    <div class="event-log" id="event-log">
+      <span class="log-muted">// Rechtsklick auf Karte oder ⋮ Button klicken</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function log(msg) {
+  const el = document.getElementById('event-log');
+  const d = document.createElement('div');
+  const t = new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  d.textContent = `[${t}] ${msg}`;
+  el.appendChild(d);
+  el.scrollTop = el.scrollHeight;
+}
+
+/* ── Aktives Menü verfolgen ── */
+let activeMenu = null;
+
+function closeAllMenus() {
+  document.querySelectorAll('.ctx-menu.open').forEach(m => m.classList.remove('open'));
+  activeMenu = null;
+}
+
+/* ── Positionierung mit Viewport-Flip ── */
+function positionMenu(menu, x, y) {
+  menu.style.left = x + 'px';
+  menu.style.top  = y + 'px';
+  menu.classList.remove('flip-x','flip-y');
+
+  // Kurz rendern lassen damit wir die Größe messen können
+  menu.style.visibility = 'hidden';
+  menu.classList.add('open');
+
+  const rect = menu.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  if (rect.right  > vw - 8) { menu.style.left = (x - rect.width)  + 'px'; menu.classList.add('flip-x'); }
+  if (rect.bottom > vh - 8) { menu.style.top  = (y - rect.height) + 'px'; menu.classList.add('flip-y'); }
+
+  menu.style.visibility = '';
+}
+
+/* ── Context-Menu: Karte ── */
+function openMapCtx(e) {
+  e.preventDefault();
+  closeAllMenus();
+
+  // Koordinaten simulieren (in echter Leaflet/MapLibre App: e.latlng)
+  const lat  = (48.3064 + (e.offsetY - 100) * 0.001).toFixed(4);
+  const lng  = (14.2858 + (e.offsetX - 200) * 0.001).toFixed(4);
+
+  document.getElementById('map-ctx-coords').textContent       = `${lat}, ${lng}`;
+  document.getElementById('map-ctx-coords-short').textContent = `${lat}, ${lng}`;
+
+  const menu = document.getElementById('map-ctx-menu');
+  positionMenu(menu, e.clientX, e.clientY);
+  activeMenu = menu;
+  log(`Context-Menu geöffnet bei ${lat}, ${lng}`);
+}
+
+function ctxAction(action) {
+  const coords = document.getElementById('map-ctx-coords').textContent;
+  const labels = {
+    'route-from':   `Route von ${coords}`,
+    'route-to':     `Route nach ${coords}`,
+    'marker':       `Marker gesetzt bei ${coords}`,
+    'copy-coords':  `Koordinaten kopiert: ${coords}`,
+    'zoom-in':      `Eingezoomed auf ${coords}`,
+  };
+  log(labels[action] || action);
+  closeAllMenus();
+}
+
+/* ── Action-Menu: Tabellen-Zeile ── */
+let activeRowId = null;
+
+function openRowMenu(e, rowId) {
+  e.stopPropagation();
+
+  const menu = document.getElementById('row-action-menu');
+
+  if (activeMenu === menu && activeRowId === rowId) {
+    closeAllMenus(); return;
+  }
+
+  closeAllMenus();
+  activeRowId = rowId;
+
+  // Bei Action-Menu: relativ zum Button positionieren
+  const btn  = e.currentTarget;
+  const wrap = btn.closest('.action-menu-wrap');
+  // Das Menü ist absolute in .action-menu-wrap — kein fixed nötig
+  menu.style.left = '';
+  menu.style.top  = '';
+  wrap.appendChild(menu);
+  menu.classList.add('open');
+  activeMenu = menu;
+
+  log(`Action-Menu für RIC ${rowId} geöffnet`);
+}
+
+function rowAction(action) {
+  const labels = {
+    'zoom':   `Auf Karte angezeigt: RIC ${activeRowId}`,
+    'route':  `Route berechnet zu RIC ${activeRowId}`,
+    'copy':   `ID kopiert: ${activeRowId}`,
+    'delete': `Eintrag gelöscht: RIC ${activeRowId}`,
+  };
+  log(labels[action] || action);
+  closeAllMenus();
+}
+
+/* ── Global schließen ── */
+document.addEventListener('click',    closeAllMenus);
+document.addEventListener('keydown',  e => { if (e.key === 'Escape') closeAllMenus(); });
+document.addEventListener('contextmenu', e => {
+  // Nur auf der Fake-Karte öffnen — überall sonst Standard-Browser-Menü
+  if (!e.target.closest('#fake-map')) return;
+});
+</script>
+</body>
+</html>

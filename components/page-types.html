@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Seitentypen</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --bg: #1a1a1a; --card-bg: #252525; --panel: #202020; --panel-deep: #161616;
+  --text: #e0e0e0; --muted: #888; --subtle: #555; --border: #333;
+  --accent: #3b82f6; --accent-subtle: rgba(59,130,246,0.07);
+  --accent-subtle-md: rgba(59,130,246,0.10); --accent-border: rgba(59,130,246,0.25);
+  --success: #22c55e; --danger: #ef4444; --warning: #eab308;
+  --font-sans: 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--text); min-height: 100vh; padding: 40px; }
+
+/* ── Seiten-Layout ── */
+.page-title-main { font-size: 1.6rem; font-weight: 300; color: #fff; margin-bottom: 8px; }
+.page-title-main strong { font-weight: 700; color: var(--accent); }
+.page-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 40px; max-width: 600px; line-height: 1.6; }
+
+.section { margin-bottom: 56px; }
+.section-label {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--subtle);
+  margin-bottom: 6px; padding-bottom: 8px; border-bottom: 1px solid #222;
+}
+.section-desc { font-size: 0.82rem; color: #444; margin-bottom: 16px; line-height: 1.6; }
+
+/* ── Screen-Rahmen ── */
+.screen {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 860px;
+}
+
+/* ── Mini-Topbar ── */
+.m-tb {
+  background: var(--card-bg);
+  height: 36px;
+  border-bottom: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.m-brand {
+  color: #fff; font-weight: 700; font-size: 1.0rem;
+  letter-spacing: 1.2px; display: flex; align-items: center; gap: 7px;
+}
+.m-brand img { width: 18px; height: 18px; }
+.m-nav { margin-left: auto; display: flex; gap: 10px; }
+.m-nav a { font-size: 0.72rem; color: var(--muted); text-decoration: none; }
+.m-nav a.active { color: var(--accent); }
+.m-controls { margin-left: auto; display: flex; gap: 6px; }
+.m-ctrl-btn {
+  background: #2a2a2a; border: 1px solid #4b5563; border-radius: 4px;
+  color: #d1d5db; font-size: 0.68rem; font-weight: 600;
+  padding: 3px 8px; height: 24px; display: flex; align-items: center;
+}
+
+/* ── Mini-Layout ── */
+.m-layout { display: flex; height: 280px; }
+.m-layout-tall { display: flex; height: 340px; }
+
+/* ── Mini-Sidebar ── */
+.m-sb {
+  width: 120px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 10px 8px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+.m-sb-label {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: #444;
+  padding: 6px 4px 3px; margin-top: 4px;
+}
+.m-sb-label:first-child { margin-top: 0; }
+.m-sb-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 6px; border-radius: 4px;
+  border-left: 2px solid transparent;
+  font-size: 0.72rem; color: var(--muted);
+}
+.m-sb-item.active {
+  color: var(--accent); background: var(--accent-subtle);
+  border-left-color: var(--accent);
+}
+.m-sb-item i { font-size: 0.65rem; width: 12px; text-align: center; opacity: 0.7; }
+.m-sb-item.active i { opacity: 1; }
+.m-sb-item .ext { font-size: 0.55rem; margin-left: auto; opacity: 0.4; }
+.m-sb-dot { width: 6px; height: 6px; border-radius: 50%; margin-left: auto; flex-shrink: 0; }
+.m-sb-dot.on { background: var(--success); box-shadow: 0 0 3px var(--success); }
+.m-sb-dot.off { background: var(--danger); }
+.m-sb-sep { height: 1px; background: var(--border); margin: 4px 0; }
+.m-sb-footer {
+  margin-top: auto; border-top: 1px solid var(--border);
+  padding: 6px 6px 0; font-size: 0.58rem;
+  font-family: var(--font-mono); color: #444;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.m-sb-footer-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--success); box-shadow: 0 0 3px var(--success); }
+
+/* ── Page Content ── */
+.m-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+
+/* Page Header */
+.m-page-header {
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.m-page-title { font-size: 1.1rem; font-weight: 300; color: #fff; }
+.m-page-title span { font-weight: 700; color: var(--accent); }
+.m-page-sub { font-size: 0.65rem; color: var(--subtle); margin-top: 2px; }
+.m-page-meta { font-size: 0.62rem; color: var(--subtle); white-space: nowrap; }
+.m-page-action {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 22px; padding: 0 8px; border-radius: 4px;
+  font-size: 0.62rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; border: 1px solid var(--accent-border);
+  background: var(--accent-subtle); color: var(--accent);
+}
+
+/* Content Body */
+.m-body { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; flex: 1; }
+
+/* Panel */
+.m-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.m-panel-hdr {
+  padding: 6px 10px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.m-panel-title { font-size: 0.72rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 5px; }
+.m-panel-title i { font-size: 0.65rem; color: var(--accent); }
+.m-panel-badge {
+  font-size: 0.58rem; padding: 1px 5px; border-radius: 3px;
+  background: rgba(139,92,246,0.12); color: #a78bfa;
+  border: 1px solid rgba(139,92,246,0.25);
+}
+.m-panel-body { padding: 8px 10px; }
+.m-panel-flush { /* kein padding */ }
+
+/* Placeholder-Elemente */
+.ph { height: 5px; border-radius: 2px; background: #333; }
+.ph.w-full { width: 100%; }
+.ph.w-80 { width: 80%; }
+.ph.w-60 { width: 60%; }
+.ph.w-40 { width: 40%; }
+.ph.accent { background: var(--accent); opacity: 0.4; }
+.ph.green { background: var(--success); opacity: 0.5; }
+.ph-gap { margin-bottom: 4px; }
+
+/* Input-Placeholder */
+.m-input { background: var(--panel-deep); border: 1px solid var(--border); border-radius: 3px; height: 20px; display: flex; align-items: center; padding: 0 8px; gap: 6px; }
+.m-input .ph { flex: 1; }
+
+/* Code-Block */
+.m-code { background: #000; border-radius: 3px; padding: 6px 8px; }
+.m-code .ph { background: #4ade80; opacity: 0.6; margin-bottom: 3px; }
+.m-code .ph:last-child { margin-bottom: 0; }
+
+/* Status-Block */
+.m-status { background: rgba(34,197,94,0.08); border-radius: 4px; padding: 5px 8px; display: flex; align-items: center; gap: 6px; }
+.m-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); box-shadow: 0 0 4px var(--success); flex-shrink: 0; }
+.m-status-text { font-size: 0.65rem; color: var(--success); }
+
+/* Tabelle */
+.m-table { width: 100%; border-collapse: collapse; background: var(--panel); }
+.m-table thead tr { border-bottom: 1px solid var(--border); }
+.m-table th { padding: 5px 10px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--subtle); text-align: left; }
+.m-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.03); }
+.m-table tbody tr:last-child { border-bottom: none; }
+.m-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.m-table td { padding: 5px 10px; font-size: 0.65rem; color: var(--muted); }
+.m-table td.primary { color: var(--text); font-family: var(--font-mono); font-size: 0.62rem; }
+.m-table td.hl { color: var(--text); }
+.m-table td.em { color: var(--subtle); }
+
+/* Card Grid */
+.m-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.m-card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.m-dash-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 10px;
+  position: relative;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.m-dash-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+.m-dash-card-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+.m-dash-card-dot.on  { background: var(--success); box-shadow: 0 0 4px var(--success); }
+.m-dash-card-dot.off { background: var(--danger); box-shadow: 0 0 4px rgba(239,68,68,0.5); }
+.m-dash-card-title { font-size: 0.68rem; font-weight: 600; color: var(--text); flex: 1; }
+.m-dash-card-sub { font-size: 0.6rem; color: var(--muted); line-height: 1.3; }
+
+/* Column Groups */
+.m-col-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.m-col-group { display: flex; flex-direction: column; gap: 6px; }
+.m-col-label { font-size: 0.68rem; font-weight: 600; color: var(--text); padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+.m-content-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 5px; padding: 6px 8px; }
+.m-content-card-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+.m-content-card-title { font-size: 0.65rem; font-weight: 600; color: var(--text); }
+.m-content-card-badge { font-size: 0.55rem; padding: 1px 4px; border-radius: 3px; background: rgba(255,255,255,0.04); color: #555; border: 1px solid #2a2a2a; }
+.m-url { background: #0d0d0d; border-radius: 3px; padding: 3px 6px; font-size: 0.55rem; color: #4ade80; font-family: var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.m-btn { display: inline-flex; align-items: center; gap: 4px; height: 18px; padding: 0 7px; border-radius: 3px; font-size: 0.6rem; font-weight: 600; background: var(--accent); color: #fff; border: none; font-family: inherit; cursor: pointer; }
+
+/* Landing */
+.m-landing { display: flex; flex-direction: column; align-items: center; padding: 30px 20px 20px; gap: 14px; }
+.m-landing-title { font-size: 1.2rem; font-weight: 300; color: #fff; }
+.m-landing-title strong { font-weight: 700; color: var(--accent); }
+.m-nav-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+.m-nav-card-icon { font-size: 1rem; color: var(--accent); margin-bottom: 2px; }
+.m-nav-card-title { font-size: 0.72rem; font-weight: 600; color: var(--text); }
+.m-nav-card-desc { font-size: 0.6rem; color: var(--muted); line-height: 1.3; flex: 1; }
+.m-nav-card.disabled { opacity: 0.5; }
+
+/* Karte */
+.m-map { flex: 1; background: #2d3a2d; display: flex; align-items: center; justify-content: center; position: relative; }
+.m-map-label { font-size: 0.62rem; color: rgba(255,255,255,0.2); }
+.m-map-zoom { position: absolute; top: 8px; left: 8px; display: flex; flex-direction: column; gap: 2px; }
+.m-map-zoom-btn { width: 18px; height: 18px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--text); }
+.m-popup { position: absolute; background: var(--card-bg); border: 1px solid #444; border-radius: 6px; padding: 6px 8px; font-size: 0.62rem; top: 40px; left: 40px; min-width: 100px; }
+.m-popup-title { font-size: 0.65rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.m-popup-sub { color: var(--muted); }
+
+/* Annotation */
+.annotation { font-size: 0.8rem; color: var(--subtle); margin-top: 8px; line-height: 1.6; max-width: 860px; }
+.annotation code { background: #1e1e1e; padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 0.75rem; color: #7ba8d4; }
+</style>
+</head>
+<body>
+
+<h1 class="page-title-main">Seitentypen <strong>Reference</strong></h1>
+<p class="page-desc">
+  Visuelle Mockups aller definierten Seitentypen. Für die Entscheidung welcher Typ
+  zu verwenden ist: <code>docs/page-types.md</code>
+</p>
+
+<!-- ═══ TYP 1: DETAIL-SEITE ═══ -->
+<div class="section">
+  <div class="section-label">Typ 1 — Detail-Seite</div>
+  <div class="section-desc">
+    Geocoding API, SDR Spectrum, POCSAG, Routing API. Mehrere Panels mit
+    strukturiertem Inhalt: Eingabefelder, Code, Status. Page-Header mit Untertitel.
+  </div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav">
+        <a class="active">Internal</a><a>Karte</a><a>Tiles</a>
+      </div>
+    </div>
+    <div class="m-layout">
+      <div class="m-sb">
+        <div class="m-sb-label">GIS Services</div>
+        <div class="m-sb-item"><i class="fa-solid fa-route"></i> Routing API <span class="m-sb-dot on"></span></div>
+        <div class="m-sb-item active"><i class="fa-solid fa-magnifying-glass-location"></i> Geocoding API <span class="m-sb-dot on"></span></div>
+        <div class="m-sb-sep"></div>
+        <div class="m-sb-label">Extern</div>
+        <div class="m-sb-item" style="color:#666"><i class="fa-brands fa-docker"></i> Portainer <span class="ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></span></div>
+        <div class="m-sb-footer"><span>v1.0.0</span><span class="m-sb-footer-dot"></span></div>
+      </div>
+      <div class="m-content">
+        <div class="m-page-header">
+          <div>
+            <div class="m-page-title">Geocoding API <span>(Nominatim)</span></div>
+            <div class="m-page-sub">Nominatim Adress-Suche und Reverse-Geocoding</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="m-page-meta">v2.3.1</span>
+            <button class="m-page-action"><i class="fa-solid fa-rotate"></i> Status prüfen</button>
+          </div>
+        </div>
+        <div class="m-body">
+          <div class="m-panel">
+            <div class="m-panel-hdr">
+              <div class="m-panel-title"><i class="fa-solid fa-circle-info"></i> Service Information</div>
+              <div class="m-panel-badge">API KEY REQUIRED</div>
+            </div>
+            <div class="m-panel-body" style="display:flex;flex-direction:column;gap:5px">
+              <div class="ph w-60 ph-gap"></div>
+              <div style="font-size:0.6rem;color:var(--subtle);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">Search Endpoint</div>
+              <div class="m-input"><div class="ph accent w-full"></div></div>
+              <div style="font-size:0.6rem;color:var(--subtle);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">Curl Example</div>
+              <div class="m-code">
+                <div class="ph w-80"></div>
+                <div class="ph w-60"></div>
+              </div>
+            </div>
+          </div>
+          <div class="m-panel">
+            <div class="m-panel-hdr">
+              <div class="m-panel-title"><i class="fa-solid fa-signal"></i> Live API-Status</div>
+            </div>
+            <div class="m-panel-body">
+              <div class="m-status">
+                <div class="m-status-dot"></div>
+                <span class="m-status-text">Online (50ms) · https://geocoder.oe5ith.at/status</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="annotation">
+    Page-Header: Titel + Untertitel + optionaler <code>page-action</code> Button.
+    Panels mit <code>panel-header</code> + Icon. Letztes Panel: Live-Status.
+  </p>
+</div>
+
+<!-- ═══ TYP 2: LISTEN-SEITE ═══ -->
+<div class="section">
+  <div class="section-label">Typ 2 — Listen-Seite</div>
+  <div class="section-desc">
+    POCSAG Feed, Log-Seiten, Ereignis-Listen. Hauptinhalt ist eine scrollbare
+    Datentabelle. Optionales Filter-Panel oben.
+  </div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a class="active">Internal</a><a>Karte</a></div>
+    </div>
+    <div class="m-layout-tall">
+      <div class="m-sb">
+        <div class="m-sb-label">SDR</div>
+        <div class="m-sb-item"><i class="fa-solid fa-chart-line"></i> Spectrum</div>
+        <div class="m-sb-item active"><i class="fa-solid fa-tower-broadcast"></i> POCSAG</div>
+        <div class="m-sb-footer"><span>v44c4840</span><span class="m-sb-footer-dot"></span></div>
+      </div>
+      <div class="m-content">
+        <div class="m-page-header">
+          <div>
+            <div class="m-page-title">SDR <span>POCSAG Feed</span></div>
+            <div class="m-page-sub">Dekodierte Funkruf-Nachrichten (letzte 24h)</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="m-page-meta">Zuletzt: 24.4.2026 13:47</span>
+            <button class="m-page-action"><i class="fa-solid fa-rotate"></i> Aktualisieren</button>
+          </div>
+        </div>
+        <div class="m-body">
+          <div class="m-panel">
+            <div class="m-panel-hdr">
+              <div class="m-panel-title"><i class="fa-solid fa-sliders"></i> Empfangsfrequenz</div>
+            </div>
+            <div class="m-panel-body" style="display:flex;gap:6px;align-items:center">
+              <div class="m-input" style="flex:1"><div class="ph w-40" style="background:#e0e0e0"></div></div>
+              <button class="m-btn"><i class="fa-solid fa-rotate"></i> Aktualisieren</button>
+            </div>
+          </div>
+          <div class="m-panel" style="flex:1">
+            <div class="m-panel-hdr">
+              <div class="m-panel-title"><i class="fa-solid fa-table-list"></i> Nachrichten-Übersicht</div>
+              <span class="m-page-meta">512 Einträge</span>
+            </div>
+            <div class="m-panel-flush">
+              <table class="m-table">
+                <thead>
+                  <tr>
+                    <th>Zeitstempel</th><th>Frequenz</th><th>RIC/ADR</th><th>Baud</th><th>Nachricht</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="primary">24.4.2026 13:46</td>
+                    <td class="primary">168.075 MHz</td>
+                    <td class="primary">1056019</td>
+                    <td class="primary">512</td>
+                    <td class="hl">BH Jurist benötigt 4020 Linz…</td>
+                  </tr>
+                  <tr>
+                    <td class="primary">24.4.2026 13:38</td>
+                    <td class="primary">168.075 MHz</td>
+                    <td class="primary">160311</td>
+                    <td class="primary">512</td>
+                    <td class="em">–</td>
+                  </tr>
+                  <tr>
+                    <td class="primary">24.4.2026 13:37</td>
+                    <td class="primary">168.075 MHz</td>
+                    <td class="primary">160310</td>
+                    <td class="primary">512</td>
+                    <td class="em">–</td>
+                  </tr>
+                  <tr>
+                    <td class="primary">24.4.2026 13:20</td>
+                    <td class="primary">168.075 MHz</td>
+                    <td class="primary">1056040</td>
+                    <td class="primary">512</td>
+                    <td class="hl">BH Jurist benötigt 4840 Vöcklabruck…</td>
+                  </tr>
+                  <tr>
+                    <td class="primary">24.4.2026 12:23</td>
+                    <td class="primary">168.075 MHz</td>
+                    <td class="primary">160813</td>
+                    <td class="primary">512</td>
+                    <td class="em">–</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="annotation">
+    Tabelle in <code>.panel-body-flush</code> (kein Padding). Hintergrund <code>--panel</code>.
+    Timestamps/IDs: <code>.primary</code> + Mono. Inhaltslos: <code>.em</code>. Zeitstempel rechts im Header.
+  </p>
+</div>
+
+<!-- ═══ TYP 3: DASHBOARD ═══ -->
+<div class="section">
+  <div class="section-label">Typ 3 — Dashboard</div>
+  <div class="section-desc">
+    System Overview. Cards in einem Grid, jede Card mit Status-Dot rechts.
+    Klickbare Cards verlinken auf Detail-Seiten.
+  </div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a class="active">Internal</a><a>Karte</a><a>Tiles</a><a>Portal</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="m-sb">
+        <div class="m-sb-label">System</div>
+        <div class="m-sb-item active"><i class="fa-solid fa-gauge-high"></i> Dashboard</div>
+        <div class="m-sb-label">GIS Services</div>
+        <div class="m-sb-item"><i class="fa-solid fa-route"></i> Routing API <span class="m-sb-dot on"></span></div>
+        <div class="m-sb-item"><i class="fa-solid fa-magnifying-glass-location"></i> Geocoding <span class="m-sb-dot on"></span></div>
+        <div class="m-sb-label">SDR</div>
+        <div class="m-sb-item"><i class="fa-solid fa-chart-line"></i> Spectrum</div>
+        <div class="m-sb-item"><i class="fa-solid fa-tower-broadcast"></i> POCSAG</div>
+        <div class="m-sb-footer"><span>v1.0.0</span><span class="m-sb-footer-dot"></span></div>
+      </div>
+      <div class="m-content">
+        <div class="m-page-header">
+          <div class="m-page-title">System <span>Overview</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-card-grid">
+
+            <!-- Card: Status-Dot RECHTS -->
+            <div class="m-dash-card">
+              <div class="m-dash-card-header">
+                <div class="m-dash-card-title">Reverse Proxy</div>
+                <div class="m-dash-card-dot on"></div>
+              </div>
+              <div class="m-dash-card-sub">Nginx · SSL · alle Domains</div>
+            </div>
+
+            <div class="m-dash-card">
+              <div class="m-dash-card-header">
+                <div class="m-dash-card-title">Authentik IdP</div>
+                <div class="m-dash-card-dot on"></div>
+              </div>
+              <div class="m-dash-card-sub">Identity Provider · OIDC</div>
+            </div>
+
+            <div class="m-dash-card">
+              <div class="m-dash-card-header">
+                <div class="m-dash-card-title">Routing Service</div>
+                <div class="m-dash-card-dot on"></div>
+              </div>
+              <div class="m-dash-card-sub">OpenRouteService · API</div>
+            </div>
+
+            <div class="m-dash-card">
+              <div class="m-dash-card-header">
+                <div class="m-dash-card-title">Geocoder Service</div>
+                <div class="m-dash-card-dot off"></div>
+              </div>
+              <div class="m-dash-card-sub">Nominatim · Offline</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="annotation">
+    Nur Seitentitel im Page-Header, kein Untertitel. Status-Dot <strong>rechts</strong> in der Card-Header-Zeile
+    neben dem Titel. Cards direkt ohne Panel-Wrapper.
+  </p>
+</div>
+
+<!-- ═══ TYP 4: KARTEN-GRID ═══ -->
+<div class="section">
+  <div class="section-label">Typ 4 — Karten-Grid (Column-Groups)</div>
+  <div class="section-desc">
+    Tiles Registry, Font-Galerie, Sprites. Inhalt in thematischen Spalten
+    mit eigenem Spalten-Titel.
+  </div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>Internal</a><a>Karte</a><a class="active">Tiles</a><a>Portal</a></div>
+    </div>
+    <div class="m-layout-tall">
+      <div class="m-sb">
+        <div class="m-sb-label">Navigation</div>
+        <div class="m-sb-item"><i class="fa-solid fa-arrow-left"></i> Portal</div>
+        <div class="m-sb-sep"></div>
+        <div class="m-sb-item active"><i class="fa-solid fa-map"></i> Maps</div>
+        <div class="m-sb-item"><i class="fa-solid fa-font"></i> Fonts</div>
+        <div class="m-sb-item"><i class="fa-solid fa-icons"></i> Sprites</div>
+        <div class="m-sb-footer"><span>v1.0.0</span></div>
+      </div>
+      <div class="m-content">
+        <div class="m-page-header">
+          <div class="m-page-title">Verfügbare <span>Vektorkarten</span></div>
+        </div>
+        <div class="m-body">
+          <div class="m-col-groups">
+
+            <div class="m-col-group">
+              <div class="m-col-label">Basemap</div>
+              <div class="m-content-card">
+                <div class="m-content-card-hdr">
+                  <div class="m-content-card-title">At</div>
+                  <div class="m-content-card-badge">BASEMAP</div>
+                </div>
+                <div class="m-url">pmtiles://tiles.oe5ith.at/basemaps/…</div>
+                <button class="m-btn" style="margin-top:4px">Vorschau</button>
+              </div>
+              <div class="m-content-card">
+                <div class="m-content-card-hdr">
+                  <div class="m-content-card-title">At Plus</div>
+                  <div class="m-content-card-badge">BASEMAP</div>
+                </div>
+                <div class="m-url">pmtiles://tiles.oe5ith.at/basemaps/…</div>
+                <button class="m-btn" style="margin-top:4px">Vorschau</button>
+              </div>
+            </div>
+
+            <div class="m-col-group">
+              <div class="m-col-label">Overlay</div>
+              <div class="m-content-card">
+                <div class="m-content-card-hdr">
+                  <div class="m-content-card-title">Anfahrtszeit Linz</div>
+                  <div class="m-content-card-badge">OVERLAY</div>
+                </div>
+                <div class="m-url">pmtiles://tiles.oe5ith.at/overlays/…</div>
+                <button class="m-btn" style="margin-top:4px">Vorschau</button>
+              </div>
+              <div class="m-content-card">
+                <div class="m-content-card-hdr">
+                  <div class="m-content-card-title">Autobahnen</div>
+                  <div class="m-content-card-badge">OVERLAY</div>
+                </div>
+                <div class="m-url">pmtiles://tiles.oe5ith.at/overlays/…</div>
+                <button class="m-btn" style="margin-top:4px">Vorschau</button>
+              </div>
+            </div>
+
+            <div class="m-col-group">
+              <div class="m-col-label">Elevation</div>
+              <div class="m-content-card">
+                <div class="m-content-card-hdr">
+                  <div class="m-content-card-title">At Elevation</div>
+                  <div class="m-content-card-badge">ELEVATION</div>
+                </div>
+                <div class="m-url">pmtiles://tiles.oe5ith.at/elevation/…</div>
+                <button class="m-btn" style="margin-top:4px">Vorschau</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="annotation">
+    <code>.col-groups.col-groups-3</code> für 3 Spalten. <code>.col-group-label</code> als
+    Spaltenüberschrift. Cards in jeder Spalte gleichartig (Content-Card Typ 3 aus cards.css).
+  </p>
+</div>
+
+<!-- ═══ TYP 5: LANDING ═══ -->
+<div class="section">
+  <div class="section-label">Typ 5 — Landing Page</div>
+  <div class="section-desc">
+    cloud.oe5ith.at. Kein Sidebar, zentrierter Inhalt, Navigation-Cards.
+  </div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>Internal</a><a>Karte</a></div>
+    </div>
+    <div class="m-landing">
+      <div class="m-landing-title">Willkommen im <strong>Cloud Portal</strong></div>
+      <div class="m-card-grid-3" style="width:100%;max-width:600px">
+
+        <div class="m-nav-card">
+          <div class="m-nav-card-icon"><i class="fa-solid fa-map"></i></div>
+          <div class="m-nav-card-title">Tileserver Registry</div>
+          <div class="m-nav-card-desc">Vektorkarten, Styles, Schriftarten und Sprites.</div>
+          <button class="m-btn" style="margin-top:4px;align-self:flex-start"><i class="fa-solid fa-arrow-right"></i> Öffnen</button>
+        </div>
+
+        <div class="m-nav-card">
+          <div class="m-nav-card-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="m-nav-card-title">Live Karte</div>
+          <div class="m-nav-card-desc">ADS-B, AIS und Layer-Auswahl.</div>
+          <button class="m-btn" style="margin-top:4px;align-self:flex-start"><i class="fa-solid fa-arrow-right"></i> Öffnen</button>
+        </div>
+
+        <div class="m-nav-card disabled">
+          <div class="m-nav-card-icon"><i class="fa-solid fa-folder-open"></i></div>
+          <div class="m-nav-card-title">File Cloud</div>
+          <div class="m-nav-card-desc">Dateispeicher und Kollaboration.</div>
+          <button class="m-btn" style="margin-top:4px;align-self:flex-start;background:#444;color:#666">Demnächst</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <p class="annotation">
+    Kein <code>.layout</code>, kein Sidebar. <code>.landing-body</code> mit <code>padding-top: 60px</code>.
+    Nav-Cards (Typ 1 aus cards.css). Disabled-Cards für zukünftige Bereiche.
+  </p>
+</div>
+
+<!-- ═══ KARTEN-SEITE ═══ -->
+<div class="section">
+  <div class="section-label">Karten-Seite (Sonderfall)</div>
+  <div class="section-desc">
+    karte.oe5ith.at, Routing-Karte, Vector-Map-Test. Karte füllt den gesamten
+    verfügbaren Bereich. Kein page.css — eigene Regeln.
+  </div>
+  <div class="screen">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-controls">
+        <div class="m-ctrl-btn">OSM Standard ▾</div>
+        <div class="m-ctrl-btn">Zoom</div>
+        <div class="m-ctrl-btn">Legende</div>
+        <div class="m-ctrl-btn">Labels: an</div>
+        <div class="m-ctrl-btn">Info</div>
+        <div class="m-ctrl-btn">Menü</div>
+      </div>
+    </div>
+    <div class="m-layout">
+      <!-- Sidebar mit Accordion -->
+      <div class="m-sb">
+        <div style="font-size:0.68rem;font-weight:600;color:#fff;padding:2px 4px 6px">Kategorien</div>
+        <div style="font-size:0.58rem;color:var(--subtle);padding:0 4px 6px">Layer beim Aktivieren laden.</div>
+
+        <!-- Accordion Gruppe geschlossen -->
+        <div style="background:var(--panel);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:3px">
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 7px;cursor:pointer">
+            <div style="width:7px;height:7px;border-radius:50%;background:#eab308;flex-shrink:0"></div>
+            <span style="font-size:0.65rem;font-weight:600;color:var(--text);flex:1">Anfahrtszeit</span>
+            <span style="font-size:0.55rem;padding:1px 4px;border-radius:3px;background:rgba(255,255,255,0.04);color:#555;border:1px solid #2a2a2a">nicht geladen</span>
+            <i class="fa-solid fa-chevron-right" style="font-size:0.5rem;color:var(--subtle)"></i>
+          </div>
+        </div>
+
+        <!-- Accordion Gruppe offen -->
+        <div style="background:var(--panel);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:3px">
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 7px;cursor:pointer">
+            <div style="width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0"></div>
+            <span style="font-size:0.65rem;font-weight:600;color:var(--text);flex:1">RD-Dienststellen</span>
+            <span style="font-size:0.55rem;padding:1px 4px;border-radius:3px;background:var(--accent-subtle-md);color:var(--accent);border:1px solid var(--accent-border)">3 Layer</span>
+            <i class="fa-solid fa-chevron-down" style="font-size:0.5rem;color:var(--subtle)"></i>
+          </div>
+          <div style="padding:2px 7px 6px 18px;display:flex;flex-direction:column;gap:2px">
+            <div style="display:flex;align-items:center;gap:5px;font-size:0.62rem;color:var(--text)">
+              <div style="width:10px;height:10px;border-radius:2px;background:var(--accent);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center"><div style="width:6px;height:3px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px)"></div></div>
+              RD-OO-SEW
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:0.62rem;color:var(--muted)">
+              <div style="width:10px;height:10px;border-radius:2px;border:1px solid var(--border)"></div>
+              RD-OO-NEF
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:0.62rem;color:var(--muted)">
+              <div style="width:10px;height:10px;border-radius:2px;border:1px solid var(--border)"></div>
+              BRD-OOE
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--panel);border:1px solid var(--border);border-radius:4px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 7px;cursor:pointer">
+            <div style="width:7px;height:7px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div>
+            <span style="font-size:0.65rem;font-weight:600;color:var(--text);flex:1">Bezirke</span>
+            <span style="font-size:0.55rem;padding:1px 4px;border-radius:3px;background:rgba(255,255,255,0.04);color:#555;border:1px solid #2a2a2a">nicht geladen</span>
+            <i class="fa-solid fa-chevron-right" style="font-size:0.5rem;color:var(--subtle)"></i>
+          </div>
+        </div>
+
+        <div class="m-sb-footer" style="margin-top:auto"><span>v44c4840</span><span class="m-sb-footer-dot"></span></div>
+      </div>
+
+      <!-- Karte -->
+      <div class="m-map">
+        <span class="m-map-label">Leaflet / MapLibre</span>
+        <div class="m-map-zoom">
+          <div class="m-map-zoom-btn">+</div>
+          <div class="m-map-zoom-btn">−</div>
+        </div>
+        <div class="m-popup">
+          <div class="m-popup-title">RK BZS Ortsstelle Eferding</div>
+          <div class="m-popup-sub">0110 · Österreichisches Rotes Kreuz</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="annotation">
+    Karte füllt <code>flex: 1</code> direkt. Sidebar mit Accordion (kein Nav-Item-Modus).
+    Topbar hat Controls-Panel statt Nav-Links. Kein <code>page.css</code> — Leaflet/MapLibre
+    CSS-Overrides aus <code>modal.css</code> aktivieren.
+  </p>
+</div>
+
+</body>
+</html>

@@ -350,3 +350,140 @@
 @media (max-width: 768px) {
   
 }
+/* ═══════════════════════════════════════
+   CONTEXT-MENU & ACTION-MENU
+   Context-Menu: öffnet per Rechtsklick
+   Action-Menu:  öffnet per ⋮ Button
+   Beide verwenden dieselbe .ctx-menu Komponente.
+   ═══════════════════════════════════════ */
+
+.ctx-menu {
+  position: fixed;              /* Context-Menu: fixed im Viewport */
+  background: var(--card-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: var(--shadow-dropdown);
+  padding: 4px;
+  min-width: 180px;
+  max-width: 260px;
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  transform: scale(0.96);
+  transform-origin: top left;
+  pointer-events: none;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.ctx-menu.open {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: all;
+}
+
+/* Öffnet nach links wenn zu nah am rechten Rand */
+.ctx-menu.flip-x { transform-origin: top right; }
+/* Öffnet nach oben wenn zu nah am unteren Rand */
+.ctx-menu.flip-y { transform-origin: bottom left; }
+.ctx-menu.flip-x.flip-y { transform-origin: bottom right; }
+
+/* ── Menü-Item ── */
+.ctx-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+}
+.ctx-item:hover {
+  background: var(--accent-subtle-md);
+  color: var(--accent);
+}
+.ctx-item i {
+  font-size: 0.76rem;
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.ctx-item:hover i { opacity: 1; }
+
+/* Danger-Variante */
+.ctx-item.danger { color: var(--text); }
+.ctx-item.danger:hover {
+  background: var(--danger-subtle);
+  color: var(--danger);
+}
+
+/* Disabled */
+.ctx-item.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Trenner ── */
+.ctx-sep {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+/* ── Label (nicht klickbar, Gruppen-Überschrift) ── */
+.ctx-label {
+  padding: 4px 10px 3px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--subtle);
+  user-select: none;
+}
+
+/* ── Wert rechts im Item (z.B. Koordinaten) ── */
+.ctx-item-value {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--subtle);
+  flex-shrink: 0;
+}
+.ctx-item:hover .ctx-item-value { color: var(--accent); opacity: 0.7; }
+
+/* ── Action-Menu Button (⋮) ── */
+.action-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--subtle);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+.action-menu-btn:hover {
+  background: var(--accent-subtle-md);
+  color: var(--accent);
+}
+
+/* Action-Menu: position absolute relativ zum Elternelement */
+.action-menu-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.action-menu-wrap .ctx-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  fixed: unset;
+  transform-origin: top right;
+}

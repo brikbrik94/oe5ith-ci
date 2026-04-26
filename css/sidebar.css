@@ -185,6 +185,29 @@
   gap: 8px; flex-shrink: 0;
 }
 .sidebar-footer-version { font-size: 0.65rem; font-family: var(--font-mono); color: #444; }
+
+/* © Copyright-Button im Footer */
+.sidebar-footer-copyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  border: none;
+  background: transparent;
+  color: #444;
+  font-size: 0.65rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color var(--transition-fast), background var(--transition-fast);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.sidebar-footer-copyright:hover {
+  color: var(--muted);
+  background: rgba(255,255,255,0.05);
+}
 .sidebar-footer-status { display: flex; align-items: center; gap: 5px; font-size: 0.65rem; }
 .footer-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .footer-dot.green { background: var(--success); box-shadow: 0 0 4px var(--success); }
