@@ -1,14 +1,14 @@
 # Farben & Tokens
 
 **Referenz-Datei:** `components/tokens.html`  
-**Master-Datei:** `shared/assets/common.css`  
+**Master-Datei:** `css/common.css`  
 **Status:** definiert · v1.0
 
 ---
 
 ## Überblick
 
-Alle Design Tokens sind als CSS Custom Properties in `shared/assets/common.css`
+Alle Design Tokens sind als CSS Custom Properties in `css/common.css`
 definiert und werden per Deploy-Script in jede Site kopiert.
 Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcoden.
 
@@ -36,9 +36,11 @@ Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcode
 |---|---|---|
 | `--accent` | `#3b82f6` | Buttons, Icons, aktive Links, Topbar-Unterstrich |
 | `--accent-hover` | `#2563eb` | Hover-State für Accent-Buttons |
-| `--accent-subtle` | `rgba(59,130,246, 0.07)` | Aktive Nav-Items, Sidebar-Tab-Toggle |
+| `--accent-subtle` | `rgba(59,130,246, 0.07)` | Aktive Nav-Items, Hover-Hintergründe |
 | `--accent-subtle-md` | `rgba(59,130,246, 0.10)` | Badge-Hintergrund, Button-Secondary |
 | `--accent-border` | `rgba(59,130,246, 0.25)` | Badge-Border, Tab-Toggle-Border |
+| `--sidebar-tab-bg` | `rgba(59,130,246, 0.15)` | Hintergrund des mobilen Sidebar-Tabs |
+| `--sidebar-tab-border` | `rgba(59,130,246, 0.35)` | Border des mobilen Sidebar-Tabs |
 
 ---
 
@@ -151,11 +153,13 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
   --border-strong:    #444444;
 
   /* Akzent */
-  --accent:           #3b82f6;
-  --accent-hover:     #2563eb;
-  --accent-subtle:    rgba(59,130,246,0.07);
-  --accent-subtle-md: rgba(59,130,246,0.10);
-  --accent-border:    rgba(59,130,246,0.25);
+  --accent:              #3b82f6;
+  --accent-hover:        #2563eb;
+  --accent-subtle:       rgba(59,130,246,0.07);
+  --accent-subtle-md:    rgba(59,130,246,0.10);
+  --accent-border:       rgba(59,130,246,0.25);
+  --sidebar-tab-bg:      rgba(59,130,246,0.15);
+  --sidebar-tab-border:  rgba(59,130,246,0.35);
 
   /* Semantisch */
   --success:          #22c55e;
@@ -196,13 +200,13 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
 
   /* Z-Index */
   --z-content:        1;
-  --z-sidebar-tab:    10;
-  --z-backdrop:       40;
-  --z-sidebar:        50;
-  --z-overlay:        90;
-  --z-topbar:         100;
-  --z-dropdown:       200;
-  --z-modal:          500;
+  --z-sidebar-tab:    1010;
+  --z-backdrop:       1040;
+  --z-sidebar:        1050;
+  --z-overlay:        1090;
+  --z-topbar:         1100;
+  --z-dropdown:       1200;
+  --z-modal:          1500;
 
   /* Transitions */
   --transition-fast:  0.15s ease;
@@ -243,7 +247,7 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
 
 | Klasse | Verwendung |
 |---|---|
-| `.layout` | Flex-Container für Sidebar + Content. `height: calc(100vh - --topbar-height)`, `overflow: hidden` |
+| `.layout` | Flex-Container für Sidebar + Content. `height: calc(100vh - var(--topbar-height))`, `overflow: hidden` |
 | `.page-content` | Haupt-Content-Bereich. `flex: 1`, `overflow-y: auto`, `padding: 40px` (Mobile: 20px 16px) |
 
 ```css
