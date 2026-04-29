@@ -396,33 +396,52 @@
 .result-kv-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--subtle); }
 .result-kv-value { font-size: 0.78rem; font-weight: 600; color: var(--text); }
 
-/* Auge-Icon (Route anzeigen) */
+/* Auge-Icon — Route-Toggle (ein/aus)
+   Unabhängig vom Item-Auswahlzustand:
+   Off: dezent sichtbar (muted)
+   Hover: Accent-Hint — zeigt Interaktivität
+   On (.active): Success-Grün — sichtbar auf dunklem UND blauem Hintergrund */
 .result-action {
   position: absolute; bottom: 7px; right: 8px;
   width: 22px; height: 22px; border-radius: 4px;
   background: transparent; border: 1px solid transparent;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--subtle); font-size: 0.65rem;
+  cursor: pointer; color: var(--muted); font-size: 0.65rem;
   transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
-.result-action:hover { background: var(--accent-subtle-md); color: var(--accent); border-color: var(--accent-border); }
-.result-item.active .result-action { color: var(--accent); }
-
-/* Variante 2: einfach, ohne Badge (NAH) */
-.result-item-simple {
-  padding: 9px 4px;
-  border-bottom: 1px solid #222;
-  cursor: pointer;
-  transition: background var(--transition-fast);
-  border-radius: 0;
+.result-action:hover {
+  background: var(--accent-subtle-md);
+  color: var(--accent);
+  border-color: var(--accent-border);
 }
-.result-item-simple:last-child { border-bottom: none; }
-.result-item-simple:hover { background: rgba(255,255,255,0.02); border-radius: 4px; }
-.result-item-simple.active { background: var(--accent-subtle); border-radius: 4px; border-bottom-color: transparent; }
+.result-action.active {
+  background: var(--success-subtle);
+  border-color: var(--success-border);
+  color: var(--success);
+}
+.result-action.active:hover {
+  background: rgba(34,197,94,0.20);
+  border-color: var(--success-border);
+  color: var(--success);
+}
+
+/* Variante 2: Ergebnis-Liste einfach (NAH-Variante)
+   Gleicher Card-Stil wie .result-item, mit Nummer-Badge.
+   Inhalt: .result-simple-title + .result-simple-org + .result-simple-meta */
+.result-item-simple {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 10px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.result-item-simple:hover { border-color: var(--accent-border); background: rgba(59,130,246,0.03); }
+.result-item-simple.active { border-color: var(--accent); background: var(--accent-subtle); }
 
 .result-simple-title { font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 2px; line-height: 1.3; }
-.result-simple-org   { font-size: 0.72rem; color: var(--accent); margin-bottom: 3px; }
-.result-simple-meta  { font-size: 0.70rem; color: var(--muted); }
+.result-simple-org   { font-size: 0.72rem; color: var(--accent); margin-bottom: 3px; padding-left: 25px; }
+.result-simple-meta  { font-size: 0.70rem; color: var(--muted); padding-left: 25px; }
 
 /* ═══════════════════════════════════════
    STATUS-PANEL

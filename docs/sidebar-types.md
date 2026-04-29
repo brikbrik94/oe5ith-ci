@@ -174,16 +174,26 @@ in der Sidebar erscheint. Formular und Ergebnisse scrollen gemeinsam.
 </div>
 ```
 
-**Zwei Aktionen pro Item:**
+**Zwei unabhängige Aktionen pro Item:**
 
 | Aktion | Element | Verhalten |
 |---|---|---|
-| Klick auf Item | `.result-item` | Karte zoomt auf diesen Punkt, Item wird `.active` |
-| Klick auf Auge | `.result-action` | Route wird auf Karte eingezeichnet |
+| Klick auf Auge | `.result-action` | Route ein-/ausblenden (Toggle) — mehrere gleichzeitig möglich |
+| Klick auf Item | `.result-item` | Bereits sichtbare Route auf Karte hervorheben (highlight), Item wird `.active` |
+
+**Auge-Button Zustände (`result-action`):**
+
+| Zustand | CSS | Bedeutung |
+|---|---|---|
+| Aus (default) | — | Route nicht sichtbar, Auge dezent (muted) |
+| Hover | — | Accent-Hint — zeigt Interaktivität |
+| An | `.result-action.active` | Route sichtbar — Success-Grün, sichtbar auf dunklem und blauem Hintergrund |
 
 **Regeln:**
+- Auge-State ist unabhängig vom Item-Auswahlzustand — kein `color: accent` auf aktivem Item
+- Mehrere Augen können gleichzeitig `.active` sein
+- Klick auf Item ohne aktives Auge: zeigt die Route zuerst (setzt Auge auf `.active`), dann highlight
 - Nummer-Badge wird bei `.active` Item mit Accent gefüllt
-- Auge-Icon rechts unten — nie als voller Button mit Text
 - `tool-sep` zwischen Formular und Ergebnis-Block
 - Ergebnis-Header zeigt Anzahl (grün) + Label der Kategorie
 - Wenn keine Ergebnisse: `result-count` in `--danger`
@@ -196,26 +206,29 @@ in der Sidebar erscheint. Formular und Ergebnisse scrollen gemeinsam.
 
 **Wann verwenden:**
 Die Sidebar zeigt nur Ergebnisse — kein Formular, keine Eingabe.
-Einfachere Darstellung ohne Nummer-Badge und Auge-Icon.
-Ganzes Item ist klickbar.
+Kein Auge-Icon (keine Routing-Funktion). Ganzes Item ist klickbar.
 
 **Elemente:**
-- Titel
-- Items mit: Titel (fett) + Organisation (accent) + Meta (Distanz/Zeit)
-- Trennlinien statt Card-Rahmen
+- Titel (H2-Equivalent der Sidebar)
+- Items mit: Nummer-Badge + Titel (fett) + Organisation (accent) + Meta (Distanz/Zeit)
+- Gleicher Card-Stil wie Typ 4 (Rahmen, Hover, Active-State)
 
 ```html
 <div class="result-item-simple active">
-  <div class="result-simple-title">ÖAMTC Luftrettungsstation Hörsching</div>
+  <div class="result-item-header">
+    <span class="result-num">1</span>
+    <span class="result-simple-title">ÖAMTC Luftrettungsstation Hörsching</span>
+  </div>
   <div class="result-simple-org">Christophorus Flugrettungsverein</div>
   <div class="result-simple-meta">5.06 km · Anflugzeit ca. 3 min · Ankunft ca. 14:49</div>
 </div>
 ```
 
 **Regeln:**
-- Kein Nummer-Badge, kein Auge-Icon
-- Org-Name in `--accent` Farbe (erkennbar als zweite Zeile)
-- Klick auf ganzes Item → Zoom auf Karte
+- Kein Auge-Icon — Typ 5 hat keine Route-Toggle-Funktion
+- Nummer-Badge wie in Typ 4 (wird bei `.active` mit Accent gefüllt)
+- Org-Name in `--accent` Farbe, fluchtet mit Titel-Text (padding-left: 25px)
+- Klick auf ganzes Item → Zoom auf Karte, Item wird `.active`
 
 ---
 

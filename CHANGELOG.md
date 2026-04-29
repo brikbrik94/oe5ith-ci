@@ -16,6 +16,22 @@ docs/versioning.md
 
 ---
 
+## v1.2.0 - 2026-04-29
+
+### Changed
+
+- `css/page.css`: `.result-action` (Auge-Button) überarbeitet.
+  - Neuer unabhängiger Toggle-State: `.result-action.active` = Route sichtbar (Success-Grün).
+  - Kaputte Regel `result-item.active .result-action { color: accent }` entfernt (blau auf blau).
+  - Default-Farbe von `--subtle` auf `--muted` angehoben (dezent sichtbarer).
+- `css/page.css`: `.result-item-simple` (Typ 5) auf Card-Stil von `.result-item` angehoben.
+  - Gleicher Rahmen, Hover und Active-State wie Typ 4.
+  - `.result-simple-org` und `.result-simple-meta` mit `padding-left: 25px` (fluchtet mit Titel nach Badge).
+- `docs/sidebar-types.md`: Typ 4 und Typ 5 aktualisiert.
+- `components/sidebar-types.html`: Typ 4 zeigt alle Auge-Zustände; Typ 5 mit Card-Stil und Nummer-Badge.
+
+---
+
 ## v1.1.0 - 2026-04-27
 
 ### Added

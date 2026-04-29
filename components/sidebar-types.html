@@ -282,32 +282,34 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
 .result-kv-label { font-size:0.58rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--subtle); }
 .result-kv-value { font-size:0.78rem; font-weight:600; color:var(--text); }
 
-/* Auge-Icon Button (rechts unten) */
+/* Auge-Icon — Route-Toggle (ein/aus)
+   Off: muted | Hover: accent-hint | On (.active): success-grün
+   Unabhängig vom Item-Auswahlzustand */
 .result-action {
   position:absolute; bottom:7px; right:8px;
   width:22px; height:22px; border-radius:4px;
   background:transparent; border:1px solid transparent;
   display:flex; align-items:center; justify-content:center;
-  cursor:pointer; color:var(--subtle);
+  cursor:pointer; color:var(--muted);
   transition:background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
   font-size:0.65rem;
 }
 .result-action:hover { background:var(--accent-subtle-md); color:var(--accent); border-color:var(--accent-border); }
-.result-item.active .result-action { color:var(--accent); }
+.result-action.active { background:var(--success-subtle); border-color:var(--success-border); color:var(--success); }
+.result-action.active:hover { background:rgba(34,197,94,0.20); border-color:var(--success-border); color:var(--success); }
 
-/* Einfachere Variante (NAH — kein Badge, kein Button) */
+/* Typ 5: gleicher Card-Stil wie .result-item, mit Nummer-Badge */
 .result-item-simple {
-  background:transparent; border:none; border-bottom:1px solid #222;
-  border-radius:0; padding:10px 4px;
+  background:var(--card-bg); border:1px solid var(--border);
+  border-radius:6px; padding:9px 10px;
   cursor:pointer;
-  transition:background var(--transition-fast);
+  transition:border-color var(--transition-fast), background var(--transition-fast);
 }
-.result-item-simple:last-child { border-bottom:none; }
-.result-item-simple:hover { background:rgba(255,255,255,0.02); }
-.result-item-simple.active { background:var(--accent-subtle); border-radius:4px; border-bottom-color:transparent; }
-.result-simple-title { font-size:0.82rem; font-weight:600; color:var(--text); margin-bottom:2px; }
-.result-simple-org { font-size:0.72rem; color:var(--accent); margin-bottom:4px; }
-.result-simple-meta { font-size:0.70rem; color:var(--muted); }
+.result-item-simple:hover { border-color:var(--accent-border); background:rgba(59,130,246,0.03); }
+.result-item-simple.active { border-color:var(--accent); background:var(--accent-subtle); }
+.result-simple-title { font-size:0.82rem; font-weight:600; color:var(--text); margin-bottom:2px; line-height:1.3; }
+.result-simple-org { font-size:0.72rem; color:var(--accent); margin-bottom:3px; padding-left:25px; }
+.result-simple-meta { font-size:0.70rem; color:var(--muted); padding-left:25px; }
 
 /* ══════════════════════════════════════
    STATUS-PANEL
@@ -562,6 +564,7 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
 
           <div class="result-list">
 
+            <!-- Item 1: ausgewählt (.active) + Route sichtbar (Auge .active) → grünes Auge auf blauem BG -->
             <div class="result-item active">
               <div class="result-item-header">
                 <span class="result-num">1</span>
@@ -572,9 +575,10 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
                 <div class="result-kv-item"><span class="result-kv-label">Dauer</span><span class="result-kv-value">3 min</span></div>
                 <div class="result-kv-item"><span class="result-kv-label">Distanz</span><span class="result-kv-value">4.4 km</span></div>
               </div>
-              <button class="result-action" title="Route anzeigen"><i class="fa-solid fa-eye"></i></button>
+              <button class="result-action active" title="Route ausblenden"><i class="fa-solid fa-eye"></i></button>
             </div>
 
+            <!-- Item 2: nicht ausgewählt + Route sichtbar (Auge .active) → grünes Auge auf dunklem BG -->
             <div class="result-item">
               <div class="result-item-header">
                 <span class="result-num">2</span>
@@ -585,9 +589,10 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
                 <div class="result-kv-item"><span class="result-kv-label">Dauer</span><span class="result-kv-value">10 min</span></div>
                 <div class="result-kv-item"><span class="result-kv-label">Distanz</span><span class="result-kv-value">5.8 km</span></div>
               </div>
-              <button class="result-action" title="Route anzeigen"><i class="fa-solid fa-eye"></i></button>
+              <button class="result-action active" title="Route ausblenden"><i class="fa-solid fa-eye"></i></button>
             </div>
 
+            <!-- Item 3: nicht ausgewählt + Route nicht sichtbar (Auge off) → dezentes Auge -->
             <div class="result-item">
               <div class="result-item-header">
                 <span class="result-num">3</span>
@@ -609,11 +614,10 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
     </div>
   </div>
   <p class="annotation">
-    <strong>Gestapelt:</strong> Tool-Panel + Ergebnis-Liste scrollen gemeinsam in <code>.sidebar-inner</code>.
-    Trenner (<code>.tool-sep</code>) zwischen Formular und Ergebnissen.
-    <strong>Klick auf Item</strong> → Zoom auf Karte (aktiver Zustand).
-    <strong>Auge-Icon</strong> rechts unten → Route einzeichnen (separater Action).
-    Nummer-Badge wird beim aktiven Item gefüllt (accent).
+    <strong>Auge = Route-Toggle:</strong> Klick auf Auge → Route ein-/ausblenden (<code>.result-action.active</code> = Route sichtbar).
+    Mehrere Routen können gleichzeitig sichtbar sein.
+    <strong>Klick auf Item</strong> → bereits sichtbare Route hervorheben, Item wird <code>.active</code>.
+    Auge-Zustand ist unabhängig vom Item-Zustand — grün bleibt sichtbar auf blauem und dunklem Hintergrund.
   </p>
 </div>
 
@@ -632,23 +636,35 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
           <div style="font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:12px">Nächste Stützpunkte</div>
 
           <div class="result-list">
-            <div class="result-item-simple active" style="padding:8px 6px;cursor:pointer">
-              <div class="result-simple-title">ÖAMTC Luftrettungsstation Hörsching-Linz</div>
+            <div class="result-item-simple active">
+              <div class="result-item-header">
+                <span class="result-num">1</span>
+                <span class="result-simple-title">ÖAMTC Luftrettungsstation Hörsching-Linz</span>
+              </div>
               <div class="result-simple-org">Christophorus Flugrettungsverein</div>
               <div class="result-simple-meta">5.06 km · Anflugzeit ca. 3 min · Ankunft ca. 14:49</div>
             </div>
-            <div class="result-item-simple" style="padding:8px 6px;cursor:pointer">
-              <div class="result-simple-title">Martin Luftrettungsstation Scharnstein</div>
+            <div class="result-item-simple">
+              <div class="result-item-header">
+                <span class="result-num">2</span>
+                <span class="result-simple-title">Martin Luftrettungsstation Scharnstein</span>
+              </div>
               <div class="result-simple-org">Heli Austria GmbH, Martin Flugrettung</div>
               <div class="result-simple-meta">45.57 km · Anflugzeit ca. 14 min · Ankunft ca. 15:00</div>
             </div>
-            <div class="result-item-simple" style="padding:8px 6px;cursor:pointer">
-              <div class="result-simple-title">ÖAMTC/ADAC Luftrettungsstation Suben</div>
+            <div class="result-item-simple">
+              <div class="result-item-header">
+                <span class="result-num">3</span>
+                <span class="result-simple-title">ÖAMTC/ADAC Luftrettungsstation Suben</span>
+              </div>
               <div class="result-simple-org">Christophorus Flugrettungsverein, ADAC Luftrettung</div>
               <div class="result-simple-meta">54.27 km · Anflugzeit ca. 16 min · Ankunft ca. 15:02</div>
             </div>
-            <div class="result-item-simple" style="padding:8px 6px;cursor:pointer">
-              <div class="result-simple-title">ÖAMTC Luftrettungsstation Ybbsitz</div>
+            <div class="result-item-simple">
+              <div class="result-item-header">
+                <span class="result-num">4</span>
+                <span class="result-simple-title">ÖAMTC Luftrettungsstation Ybbsitz</span>
+              </div>
               <div class="result-simple-org">Christophorus Flugrettungsverein</div>
               <div class="result-simple-meta">67.39 km · Anflugzeit ca. 20 min · Ankunft ca. 15:05</div>
             </div>
@@ -660,8 +676,8 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
     </div>
   </div>
   <p class="annotation">
-    <strong>Wann:</strong> Nur Ergebnisse, kein Formular. Kein Badge, kein Auge-Icon.
-    Trennlinien statt Card-Rahmen. Org-Name in Accent-Farbe.
+    <strong>Wann:</strong> Nur Ergebnisse, kein Formular. Kein Auge-Icon (keine Route-Toggle-Funktion).
+    Gleicher Card-Stil wie Typ 4 mit Nummer-Badge. Org-Name in Accent-Farbe, fluchtet mit Titel.
     Ganzes Item klickbar → Zoom auf Karte.
   </p>
 </div>
