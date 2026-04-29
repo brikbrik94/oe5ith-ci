@@ -22,7 +22,7 @@
   padding: 0 20px;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: var(--z-topbar);
   gap: 0;
 }
 
@@ -141,7 +141,7 @@
   border: 1px solid #4b5563;
   border-radius: 6px;
   min-width: 180px;
-  z-index: 200;
+  z-index: var(--z-dropdown);
   padding: 4px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
@@ -283,7 +283,7 @@
   font-size: 0.8rem;
   color: var(--muted);
   display: none;
-  z-index: 200;
+  z-index: var(--z-dropdown);
 }
 
 .topbar-search-result.visible {
@@ -341,7 +341,7 @@
   font-size: 12px;
   font-weight: 700;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
-  z-index: 10;
+  z-index: var(--z-sidebar-tab);
   user-select: none;
 }
 

@@ -81,6 +81,7 @@
   --z-overlay:        1090;
   --z-topbar:         1100;
   --z-dropdown:       1200;
+  --z-tooltip:        1300;
   --z-modal:          1500;
 
   /* ── TRANSITIONS ── */
@@ -139,5 +140,8 @@ a {
 }
 
 @media (max-width: 768px) {
+  .layout {
+    height: calc(100dvh - var(--topbar-height-mobile));
+  }
   .page-content { padding: 20px 16px; }
 }
