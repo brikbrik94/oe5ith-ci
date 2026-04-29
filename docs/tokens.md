@@ -108,7 +108,9 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
 | `--z-overlay` | `1090` | Controls Overlay Panel |
 | `--z-topbar` | `1100` | Topbar (sticky) |
 | `--z-dropdown` | `1200` | Dropdowns, Menus |
+| `--z-tooltip` | `1300` | Tooltips |
 | `--z-modal` | `1500` | Modals |
+| `--z-toast` | `1600` | Toast-Meldungen — über Modals |
 
 > **Karten-Applikationen:** Leaflet und MapLibre setzen ihre Controls bei 400–1000,
 > Popups bei 700. Die CI-Tokens beginnen bei 1000+ damit Sidebar, Topbar und Modals
@@ -134,6 +136,7 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
 | `--shadow-card` | `0 10px 20px rgba(0,0,0,0.30)` | Card Hover-Zustand |
 | `--shadow-dropdown` | `0 8px 20px rgba(0,0,0,0.40)` | Dropdowns, Overlay-Menus |
 | `--shadow-sidebar` | `4px 0 20px rgba(0,0,0,0.50)` | Sidebar Mobile Overlay |
+| `--shadow-toast` | `0 8px 24px rgba(0,0,0,0.50)` | Toast-Meldungen |
 
 ---
 

@@ -83,6 +83,7 @@
   --z-dropdown:       1200;
   --z-tooltip:        1300;
   --z-modal:          1500;
+  --z-toast:          1600;
 
   /* ── TRANSITIONS ── */
   --transition-fast:  0.15s ease;
@@ -94,6 +95,7 @@
   --shadow-card:      0 10px 20px rgba(0,0,0,0.30);
   --shadow-dropdown:  0 8px 20px rgba(0,0,0,0.40);
   --shadow-sidebar:   4px 0 20px rgba(0,0,0,0.50);
+  --shadow-toast:     0 8px 24px rgba(0,0,0,0.50);
 }
 
 /* ── BASIS-RESET ── */
