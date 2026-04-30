@@ -19,6 +19,9 @@ z.B. Tool-Panel + Ergebnis-Liste in einer gemeinsam scrollenden `.sidebar-inner`
 | 5 | Ergebnis-Liste einfach | NAH-Stützpunkte |
 | 6 | Status-Panel | ADS-B/AIS Live-Stats |
 
+> **Sidebar-Footer:** Jede Sidebar benötigt ein `.sidebar-footer` am unteren Rand (Version, optionaler Status, `©`-Button).
+> Vollständige Struktur und HTML: → [`docs/sidebar.md` — Abschnitt „Sidebar Footer"](sidebar.md#sidebar-footer)
+
 ---
 
 ## Entscheidungsbaum
