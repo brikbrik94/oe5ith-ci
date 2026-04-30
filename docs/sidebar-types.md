@@ -230,6 +230,21 @@ Kein Auge-Icon (keine Routing-Funktion). Ganzes Item ist klickbar.
 - Org-Name in `--accent` Farbe, fluchtet mit Titel-Text (padding-left: 25px)
 - Klick auf ganzes Item → Zoom auf Karte, Item wird `.active`
 
+**Leerzustand:**
+
+Wenn noch keine Ergebnisse vorliegen, `.result-empty` anstelle der `.result-list` anzeigen:
+
+```html
+<div class="result-empty">
+  <i class="fa-solid fa-arrow-pointer"></i>
+  Klicke auf einen Punkt in der Karte, um die 5 nächsten NAH-Stützpunkte zu berechnen.
+</div>
+```
+
+- Icon optional — FontAwesome, Auswahl site-spezifisch (z.B. `fa-arrow-pointer` für Desktop-Hinweis)
+- Kein Hover, kein Klick — rein informativer Zustand
+- Text frei wählbar je nach Anwendungsfall
+
 ---
 
 ## Typ 6 — Status-Panel (read-only)
@@ -293,3 +308,4 @@ Reihenfolge: Tool/Eingabe oben, Ergebnisse unten.
 | Datum | Änderung |
 |---|---|
 | 2026-04-24 | Initiale Definition. 6 Typen. Gestapelte Panels. Ergebnis-Liste mit Auge-Icon. |
+| 2026-04-30 | Typ 5: `.result-empty` Leerzustand ergänzt |
