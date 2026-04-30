@@ -311,6 +311,23 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
 .result-simple-org { font-size:0.72rem; color:var(--accent); margin-bottom:3px; padding-left:25px; }
 .result-simple-meta { font-size:0.70rem; color:var(--muted); padding-left:25px; }
 
+/* Typ 5: Leerzustand */
+.result-empty {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 4px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.result-empty > i {
+  flex-shrink: 0;
+  margin-top: 2px;
+  opacity: 0.5;
+  font-size: 0.85rem;
+}
+
 /* ══════════════════════════════════════
    STATUS-PANEL
    ══════════════════════════════════════ */
@@ -679,6 +696,30 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
     <strong>Wann:</strong> Nur Ergebnisse, kein Formular. Kein Auge-Icon (keine Route-Toggle-Funktion).
     Gleicher Card-Stil wie Typ 4 mit Nummer-Badge. Org-Name in Accent-Farbe, fluchtet mit Titel.
     Ganzes Item klickbar → Zoom auf Karte.
+  </p>
+
+  <!-- Leerzustand -->
+  <div class="screen" style="margin-top:16px">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a><a>Legende</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:200px">
+        <div class="sidebar-inner">
+          <div style="font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:12px">Nächste Stützpunkte</div>
+          <div class="result-empty">
+            <i class="fa-solid fa-arrow-pointer"></i>
+            Klicke auf einen Punkt in der Karte, um die 5 nächsten NAH-Stützpunkte zu berechnen.
+          </div>
+        </div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Leerzustand:</strong> Solange keine Ergebnisse vorliegen, ersetzt <code>.result-empty</code>
+    die <code>.result-list</code>. Icon optional (FontAwesome, site-spezifisch).
   </p>
 </div>
 
