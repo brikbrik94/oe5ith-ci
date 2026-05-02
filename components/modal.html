@@ -465,6 +465,12 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
   </div>
 </div>
 
+<!-- ═══ MAP LEGEND ═══ -->
+<div class="map-legend" id="demo-legend" style="display:none;">
+  <div class="map-legend-title"></div>
+  <div class="map-legend-entries"></div>
+</div>
+
 <header class="topbar">
   <a href="#" class="brand">
     <img src="assets/logo.svg" alt="Logo" width="26" height="26">
@@ -570,6 +576,41 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ═══ MAP LEGEND ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Karten-Legende</div>
+    <div class="demo-section-desc">
+      Fixiertes Panel rechts unten. Befüllung per <code>MapLegend</code>-API.
+      Drei Eintragstypen: <code>dot</code>, <code>line</code>, <code>area</code>.
+      Beliebige CSS-Farben. Ein-/Ausblenden über <code>legend.toggle()</code>.
+    </div>
+    <div class="demo-row">
+      <button class="demo-trigger" onclick="demoLegendToggle()">Legende ein-/ausblenden</button>
+      <button class="demo-trigger" onclick="demoLegendReset()">Demo-Einträge neu laden</button>
+    </div>
+
+    <!-- Statisches Markup-Beispiel (nicht live, nur Referenz) -->
+    <div style="margin-top:24px; padding:12px 14px; background:var(--panel-deep); border:1px solid var(--border); border-radius:8px; display:inline-block;">
+      <div class="map-legend" style="position:static; box-shadow:none; min-width:0;">
+        <div class="map-legend-title">Kartenschlüssel</div>
+        <div class="map-legend-entries">
+          <div class="map-legend-entry">
+            <div class="map-legend-dot" style="background:#22c55e;"></div>
+            <span class="map-legend-label">Feuerwehr aktiv</span>
+          </div>
+          <div class="map-legend-entry">
+            <div class="map-legend-line" style="background:#3b82f6;"></div>
+            <span class="map-legend-label">Route</span>
+          </div>
+          <div class="map-legend-entry">
+            <div class="map-legend-area" style="background:#f59e0b;"></div>
+            <span class="map-legend-label">Sperrzone</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
