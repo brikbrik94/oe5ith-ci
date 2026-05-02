@@ -332,6 +332,24 @@ Kein Major Release nötig, solange keine Klassen oder Tokens entfernt oder umben
 
 ## Spätere mögliche Releases
 
+### Kartenstile — Erweiterung auf Variante C
+
+Aktuell: `MAP_ROUTE_STYLES` als dokumentiertes JS-Inline-Objekt zum Kopieren (Variante A).
+
+Sobald weitere Linienzustände hinzukommen (z.B. gesperrt, alternativ, geplant,
+Rückweg), soll das Objekt in eine dedizierte TypeScript-Referenzdatei ausgelagert
+werden:
+
+```text
+scripts/map-styles.ts
+```
+
+Diese Datei würde alle Kartenstil-Konstanten (Routen, Marker, Polygone) zentral
+bündeln und direkt importierbar machen. Dokumentation in `docs/map-routes.md`
+entsprechend aktualisieren.
+
+---
+
 ### v1.3.0 — Komponenten-Review
 
 Mögliche Themen:
