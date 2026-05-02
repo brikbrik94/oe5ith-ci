@@ -1,0 +1,9 @@
+# Superpowers visual companion sessions
+.superpowers/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+*.swp
