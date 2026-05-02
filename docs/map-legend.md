@@ -16,7 +16,7 @@ Fixiertes Overlay-Panel rechts unten über der Karte. Zeigt eine Legende mit far
 </div>
 ```
 
-Das Panel startet mit `display:none` — `MapLegend.show()` macht es sichtbar.
+Das Panel startet mit `display:none` — `MapLegend.show()` macht es sichtbar. Die Kindelemente `.map-legend-title` und `.map-legend-entries` müssen im HTML vorhanden sein. `isVisible()` prüft ausschließlich den Inline-Style — CSS-Klassen-basiertes Ausblenden wird nicht erkannt.
 
 ## JS-API
 
