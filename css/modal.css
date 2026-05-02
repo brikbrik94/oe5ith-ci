@@ -498,7 +498,7 @@
   border-radius: var(--card-radius);
   box-shadow: var(--shadow-card);
   min-width: 160px;
-  max-width: 260px;
+  max-width: var(--sidebar-width);
   padding: 12px 14px;
 }
 
