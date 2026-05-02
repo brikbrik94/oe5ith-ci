@@ -617,6 +617,84 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
 </div>
 
 <script>
+/* ── MapLegend ── */
+class MapLegend {
+  constructor(selector) {
+    this._el = typeof selector === 'string'
+      ? document.querySelector(selector)
+      : selector;
+    this._titleEl = this._el.querySelector('.map-legend-title');
+    this._entriesEl = this._el.querySelector('.map-legend-entries');
+  }
+
+  setTitle(text) {
+    this._titleEl.textContent = text;
+    this._titleEl.style.display = text ? '' : 'none';
+  }
+
+  addEntry({ type, color, label }) {
+    const typeClass = { dot: 'map-legend-dot', line: 'map-legend-line', area: 'map-legend-area' }[type];
+    const entry = document.createElement('div');
+    entry.className = 'map-legend-entry';
+
+    const indicator = document.createElement('div');
+    indicator.className = typeClass;
+    indicator.style.background = color;
+
+    const labelEl = document.createElement('span');
+    labelEl.className = 'map-legend-label';
+    labelEl.textContent = label;
+
+    entry.appendChild(indicator);
+    entry.appendChild(labelEl);
+    this._entriesEl.appendChild(entry);
+  }
+
+  clearEntries() {
+    this._entriesEl.innerHTML = '';
+  }
+
+  show() {
+    this._el.style.display = '';
+  }
+
+  hide() {
+    this._el.style.display = 'none';
+  }
+
+  toggle() {
+    this.isVisible() ? this.hide() : this.show();
+  }
+
+  isVisible() {
+    return this._el.style.display !== 'none';
+  }
+
+  destroy() {
+    this._el.remove();
+  }
+}
+
+/* ── MapLegend Demo ── */
+const demoLegend = new MapLegend('#demo-legend');
+
+function demoLegendReset() {
+  demoLegend.clearEntries();
+  demoLegend.setTitle('Kartenschlüssel');
+  demoLegend.addEntry({ type: 'dot',  color: '#22c55e', label: 'Feuerwehr aktiv' });
+  demoLegend.addEntry({ type: 'dot',  color: '#ef4444', label: 'Feuerwehr inaktiv' });
+  demoLegend.addEntry({ type: 'line', color: '#3b82f6', label: 'Anfahrtsroute' });
+  demoLegend.addEntry({ type: 'area', color: '#f59e0b', label: 'Sperrzone' });
+  demoLegend.addEntry({ type: 'area', color: '#8b5cf6', label: 'Einsatzgebiet' });
+  demoLegend.show();
+}
+
+function demoLegendToggle() {
+  demoLegend.toggle();
+}
+
+demoLegendReset();
+
 /* ── Modal ── */
 function openModal() {
   const bd = document.getElementById('modal-backdrop');
