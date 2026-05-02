@@ -623,6 +623,7 @@ class MapLegend {
     this._el = typeof selector === 'string'
       ? document.querySelector(selector)
       : selector;
+    if (!this._el) throw new Error(`MapLegend: element "${selector}" not found`);
     this._titleEl = this._el.querySelector('.map-legend-title');
     this._entriesEl = this._el.querySelector('.map-legend-entries');
   }
@@ -634,6 +635,7 @@ class MapLegend {
 
   addEntry({ type, color, label }) {
     const typeClass = { dot: 'map-legend-dot', line: 'map-legend-line', area: 'map-legend-area' }[type];
+    if (!typeClass) throw new Error(`MapLegend.addEntry: unknown type "${type}"`);
     const entry = document.createElement('div');
     entry.className = 'map-legend-entry';
 
@@ -667,7 +669,7 @@ class MapLegend {
   }
 
   isVisible() {
-    return this._el.style.display !== 'none';
+    return this._el.style.display !== 'none'; /* prüft nur Inline-Style */
   }
 
   destroy() {
