@@ -93,8 +93,8 @@ Flex-Row für die Eingabefelder im Control-Panel.
 
 ### `.ci-label` — Label außerhalb von `.form-field`
 
-Definiert in `css/typography.css`. Identisches Aussehen wie `.form-label`,
-verwendbar außerhalb von Formular-Kontexten.
+Definiert in `css/typography.css`. Gleicher visueller Stil wie `.form-label`
+(0.65rem, 700, uppercase, `var(--subtle)`), verwendbar außerhalb von Formular-Kontexten.
 
 ```html
 <span class="ci-label">Dienst</span>
@@ -171,6 +171,7 @@ Definiert in `css/typography.css`. Wendet `var(--font-mono)` auf beliebige Eleme
 <link rel="stylesheet" href="css/buttons.css">
 <link rel="stylesheet" href="css/page.css">
 <link rel="stylesheet" href="css/code-viewer.css">
+<link rel="stylesheet" href="css/forms.css">
 ```
 
 Oder alles auf einmal über `css/index.css`.
