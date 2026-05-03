@@ -135,6 +135,32 @@ Wenn keiner dieser Typen passt, muss zuerst ein neuer Seitentyp dokumentiert wer
 
 ---
 
+### 5a. API-Debugger / Code-Viewer
+
+Seiten, die API-Antworten oder technische Rohdaten anzeigen, verwenden das `.panel-code` Pattern.
+
+**Seitentyp:** Typ 1 — Detail-Seite.
+
+**Zwei Panels:**
+
+1. **Control Panel** — normales `.panel` mit `.form-row` für horizontal angeordnete Eingabefelder.
+   Labels über Feldern: `.ci-label`. Mono-Inputs: `.form-input.mono`.
+
+2. **Code Viewer** — `.panel.panel-code` mit:
+   - `.panel-header`: Titel links, `badge-green`/`badge-red` + Latenz + Copy-Button rechts.
+   - `<pre class="code-viewer-pre">`: scrollbarer Code-Block.
+
+**Regeln:**
+- Kein `background` hardcoden — `var(--code-bg)` verwenden.
+- HTTP-Status immer als Badge darstellen: `badge-green` (2xx), `badge-red` (4xx/5xx), `badge-yellow` (3xx).
+- Latenz als `<span class="panel-meta">42 ms</span>` neben dem Badge.
+- Copy-Button: `.btn.btn-sm.btn-ghost`.
+- Kein CSS-Grid, kein lokales Panel-Styling — nur `.panel.panel-code`.
+
+**Referenz:** `components/code-viewer.html`, `docs/code-viewer.md`
+
+---
+
 ### 6. Karten-Seiten sind Sonderfälle
 
 Karten-Seiten mit Leaflet oder MapLibre verwenden eigene Layoutregeln.
