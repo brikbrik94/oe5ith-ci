@@ -16,6 +16,25 @@ docs/versioning.md
 
 ---
 
+## v1.3.0 - 2026-05-02
+
+### Added
+
+- `css/code-viewer.css` (neu): Code-Viewer / API-Debugger Pattern.
+  - `.panel-code` Modifier auf `.panel` — Terminal-Charakter (schwarzer Hintergrund, starke Border).
+  - `.code-viewer-pre` — scrollbarer Code-Block (`max-height: 600px`, `pre-wrap`, Mono-Font, grüne Schrift).
+  - `.form-row` — horizontales Flex-Layout für Control-Panel-Inputs (`flex-end` ausgerichtet).
+- `css/typography.css`: Utility-Klassen ergänzt.
+  - `.mono` — wendet `var(--font-mono)` auf beliebige Elemente an.
+  - `.ci-label` — kleines Uppercase-Label außerhalb von `.form-field` Kontexten.
+- `components/code-viewer.html` — Referenz-Seite mit allen Badge-Varianten (200 OK, 302 Found, 404 Not Found) und `.mono` Demo.
+- `docs/code-viewer.md` — vollständige Komponentendokumentation.
+- `docs/for-coding-agents.md`: Abschnitt 5a API-Debugger / Code-Viewer ergänzt.
+- `docs/tokens.md`: Verwendungshinweise für `--code-bg` und `--code-text` auf `.panel-code` ergänzt.
+- `.gitignore` hinzugefügt.
+
+---
+
 ## v1.2.0 - 2026-04-29
 
 ### Changed
