@@ -32,6 +32,7 @@
   --btn-radius:       6px;
   --badge-radius:     4px;
   --transition-fast:  0.15s ease;
+  --topbar-height:    60px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,12 +40,12 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
 
 /* TOPBAR */
 .topbar {
-  background: var(--card-bg); height: 60px;
+  background: var(--card-bg); height: var(--topbar-height);
   border-bottom: 2px solid var(--accent);
   display: flex; align-items: center; padding: 0 20px;
   position: sticky; top: 0; z-index: 100;
 }
-.brand { font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; color: #fff; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; color: #fff; text-decoration: none; }
 
 /* DEMO LAYOUT */
 .demo-body { padding: 32px 40px; display: flex; flex-direction: column; gap: 32px; max-width: 860px; }
@@ -117,7 +118,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
 <body>
 
 <div class="topbar">
-  <span class="brand">OE5ITH CI — Code Viewer</span>
+  <a class="brand" href="#">OE5ITH CI — Code Viewer</a>
 </div>
 
 <div class="demo-body">
