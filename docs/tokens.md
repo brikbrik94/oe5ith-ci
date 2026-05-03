@@ -61,8 +61,8 @@ Jede semantische Farbe hat drei Varianten: Vollton, Subtle (10%), Border (25%).
 
 | Token | Wert | Verwendung |
 |---|---|---|
-| `--code-bg` | `#000000` | Code Block Hintergrund |
-| `--code-text` | `#4ade80` | Terminal-Output, Code Block Text |
+| `--code-bg` | `#000000` | Code Block Hintergrund; `.panel-code` Panel-Hintergrund |
+| `--code-text` | `#4ade80` | Terminal-Output, Code Block Text; `.code-viewer-pre` |
 | `--code-inline-bg` | `#2a2a2a` | Inline Code Hintergrund |
 | `--code-inline-text` | `#e6e6e6` | Inline Code Text |
 | `--url-bg` | `#0d0d0d` | URL / Pfad Felder in Cards |
