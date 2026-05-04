@@ -167,12 +167,12 @@
 
 /* ═══ SIDEBAR TAB ═══ */
 .sidebar-tab {
-  position: absolute; right: -13px; top: 50%; transform: translateY(-50%);
-  width: 13px; height: 36px;
-  background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.25);
+  position: absolute; right: -18px; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 44px;
+  background: rgba(59,130,246,0.35); border: 1px solid rgba(59,130,246,0.60);
   border-left: none; border-radius: 0 7px 7px 0;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--accent); font-size: 10px; font-weight: 700;
+  cursor: pointer; color: var(--accent); font-size: 12px; font-weight: 700;
   transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
   z-index: var(--z-sidebar-tab); user-select: none;
 }
@@ -251,5 +251,9 @@
   }
   .sidebar.mobile-open { transform: translateX(0); box-shadow: var(--shadow-sidebar); }
   .sidebar.collapsed { width: var(--sidebar-width); }
+
+  .sidebar-tab {
+    right: -32px; width: 32px; height: 52px; font-size: 14px;
+  }
 
 }
