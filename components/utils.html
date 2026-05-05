@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Utils</title>
+<style>
+:root {
+  --bg:#1a1a1a; --panel:#202020; --panel-deep:#161616;
+  --text:#e0e0e0; --muted:#888; --subtle:#555; --border:#333;
+  --accent:#3b82f6; --card-gap:20px;
+  --font-sans:'Segoe UI',system-ui,sans-serif;
+  --transition-fast:0.15s ease;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--font-sans); background:var(--bg); color:var(--text); padding:40px; }
+
+.page-title { font-size:1.6rem; font-weight:300; color:#fff; margin-bottom:6px; }
+.page-title strong { font-weight:700; color:var(--accent); }
+.page-desc { font-size:0.85rem; color:var(--muted); margin-bottom:48px; max-width:640px; line-height:1.6; }
+
+.section { margin-bottom:56px; }
+.section-label {
+  font-size:0.68rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+  color:var(--subtle); margin-bottom:6px; padding-bottom:8px; border-bottom:1px solid #222;
+}
+.section-desc { font-size:0.82rem; color:#444; margin-bottom:16px; line-height:1.6; }
+.annotation { font-size:0.8rem; color:var(--subtle); margin-top:10px; line-height:1.6; max-width:860px; }
+.annotation code { background:#1e1e1e; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:0.75rem; color:#7ba8d4; }
+
+/* Demo-Boxen */
+.demo-box {
+  background:var(--panel); border:1px solid var(--border); border-radius:6px;
+  padding:20px; display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;
+}
+.demo-item {
+  background:var(--panel-deep); border:1px dashed var(--border);
+  border-radius:4px; padding:12px 16px;
+  font-size:0.78rem; color:var(--muted);
+}
+.demo-label {
+  font-size:0.6rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase;
+  color:var(--subtle); margin-bottom:6px;
+}
+
+/* ── Utils (aus utils.css) ── */
+.full-map    { flex:1; height:100%; min-height:0; position:relative; }
+.m-gap       { margin:var(--card-gap); }
+.mb-gap      { margin-bottom:var(--card-gap); }
+.flex-col    { display:flex; flex-direction:column; }
+.flex-center { display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+
+<div class="page-title">CI Reference — <strong>Utils</strong></div>
+<p class="page-desc">Zweckgebundene Utility-Klassen aus <code>css/utils.css</code>. Kein Komponenten-Kontext — direkt auf beliebige Elemente anwendbar.</p>
+
+<!-- .full-map -->
+<div class="section">
+  <div class="section-label">.full-map</div>
+  <div class="section-desc">Vollflächiger Container für MapLibre / Leaflet. <code>flex:1 · height:100% · min-height:0 · position:relative</code>. Verhindert Layout-Sprünge beim Initialisieren der Karte in einem Flex-Parent.</div>
+  <div class="demo-box" style="height:120px; padding:0; overflow:hidden; border-radius:6px;">
+    <div class="full-map" style="background:#2d3a2d; display:flex; align-items:center; justify-content:center;">
+      <span style="font-size:0.7rem; color:rgba(255,255,255,0.2)">Karte füllt den verfügbaren Bereich</span>
+    </div>
+  </div>
+  <p class="annotation">Auf das direkte Kind des <code>.layout</code>-Containers anwenden. Kein <code>width</code> oder <code>height</code> nötig — der Flex-Parent übernimmt die Steuerung.</p>
+</div>
+
+<!-- .m-gap / .mb-gap -->
+<div class="section">
+  <div class="section-label">.m-gap / .mb-gap</div>
+  <div class="section-desc">Abstand mit dem CI-Token <code>--card-gap</code> (20px). <code>.m-gap</code> rundherum, <code>.mb-gap</code> nur nach unten.</div>
+  <div class="demo-box" style="flex-direction:column; gap:0; padding:0; background:transparent; border:none;">
+    <div class="demo-item m-gap" style="background:var(--panel);">
+      <div class="demo-label">.m-gap</div>
+      margin: 20px (var(--card-gap)) rundherum
+    </div>
+    <div class="demo-item mb-gap" style="background:var(--panel);">
+      <div class="demo-label">.mb-gap</div>
+      margin-bottom: 20px (var(--card-gap))
+    </div>
+  </div>
+</div>
+
+<!-- .flex-col / .flex-center -->
+<div class="section">
+  <div class="section-label">.flex-col / .flex-center</div>
+  <div class="section-desc">Grundlegende Flex-Steuerung um <code>style="display:flex;..."</code> im HTML zu vermeiden.</div>
+  <div class="demo-box">
+    <div>
+      <div class="demo-label">.flex-col</div>
+      <div class="flex-col" style="gap:6px; background:var(--panel-deep); padding:12px; border-radius:4px; min-width:120px;">
+        <div class="demo-item" style="padding:6px 10px;">Item 1</div>
+        <div class="demo-item" style="padding:6px 10px;">Item 2</div>
+        <div class="demo-item" style="padding:6px 10px;">Item 3</div>
+      </div>
+    </div>
+    <div>
+      <div class="demo-label">.flex-center</div>
+      <div class="flex-center" style="width:140px; height:80px; background:var(--panel-deep); border-radius:4px;">
+        <div class="demo-item" style="padding:6px 10px;">Zentriert</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
