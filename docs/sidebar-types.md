@@ -18,6 +18,7 @@ z.B. Tool-Panel + Ergebnis-Liste in einer gemeinsam scrollenden `.sidebar-inner`
 | 4 | Tool-Panel + Ergebnis-Liste | Routing SEW/NEF |
 | 5 | Ergebnis-Liste einfach | NAH-Stützpunkte |
 | 6 | Status-Panel | ADS-B/AIS Live-Stats |
+| 7 | Koordinaten-Umrechner | coord.oe5ith.at |
 
 > **Sidebar-Footer:** Jede Sidebar benötigt ein `.sidebar-footer` am unteren Rand (Version, optionaler Status, `©`-Button).
 > Vollständige Struktur und HTML: → [`docs/sidebar.md` — Abschnitt „Sidebar Footer"](sidebar.md#sidebar-footer)
@@ -46,6 +47,10 @@ Gibt der Nutzer Daten ein und bekommt Ergebnisse?
 Zeigt die Sidebar nur Live-Daten (read-only)?
 │
 └── JA → Typ 6: Status-Panel
+
+Gibt der Nutzer Koordinaten ein und will zwischen Systemen umrechnen?
+│
+└── JA → Typ 7: Koordinaten-Umrechner
 
 Kombinationen nötig?
 └── Panels stapeln — z.B. Typ 2 + Typ 6
@@ -288,6 +293,42 @@ Aktualisierung per JS im Hintergrund.
 
 ---
 
+## Typ 7 — Koordinaten-Umrechner
+
+**Beispiel:** coord.oe5ith.at
+
+**Wann verwenden:**
+Karten-Seiten mit bidirektionalem Koordinaten-Umrechner. Nutzer gibt Koordinaten
+in einem beliebigen System ein — alle anderen Systeme werden live umgerechnet
+und der Punkt auf der Karte gesetzt.
+
+**Elemente:**
+- `.coord-block` je Koordinatensystem (aktiv oder inaktiv)
+- `.coord-block-header`: Systemname + Copy-Button (`.coord-copy`)
+- `.coord-row`: Standard-Zeile mit `.coord-label` + `.coord-input`
+- `.coord-row-dms`: DMS-Zeile mit 3 × `.coord-input-dms` + `.coord-suffix` (N/S, E/W)
+- `.coord-row-inline`: 2 Feld-Paare nebeneinander (MGRS: GZD + 100km-Square)
+- `.coord-input-full`: Volles Feld ohne Label (Maidenhead)
+- `.coord-select`: Dropdown für Meridianstreifen (BMN: M28/M31/M34)
+- `tool-sep` zwischen Blöcken
+
+**Zustände:**
+
+| Zustand | CSS | Felder |
+|---|---|---|
+| Aktiver Block (Eingabe) | `.coord-block.active` | Border links `--accent`, Titel `--accent`, editierbar |
+| Inaktiver Block (Ausgabe) | `.coord-block` | Kein Rand, `readonly`, Farbe `--muted` |
+| Feld-Fehler | `.coord-input-error` | Border `--danger` |
+
+**Regeln:**
+- Exakt ein Block ist zur Zeit aktiv — Klick auf inaktiven Block wechselt die Aktivierung
+- Copy-Button immer sichtbar (aktiv + inaktiv) — Format ist App-spezifisch
+- Kein Submit-Button — Umrechnung erfolgt live per App-JS
+- Karten-Punkt wird automatisch gesetzt sobald gültige Koordinaten vorliegen
+- Umrechnungslogik, Zone-Defaults und Copy-Format sind nicht Teil des CI
+
+---
+
 ## Panels stapeln
 
 Mehrere Panel-Typen können in einer `.sidebar-inner` kombiniert werden.
@@ -312,3 +353,4 @@ Reihenfolge: Tool/Eingabe oben, Ergebnisse unten.
 |---|---|
 | 2026-04-24 | Initiale Definition. 6 Typen. Gestapelte Panels. Ergebnis-Liste mit Auge-Icon. |
 | 2026-04-30 | Typ 5: `.result-empty` Leerzustand ergänzt |
+| 2026-05-05 | Typ 7: Koordinaten-Umrechner ergänzt (`coords.css`, `.coord-block` Pattern) |
