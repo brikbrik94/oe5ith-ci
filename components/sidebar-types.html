@@ -241,6 +241,14 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
 }
 .btn-primary:hover { background:var(--accent-hover); }
 
+/* Overlay Section Label */
+.overlay-section-label {
+  font-size:0.62rem; font-weight:700; letter-spacing:1.2px;
+  text-transform:uppercase; color:var(--subtle);
+  margin-bottom:5px; margin-top:10px;
+}
+.overlay-section-label:first-child { margin-top:0; }
+
 /* ══════════════════════════════════════
    COORD-BLOCK (Typ 7)
    ══════════════════════════════════════ */
@@ -1056,6 +1064,26 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
     Felder editierbar. <strong>Inaktive Blöcke:</strong> Kein Rand, Felder <code>readonly</code>
     (gedimmt). Klick auf Block macht ihn aktiv. <code>.coord-input-error</code>
     für Fehler-State (rote Border). Keine Umrechnungslogik im CI — App-Sache.
+  </p>
+</div>
+
+<!-- ═══ OVERLAY-SECTION-LABEL ═══ -->
+<div class="section">
+  <div class="section-label">Overlay Section Label</div>
+  <div class="section-desc">Variante von <code>.sidebar-section-label</code> für schwebende Overlays (z.B. Topbar-Panels auf Tablet/Mobile). Gleiche Typografie, ohne den Sidebar-spezifischen Padding-Versatz.</div>
+  <div class="screen" style="max-width:300px">
+    <div style="background:var(--panel); padding:14px 12px; border-radius:6px;">
+      <div class="overlay-section-label" style="margin-top:0">Navigation</div>
+      <div class="sb-nav active"><i class="fa-solid fa-map"></i> Karte</div>
+      <div class="sb-nav"><i class="fa-solid fa-list"></i> Liste</div>
+      <div class="overlay-section-label">Werkzeuge</div>
+      <div class="sb-nav"><i class="fa-solid fa-route"></i> Routing</div>
+      <div class="sb-nav"><i class="fa-solid fa-location-dot"></i> Koordinaten</div>
+    </div>
+  </div>
+  <p class="annotation">
+    Verwendet <code>var(--subtle)</code> für die Farbe. <code>:first-child</code> entfernt den oberen Abstand automatisch.
+    Kein <code>padding</code>-Versatz — passt in beliebige Container ohne Sidebar-Kontext.
   </p>
 </div>
 
