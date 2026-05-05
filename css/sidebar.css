@@ -38,6 +38,16 @@
   padding: 0 6px; margin-bottom: 6px; margin-top: 12px;
 }
 .sidebar-section-label:first-child { margin-top: 0; }
+.overlay-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--subtle);
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+.overlay-section-label:first-child { margin-top: 0; }
 .sidebar-sep { height: 1px; background: var(--border); margin: 10px 0; }
 .tool-sep { height: 1px; background: var(--border); margin: 10px 0; }
 
