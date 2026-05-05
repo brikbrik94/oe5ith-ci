@@ -14,6 +14,23 @@ Siehe auch:
 docs/versioning.md
 ```
 
+## v1.4.0 - 2026-05-05
+
+### Added
+
+- `css/coords.css` (neu): Sidebar Typ 7 — Koordinaten-Umrechner Pattern.
+  - `.coord-block` / `.coord-block.active` — Container mit Accent-Border-Links für aktives System.
+  - `.coord-block-header`, `.coord-block-title`, `.coord-copy` — Titelzeile mit Copy-Button.
+  - `.coord-row`, `.coord-label`, `.coord-input` — Standard-Zeile für 2-Feld-Systeme (WGS84 Dezimalgrad, UTM, BMN).
+  - `.coord-row-dms`, `.coord-input-dms`, `.coord-suffix` — DMS-Zeile mit 3 schmalen Feldern + N/S, E/W Suffix.
+  - `.coord-row-inline`, `.coord-input-short` — Inline-Zeile für 2 Feld-Paare nebeneinander (MGRS GZD + 100km-Square).
+  - `.coord-input-full` — Volles Feld ohne Label (Maidenhead Grid).
+  - `.coord-input-error` — Fehler-State (rote Border).
+  - `.coord-select` — Dropdown für Meridianstreifen (BMN M28/M31/M34).
+- `css/sidebar.css`: `.tool-sep` ergänzt (war bisher nur in Komponenten-Inline-Style definiert).
+- `components/sidebar-types.html`: Typ 7 Demo-Sektion mit allen 6 Koordinatensystemen.
+- `docs/sidebar-types.md`: Typ 7 Beschreibung, Entscheidungsbaum-Erweiterung.
+
 ---
 
 ## v1.3.0 - 2026-05-02
