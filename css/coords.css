@@ -151,6 +151,10 @@
   border-color: transparent;
   box-shadow: none;
 }
+.coord-input-full.coord-input-error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 2px rgba(239,68,68,0.12);
+}
 
 /* ═══════════════════════════════════════
    COORD-ROW-DMS — DMS-Zeile (3 schmale Felder + Suffix)
@@ -194,6 +198,10 @@
 .coord-input-dms[readonly]:focus {
   border-color: transparent;
   box-shadow: none;
+}
+.coord-input-dms.coord-input-error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 2px rgba(239,68,68,0.12);
 }
 
 .coord-suffix {
@@ -246,6 +254,10 @@
 .coord-input-short[readonly]:focus {
   border-color: transparent;
   box-shadow: none;
+}
+.coord-input-short.coord-input-error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 2px rgba(239,68,68,0.12);
 }
 
 /* ═══════════════════════════════════════
