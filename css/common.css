@@ -28,7 +28,7 @@
   --accent-border:    rgba(59,130,246,0.25);
   --sidebar-tab-bg:   rgba(59,130,246,0.15);   /* Sidebar-Tab Hintergrund */
   --sidebar-tab-border: rgba(59,130,246,0.35); /* Sidebar-Tab Border */
-  --sidebar-tab-width:  16px;                  /* Breite des Sidebar-Tab-Toggles */
+  --sidebar-tab-width:  18px;                  /* Breite des Sidebar-Tab-Toggles */
   --sidebar-tab-height: 44px;                  /* Höhe des Sidebar-Tab-Toggles */
 
   /* ── FARBEN: Semantisch ── */

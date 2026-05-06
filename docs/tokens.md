@@ -41,7 +41,7 @@ Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcode
 | `--accent-border` | `rgba(59,130,246, 0.25)` | Badge-Border, Tab-Toggle-Border |
 | `--sidebar-tab-bg` | `rgba(59,130,246, 0.15)` | Hintergrund des mobilen Sidebar-Tabs |
 | `--sidebar-tab-border` | `rgba(59,130,246, 0.35)` | Border des mobilen Sidebar-Tabs |
-| `--sidebar-tab-width` | `16px` | Breite des Sidebar-Tab-Toggles |
+| `--sidebar-tab-width` | `18px` | Breite des Sidebar-Tab-Toggles |
 | `--sidebar-tab-height` | `44px` | Höhe des Sidebar-Tab-Toggles |
 
 ---
@@ -174,7 +174,7 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
   --accent-border:       rgba(59,130,246,0.25);
   --sidebar-tab-bg:      rgba(59,130,246,0.15);
   --sidebar-tab-border:  rgba(59,130,246,0.35);
-  --sidebar-tab-width:   16px;
+  --sidebar-tab-width:   18px;
   --sidebar-tab-height:  44px;
 
   /* Semantisch */
