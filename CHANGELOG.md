@@ -33,6 +33,23 @@ docs/versioning.md
 
 ---
 
+## v1.5.0 - 2026-05-05
+
+### Added
+
+- `css/utils.css` (neu): Utility-Klassen ohne Komponenten-Kontext.
+  - `.full-map` — vollflächiger MapLibre/Leaflet-Container (`flex:1`, `height:100%`, `min-height:0`, `position:relative`).
+  - `.m-gap` / `.mb-gap` — Abstände via `var(--card-gap)`.
+  - `.flex-col` / `.flex-center` — grundlegende Flex-Steuerung.
+- `css/common.css`: `--sidebar-tab-width: 16px` und `--sidebar-tab-height: 44px` ergänzt.
+- `css/sidebar.css`: `.overlay-section-label` — Variante von `.sidebar-section-label` für schwebende Overlays.
+- `components/utils.html` — Referenzseite für alle Utils.
+- `components/sidebar-types.html`: `.overlay-section-label` Demo-Sektion.
+- `docs/tokens.md`: Z-Index-Bereichstabelle (0–999 App, 1000+ CI) und Tab-Maß-Token-Dokumentation.
+- `docs/for-coding-agents.md`: No-Inline-Style-Regel für dynamisch erzeugte HTML-Strings im JS/TS.
+
+---
+
 ## v1.3.0 - 2026-05-02
 
 ### Added
