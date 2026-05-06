@@ -334,6 +334,7 @@ Falls JavaScript ergänzt wird:
 
 - UI-Zustände über Klassen steuern.
 - Keine Inline-Styles setzen, wenn eine CSS-Klasse ausreicht.
+- Kein `style="..."` in dynamisch erzeugten HTML-Strings im JS/TS-Code. Ausnahme: Werte die erst zur Laufzeit berechnet werden können (z.B. Pixel-Positionen aus JS-Events, dynamische Breiten/Höhen aus Messungen). Für alle anderen Fälle: CI-Klassen verwenden.
 - Keine hart codierten Farben oder Layoutwerte in JavaScript.
 - Bestehende IDs und Klassen nicht ohne Grund ändern.
 - Event-Handler nachvollziehbar benennen.
