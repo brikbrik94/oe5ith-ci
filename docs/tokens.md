@@ -41,6 +41,8 @@ Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcode
 | `--accent-border` | `rgba(59,130,246, 0.25)` | Badge-Border, Tab-Toggle-Border |
 | `--sidebar-tab-bg` | `rgba(59,130,246, 0.15)` | Hintergrund des mobilen Sidebar-Tabs |
 | `--sidebar-tab-border` | `rgba(59,130,246, 0.35)` | Border des mobilen Sidebar-Tabs |
+| `--sidebar-tab-width` | `16px` | Breite des Sidebar-Tab-Toggles |
+| `--sidebar-tab-height` | `44px` | Höhe des Sidebar-Tab-Toggles |
 
 ---
 
@@ -116,6 +118,15 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
 > Popups bei 700. Die CI-Tokens beginnen bei 1000+ damit Sidebar, Topbar und Modals
 > immer über der Karten-Engine liegen.
 
+**Reservierte Bereiche:**
+
+| Bereich | Z-Index | Verwendung |
+|---|---|---|
+| App-Content | 0 – 999 | Site-spezifische Inhalte, Karten-Layer, App-Overlays |
+| CI-Overlays | 1000+ | Sidebar-Tab (1010) bis Toast (1600) |
+
+App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays immer oben bleiben.
+
 ---
 
 ## Transition Tokens
@@ -163,6 +174,8 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
   --accent-border:       rgba(59,130,246,0.25);
   --sidebar-tab-bg:      rgba(59,130,246,0.15);
   --sidebar-tab-border:  rgba(59,130,246,0.35);
+  --sidebar-tab-width:   16px;
+  --sidebar-tab-height:  44px;
 
   /* Semantisch */
   --success:          #22c55e;
@@ -240,6 +253,7 @@ Z-Index Werte sind gestaffelt und dürfen nie manuell überschrieben werden.
 
 | Datum | Änderung |
 |---|---|
+| 2026-05-05 | `--sidebar-tab-width` und `--sidebar-tab-height` ergänzt. Z-Index-Bereichstabelle hinzugefügt. |
 | 2026-04-22 | Initiale vollständige Token-Definition. Alle Farben aus Badges/Buttons als Tokens. Z-Index, Transitions, Shadows ergänzt. |
 
 ---
