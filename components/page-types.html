@@ -229,6 +229,22 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
 .m-nav-card-title { font-size: 0.72rem; font-weight: 600; color: var(--text); }
 .m-nav-card-desc { font-size: 0.6rem; color: var(--muted); line-height: 1.3; flex: 1; }
 .m-nav-card.disabled { opacity: 0.5; }
+.m-footer {
+  width: 100%;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.65rem;
+  color: var(--subtle);
+}
+.m-footer-links { display: flex; gap: 10px; }
+.m-footer-links a { color: var(--muted); text-decoration: none; }
+.m-footer-links a:hover { color: var(--text); }
 
 /* Karte */
 .m-map { flex: 1; background: #2d3a2d; display: flex; align-items: center; justify-content: center; position: relative; }
@@ -631,11 +647,21 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
         </div>
 
       </div>
+      <div class="m-footer">
+        <span style="font-family:monospace;color:var(--subtle)">CI v2.0.0</span>
+        <span>© 2026 OE5ITH</span>
+        <div class="m-footer-links">
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+        </div>
+      </div>
     </div>
   </div>
   <p class="annotation">
-    Kein <code>.layout</code>, kein Sidebar. <code>.landing-body</code> mit <code>padding-top: 60px</code>.
+    Kein <code>.layout</code>, keine Sidebar. <code>.landing-body</code> mit <code>padding-top: 60px</code>.
     Nav-Cards (Typ 1 aus cards.css). Disabled-Cards für zukünftige Bereiche.
+    <code>.page-footer</code> mit Version, Copyright und Links ist <strong>Pflicht</strong> auf jeder Startseite.
+    <code>margin-top: auto</code> drückt den Footer ans Ende von <code>.landing-body</code>.
   </p>
 </div>
 
