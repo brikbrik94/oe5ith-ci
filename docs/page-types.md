@@ -192,7 +192,10 @@ Topbar
 └── landing-body (zentriert)
     ├── landing-title            ← "Willkommen im Cloud Portal"
     ├── card-grid                ← Navigation-Cards (Typ 1 aus cards.css)
-    └── Footer (optional)        ← Versioninfo, Copyright
+    └── page-footer              ← Version · Copyright · Links (Pflicht)
+        ├── page-footer-version  ← CI-Version, z.B. "CI v2.0.0"
+        ├── page-footer-copy     ← "© 2026 OE5ITH"
+        └── page-footer-links    ← Impressum, Datenschutz
 ```
 
 **Merkmale:**
@@ -201,6 +204,7 @@ Topbar
 - `padding-top: 60px` — mehr Luft nach der Topbar als bei anderen Typen
 - Nav-Cards mit Icon + Titel + Beschreibung + Button
 - Disabled-Cards für noch nicht verfügbare Bereiche
+- `.page-footer` mit Version, Copyright-Text und Links ist **Pflicht** — kein optionaler Baustein
 
 **Nicht geeignet wenn:**
 - Es nach dem Login weitere Navigation gibt → Typ 3 (Dashboard)
@@ -220,7 +224,8 @@ verfügbaren Bereich. Die Sidebar enthält Layer-Controls (Accordion).
 - Die Karte füllt `flex: 1` im Layout direkt aus
 - Sidebar enthält Accordion-Gruppen statt Nav-Items
 - Topbar enthält Controls-Panel (Dropdown, Toggles)
-- Leaflet/MapLibre CSS-Overrides aus `modal.css` aktivieren
+- Native MapLibre/Leaflet-Attribution bleibt aktiv (kein CSS-Override nötig)
+- `.sidebar-footer-copyright`-Button für weiterführende Lizenzinfos nutzen
 
 **Struktur:**
 ```
@@ -229,6 +234,16 @@ Topbar (mit Controls-Panel: Kartentyp, Zoom, Legende, Labels)
     ├── Sidebar (Accordion-Layer-Steuerung)
     └── Karten-Container (height: 100%, width: 100%)
 ```
+
+---
+
+## Footer- und Copyright-Regeln
+
+| Seitentyp | Sidebar | Copyright-Anzeige |
+|---|---|---|
+| Typ 1–4 | Pflicht | Sidebar-Footer: Version + `.sidebar-footer-copyright`-Button |
+| Typ 5 — Startseite | Nicht vorhanden | `.page-footer` mit Version, Copyright-Text, Links |
+| Karten-Sonderfall | Pflicht (auch wenn leer) | Sidebar-Footer + native MapLibre/Leaflet-Attribution |
 
 ---
 
@@ -263,4 +278,5 @@ das bestehende Basis-CSS (`common.css`, `topbar.css`, `sidebar.css`) wiederverwe
 
 | Datum | Änderung |
 |---|---|
+| 2026-05-07 | `.map-attribution`-Verweis entfernt (Breaking: v2.0.0). `.page-footer` als Pflichtbaustein für Typ 5 dokumentiert. Footer/Copyright-Regeltabelle ergänzt. |
 | 2026-04-24 | Initiale Definition. 5 Typen + Karten-Sonderfall. Entscheidungsbaum. Schnellreferenz. |
