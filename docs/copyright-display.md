@@ -42,33 +42,19 @@ Er ist auf **jeder** Seite mit Sidebar vorhanden — unabhängig vom Seitentyp.
 ## 2. Karten-Attribution (nur Karten-Seiten)
 
 Auf allen Seiten mit Leaflet oder MapLibre **muss** die Attribution
-sichtbar in der Karte erscheinen. Der `ⓘ`-Button daneben öffnet
-das vollständige Copyright-Modal.
+sichtbar in der Karte erscheinen.
 
 ```
 ┌──────────────────────────────────────────────────────┐
 │                                                      │
 │                    [Karte]                           │
 │                                                      │
-│              © OpenStreetMap | © Leaflet | © basemap.at  ⓘ │
+│              © OpenStreetMap | © Leaflet | © basemap.at │
 └──────────────────────────────────────────────────────┘
 ```
 
-```html
-<div class="map-attribution">
-  © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>
-  <span class="map-attribution-sep">|</span>
-  © <a href="https://leafletjs.com" target="_blank">Leaflet</a>
-  <span class="map-attribution-sep">|</span>
-  © <a href="https://basemap.at" target="_blank">basemap.at</a>
-  <button class="map-attribution-info"
-          onclick="openCopyrightModal()"
-          title="Alle Copyright-Informationen">ⓘ</button>
-</div>
-```
-
-**Pflicht:** OSM, Leaflet und basemap.at müssen immer sichtbar sein.
-Das `ⓘ`-Icon ist zusätzlich — es ersetzt nicht die Pflicht-Attribution.
+> **Hinweis:** `.map-attribution` wurde in v2.0.0 entfernt. Karten-Seiten verwenden die native
+> MapLibre/Leaflet-Attribution. Weiterführende Copyright-Infos über `.sidebar-footer-copyright`.
 
 ---
 

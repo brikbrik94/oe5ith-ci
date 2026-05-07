@@ -381,26 +381,6 @@ document.addEventListener('keydown', e => {
 </div>
 ```
 
-**Karten-Attribution (Karten-Seiten):**
-
-```html
-<!-- Ersetzt die native Leaflet/MapLibre Attribution -->
-<div class="map-attribution">
-  © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>
-  <span class="map-attribution-sep">|</span>
-  © <a href="https://leafletjs.com" target="_blank">Leaflet</a>
-  <span class="map-attribution-sep">|</span>
-  © <a href="https://basemap.at" target="_blank">basemap.at</a>
-  <button class="map-attribution-info"
-          onclick="openCopyrightModal()"
-          title="Alle Copyright-Informationen">ⓘ</button>
-</div>
-```
-
-> **Wichtig:** `.leaflet-control-attribution` und `.maplibregl-ctrl-attrib` werden
-> durch `page.css` ausgeblendet wenn `.map-attribution` verwendet wird —
-> um doppelte Attribution zu vermeiden. OSM/Leaflet bleiben aber im
-> `.map-attribution` Block sichtbar — die Lizenzpflicht bleibt erfüllt.
 
 
 ---

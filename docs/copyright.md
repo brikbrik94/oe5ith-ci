@@ -183,14 +183,8 @@ Folgende Vermerke **müssen** auf Kartenseiten sichtbar sein:
 © OpenStreetMap contributors | © Leaflet | © basemap.at
 ```
 
-**Empfohlene vollständige Attribution im Karten-Footer:**
-```html
-<div class="map-attribution">
-  © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap contributors</a>
-  | © <a href="https://leafletjs.com" target="_blank">Leaflet</a>
-  | © <a href="https://basemap.at" target="_blank">basemap.at</a> (CC BY 4.0)
-</div>
-```
+> **Hinweis:** `.map-attribution` wurde in v2.0.0 entfernt. Karten-Seiten verwenden die native
+> MapLibre/Leaflet-Attribution. Weiterführende Copyright-Infos über `.sidebar-footer-copyright`.
 
 ---
 
