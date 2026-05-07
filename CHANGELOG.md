@@ -33,6 +33,23 @@ docs/versioning.md
 
 ---
 
+## v1.6.0 - 2026-05-07
+
+### Added
+
+- `css/common.css`: Globale Scrollbar-Stilisierung. 6px breiter Thumb in `--border-strong`
+  auf transparentem Track. Hover-State `--subtle`. Unterstützt Firefox (`scrollbar-width`/
+  `scrollbar-color`) und Chrome/Safari/Edge (`::-webkit-scrollbar`).
+
+### Changed
+
+- `css/common.css`: `--sidebar-width` von 260px auf 300px erhöht. Verbessert die Lesbarkeit
+  von Formularen mit mehreren nebeneinanderstehenden Feldern (z.B. DMS-Zeilen im
+  Koordinaten-Umrechner). Auf aktuellen Displays (≥1366px Breite) unproblematisch.
+- `docs/tokens.md`: `--sidebar-width` und Änderungshistorie aktualisiert.
+
+---
+
 ## v1.5.0 - 2026-05-05
 
 ### Added
