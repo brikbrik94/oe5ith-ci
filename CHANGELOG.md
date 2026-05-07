@@ -14,6 +14,25 @@ Siehe auch:
 docs/versioning.md
 ```
 
+## v2.0.0 - 2026-05-07
+
+### Breaking
+
+- `css/page.css`: `.map-attribution`, `.map-attribution-sep`, `.map-attribution-info`
+  entfernt. Sites die diese Klassen verwenden müssen das `.map-attribution`-HTML-Element
+  entfernen und native MapLibre/Leaflet-Attribution aktivieren.
+- `css/page.css`: Hide-Regeln `.leaflet-control-attribution` und `.maplibregl-ctrl-attrib`
+  entfernt. Native Attribution wird jetzt im Standard-Stil der jeweiligen Bibliothek
+  angezeigt.
+
+### Added
+
+- `css/page.css`: `.page-footer`, `.page-footer-version`, `.page-footer-copy`,
+  `.page-footer-links` — Fußzeilen-Komponente für Typ-5-Startseiten (ohne Sidebar).
+  Enthält Version, Copyright-Text und Linkliste (Impressum, Datenschutz etc.).
+
+---
+
 ## v1.6.1 - 2026-05-07
 
 ### Fixed
