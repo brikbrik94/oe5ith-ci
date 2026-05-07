@@ -87,7 +87,7 @@ Jede semantische Farbe hat drei Varianten: Vollton, Subtle (10%), Border (25%).
 |---|---|---|
 | `--topbar-height` | `60px` | Topbar Desktop + Tablet |
 | `--topbar-height-mobile` | `52px` | Topbar Mobile ≤768px |
-| `--sidebar-width` | `260px` | Sidebar, alle Breakpoints |
+| `--sidebar-width` | `300px` | Sidebar, alle Breakpoints |
 | `--container-max` | `1000px` | Max-width Content-Container |
 | `--card-radius` | `12px` | Cards, Modals |
 | `--card-padding` | `20px` | Innenabstand Cards |
@@ -206,7 +206,7 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
   /* Spacing */
   --topbar-height:        60px;
   --topbar-height-mobile: 52px;
-  --sidebar-width:        260px;
+  --sidebar-width:        300px;
   --container-max:        1000px;
   --card-radius:          12px;
   --card-padding:         20px;
@@ -234,7 +234,17 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
   --shadow-card:      0 10px 20px rgba(0,0,0,0.30);
   --shadow-dropdown:  0 8px 20px rgba(0,0,0,0.40);
   --shadow-sidebar:   4px 0 20px rgba(0,0,0,0.50);
+  --shadow-toast:     0 8px 24px rgba(0,0,0,0.50);
+
+  /* ── Scrollbar ── */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
 }
+
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--subtle); }
 ```
 
 ---
@@ -253,6 +263,7 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
 
 | Datum | Änderung |
 |---|---|
+| 2026-05-07 | `--sidebar-width` von 260px auf 300px erhöht. Globale Scrollbar-Stilisierung (`scrollbar-width: thin`, `--border-strong`/transparent) in `common.css` ergänzt. |
 | 2026-05-05 | `--sidebar-tab-width` und `--sidebar-tab-height` ergänzt. Z-Index-Bereichstabelle hinzugefügt. |
 | 2026-04-22 | Initiale vollständige Token-Definition. Alle Farben aus Badges/Buttons als Tokens. Z-Index, Transitions, Shadows ergänzt. |
 
