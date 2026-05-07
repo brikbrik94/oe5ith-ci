@@ -235,12 +235,13 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
   --shadow-dropdown:  0 8px 20px rgba(0,0,0,0.40);
   --shadow-sidebar:   4px 0 20px rgba(0,0,0,0.50);
   --shadow-toast:     0 8px 24px rgba(0,0,0,0.50);
+}
 
-  /* ── Scrollbar ── */
+/* ── Scrollbar ── */
+html {
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
 }
-
 ::-webkit-scrollbar        { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track  { background: transparent; }
 ::-webkit-scrollbar-thumb  { background: var(--border-strong); border-radius: 3px; }
