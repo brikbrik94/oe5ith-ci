@@ -14,6 +14,16 @@ Siehe auch:
 docs/versioning.md
 ```
 
+## v1.6.1 - 2026-05-07
+
+### Fixed
+
+- `css/topbar.css`: `.controls-panel` erhält `gap: 8px` als Fallback. Wenn `display: contents`
+  durch eine Utility-Klasse (z.B. `.desktop-only`) überschrieben wird, kleben die Kind-Elemente
+  nicht mehr zusammen. Gemeldet via `CI_FIXES_REPORT.md` aus `website-v3`.
+
+---
+
 ## v1.4.0 - 2026-05-05
 
 ### Added
