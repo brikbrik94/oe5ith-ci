@@ -19,13 +19,13 @@
   --subtle:           #555555;
   --border:           #333333;
   --border-strong:    #444444;
+  --surface-hover:    rgba(255,255,255,0.05); /* Subtle hover on dark backgrounds */
 
   /* ── FARBEN: Akzent ── */
   --accent:           #3b82f6;
   --accent-hover:     #2563eb;
   --accent-subtle:    rgba(59,130,246,0.07);   /* Nav-Items, Hover */
   --accent-subtle-md: rgba(59,130,246,0.10);
-  --surface-hover:    rgba(255,255,255,0.05); /* Subtle hover on dark backgrounds */
   --accent-border:    rgba(59,130,246,0.25);
   --sidebar-tab-bg:   rgba(59,130,246,0.15);   /* Sidebar-Tab Hintergrund */
   --sidebar-tab-border: rgba(59,130,246,0.35); /* Sidebar-Tab Border */

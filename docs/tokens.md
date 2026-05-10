@@ -27,6 +27,7 @@ Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcode
 | `--subtle` | `#555555` | Labels, Section-Titles, Metadaten |
 | `--border` | `#333333` | Alle Borders |
 | `--border-strong` | `#444444` | Hover-Borders, aktive Elemente |
+| `--surface-hover` | `rgba(255,255,255, 0.05)` | Subtiler Hover auf dunklen Hintergründen |
 
 ---
 
@@ -38,7 +39,6 @@ Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcode
 | `--accent-hover` | `#2563eb` | Hover-State für Accent-Buttons |
 | `--accent-subtle` | `rgba(59,130,246, 0.07)` | Aktive Nav-Items, Hover-Hintergründe |
 | `--accent-subtle-md` | `rgba(59,130,246, 0.10)` | Badge-Hintergrund, Button-Secondary |
-| `--surface-hover` | `rgba(255,255,255, 0.05)` | Subtiler Hover auf dunklen Hintergründen |
 | `--accent-border` | `rgba(59,130,246, 0.25)` | Badge-Border, Tab-Toggle-Border |
 | `--sidebar-tab-bg` | `rgba(59,130,246, 0.15)` | Hintergrund des mobilen Sidebar-Tabs |
 | `--sidebar-tab-border` | `rgba(59,130,246, 0.35)` | Border des mobilen Sidebar-Tabs |

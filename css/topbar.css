@@ -345,7 +345,7 @@
 
 .topbar-nav-link:hover {
   color: var(--text);
-  background: rgba(255,255,255,0.05);
+  background: var(--surface-hover);
 }
 
 .topbar-nav-link.active {
@@ -424,7 +424,7 @@
 
 .topbar-nav-dropdown-item:hover {
   background: var(--accent-subtle-md);
-  color: #fff;
+  color: var(--text);
 }
 
 .topbar-nav-dropdown-item.active {
