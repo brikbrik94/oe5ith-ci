@@ -67,6 +67,7 @@ Der beschreibende Text erscheint kontextsensitiv:
 - `data-tooltip="…"` — Text für den Desktop-Tooltip
 - `.topbar-toggle-label`-Span — Text für das Overlay
 
+`data-tooltip` und der Text im `.topbar-toggle-label`-Span müssen identisch sein.  
 Ohne beide Felder ist der Modifier nicht erlaubt.
 
 ### CSS
