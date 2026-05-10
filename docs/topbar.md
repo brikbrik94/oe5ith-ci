@@ -100,6 +100,15 @@ toggle.style.width = Math.ceil(measured / 10) * 10 + 'px'; // auf 10px runden
 
 **Nicht erlaubt:** `width: auto`, `min-width`, oder Breite durch Inhalt bestimmen lassen.
 
+**Menü-Breite:**
+```css
+.topbar-dropdown-menu {
+  min-width: 100%;  /* mindestens so breit wie der Toggle */
+}
+```
+Das Menü ist immer mindestens so breit wie sein Toggle-Button — nie schmaler.  
+Wenn einzelne Einträge länger sind als der Toggle, darf das Menü breiter werden.
+
 ### Verhalten nach Breakpoint
 
 | Breakpoint | Verhalten |
@@ -112,6 +121,32 @@ toggle.style.width = Math.ceil(measured / 10) * 10 + 'px'; // auf 10px runden
 
 Öffnet sich unter der Topbar, volle Breite, `background: #202020`.  
 Wird per Klick außerhalb oder `Escape` geschlossen.
+
+---
+
+### Schaltflächen: Icon-only Modifier
+
+Toggle-Schaltflächen können mit `.topbar-toggle--icon-only` als reine Icon-Buttons dargestellt werden.
+
+| Kontext | Darstellung |
+|---|---|
+| Desktop (`controls-panel`) | Nur Icon — Text als Tooltip bei Hover |
+| Tablet/Mobile (`controls-overlay`) | Icon + Text immer sichtbar |
+
+**HTML (Pflichtfelder):**
+```html
+<button class="topbar-toggle topbar-toggle--icon-only"
+        data-tooltip="Hillshade"
+        aria-pressed="false">
+  <svg>…</svg>
+  <span class="topbar-toggle-label">Hillshade</span>
+</button>
+```
+
+Regeln:
+- `data-tooltip` und der Text im `.topbar-toggle-label`-Span müssen identisch sein.
+- Ohne `data-tooltip` und `.topbar-toggle-label` ist der Modifier nicht erlaubt.
+- Der Tooltip erscheint mittig oberhalb des Buttons via CSS `::after`.
 
 ---
 
@@ -140,6 +175,39 @@ Links je nach Seite zu definieren (siehe Seiten-spezifische Doku).
 @media (max-width: 768px)  { .topbar-nav-link { display: none; } }
 @media (max-width: 1024px) { .topbar-nav-link:nth-child(n+3) { display: none; } }
 ```
+
+### Nav Dropdown (`.topbar-nav-dropdown`)
+
+Ersetzt mehrere einzelne `.topbar-nav-link`-Einträge wenn mehr als 2–3 Links benötigt werden.
+
+> **Regel:** `.topbar-nav-dropdown` und `.topbar-nav-link` nie gleichzeitig in `topbar-right` verwenden.
+
+**HTML:**
+```html
+<div class="topbar-nav-dropdown">
+  <button class="topbar-nav-dropdown-toggle"
+          aria-haspopup="menu" aria-expanded="false">
+    Portale
+    <span class="chevron">▾</span>
+  </button>
+  <div class="topbar-nav-dropdown-menu" role="menu">
+    <a href="#" class="topbar-nav-dropdown-item" role="menuitem">Link 1</a>
+    <a href="#" class="topbar-nav-dropdown-item active" role="menuitem">Link 2</a>
+    <a href="#" class="topbar-nav-dropdown-item" role="menuitem">Link 3</a>
+  </div>
+</div>
+```
+
+- Label ("Portale") ist frei wählbar im HTML — keine CSS-Änderung nötig.
+- Menü öffnet sich **rechts ausgerichtet** (`right: 0`).
+
+**Breakpoints:**
+
+| Breakpoint | Verhalten |
+|---|---|
+| Desktop ≥1025px | Vollständig sichtbar |
+| Tablet 769–1024px | Vollständig sichtbar |
+| Mobile ≤768px | Ausgeblendet (`display: none !important`) |
 
 ---
 
@@ -201,6 +269,7 @@ Stattdessen: Halbkreis-Tab an der rechten Kante der Sidebar.
 - Toggle Button: `aria-pressed`
 - Searchbar: `aria-label="Suchfeld"`
 - Sidebar-Tab: `role="button"`, `aria-label`, `tabindex="0"`, Enter/Space bedienbar
+- Nav Dropdown Toggle: `aria-haspopup="menu"`, `aria-expanded`, `Escape` schließt Menü
 - Controls-Toggle: `aria-expanded`, `aria-controls`
 - `Escape` schließt Dropdown, Sidebar (Mobile), Controls-Overlay
 
@@ -421,4 +490,5 @@ mit `display: flex` aus anderen Regeln zu verhindern.
 
 | Datum | Änderung |
 |---|---|
+| 2026-05-10 | Dropdown min-width Fix · `.topbar-toggle--icon-only` Modifier · `.topbar-nav-dropdown` Komponente |
 | 2026-04-21 | Initiale Definition. Hamburger durch Sidebar-Tab ersetzt. Mobile 52px. Brand ohne Icon auf Mobile. |
