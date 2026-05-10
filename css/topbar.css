@@ -380,7 +380,7 @@
 .topbar-nav-dropdown-toggle:hover,
 .topbar-nav-dropdown-toggle.open {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-hover);
 }
 
 .topbar-nav-dropdown-toggle .chevron {
@@ -423,7 +423,7 @@
 }
 
 .topbar-nav-dropdown-item:hover {
-  background: rgba(59, 130, 246, 0.1);
+  background: var(--accent-subtle-md);
   color: #fff;
 }
 
