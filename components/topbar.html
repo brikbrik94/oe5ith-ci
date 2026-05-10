@@ -27,6 +27,9 @@
 
   --panel:          #202020;
   --z-tooltip:      1300;
+  --z-dropdown:     1200;
+  --transition-fast: 0.15s ease;
+  --shadow-dropdown: 0 8px 20px rgba(0,0,0,0.40);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -771,11 +774,20 @@ body {
     </div><!-- /controls-panel -->
   </div><!-- /topbar-center -->
 
-  <!-- RECHTS: Nav Links -->
+  <!-- RECHTS: Nav Dropdown -->
   <div class="topbar-right">
-    <a href="#" class="topbar-nav-link" data-link="1">Link 1</a>
-    <a href="#" class="topbar-nav-link" data-link="2">Link 2</a>
-    <a href="#" class="topbar-nav-link active" data-link="3">Link 3</a>
+    <div class="topbar-nav-dropdown" id="nav-dropdown-wrap">
+      <button class="topbar-nav-dropdown-toggle" id="nav-dropdown-toggle"
+              aria-haspopup="true" aria-expanded="false">
+        Portale
+        <span class="chevron">▾</span>
+      </button>
+      <div class="topbar-nav-dropdown-menu" id="nav-dropdown-menu">
+        <a href="#" class="topbar-nav-dropdown-item" data-link="1">Portal 1</a>
+        <a href="#" class="topbar-nav-dropdown-item" data-link="2">Portal 2</a>
+        <a href="#" class="topbar-nav-dropdown-item active" data-link="3">Portal 3</a>
+      </div>
+    </div>
   </div>
 
 </header>
@@ -981,15 +993,37 @@ $('search-input').addEventListener('keydown', e => {
 });
 
 /* ═══════════════════════════════════════
-   NAV LINKS
+   NAV DROPDOWN
    ═══════════════════════════════════════ */
-document.querySelectorAll('.topbar-nav-link').forEach(link => {
-  link.addEventListener('click', e => {
+let navDropdownOpen = false;
+
+function setNavDropdown(open) {
+  navDropdownOpen = open;
+  $('nav-dropdown-menu').classList.toggle('open', open);
+  $('nav-dropdown-toggle').classList.toggle('open', open);
+  $('nav-dropdown-toggle').setAttribute('aria-expanded', open);
+}
+
+$('nav-dropdown-toggle').addEventListener('click', e => {
+  e.stopPropagation();
+  setNavDropdown(!navDropdownOpen);
+  log(`Portale-Dropdown → ${navDropdownOpen ? 'geöffnet' : 'geschlossen'}`);
+});
+
+document.querySelectorAll('.topbar-nav-dropdown-item').forEach(item => {
+  item.addEventListener('click', e => {
     e.preventDefault();
-    document.querySelectorAll('.topbar-nav-link').forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
-    log(`Nav → "Link ${link.dataset.link}" geklickt`);
+    document.querySelectorAll('.topbar-nav-dropdown-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    log(`Portal → "Portal ${item.dataset.link}" geklickt`);
+    setNavDropdown(false);
   });
+});
+
+document.addEventListener('click', e => {
+  if (navDropdownOpen && !$('nav-dropdown-wrap').contains(e.target)) {
+    setNavDropdown(false);
+  }
 });
 
 /* ═══════════════════════════════════════
@@ -1028,6 +1062,7 @@ document.addEventListener('keydown', e => {
     if (controlsOpen) setControls(false);
     if (sidebarOpen && window.innerWidth <= 768) setSidebar(false);
     if (dropdownOpen) setDropdown(false);
+    if (navDropdownOpen) setNavDropdown(false);
   }
 });
 
