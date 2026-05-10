@@ -14,6 +14,28 @@ Siehe auch:
 docs/versioning.md
 ```
 
+## v2.1.0 - 2026-05-10
+
+### Added
+
+- `css/topbar.css`: `.topbar-toggle--icon-only` Modifier — Icon-only Toggle-Schaltflächen
+  mit CSS-Tooltip auf Desktop (`data-tooltip` via `::after`) und Icon + Label im
+  Controls-Overlay (Tablet/Mobile). Pflichtfelder: `data-tooltip` + `.topbar-toggle-label`.
+- `css/topbar.css`: `.topbar-nav-dropdown` Komponente — Platzsparendes Navigations-Dropdown
+  für `topbar-right`. Ersetzt einzelne `.topbar-nav-link`-Einträge bei mehr als 2–3 Links.
+  Label frei wählbar im HTML. Menü rechts ausgerichtet. Auf Mobile ausgeblendet.
+- `css/common.css`: `--surface-hover` Token — `rgba(255,255,255,0.05)` für subtile
+  Hover-Hintergründe auf dunklen Oberflächen.
+
+### Fixed
+
+- `css/topbar.css`: `.topbar-dropdown-menu` — `min-width: 180px` korrigiert auf
+  `min-width: 100%`. Dropdown-Menü öffnet sich nicht mehr breiter als der Toggle-Button.
+- `css/topbar.css`: `.topbar-nav-link:hover` — Hardcoded `rgba(255,255,255,0.05)`
+  durch `var(--surface-hover)` ersetzt.
+
+---
+
 ## v2.0.0 - 2026-05-07
 
 ### Breaking
