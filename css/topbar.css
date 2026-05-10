@@ -250,7 +250,7 @@
 
 /* Overlay: Label immer sichtbar */
 .controls-overlay .topbar-toggle--icon-only .topbar-toggle-label {
-  display: inline;
+  display: revert;
 }
 
 /* ═══════════════════════════════════════
