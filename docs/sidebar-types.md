@@ -7,7 +7,7 @@
 
 ## Überblick
 
-Sechs definierte Sidebar-Panel-Typen. Panels können **gestapelt** werden —
+Acht definierte Sidebar-Panel-Typen. Panels können **gestapelt** werden —
 z.B. Tool-Panel + Ergebnis-Liste in einer gemeinsam scrollenden `.sidebar-inner`.
 
 | Typ | Name | Beispiel |
@@ -19,6 +19,7 @@ z.B. Tool-Panel + Ergebnis-Liste in einer gemeinsam scrollenden `.sidebar-inner`
 | 5 | Ergebnis-Liste einfach | NAH-Stützpunkte |
 | 6 | Status-Panel | ADS-B/AIS Live-Stats |
 | 7 | Koordinaten-Umrechner | coord.oe5ith.at |
+| 8 | Objekt-Detail | map.oe5ith.at/tracking |
 
 > **Sidebar-Footer:** Jede Sidebar benötigt ein `.sidebar-footer` am unteren Rand (Version, optionaler Status, `©`-Button).
 > Vollständige Struktur und HTML: → [`docs/sidebar.md` — Abschnitt „Sidebar Footer"](sidebar.md#sidebar-footer)
@@ -47,6 +48,10 @@ Gibt der Nutzer Daten ein und bekommt Ergebnisse?
 Zeigt die Sidebar nur Live-Daten (read-only)?
 │
 └── JA → Typ 6: Status-Panel
+
+Zeigt die Sidebar Details zu einem angeklickten Kartenobjekt (Flugzeug, Schiff)?
+│
+└── JA → Typ 8: Objekt-Detail (kombiniert mit Typ 6)
 
 Gibt der Nutzer Koordinaten ein und will zwischen Systemen umrechnen?
 │
@@ -329,6 +334,99 @@ und der Punkt auf der Karte gesetzt.
 
 ---
 
+## Typ 8 — Objekt-Detail
+
+**Beispiel:** map.oe5ith.at/tracking
+
+**Wann verwenden:**
+Tracking-/Monitoring-Karten wo Klick auf ein Objekt (Flugzeug, Schiff, Fahrzeug)
+Details in der Sidebar zeigt. Immer in Kombination mit einem anderen Panel-Typ (z.B. Typ 6),
+getrennt durch `tool-sep`.
+
+**Zustände:**
+
+| Zustand | Anzeige |
+|---|---|
+| Kein Objekt gewählt | `.result-empty` mit Icon + Hinweistext |
+| Objekt gewählt | `.object-detail` mit Header + Key-Value-Zeilen |
+
+**HTML — Leerzustand:**
+
+```html
+<div class="result-empty">
+  <i class="fa-solid fa-satellite-dish"></i>
+  Klicke auf ein Flugzeug oder Schiff auf der Karte für Details.
+</div>
+```
+
+**HTML — Gefüllt (ADSB):**
+
+```html
+<div class="object-detail">
+  <div class="object-detail-header">
+    <i class="fa-solid fa-plane object-detail-icon"></i>
+    <span class="object-detail-name">AUA123</span>
+    <span class="badge badge-blue">ADS-B</span>
+  </div>
+  <div class="result-kv">
+    <div class="result-kv-item">
+      <span class="result-kv-label">Höhe</span>
+      <span class="result-kv-value">8.450 ft</span>
+    </div>
+    <div class="result-kv-item">
+      <span class="result-kv-label">Speed</span>
+      <span class="result-kv-value">485 kt</span>
+    </div>
+    <div class="result-kv-item">
+      <span class="result-kv-label">Kurs</span>
+      <span class="result-kv-value">247°</span>
+    </div>
+    <div class="result-kv-item">
+      <span class="result-kv-label">RSSI</span>
+      <span class="result-kv-value">−82 dBm</span>
+    </div>
+  </div>
+</div>
+```
+
+**HTML — Gefüllt (AIS):**
+
+```html
+<div class="object-detail">
+  <div class="object-detail-header">
+    <i class="fa-solid fa-ship object-detail-icon"></i>
+    <span class="object-detail-name">NORDIC ODEN</span>
+    <span class="badge badge-gray">AIS</span>
+  </div>
+  <div class="result-kv">
+    <div class="result-kv-item">
+      <span class="result-kv-label">MMSI</span>
+      <span class="result-kv-value">230084000</span>
+    </div>
+    <div class="result-kv-item">
+      <span class="result-kv-label">SOG</span>
+      <span class="result-kv-value">12,4 kt</span>
+    </div>
+    <div class="result-kv-item">
+      <span class="result-kv-label">COG</span>
+      <span class="result-kv-value">184°</span>
+    </div>
+    <div class="result-kv-item">
+      <span class="result-kv-label">RSSI</span>
+      <span class="result-kv-value">−91 dBm</span>
+    </div>
+  </div>
+</div>
+```
+
+**Regeln:**
+- Badge-Farbe unterscheidet den Objekttyp: `.badge-blue` für ADSB, `.badge-gray` für AIS
+- `.result-kv` aus Typ 4 wird unverändert wiederverwendet
+- Leerzustand: `.result-empty` aus Typ 5 wird wiederverwendet
+- JS-Zuständigkeit: Beim Klick auf ein Kartenobjekt `.result-empty` verstecken und `.object-detail` befüllen/zeigen; bei Klick auf leere Karte wieder Leerzustand zeigen
+
+---
+
 ## Panels stapeln
 
 Mehrere Panel-Typen können in einer `.sidebar-inner` kombiniert werden.
@@ -339,6 +437,7 @@ Reihenfolge: Tool/Eingabe oben, Ergebnisse unten.
 | Typ 1 + Typ 6 | Nav-Liste + Live-Stats am Ende |
 | Typ 2 + Typ 6 | Layer-Steuerung + Status-Anzeige |
 | Typ 3 + (→ Typ 4) | Tool-Panel, nach Berechnung Ergebnisse einblenden |
+| Typ 6 + Typ 8 | Live-Stats + Objekt-Detail (Tracking-Seite) |
 
 **Trenner zwischen gestapelten Panels:**
 ```html
@@ -354,3 +453,4 @@ Reihenfolge: Tool/Eingabe oben, Ergebnisse unten.
 | 2026-04-24 | Initiale Definition. 6 Typen. Gestapelte Panels. Ergebnis-Liste mit Auge-Icon. |
 | 2026-04-30 | Typ 5: `.result-empty` Leerzustand ergänzt |
 | 2026-05-05 | Typ 7: Koordinaten-Umrechner ergänzt (`coords.css`, `.coord-block` Pattern) |
+| 2026-05-11 | Typ 8: Objekt-Detail ergänzt; `result-kv`, `status-panel/row/dot` nach `sidebar.css` extrahiert |
