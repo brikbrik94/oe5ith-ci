@@ -252,6 +252,12 @@
   font-size: 0.85rem;
 }
 
+/* ═══ TYP 4/6/8 — KEY-VALUE ZEILEN ═══ */
+.result-kv { display: flex; gap: 12px; padding-left: 25px; margin-bottom: 5px; }
+.result-kv-item { display: flex; flex-direction: column; gap: 1px; }
+.result-kv-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--subtle); }
+.result-kv-value { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+
 /* ═══ MOBILE ═══ */
 @media (max-width: 768px) {
   .sidebar {
