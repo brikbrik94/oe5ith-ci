@@ -1081,124 +1081,19 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
 <!-- ═══ TYP 8: OBJEKT-DETAIL ═══ -->
 <div class="section">
   <div class="section-label">Typ 8 — Objekt-Detail</div>
-  <div class="section-desc">Klick auf Kartenobjekt → Detail-Panel füllt sich. Kombiniert mit Typ 6 über <code>.tool-sep</code>. Drei Zustände: leer, ADS-B, AIS.</div>
+  <div class="section-desc">ADS-B / AIS Tracking-Sidebar. Klick auf Kartenobjekt füllt das Detail-Panel. Immer kombiniert mit Typ 6 (Status-Panel oben, <code>.tool-sep</code> als Trenner, Detail unten).</div>
 
-  <!-- Leerzustand -->
-  <div class="screen" style="max-width:320px;margin-bottom:16px">
+  <!-- Hauptzustand: Objekt gewählt (ADS-B) -->
+  <div class="screen">
     <div class="m-tb">
       <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
       <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
     </div>
     <div class="m-layout">
-      <div class="sidebar" style="height:120px">
-        <div class="sidebar-inner">
-          <div class="result-empty">
-            <i class="fa-solid fa-satellite-dish"></i>
-            Klicke auf ein Flugzeug oder Schiff auf der Karte für Details.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <p class="annotation" style="margin-bottom:16px">
-    <strong>Leerzustand:</strong> <code>.result-empty</code> solange kein Objekt gewählt.
-  </p>
-
-  <!-- Gefüllt: ADS-B -->
-  <div class="screen" style="max-width:320px;margin-bottom:16px">
-    <div class="m-tb">
-      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
-      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
-    </div>
-    <div class="m-layout">
-      <div class="sidebar" style="height:200px">
-        <div class="sidebar-inner">
-          <div class="object-detail">
-            <div class="object-detail-header">
-              <i class="fa-solid fa-plane object-detail-icon"></i>
-              <span class="object-detail-name">AUA123</span>
-              <span class="badge badge-blue">ADS-B</span>
-            </div>
-            <div class="result-kv">
-              <div class="result-kv-item">
-                <span class="result-kv-label">Höhe</span>
-                <span class="result-kv-value">8.450 ft</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">Speed</span>
-                <span class="result-kv-value">485 kt</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">Kurs</span>
-                <span class="result-kv-value">247°</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">RSSI</span>
-                <span class="result-kv-value">−82 dBm</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <p class="annotation" style="margin-bottom:16px">
-    <strong>Gefüllt — ADS-B:</strong> <code>.object-detail</code> mit Header (Icon + Name + Badge) und <code>.result-kv</code> für Key-Value-Zeilen.
-  </p>
-
-  <!-- Gefüllt: AIS -->
-  <div class="screen" style="max-width:320px;margin-bottom:16px">
-    <div class="m-tb">
-      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
-      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
-    </div>
-    <div class="m-layout">
-      <div class="sidebar" style="height:200px">
-        <div class="sidebar-inner">
-          <div class="object-detail">
-            <div class="object-detail-header">
-              <i class="fa-solid fa-ship object-detail-icon"></i>
-              <span class="object-detail-name">NORDIC ODEN</span>
-              <span class="badge badge-gray">AIS</span>
-            </div>
-            <div class="result-kv">
-              <div class="result-kv-item">
-                <span class="result-kv-label">MMSI</span>
-                <span class="result-kv-value">230084000</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">SOG</span>
-                <span class="result-kv-value">12,4 kt</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">COG</span>
-                <span class="result-kv-value">184°</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">RSSI</span>
-                <span class="result-kv-value">−91 dBm</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <p class="annotation" style="margin-bottom:16px">
-    <strong>Gefüllt — AIS:</strong> Gleiches Muster, <code>.badge-gray</code> statt <code>.badge-blue</code>.
-  </p>
-
-  <!-- Kombination Typ 6 + Typ 8 -->
-  <div class="screen" style="max-width:320px">
-    <div class="m-tb">
-      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
-      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
-    </div>
-    <div class="m-layout">
-      <div class="sidebar" style="height:480px">
+      <div class="sidebar" style="height:380px">
         <div class="sidebar-inner">
 
-          <!-- Stats-Panel (Typ 6) -->
+          <!-- Status-Panel (Typ 6) -->
           <div class="status-panel">
             <div class="status-row">
               <div class="status-row-left">
@@ -1270,15 +1165,62 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
             </div>
           </div>
 
-        </div><!-- /.sidebar-inner -->
+        </div>
         <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
       </div>
       <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
     </div>
   </div>
   <p class="annotation">
-    <strong>Kombination Typ 6 + Typ 8 (Tracking-Sidebar):</strong> Status-Panel oben, <code>.tool-sep</code> als Trenner, Detail-Panel darunter.
+    <strong>Struktur:</strong> Status-Panel (Typ 6) oben · <code>.tool-sep</code> · <code>.object-detail</code> mit Header (Icon + Name + Badge) und <code>.result-kv</code> für Key-Value-Zeilen.
+    ADS-B → <code>.badge-blue</code>, AIS → <code>.badge-gray</code> + Schiff-Icon.
     Gewähltes Objekt ersetzt den Leerzustand dynamisch per JS.
+  </p>
+
+  <!-- Leerzustand -->
+  <div class="screen" style="max-width:320px;margin-top:16px">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:220px">
+        <div class="sidebar-inner">
+          <div class="status-panel">
+            <div class="status-row">
+              <div class="status-row-left">
+                <i class="fa-solid fa-plane status-row-icon"></i>
+                <span class="status-row-name">ADS-B Flugzeuge</span>
+              </div>
+              <div class="status-row-right">
+                <span class="status-row-value">42</span>
+                <span class="status-dot on"></span>
+              </div>
+            </div>
+            <div class="status-row">
+              <div class="status-row-left">
+                <i class="fa-solid fa-ship status-row-icon"></i>
+                <span class="status-row-name">AIS Schiffe</span>
+              </div>
+              <div class="status-row-right">
+                <span class="status-row-value">7</span>
+                <span class="status-dot on"></span>
+              </div>
+            </div>
+          </div>
+          <div class="tool-sep"></div>
+          <div class="result-empty">
+            <i class="fa-solid fa-satellite-dish"></i>
+            Klicke auf ein Flugzeug oder Schiff auf der Karte für Details.
+          </div>
+        </div>
+        <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Leerzustand:</strong> <code>.result-empty</code> unterhalb des Status-Panels solange kein Objekt angeklickt wurde.
   </p>
 </div>
 
