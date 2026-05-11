@@ -724,18 +724,20 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
   <div class="demo-section">
     <div class="demo-section-title">Geocoder Dropdown — Suchergebnisse</div>
     <div class="demo-section-desc">
-      Erscheint unterhalb eines <code>.form-input-wrap</code> bei aktiver Suche.
+      Erscheint unterhalb des Suchfelds während der Eingabe (Nominatim).
       Der übergeordnete <code>.form-field</code> muss <code>position: relative</code> haben.
       Show/Hide-Logik liegt beim Consumer.
     </div>
 
     <div class="demo-cols">
 
-      <!-- Sidebar-Kontext mit sichtbarem Dropdown -->
+      <!-- Vollständiges Sidebar-Panel -->
       <div class="sidebar-ctx" style="position: relative; overflow: visible;">
+        <div class="sidebar-ctx-title">Ort suchen</div>
 
-        <div class="form-field" style="position: relative;">
-          <label class="form-label" for="geocoder-demo">Ort suchen</label>
+        <!-- Geocoder-Suche mit offenem Dropdown -->
+        <div class="form-field" style="position: relative; margin-bottom: 128px;">
+          <label class="form-label" for="geocoder-demo">Standort</label>
           <div class="form-input-wrap">
             <i class="fa-solid fa-search form-input-icon"></i>
             <input class="form-input" id="geocoder-demo" type="text" value="Linz">
@@ -770,10 +772,25 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
           </div>
         </div>
 
+        <div class="ctx-sep"></div>
+
+        <!-- Koordinaten-Anzeige (wird nach Auswahl befüllt) -->
+        <div class="form-field">
+          <label class="form-label" for="geocoder-coords">Koordinaten</label>
+          <input class="form-input mono" id="geocoder-coords" type="text"
+                 placeholder="— Kein Ort gewählt —" disabled>
+        </div>
+
+        <button class="form-submit" style="opacity:0.45;cursor:not-allowed;" disabled>
+          <i class="fa-solid fa-location-dot"></i> Übernehmen
+        </button>
+
       </div><!-- /sidebar-ctx -->
 
       <!-- Beschreibung -->
       <div style="font-size:.82rem;color:var(--muted);line-height:1.7">
+        <p style="margin-bottom:8px">Das Dropdown öffnet sich absolut unterhalb des Inputs und überlagert darunter liegende Inhalte. <code>position: relative</code> am <code>.form-field</code> ist Pflicht.</p>
+        <p style="margin-bottom:12px">Die Koordinaten-Zeile und der Button zeigen den typischen Folge-Zustand — der Consumer setzt die Werte nach Auswahl eines Eintrags.</p>
         <p>Klassen:</p>
         <ul style="margin-top:6px;padding-left:16px;line-height:2">
           <li><code>.geocoder-results</code> — Container-Panel</li>
