@@ -277,6 +277,63 @@
   color: var(--text);
 }
 
+/* ═══ TYP 6 — STATUS-PANEL ═══ */
+.status-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: var(--panel-deep);
+  border: 1px solid var(--border);
+}
+.status-row-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.status-row-icon {
+  font-size: 0.72rem;
+  color: var(--muted);
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.status-row-name {
+  font-size: 0.78rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.status-row-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.status-row-value {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.status-dot.on   { background: var(--success); box-shadow: 0 0 4px var(--success); }
+.status-dot.off  { background: var(--danger);  box-shadow: 0 0 4px rgba(239,68,68,0.5); }
+.status-dot.warn { background: var(--warning); box-shadow: 0 0 4px rgba(234,179,8,0.5); }
+
 /* ═══ MOBILE ═══ */
 @media (max-width: 768px) {
   .sidebar {

@@ -386,8 +386,6 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
 .result-item-title { font-size:0.82rem; font-weight:600; color:var(--text); flex:1; line-height:1.3; }
 .result-item-sub { font-size:0.72rem; color:var(--muted); margin-bottom:5px; padding-left:25px; }
 
-/* Key-Value Zeile — jetzt in css/sidebar.css */
-
 /* Auge-Icon — Route-Toggle (ein/aus)
    Off: muted | Hover: accent-hint | On (.active): success-grün
    Unabhängig vom Item-Auswahlzustand */
@@ -434,24 +432,6 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
   font-size: 0.85rem;
 }
 
-/* ══════════════════════════════════════
-   STATUS-PANEL
-   ══════════════════════════════════════ */
-.status-panel { display:flex; flex-direction:column; gap:6px; }
-.status-row {
-  display:flex; align-items:center; justify-content:space-between;
-  gap:8px; padding:6px 8px; border-radius:4px;
-  background:var(--panel-deep); border:1px solid var(--border);
-}
-.status-row-left { display:flex; align-items:center; gap:8px; min-width:0; }
-.status-row-icon { font-size:0.72rem; color:var(--muted); width:14px; text-align:center; flex-shrink:0; }
-.status-row-name { font-size:0.78rem; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.status-row-right { display:flex; align-items:center; gap:6px; flex-shrink:0; }
-.status-row-value { font-size:0.72rem; color:var(--muted); font-family:var(--font-mono); }
-.status-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-.status-dot.on { background:var(--success); box-shadow:0 0 4px var(--success); }
-.status-dot.off { background:var(--danger); box-shadow:0 0 4px rgba(239,68,68,0.5); }
-.status-dot.warn { background:var(--warning); box-shadow:0 0 4px rgba(234,179,8,0.5); }
 </style>
 </head>
 <body>
