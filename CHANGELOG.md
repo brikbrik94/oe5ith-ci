@@ -14,7 +14,7 @@ Siehe auch:
 docs/versioning.md
 ```
 
-## [1.1.1] - 2026-05-11
+## [1.2.0] - 2026-05-11
 
 ### Added
 
