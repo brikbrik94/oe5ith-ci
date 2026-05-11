@@ -285,6 +285,71 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
 }
 
 /* ═══════════════════════════════════════
+   GEOCODER DROPDOWN
+   Für Suchergebnisse (Nominatim)
+   ═══════════════════════════════════════ */
+.geocoder-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--panel-deep);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1000;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.geocoder-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.geocoder-item:last-child { border-bottom: none; }
+.geocoder-item:hover { background: rgba(255,255,255,0.04); }
+
+.geocoder-icon {
+  width: 16px;
+  color: var(--accent);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.geocoder-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.geocoder-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.geocoder-subtitle {
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ═══════════════════════════════════════
    DEMO / REFERENZ STYLES
    ═══════════════════════════════════════ */
 .page-content { padding: 40px; max-width: 860px; }
@@ -649,6 +714,74 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
           <span class="form-hint">Nur bei Modus A→B verfügbar.</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ═══ GEOCODER DROPDOWN ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Geocoder Dropdown — Suchergebnisse</div>
+    <div class="demo-section-desc">
+      Erscheint unterhalb eines <code>.form-input-wrap</code> bei aktiver Suche.
+      Der übergeordnete <code>.form-field</code> muss <code>position: relative</code> haben.
+      Show/Hide-Logik liegt beim Consumer.
+    </div>
+
+    <div class="demo-cols">
+
+      <!-- Sidebar-Kontext mit sichtbarem Dropdown -->
+      <div class="sidebar-ctx" style="position: relative; overflow: visible;">
+
+        <div class="form-field" style="position: relative;">
+          <label class="form-label" for="geocoder-demo">Ort suchen</label>
+          <div class="form-input-wrap">
+            <i class="fa-solid fa-search form-input-icon"></i>
+            <input class="form-input" id="geocoder-demo" type="text" value="Linz">
+          </div>
+
+          <div class="geocoder-results">
+
+            <div class="geocoder-item">
+              <div class="geocoder-icon"><i class="fa-solid fa-city"></i></div>
+              <div class="geocoder-content">
+                <div class="geocoder-title">Linz</div>
+                <div class="geocoder-subtitle">Oberösterreich, Österreich</div>
+              </div>
+            </div>
+
+            <div class="geocoder-item">
+              <div class="geocoder-icon"><i class="fa-solid fa-mountain"></i></div>
+              <div class="geocoder-content">
+                <div class="geocoder-title">Pöstlingberg</div>
+                <div class="geocoder-subtitle">Berg in Linz</div>
+              </div>
+            </div>
+
+            <div class="geocoder-item">
+              <div class="geocoder-icon"><i class="fa-solid fa-map-pin"></i></div>
+              <div class="geocoder-content">
+                <div class="geocoder-title">Linzer Straße 42, Linz</div>
+                <div class="geocoder-subtitle">Oberösterreich, Österreich</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /sidebar-ctx -->
+
+      <!-- Beschreibung -->
+      <div style="font-size:.82rem;color:var(--muted);line-height:1.7">
+        <p>Klassen:</p>
+        <ul style="margin-top:6px;padding-left:16px;line-height:2">
+          <li><code>.geocoder-results</code> — Container-Panel</li>
+          <li><code>.geocoder-item</code> — Einzelner Treffer</li>
+          <li><code>.geocoder-icon</code> — Icon-Spalte</li>
+          <li><code>.geocoder-content</code> — Text-Spalte</li>
+          <li><code>.geocoder-title</code> — Primärtext</li>
+          <li><code>.geocoder-subtitle</code> — Sekundärtext</li>
+        </ul>
+      </div>
+
     </div>
   </div>
 
