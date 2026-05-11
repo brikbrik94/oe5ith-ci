@@ -14,6 +14,20 @@ Siehe auch:
 docs/versioning.md
 ```
 
+## [Unreleased]
+
+### Added
+
+- Sidebar Typ 8 — Objekt-Detail: neues Panel für Tracking-/Monitoring-Seiten. Zeigt bei Klick auf ein Kartenobjekt Details (Callsign/Name, Höhe/Speed/Kurs, MMSI/SOG/COG, RSSI). Klassen: `.object-detail`, `.object-detail-header`, `.object-detail-icon`, `.object-detail-name`.
+- `components/sidebar-types.html`: Typ 8 Demo-Sektion mit Leerzustand, ADSB-Objekt, AIS-Objekt und Kombinations-Beispiel (Typ 6 + Typ 8).
+
+### Changed
+
+- `css/sidebar.css`: `result-kv`, `status-panel`, `status-row*`, `status-dot` aus Inline-Style von `components/sidebar-types.html` extrahiert — jetzt für alle Produktionsseiten im gemeinsamen CSS verfügbar.
+- `docs/sidebar-types.md`: Typ 8 dokumentiert, Entscheidungsbaum und Stapel-Tabelle ergänzt.
+
+---
+
 ## v2.1.0 - 2026-05-10
 
 ### Added
