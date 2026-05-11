@@ -14,6 +14,16 @@ Siehe auch:
 docs/versioning.md
 ```
 
+## [1.1.1] - 2026-05-11
+
+### Added
+
+- Geocoder Dropdown: `.geocoder-results`, `.geocoder-item`, `.geocoder-icon`, `.geocoder-content`, `.geocoder-title`, `.geocoder-subtitle` in `css/forms.css`
+- `docs/geocoder-dropdown.md`: Dokumentation mit HTML-Struktur, Icon-Referenz und Regeln
+- Demo-Abschnitt in `components/forms.html`
+
+---
+
 ## [Unreleased]
 
 ### Added
