@@ -23,6 +23,9 @@
   --sidebar-width:300px;
   --topbar-height:44px;
   --transition-fast:0.15s ease;
+  --surface-hover:    rgba(255,255,255,0.05);
+  --z-dropdown:       1200;
+  --shadow-dropdown:  0 8px 20px rgba(0,0,0,0.40);
 }
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 body { font-family:var(--font-sans); background:var(--bg); color:var(--text); padding:40px; }
@@ -250,6 +253,36 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
   margin-bottom:5px; margin-top:10px;
 }
 .overlay-section-label:first-child { margin-top:0; }
+
+/* ══════════════════════════════════════
+   FORM INPUT WRAP (für Geocoder-Icon)
+   ══════════════════════════════════════ */
+.form-input-wrap { position:relative; display:flex; align-items:center; }
+.form-input-wrap .form-input { padding-left:28px; }
+.form-input-icon { position:absolute; left:9px; font-size:0.7rem; color:var(--subtle); pointer-events:none; }
+
+/* ══════════════════════════════════════
+   GEOCODER DROPDOWN (Typ 9)
+   ══════════════════════════════════════ */
+.geocoder-results {
+  position:absolute; top:100%; left:0; right:0;
+  background:var(--panel-deep); border:1px solid var(--border);
+  border-top:none; border-radius:0 0 5px 5px;
+  box-shadow:var(--shadow-dropdown); z-index:var(--z-dropdown);
+  max-height:280px; overflow-y:auto;
+}
+.geocoder-item {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:9px 10px; cursor:pointer;
+  transition:background var(--transition-fast);
+  border-bottom:1px solid rgba(255,255,255,0.03);
+}
+.geocoder-item:last-child { border-bottom:none; }
+.geocoder-item:hover { background:var(--surface-hover); }
+.geocoder-icon { width:14px; color:var(--accent); font-size:0.82rem; text-align:center; margin-top:2px; flex-shrink:0; }
+.geocoder-content { flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
+.geocoder-title { font-size:0.78rem; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.geocoder-subtitle { font-size:0.68rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
 /* ══════════════════════════════════════
    COORD-BLOCK (Typ 7)
@@ -1246,6 +1279,114 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
   <p class="annotation">
     <strong>Kombination Typ 6 + Typ 8 (Tracking-Sidebar):</strong> Status-Panel oben, <code>.tool-sep</code> als Trenner, Detail-Panel darunter.
     Gewähltes Objekt ersetzt den Leerzustand dynamisch per JS.
+  </p>
+</div>
+
+<!-- ═══ TYP 9: GEOCODER-SUCHE ═══ -->
+<div class="section">
+  <div class="section-label">Typ 9 — Geocoder-Suche</div>
+  <div class="section-desc">Nominatim-basierte Ortssuche. Suchfeld mit Live-Dropdown — Auswahl befüllt Koordinaten-Output und aktiviert den Übernehmen-Button.</div>
+
+  <!-- Zustand 1: Suche aktiv -->
+  <div class="screen" style="overflow:visible; margin-bottom:4px;">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:400px; overflow:visible;">
+        <div class="sidebar-inner" style="overflow:visible;">
+          <div class="tool-panel-title">Ort suchen</div>
+
+          <div class="form-field" style="position:relative; margin-bottom:132px;">
+            <label class="form-label">Standort</label>
+            <div class="form-input-wrap">
+              <i class="fa-solid fa-search form-input-icon"></i>
+              <input class="form-input" type="text" value="Linz">
+            </div>
+
+            <div class="geocoder-results">
+              <div class="geocoder-item">
+                <div class="geocoder-icon"><i class="fa-solid fa-city"></i></div>
+                <div class="geocoder-content">
+                  <div class="geocoder-title">Linz</div>
+                  <div class="geocoder-subtitle">Oberösterreich, Österreich</div>
+                </div>
+              </div>
+              <div class="geocoder-item">
+                <div class="geocoder-icon"><i class="fa-solid fa-mountain"></i></div>
+                <div class="geocoder-content">
+                  <div class="geocoder-title">Pöstlingberg</div>
+                  <div class="geocoder-subtitle">Berg in Linz</div>
+                </div>
+              </div>
+              <div class="geocoder-item">
+                <div class="geocoder-icon"><i class="fa-solid fa-map-pin"></i></div>
+                <div class="geocoder-content">
+                  <div class="geocoder-title">Linzer Straße 42, Linz</div>
+                  <div class="geocoder-subtitle">Oberösterreich, Österreich</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-sep"></div>
+
+          <div class="form-field" style="margin-bottom:8px;">
+            <label class="form-label">Koordinaten</label>
+            <input class="form-input" type="text" placeholder="— Kein Ort gewählt —" disabled style="font-family:var(--font-mono);">
+          </div>
+          <button class="btn-primary" style="opacity:0.45;cursor:not-allowed;" disabled>
+            <i class="fa-solid fa-location-dot"></i> Übernehmen
+          </button>
+        </div>
+        <div class="sidebar-footer"><span>v2.2.0</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation" style="margin-bottom:16px">
+    <strong>Suche aktiv:</strong> Dropdown erscheint absolut unterhalb des Inputs und überlagert darunter liegende Panel-Elemente.
+    <code>overflow:visible</code> auf Sidebar und Screen-Rahmen nötig.
+  </p>
+
+  <!-- Zustand 2: Ort gewählt -->
+  <div class="screen" style="max-width:320px;">
+    <div class="m-tb">
+      <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
+      <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
+    </div>
+    <div class="m-layout">
+      <div class="sidebar" style="height:220px;">
+        <div class="sidebar-inner">
+          <div class="tool-panel-title">Ort suchen</div>
+
+          <div class="form-field" style="position:relative; margin-bottom:8px;">
+            <label class="form-label">Standort</label>
+            <div class="form-input-wrap">
+              <i class="fa-solid fa-search form-input-icon"></i>
+              <input class="form-input" type="text" value="Linz">
+            </div>
+          </div>
+
+          <div class="tool-sep"></div>
+
+          <div class="form-field" style="margin-bottom:8px;">
+            <label class="form-label">Koordinaten</label>
+            <input class="form-input" type="text" value="48.3064, 14.2858" style="font-family:var(--font-mono);">
+          </div>
+          <button class="btn-primary">
+            <i class="fa-solid fa-location-dot"></i> Übernehmen
+          </button>
+        </div>
+        <div class="sidebar-footer"><span>v2.2.0</span><span class="sidebar-footer-dot"></span></div>
+      </div>
+      <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
+    </div>
+  </div>
+  <p class="annotation">
+    <strong>Ort gewählt:</strong> Dropdown geschlossen, Koordinaten-Feld befüllt, Button aktiv.
+    Show/Hide des Dropdowns und Befüllen der Felder liegt beim Consumer.
   </p>
 </div>
 
