@@ -297,8 +297,8 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
   border: 1px solid var(--border);
   border-top: none;
   border-radius: 0 0 5px 5px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 1000;
+  box-shadow: var(--shadow-dropdown);
+  z-index: var(--z-dropdown);
   max-height: 280px;
   overflow-y: auto;
 }
@@ -313,7 +313,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
   border-bottom: 1px solid rgba(255,255,255,0.03);
 }
 .geocoder-item:last-child { border-bottom: none; }
-.geocoder-item:hover { background: rgba(255,255,255,0.04); }
+.geocoder-item:hover { background: var(--surface-hover); }
 
 .geocoder-icon {
   width: 16px;
