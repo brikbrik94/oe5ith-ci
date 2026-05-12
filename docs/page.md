@@ -204,7 +204,7 @@ CSS liefert die visuellen States — echte Sortierlogik ist **JS-Pflicht**.
 
 **JS-Verantwortlichkeiten:**
 - Tabelle per `.ci-table--sortable` selektieren
-- Bei Klick auf `.sortable th`: `.sort-asc` / `.sort-desc` auf dem aktiven `<th>` toggeln, auf allen anderen entfernen
+- Bei Klick auf `th.sortable`: `.sort-asc` / `.sort-desc` auf dem aktiven `<th>` toggeln, auf allen anderen entfernen
 - DOM-Zeilen (`<tbody> <tr>`) nach dem Sortierwert neu anordnen
 
 ---
