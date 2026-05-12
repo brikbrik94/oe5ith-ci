@@ -368,7 +368,7 @@ Immer in Kombination mit Typ 6 (Stats-Panel), getrennt durch `tool-sep`.
 <div class="tracking-list">
 
   <!-- collapsed -->
-  <div class="tracking-item" data-type="adsb">
+  <div class="tracking-item" data-type="adsb" data-id="AUA123">
     <div class="tracking-item-header">
       <i class="fa-solid fa-plane tracking-item-icon"></i>
       <span class="tracking-item-name">AUA123</span>
@@ -378,7 +378,7 @@ Immer in Kombination mit Typ 6 (Stats-Panel), getrennt durch `tool-sep`.
   </div>
 
   <!-- aufgeklappt + aktiv (ADS-B) -->
-  <div class="tracking-item active" data-type="adsb">
+  <div class="tracking-item active" data-type="adsb" data-id="OE-LXA">
     <div class="tracking-item-header">
       <i class="fa-solid fa-plane tracking-item-icon"></i>
       <span class="tracking-item-name">OE-LXA</span>
@@ -408,7 +408,7 @@ Immer in Kombination mit Typ 6 (Stats-Panel), getrennt durch `tool-sep`.
   </div>
 
   <!-- AIS collapsed -->
-  <div class="tracking-item" data-type="ais">
+  <div class="tracking-item" data-type="ais" data-id="230084000">
     <div class="tracking-item-header">
       <i class="fa-solid fa-ship tracking-item-icon"></i>
       <span class="tracking-item-name">NORDIC ODEN</span>
@@ -433,6 +433,7 @@ Immer in Kombination mit Typ 6 (Stats-Panel), getrennt durch `tool-sep`.
 
 **Regeln:**
 - `data-type="adsb"` / `data-type="ais"` für JS-Filterung via Mode-Switch
+- `data-id` = Callsign für ADS-B, MMSI für AIS — wird von JS für Kartenklick-Zuordnung genutzt
 - Badge-Farbe: `.badge-blue` für ADS-B, `.badge-gray` für AIS
 - `.result-kv` aus Typ 4 wird unverändert wiederverwendet
 - `.result-empty` aus Typ 5 wird wiederverwendet

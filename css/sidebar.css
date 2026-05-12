@@ -338,12 +338,13 @@
 .tracking-list { display: flex; flex-direction: column; gap: 4px; }
 .tracking-item {
   border: 1px solid var(--border);
+  border-left: 2px solid transparent;
   border-radius: 4px;
   background: var(--panel-deep);
   cursor: pointer;
   overflow: hidden;
 }
-.tracking-item.active { border-left: 2px solid var(--accent); }
+.tracking-item.active { border-left-color: var(--accent); }
 .tracking-item-header {
   display: flex;
   align-items: center;
