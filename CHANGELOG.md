@@ -28,13 +28,17 @@ docs/versioning.md
 
 ### Added
 
-- Sidebar Typ 8 — Objekt-Detail: neues Panel für Tracking-/Monitoring-Seiten. Zeigt bei Klick auf ein Kartenobjekt Details (Callsign/Name, Höhe/Speed/Kurs, MMSI/SOG/COG, RSSI). Klassen: `.object-detail`, `.object-detail-header`, `.object-detail-icon`, `.object-detail-name`.
-- `components/sidebar-types.html`: Typ 8 Demo-Sektion mit Leerzustand, ADSB-Objekt, AIS-Objekt und Kombinations-Beispiel (Typ 6 + Typ 8).
+- Sidebar Typ 8 — Tracking-Liste: scrollbare Liste aller empfangenen ADSB/AIS-Objekte mit Mode-Switch (Alle / ADS-B / AIS) und Expand-Verhalten. Klassen: `.tracking-list`, `.tracking-item`, `.tracking-item-header`, `.tracking-item-body`, `.tracking-item-icon`, `.tracking-item-name`, `.tracking-item-chevron`.
 
 ### Changed
 
-- `css/sidebar.css`: `result-kv`, `status-panel`, `status-row*`, `status-dot` aus Inline-Style von `components/sidebar-types.html` extrahiert — jetzt für alle Produktionsseiten im gemeinsamen CSS verfügbar.
-- `docs/sidebar-types.md`: Typ 8 dokumentiert, Entscheidungsbaum und Stapel-Tabelle ergänzt.
+- `docs/sidebar-types.md`: Typ 8 vollständig neu definiert (Tracking-Liste ersetzt Objekt-Detail).
+
+### Removed
+
+- `.object-detail`, `.object-detail-header`, `.object-detail-icon`, `.object-detail-name` aus `css/sidebar.css` entfernt (ersetzt durch `.tracking-*`).
+
+> **Hinweis Versioning:** Da `.object-detail*`-Klassen entfernt werden, ist das technisch ein MAJOR-Change (v3.0.0). Da diese Klassen erst mit v2.2.0 eingeführt wurden und noch keine Produktionsseite sie nutzt, kann auch v2.3.0 gewählt werden — Entscheidung liegt beim Maintainer.
 
 ---
 
