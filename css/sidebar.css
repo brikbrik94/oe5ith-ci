@@ -334,30 +334,30 @@
 .status-dot.off  { background: var(--danger);  box-shadow: 0 0 4px rgba(239,68,68,0.5); }
 .status-dot.warn { background: var(--warning); box-shadow: 0 0 4px rgba(234,179,8,0.5); }
 
-/* ═══ TYP 8 — OBJEKT-DETAIL ═══ */
-.object-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 4px 0;
+/* ═══ TYP 8 — TRACKING-LISTE ═══ */
+.tracking-list { display: flex; flex-direction: column; gap: 4px; }
+.tracking-item {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--panel-deep);
+  cursor: pointer;
+  overflow: hidden;
 }
-.object-detail-header {
+.tracking-item.active { border-left: 2px solid var(--accent); }
+.tracking-item-header {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 6px 8px;
-  border-radius: 4px;
-  background: var(--panel-deep);
-  border: 1px solid var(--border);
 }
-.object-detail-icon {
+.tracking-item-icon {
   font-size: 0.72rem;
   color: var(--muted);
   width: 14px;
   text-align: center;
   flex-shrink: 0;
 }
-.object-detail-name {
+.tracking-item-name {
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--text);
@@ -366,6 +366,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.tracking-item-chevron {
+  font-size: 0.65rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+.tracking-item.active .tracking-item-chevron { transform: rotate(180deg); }
+.tracking-item-body { display: none; padding: 0 8px 8px; }
+.tracking-item.active .tracking-item-body { display: block; }
 
 /* ═══ MOBILE ═══ */
 @media (max-width: 768px) {
