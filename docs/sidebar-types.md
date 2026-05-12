@@ -19,7 +19,7 @@ z.B. Tool-Panel + Ergebnis-Liste in einer gemeinsam scrollenden `.sidebar-inner`
 | 5 | Ergebnis-Liste einfach | NAH-Stützpunkte |
 | 6 | Status-Panel | ADS-B/AIS Live-Stats |
 | 7 | Koordinaten-Umrechner | coord.oe5ith.at |
-| 8 | Objekt-Detail | map.oe5ith.at/tracking |
+| 8 | Tracking-Liste | map.oe5ith.at/tracking |
 
 > **Sidebar-Footer:** Jede Sidebar benötigt ein `.sidebar-footer` am unteren Rand (Version, optionaler Status, `©`-Button).
 > Vollständige Struktur und HTML: → [`docs/sidebar.md` — Abschnitt „Sidebar Footer"](sidebar.md#sidebar-footer)
@@ -49,9 +49,9 @@ Zeigt die Sidebar nur Live-Daten (read-only)?
 │
 └── JA → Typ 6: Status-Panel
 
-Zeigt die Sidebar Details zu einem angeklickten Kartenobjekt (Flugzeug, Schiff)?
+Zeigt die Sidebar alle empfangenen Tracking-Objekte (Flugzeuge, Schiffe) in einer Liste?
 │
-└── JA → Typ 8: Objekt-Detail (kombiniert mit Typ 6)
+└── JA → Typ 8: Tracking-Liste (kombiniert mit Typ 6)
 
 Gibt der Nutzer Koordinaten ein und will zwischen Systemen umrechnen?
 │
@@ -452,7 +452,7 @@ Reihenfolge: Tool/Eingabe oben, Ergebnisse unten.
 | Typ 1 + Typ 6 | Nav-Liste + Live-Stats am Ende |
 | Typ 2 + Typ 6 | Layer-Steuerung + Status-Anzeige |
 | Typ 3 + (→ Typ 4) | Tool-Panel, nach Berechnung Ergebnisse einblenden |
-| Typ 6 + Typ 8 | Live-Stats + Objekt-Detail (Tracking-Seite) |
+| Typ 6 + Typ 8 | Live-Stats + Tracking-Liste (Tracking-Seite) |
 
 **Trenner zwischen gestapelten Panels:**
 ```html
