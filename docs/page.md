@@ -123,7 +123,8 @@ Section-Container für inhaltliche Abschnitte.
   </div>
 
   <!-- Oder: kein Padding (für Tabellen, Code-Blöcke) -->
-  <div class="panel-body-flush">
+  <!-- Mit --scroll für horizontal scrollbare Tabellen auf Mobile -->
+  <div class="panel-body-flush panel-body-flush--scroll">
     <table class="ci-table">...</table>
   </div>
 
@@ -140,15 +141,15 @@ Section-Container für inhaltliche Abschnitte.
 ## Tabelle
 
 CI-konforme Tabelle. Hintergrund `--panel` (#202020).
-Immer in `.panel-body-flush` verwenden.
+Immer in `.panel-body-flush.panel-body-flush--scroll` verwenden — sorgt für horizontales Scrolling auf Mobile statt Zeilen-Stacking.
 
 ```html
 <div class="panel">
   <div class="panel-header">
     <div class="panel-title">Nachrichten-Übersicht</div>
   </div>
-  <div class="panel-body-flush">
-    <table class="ci-table">
+  <div class="panel-body-flush panel-body-flush--scroll">
+    <table class="ci-table ci-table--sortable">
       <thead>
         <tr>
           <th class="mono">Zeitstempel</th>
@@ -189,6 +190,22 @@ Immer in `.panel-body-flush` verwenden.
 | `.highlight` | alle `td` in `--text` statt `--muted` |
 | `.mono` | `--font-mono`, `0.76rem` |
 | `.empty` | Farbe `--subtle` |
+
+### Sortable Contract
+
+CSS liefert die visuellen States — echte Sortierlogik ist **JS-Pflicht**.
+
+| Klasse | Ebene | Bedeutung |
+|---|---|---|
+| `.ci-table--sortable` | `<table>` | JS-Marker: diese Tabelle hat sortierbare Spalten |
+| `.sortable` | `<th>` | Spalte ist sortierbar (Cursor, User-Select) |
+| `.sort-asc` | `<th>` | Spalte ist aktiv aufsteigend sortiert (↑ in `--accent`) |
+| `.sort-desc` | `<th>` | Spalte ist aktiv absteigend sortiert (↓ in `--accent`) |
+
+**JS-Verantwortlichkeiten:**
+- Tabelle per `.ci-table--sortable` selektieren
+- Bei Klick auf `.sortable th`: `.sort-asc` / `.sort-desc` auf dem aktiven `<th>` toggeln, auf allen anderen entfernen
+- DOM-Zeilen (`<tbody> <tr>`) nach dem Sortierwert neu anordnen
 
 ---
 
