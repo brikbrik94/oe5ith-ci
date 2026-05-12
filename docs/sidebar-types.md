@@ -334,96 +334,111 @@ und der Punkt auf der Karte gesetzt.
 
 ---
 
-## Typ 8 — Objekt-Detail
+## Typ 8 — Tracking-Liste
 
 **Beispiel:** map.oe5ith.at/tracking
 
 **Wann verwenden:**
-Tracking-/Monitoring-Karten wo Klick auf ein Objekt (Flugzeug, Schiff, Fahrzeug)
-Details in der Sidebar zeigt. Immer in Kombination mit einem anderen Panel-Typ (z.B. Typ 6),
-getrennt durch `tool-sep`.
+Tracking-/Monitoring-Karten die alle empfangenen Objekte (Flugzeuge, Schiffe)
+in einer scrollbaren Liste zeigen. Mode-Switch filtert nach Typ.
+Klick auf ein Item klappt Details auf und hebt das Objekt auf der Karte hervor.
+Immer in Kombination mit Typ 6 (Stats-Panel), getrennt durch `tool-sep`.
 
 **Zustände:**
 
 | Zustand | Anzeige |
 |---|---|
-| Kein Objekt gewählt | `.result-empty` mit Icon + Hinweistext |
-| Objekt gewählt | `.object-detail` mit Header + Key-Value-Zeilen |
+| Keine Objekte empfangen | `.result-empty` mit Icon + Hinweistext |
+| Objekte vorhanden | `.tracking-list` mit `.tracking-item`-Items |
+| Item ausgewählt | `.tracking-item.active` — aufgeklappt + Karte highlighted |
+
+**HTML — Mode-Switch:**
+
+```html
+<div class="segmented">
+  <button class="segmented-btn active">Alle</button>
+  <button class="segmented-btn">ADS-B</button>
+  <button class="segmented-btn">AIS</button>
+</div>
+```
+
+**HTML — Tracking-Liste (ein collapsed, ein aktiv aufgeklappt):**
+
+```html
+<div class="tracking-list">
+
+  <!-- collapsed -->
+  <div class="tracking-item" data-type="adsb">
+    <div class="tracking-item-header">
+      <i class="fa-solid fa-plane tracking-item-icon"></i>
+      <span class="tracking-item-name">AUA123</span>
+      <span class="badge badge-blue">ADS-B</span>
+      <i class="fa-solid fa-chevron-down tracking-item-chevron"></i>
+    </div>
+  </div>
+
+  <!-- aufgeklappt + aktiv (ADS-B) -->
+  <div class="tracking-item active" data-type="adsb">
+    <div class="tracking-item-header">
+      <i class="fa-solid fa-plane tracking-item-icon"></i>
+      <span class="tracking-item-name">OE-LXA</span>
+      <span class="badge badge-blue">ADS-B</span>
+      <i class="fa-solid fa-chevron-down tracking-item-chevron"></i>
+    </div>
+    <div class="tracking-item-body">
+      <div class="result-kv">
+        <div class="result-kv-item">
+          <span class="result-kv-label">Höhe</span>
+          <span class="result-kv-value">8.450 ft</span>
+        </div>
+        <div class="result-kv-item">
+          <span class="result-kv-label">Speed</span>
+          <span class="result-kv-value">485 kt</span>
+        </div>
+        <div class="result-kv-item">
+          <span class="result-kv-label">Kurs</span>
+          <span class="result-kv-value">247°</span>
+        </div>
+        <div class="result-kv-item">
+          <span class="result-kv-label">RSSI</span>
+          <span class="result-kv-value">−82 dBm</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AIS collapsed -->
+  <div class="tracking-item" data-type="ais">
+    <div class="tracking-item-header">
+      <i class="fa-solid fa-ship tracking-item-icon"></i>
+      <span class="tracking-item-name">NORDIC ODEN</span>
+      <span class="badge badge-gray">AIS</span>
+      <i class="fa-solid fa-chevron-down tracking-item-chevron"></i>
+    </div>
+  </div>
+
+</div>
+```
+
+**AIS-Felder in `.tracking-item-body`:** MMSI, SOG (kt), COG (°), RSSI (dBm)
 
 **HTML — Leerzustand:**
 
 ```html
 <div class="result-empty">
   <i class="fa-solid fa-satellite-dish"></i>
-  Klicke auf ein Flugzeug oder Schiff auf der Karte für Details.
-</div>
-```
-
-**HTML — Gefüllt (ADSB):**
-
-```html
-<div class="object-detail">
-  <div class="object-detail-header">
-    <i class="fa-solid fa-plane object-detail-icon"></i>
-    <span class="object-detail-name">AUA123</span>
-    <span class="badge badge-blue">ADS-B</span>
-  </div>
-  <div class="result-kv">
-    <div class="result-kv-item">
-      <span class="result-kv-label">Höhe</span>
-      <span class="result-kv-value">8.450 ft</span>
-    </div>
-    <div class="result-kv-item">
-      <span class="result-kv-label">Speed</span>
-      <span class="result-kv-value">485 kt</span>
-    </div>
-    <div class="result-kv-item">
-      <span class="result-kv-label">Kurs</span>
-      <span class="result-kv-value">247°</span>
-    </div>
-    <div class="result-kv-item">
-      <span class="result-kv-label">RSSI</span>
-      <span class="result-kv-value">−82 dBm</span>
-    </div>
-  </div>
-</div>
-```
-
-**HTML — Gefüllt (AIS):**
-
-```html
-<div class="object-detail">
-  <div class="object-detail-header">
-    <i class="fa-solid fa-ship object-detail-icon"></i>
-    <span class="object-detail-name">NORDIC ODEN</span>
-    <span class="badge badge-gray">AIS</span>
-  </div>
-  <div class="result-kv">
-    <div class="result-kv-item">
-      <span class="result-kv-label">MMSI</span>
-      <span class="result-kv-value">230084000</span>
-    </div>
-    <div class="result-kv-item">
-      <span class="result-kv-label">SOG</span>
-      <span class="result-kv-value">12,4 kt</span>
-    </div>
-    <div class="result-kv-item">
-      <span class="result-kv-label">COG</span>
-      <span class="result-kv-value">184°</span>
-    </div>
-    <div class="result-kv-item">
-      <span class="result-kv-label">RSSI</span>
-      <span class="result-kv-value">−91 dBm</span>
-    </div>
-  </div>
+  Warte auf Empfang…
 </div>
 ```
 
 **Regeln:**
-- Badge-Farbe unterscheidet den Objekttyp: `.badge-blue` für ADSB, `.badge-gray` für AIS
+- `data-type="adsb"` / `data-type="ais"` für JS-Filterung via Mode-Switch
+- Badge-Farbe: `.badge-blue` für ADS-B, `.badge-gray` für AIS
 - `.result-kv` aus Typ 4 wird unverändert wiederverwendet
-- Leerzustand: `.result-empty` aus Typ 5 wird wiederverwendet
-- JS-Zuständigkeit: Beim Klick auf ein Kartenobjekt `.result-empty` verstecken und `.object-detail` befüllen/zeigen; bei Klick auf leere Karte wieder Leerzustand zeigen
+- `.result-empty` aus Typ 5 wird wiederverwendet
+- `.segmented` / `.segmented-btn` aus `forms.css` wird wiederverwendet
+- Immer genau ein Item kann `.active` sein (oder keines)
+- JS-Zuständigkeit: Klick auf `.tracking-item-header` → `.active` toggeln + Karte highlighten; Kartenklick → Item per `data-type`/`data-id` finden, `.active` setzen, `scrollIntoView()`; Mode-Switch → Items per `data-type` filtern
 
 ---
 
@@ -454,3 +469,4 @@ Reihenfolge: Tool/Eingabe oben, Ergebnisse unten.
 | 2026-04-30 | Typ 5: `.result-empty` Leerzustand ergänzt |
 | 2026-05-05 | Typ 7: Koordinaten-Umrechner ergänzt (`coords.css`, `.coord-block` Pattern) |
 | 2026-05-11 | Typ 8: Objekt-Detail ergänzt; `result-kv`, `status-panel/row/dot` nach `sidebar.css` extrahiert |
+| 2026-05-12 | Typ 8: Objekt-Detail → Tracking-Liste; Mode-Switch, Expand-Verhalten, `data-type`-Filter |
