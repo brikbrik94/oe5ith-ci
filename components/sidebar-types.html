@@ -1078,19 +1078,19 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
   </p>
 </div>
 
-<!-- ═══ TYP 8: OBJEKT-DETAIL ═══ -->
+<!-- ═══ TYP 8: TRACKING-LISTE ═══ -->
 <div class="section">
-  <div class="section-label">Typ 8 — Objekt-Detail</div>
-  <div class="section-desc">ADS-B / AIS Tracking-Sidebar. Klick auf Kartenobjekt füllt das Detail-Panel. Immer kombiniert mit Typ 6 (Status-Panel oben, <code>.tool-sep</code> als Trenner, Detail unten).</div>
+  <div class="section-label">Typ 8 — Tracking-Liste</div>
+  <div class="section-desc">ADS-B / AIS Tracking-Sidebar. Zeigt alle empfangenen Objekte als scrollbare Liste. Mode-Switch filtert nach Typ. Klick auf Item klappt Details auf und hebt das Objekt auf der Karte hervor. Immer kombiniert mit Typ 6 (Status-Panel oben, <code>.tool-sep</code> als Trenner).</div>
 
-  <!-- Hauptzustand: Objekt gewählt (ADS-B) -->
+  <!-- Hauptzustand: Liste mit Objekten, ein Item aufgeklappt -->
   <div class="screen">
     <div class="m-tb">
       <div class="m-brand"><img src="assets/logo.svg"> OESITH</div>
       <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
     </div>
     <div class="m-layout">
-      <div class="sidebar" style="height:380px">
+      <div class="sidebar" style="height:460px">
         <div class="sidebar-inner">
 
           <!-- Status-Panel (Typ 6) -->
@@ -1138,43 +1138,79 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
 
           <div class="tool-sep"></div>
 
-          <!-- Detail-Panel (Typ 8) — ADS-B Objekt gewählt -->
-          <div class="object-detail">
-            <div class="object-detail-header">
-              <i class="fa-solid fa-plane object-detail-icon"></i>
-              <span class="object-detail-name">AUA123</span>
-              <span class="badge badge-blue">ADS-B</span>
-            </div>
-            <div class="result-kv">
-              <div class="result-kv-item">
-                <span class="result-kv-label">Höhe</span>
-                <span class="result-kv-value">8.450 ft</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">Speed</span>
-                <span class="result-kv-value">485 kt</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">Kurs</span>
-                <span class="result-kv-value">247°</span>
-              </div>
-              <div class="result-kv-item">
-                <span class="result-kv-label">RSSI</span>
-                <span class="result-kv-value">−82 dBm</span>
+          <!-- Mode-Switch -->
+          <div class="segmented">
+            <button class="segmented-btn active">Alle</button>
+            <button class="segmented-btn">ADS-B</button>
+            <button class="segmented-btn">AIS</button>
+          </div>
+
+          <!-- Tracking-Liste -->
+          <div class="tracking-list">
+
+            <!-- Item collapsed -->
+            <div class="tracking-item" data-type="adsb">
+              <div class="tracking-item-header">
+                <i class="fa-solid fa-plane tracking-item-icon"></i>
+                <span class="tracking-item-name">AUA123</span>
+                <span class="badge badge-blue">ADS-B</span>
+                <i class="fa-solid fa-chevron-down tracking-item-chevron"></i>
               </div>
             </div>
+
+            <!-- Item aufgeklappt + aktiv (ADS-B) -->
+            <div class="tracking-item active" data-type="adsb">
+              <div class="tracking-item-header">
+                <i class="fa-solid fa-plane tracking-item-icon"></i>
+                <span class="tracking-item-name">OE-LXA</span>
+                <span class="badge badge-blue">ADS-B</span>
+                <i class="fa-solid fa-chevron-down tracking-item-chevron"></i>
+              </div>
+              <div class="tracking-item-body">
+                <div class="result-kv">
+                  <div class="result-kv-item">
+                    <span class="result-kv-label">Höhe</span>
+                    <span class="result-kv-value">8.450 ft</span>
+                  </div>
+                  <div class="result-kv-item">
+                    <span class="result-kv-label">Speed</span>
+                    <span class="result-kv-value">485 kt</span>
+                  </div>
+                  <div class="result-kv-item">
+                    <span class="result-kv-label">Kurs</span>
+                    <span class="result-kv-value">247°</span>
+                  </div>
+                  <div class="result-kv-item">
+                    <span class="result-kv-label">RSSI</span>
+                    <span class="result-kv-value">−82 dBm</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AIS-Item collapsed -->
+            <div class="tracking-item" data-type="ais">
+              <div class="tracking-item-header">
+                <i class="fa-solid fa-ship tracking-item-icon"></i>
+                <span class="tracking-item-name">NORDIC ODEN</span>
+                <span class="badge badge-gray">AIS</span>
+                <i class="fa-solid fa-chevron-down tracking-item-chevron"></i>
+              </div>
+            </div>
+
           </div>
 
         </div>
-        <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
+        <div class="sidebar-footer"><span>v2.3.0</span><span class="sidebar-footer-dot"></span></div>
       </div>
       <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
     </div>
   </div>
   <p class="annotation">
-    <strong>Struktur:</strong> Status-Panel (Typ 6) oben · <code>.tool-sep</code> · <code>.object-detail</code> mit Header (Icon + Name + Badge) und <code>.result-kv</code> für Key-Value-Zeilen.
-    ADS-B → <code>.badge-blue</code>, AIS → <code>.badge-gray</code> + Schiff-Icon.
-    Gewähltes Objekt ersetzt den Leerzustand dynamisch per JS.
+    <strong>Struktur:</strong> Status-Panel (Typ 6) oben · <code>.tool-sep</code> · <code>.segmented</code> Mode-Switch · <code>.tracking-list</code> mit <code>.tracking-item</code>-Items.<br>
+    Aktives Item: <code>.tracking-item.active</code> — zeigt <code>.tracking-item-body</code>, dreht Chevron (180°), accent border-left.<br>
+    ADS-B → <code>.badge-blue</code> + <code>fa-plane</code>, AIS → <code>.badge-gray</code> + <code>fa-ship</code>.<br>
+    JS: Klick auf <code>.tracking-item-header</code> → <code>.active</code> toggeln + Karte highlighten. Kartenklick → passendes Item per <code>data-type</code>/<code>data-id</code> suchen, <code>.active</code> setzen, <code>scrollIntoView()</code>. Mode-Switch → Items per <code>data-type</code> filtern.
   </p>
 
   <!-- Leerzustand -->
@@ -1184,7 +1220,7 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
       <div class="m-nav"><a>OSM Standard ▾</a><a>Zoom</a></div>
     </div>
     <div class="m-layout">
-      <div class="sidebar" style="height:220px">
+      <div class="sidebar" style="height:240px">
         <div class="sidebar-inner">
           <div class="status-panel">
             <div class="status-row">
@@ -1193,8 +1229,8 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
                 <span class="status-row-name">ADS-B Flugzeuge</span>
               </div>
               <div class="status-row-right">
-                <span class="status-row-value">42</span>
-                <span class="status-dot on"></span>
+                <span class="status-row-value">0</span>
+                <span class="status-dot off"></span>
               </div>
             </div>
             <div class="status-row">
@@ -1203,24 +1239,29 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
                 <span class="status-row-name">AIS Schiffe</span>
               </div>
               <div class="status-row-right">
-                <span class="status-row-value">7</span>
-                <span class="status-dot on"></span>
+                <span class="status-row-value">0</span>
+                <span class="status-dot off"></span>
               </div>
             </div>
           </div>
           <div class="tool-sep"></div>
+          <div class="segmented">
+            <button class="segmented-btn active">Alle</button>
+            <button class="segmented-btn">ADS-B</button>
+            <button class="segmented-btn">AIS</button>
+          </div>
           <div class="result-empty">
             <i class="fa-solid fa-satellite-dish"></i>
-            Klicke auf ein Flugzeug oder Schiff auf der Karte für Details.
+            Warte auf Empfang…
           </div>
         </div>
-        <div class="sidebar-footer"><span>v44c4840</span><span class="sidebar-footer-dot"></span></div>
+        <div class="sidebar-footer"><span>v2.3.0</span><span class="sidebar-footer-dot"></span></div>
       </div>
       <div class="m-map-bg"><span class="m-map-label">Leaflet / MapLibre</span></div>
     </div>
   </div>
   <p class="annotation">
-    <strong>Leerzustand:</strong> <code>.result-empty</code> unterhalb des Status-Panels solange kein Objekt angeklickt wurde.
+    <strong>Leerzustand:</strong> <code>.result-empty</code> unterhalb des Mode-Switch solange keine Objekte empfangen wurden (oder der aktive Filter keine Treffer hat).
   </p>
 </div>
 
