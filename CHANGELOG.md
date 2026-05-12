@@ -14,16 +14,6 @@ Siehe auch:
 docs/versioning.md
 ```
 
-## [2.2.0] - 2026-05-11
-
-### Added
-
-- Geocoder Dropdown: `.geocoder-results`, `.geocoder-item`, `.geocoder-icon`, `.geocoder-content`, `.geocoder-title`, `.geocoder-subtitle` in `css/forms.css`
-- `docs/geocoder-dropdown.md`: Dokumentation mit HTML-Struktur, Icon-Referenz und Regeln
-- Demo-Abschnitt in `components/forms.html`
-
----
-
 ## [Unreleased]
 
 ### Added
@@ -39,6 +29,16 @@ docs/versioning.md
 - `.object-detail`, `.object-detail-header`, `.object-detail-icon`, `.object-detail-name` aus `css/sidebar.css` entfernt (ersetzt durch `.tracking-*`).
 
 > **Hinweis Versioning:** Da `.object-detail*`-Klassen entfernt werden, ist das technisch ein MAJOR-Change (v3.0.0). Da diese Klassen erst mit v2.2.0 eingeführt wurden und noch keine Produktionsseite sie nutzt, kann auch v2.3.0 gewählt werden — Entscheidung liegt beim Maintainer.
+
+---
+
+## [2.2.0] - 2026-05-11
+
+### Added
+
+- Geocoder Dropdown: `.geocoder-results`, `.geocoder-item`, `.geocoder-icon`, `.geocoder-content`, `.geocoder-title`, `.geocoder-subtitle` in `css/forms.css`
+- `docs/geocoder-dropdown.md`: Dokumentation mit HTML-Struktur, Icon-Referenz und Regeln
+- Demo-Abschnitt in `components/forms.html`
 
 ---
 
