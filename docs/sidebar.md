@@ -197,7 +197,7 @@ Eingesetzt für Layer-Steuerung auf Kartenseiten.
 .accordion
 └── .acc-group (.open)
     ├── .acc-header          ← immer sichtbar, klickbar
-    │   ├── .acc-dot         ← site-spezifische Farbe, kein CI-Token
+    │   ├── .acc-dot         ← CI-Default: var(--accent); Overrides möglich
     │   ├── .acc-title
     │   ├── .acc-status      ← unloaded / partial / all-on
     │   └── .acc-chevron     ← rotiert bei .open
@@ -205,19 +205,23 @@ Eingesetzt für Layer-Steuerung auf Kartenseiten.
     │   ├── "Alle an"
     │   └── "Alle aus"
     └── .acc-body            ← max-height Transition
-        └── .acc-item (.checked)
-            ├── .acc-checkbox
-            └── .acc-item-label
+        ├── .acc-item (.checked)
+        │   ├── .acc-checkbox
+        │   └── .acc-item-label
+        ├── .acc-item.loading-state  ← Ladehinweis (subtle)
+        └── .acc-item.error-state    ← Fehlerhinweis (danger)
 ```
 
 ### Dot-Farbe
 
-Der Dot signalisiert die Kategorie der Gruppe. Die Farbe ist **frei und site-spezifisch** —
-sie ist kein CI-Token und wird nicht zentral vorgegeben. Jede Site wählt ihre eigenen
-Dot-Farben passend zu den dargestellten Inhalten.
+Der Dot signalisiert die Kategorie der Gruppe. Als CI-Default wird `var(--accent)` verwendet.
+Site-spezifische Overrides sind per Inline-Style oder eigener CSS-Regel möglich.
 
 ```html
-<!-- Farbe direkt als style, kein Token -->
+<!-- CI-Default: var(--accent) -->
+<span class="acc-dot"></span>
+
+<!-- Site-spezifischer Override per Inline-Style -->
 <span class="acc-dot" style="background:#22c55e"></span>
 ```
 
@@ -230,6 +234,20 @@ Dot-Farben passend zu den dargestellten Inhalten.
 | `.acc-status.all-on` | `alle aktiv` | Grün (--success) | Alle Layer aktiviert |
 
 Badge-Text-Regel: 0 aktiv → `nicht geladen` · 1–(n-1) aktiv → `n Layer` · alle aktiv → `alle aktiv`
+
+### Async-Zustände (Loading / Error)
+
+Wenn Layer-Daten asynchron geladen werden, können Platzhalter-Items im Accordion-Body angezeigt werden:
+
+| Klasse | Farbe | Verwendung |
+|---|---|---|
+| `.acc-item.loading-state` | `--subtle` (grau) | Ladeanzeige während Fetch |
+| `.acc-item.error-state` | `--danger` (rot) | Fehler beim Laden |
+
+```html
+<div class="acc-item loading-state">Lade Layer-Daten …</div>
+<div class="acc-item error-state">Fehler: Layer konnte nicht geladen werden</div>
+```
 
 ### Filter-Feld
 
@@ -354,7 +372,7 @@ Symbol: `‹` (offen) / `›` (geschlossen)
 ## Regeln
 
 1. Section-Labels nur bei mehreren Gruppen — nie für eine einzige Gruppe
-2. Dot-Farbe der Accordion-Gruppe ist frei und site-spezifisch — kein CI-Token
+2. Dot-Farbe: CI-Default ist `var(--accent)` — site-spezifische Overrides per Inline-Style möglich
 3. Status-Badge immer per JS aktualisieren — nie statisch hardcoden
 4. Filter-Feld nur bei mehr als 5 Accordion-Gruppen
 5. Externe Links: immer `color: #666`, immer Pfeil-Icon, immer neuer Tab
@@ -369,3 +387,4 @@ Symbol: `‹` (offen) / `›` (geschlossen)
 | 2026-04-22 | v1.1: Accordion als Sidebar-Element integriert. Dot-Farben aus Accordion entfernt — site-spezifisch. Elementübersicht ergänzt. accordion.md aufgelöst. |
 | 2026-04-24 | v1.3: © Button im Footer. Karten-Attribution ⓘ Button in page.css. |
 | 2026-04-22 | v1.2: Höhe & Scroll-Verhalten definiert. Layout `height` statt `min-height`. Sidebar `height: 100%`, inner `flex: 1 / overflow-y: auto`, Footer `flex-shrink: 0`. |
+| 2026-05-20 | `.acc-dot` erhält `var(--accent)` als CI-Default. `.acc-item.loading-state` und `.acc-item.error-state` hinzugefügt. |
