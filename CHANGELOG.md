@@ -19,8 +19,23 @@ docs/versioning.md
 ### Added
 
 - Sidebar Typ 8 — Tracking-Liste: scrollbare Liste aller empfangenen ADSB/AIS-Objekte mit Mode-Switch (Alle / ADS-B / AIS) und Expand-Verhalten. Klassen: `.tracking-list`, `.tracking-item`, `.tracking-item-header`, `.tracking-item-body`, `.tracking-item-icon`, `.tracking-item-name`, `.tracking-item-chevron`.
+- **utils.css** — Text/Visibility: `.text-center`, `.text-left`, `.opacity-50`, `.hidden`
+- **utils.css** — Flex: `.flex-1`, `.flex-2`, `.w-full`, `.flex-align-center`, `.justify-between`, `.gap-4`
+- **utils.css** — Table: `.table-wrapper`, `.table-col-25`, `.border-collapse`
+- **utils.css** — Spacing: `.m-0`, `.mt-0`, `.mt-8`, `.mt-12`, `.mb-8`, `.pb-0`, `.p-double-gap`, `.mb-1-5-gap`, `.p-2rem`
+- **utils.css** — Misc: `.pos-relative`, `.cursor-pointer`, `.border-none`, `.no-dot-bg`
+- **typography.css** — Font-Weights: `.font-medium`, `.font-semibold`
+- **typography.css** — Text-Utilities: `.t-success`, `.t-danger`, `.t-muted`, `.t-subtle`, `.t-white`, `.t-tiny`
+- **sidebar.css** — `.acc-item.loading-state`, `.acc-item.error-state` für asynchrone Layer-Zustände
+- **cards.css** — `.sprite-preview-img` für Icon-/Asset-Vorschauen in Cards
+- **coords.css** — `.coord-header-status` für Zusatz-Text im Koordinaten-Block-Header
+- **sidebar.css** — `.acc-dot` erhält `background: var(--accent)` als CI-Default (site-spezifische Overrides möglich)
+- **common.css / tokens.md** — Neues Token `--white: #ffffff` für `.t-white` und Heading-Schrift
+- Referenz-Demos in `components/utils.html`, `components/typography.html`, `components/sidebar.html`, `components/cards.html` aktualisiert
 
 ### Changed
+
+- `docs/sidebar.md`: `.acc-dot` Dokumentation aktualisiert (CI-Default `var(--accent)`). Async-Zustände `.loading-state` / `.error-state` dokumentiert.
 
 - `docs/sidebar-types.md`: Typ 8 vollständig neu definiert (Tracking-Liste ersetzt Objekt-Detail).
 
