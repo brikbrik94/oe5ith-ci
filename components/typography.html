@@ -166,6 +166,17 @@ pre, .t-code-block {
   .page-content { padding: 20px 16px; }
   .type-row { grid-template-columns: 1fr; gap: 8px; }
 }
+
+/* Font-Weight Utilities */
+.font-medium   { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+/* Color/Size Utilities */
+.t-success { color: var(--success, #22c55e); }
+.t-danger  { color: var(--danger,  #ef4444); }
+.t-muted   { color: var(--muted,   #888); }
+.t-subtle  { color: var(--subtle,  #555); }
+.t-white   { color: var(--white,   #fff); }
+.t-tiny    { font-size: 0.75rem; }
 </style>
 </head>
 <body>
@@ -347,6 +358,44 @@ pre, .t-code-block {
     <p>OpenRouteService mit aktivem Profil <code>driving-car</code>. Zugriff mit validem API-Key.</p>
     <span class="t-url">https://ors.oe5ith.at/directions/driving-car</span>
     <span class="t-small">Endpunkt erfordert Header <code>X-API-Key</code>. Rate-Limit: 10 req/s.</span>
+  </div>
+
+  <!-- FONT-WEIGHT -->
+  <div class="section-title">Font-Weight Utilities</div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">.font-medium / .font-semibold</div>
+      <span class="type-token"><b>font-weight: 500</b></span>
+      <span class="type-token"><b>font-weight: 600</b></span>
+    </div>
+    <div>
+      <div class="font-medium" style="font-size:0.9rem;color:var(--text);margin-bottom:8px">font-weight: 500 (.font-medium) — Der braune Fuchs springt.</div>
+      <div class="font-semibold" style="font-size:0.9rem;color:var(--text)">font-weight: 600 (.font-semibold) — Der braune Fuchs springt.</div>
+    </div>
+  </div>
+
+  <!-- TEXT UTILITIES -->
+  <div class="section-title">Color / Size Utilities</div>
+
+  <div class="type-row">
+    <div>
+      <div class="type-meta-name">.t-success / .t-danger / .t-muted / .t-subtle / .t-white / .t-tiny</div>
+      <span class="type-token"><b>var(--success)</b></span>
+      <span class="type-token"><b>var(--danger)</b></span>
+      <span class="type-token"><b>var(--muted)</b></span>
+      <span class="type-token"><b>var(--subtle)</b></span>
+      <span class="type-token"><b>var(--white)</b></span>
+      <span class="type-token"><b>0.75rem</b></span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span class="t-success">t-success — var(--success, #22c55e)</span>
+      <span class="t-danger">t-danger — var(--danger, #ef4444)</span>
+      <span class="t-muted">t-muted — var(--muted, #888)</span>
+      <span class="t-subtle">t-subtle — var(--subtle, #555)</span>
+      <span class="t-white">t-white — var(--white, #fff)</span>
+      <span class="t-tiny t-muted">t-tiny — 0.75rem, hier kombiniert mit .t-muted</span>
+    </div>
   </div>
 
 </div>
