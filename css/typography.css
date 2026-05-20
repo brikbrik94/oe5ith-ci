@@ -127,7 +127,7 @@ pre, .t-code-block {
 .font-medium   { font-weight: 500; }
 .font-semibold { font-weight: 600; }
 
-/* ── Text-Color Utilities (CI-Token-basiert) ── */
+/* ── Text Utilities (Farbe + Größe, CI-Token-basiert) ── */
 
 .t-success { color: var(--success); }
 .t-danger  { color: var(--danger); }
