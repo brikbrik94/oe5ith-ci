@@ -138,7 +138,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
 .acc-header:hover { background: rgba(255,255,255,0.03); }
 
 /* Dot — Farbe ist site-spezifisch, kein CI-Token */
-.acc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.acc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; background: var(--accent, #3b82f6); }
 
 .acc-title {
   font-size: 0.85rem; font-weight: 600; color: var(--text);
@@ -204,6 +204,17 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
 }
 .acc-item-label { font-size: 0.82rem; color: var(--muted); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .acc-item.checked .acc-item-label { color: var(--text); }
+
+.acc-item.loading-state {
+  padding-left: 24px;
+  color: var(--subtle, #555);
+  font-size: 0.8rem;
+}
+.acc-item.error-state {
+  padding-left: 24px;
+  color: var(--danger, #ef4444);
+  font-size: 0.8rem;
+}
 
 /* ═══ SIDEBAR TAB ═══ */
 .sidebar-tab {
@@ -635,6 +646,16 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Accordion Item States -->
+    <div class="ref-section">
+      <div class="ref-section-title">Accordion — Item-Zustände (Loading / Error)</div>
+      <div class="demo-box" style="flex-direction:column; gap:0; padding:0; background:var(--panel); border-radius:6px; overflow:hidden;">
+        <div class="acc-item loading-state">Lade Layer-Daten …</div>
+        <div class="acc-item error-state">Fehler: Layer konnte nicht geladen werden</div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:12px;line-height:1.6;">Zustände für asynchron geladene Layer-Listen. Werden in den Accordion-Body eingesetzt, bis Daten verfügbar sind oder ein Fehler auftritt.</p>
     </div>
 
     <!-- Footer Seitentypen -->
