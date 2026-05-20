@@ -21,7 +21,7 @@
 }
 
 /* ═══════════════════════════════════════
-   SPACING UTILITIES
+   GAP TOKEN UTILITIES
    ═══════════════════════════════════════ */
 
 .m-gap  { margin: var(--card-gap); }
