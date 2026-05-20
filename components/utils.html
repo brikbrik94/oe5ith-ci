@@ -49,6 +49,38 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
 .mb-gap      { margin-bottom:var(--card-gap); }
 .flex-col    { display:flex; flex-direction:column; }
 .flex-center { display:flex; align-items:center; justify-content:center; }
+/* Text & Visibility */
+.text-center    { text-align: center; }
+.text-left      { text-align: left; }
+.opacity-50     { opacity: 0.5; }
+.hidden         { display: none !important; }
+/* Flex Extensions */
+.flex-1            { flex: 1; }
+.flex-2            { flex: 2; }
+.w-full            { width: 100%; }
+.flex-align-center { display: flex; align-items: center; }
+.justify-between   { justify-content: space-between; }
+.gap-4             { gap: 4px; }
+/* Table */
+.table-wrapper   { overflow-x: auto; width: 100%; }
+.table-col-25    { width: 25%; }
+.border-collapse { border-collapse: collapse; }
+/* Spacing */
+.m-0   { margin: 0; }
+.mt-0  { margin-top: 0; }
+.mt-8  { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mb-8  { margin-bottom: 8px; }
+.pb-0  { padding-bottom: 0; }
+.p-double-gap { padding: calc(2 * 20px); }
+.mb-1-5-gap   { margin-bottom: calc(1.5 * 20px); }
+.p-2rem       { padding: 2rem; }
+/* Position & Cursor */
+.pos-relative   { position: relative; }
+.cursor-pointer { cursor: pointer; }
+/* Border */
+.border-none { border: none; }
+.no-dot-bg   { background: none !important; box-shadow: none !important; }
 </style>
 </head>
 <body>
@@ -101,6 +133,139 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
       <div class="demo-label">.flex-center</div>
       <div class="flex-center" style="width:140px; height:80px; background:var(--panel-deep); border-radius:4px;">
         <div class="demo-item" style="padding:6px 10px;">Zentriert</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEXT & VISIBILITY -->
+<div class="section">
+  <div class="section-label">.text-center / .text-left / .opacity-50 / .hidden</div>
+  <div class="section-desc">Text-Alignment und Sichtbarkeit. <code>.hidden</code> entspricht <code>display:none !important</code>.</div>
+  <div class="demo-box" style="flex-direction:column; gap:8px;">
+    <div class="demo-item text-center" style="width:100%"><div class="demo-label">.text-center</div>Text zentriert</div>
+    <div class="demo-item text-left"   style="width:100%"><div class="demo-label">.text-left</div>Text links</div>
+    <div class="demo-item opacity-50"  style="width:100%"><div class="demo-label">.opacity-50</div>50% Opazität</div>
+    <div class="demo-item" style="width:100%"><div class="demo-label">.hidden</div><span class="hidden">Dieses Element ist versteckt.</span><em style="color:var(--subtle)">(Element nicht sichtbar)</em></div>
+  </div>
+</div>
+
+<!-- FLEX EXTENSIONS -->
+<div class="section">
+  <div class="section-label">.flex-1 / .flex-2 / .w-full / .flex-align-center / .justify-between / .gap-4</div>
+  <div class="section-desc">Ergänzungen zum Flex-System.</div>
+  <div class="demo-box" style="flex-direction:column; gap:10px;">
+    <div>
+      <div class="demo-label">.flex-1 / .flex-2 (im Flex-Parent)</div>
+      <div style="display:flex; gap:6px; width:100%;">
+        <div class="demo-item flex-1"><code>.flex-1</code></div>
+        <div class="demo-item flex-2"><code>.flex-2</code></div>
+      </div>
+    </div>
+    <div>
+      <div class="demo-label">.flex-align-center</div>
+      <div class="demo-item flex-align-center" style="gap:8px; width:100%;">
+        <span style="width:12px;height:12px;background:var(--accent);border-radius:50%;display:inline-block;flex-shrink:0;"></span>
+        <span>Vertikal zentriert</span>
+      </div>
+    </div>
+    <div>
+      <div class="demo-label">.justify-between</div>
+      <div class="demo-item flex-align-center justify-between" style="width:100%;">
+        <span>Links</span><span>Rechts</span>
+      </div>
+    </div>
+    <div>
+      <div class="demo-label">.w-full</div>
+      <div class="demo-item w-full"><code>.w-full</code> — volle Breite</div>
+    </div>
+    <div>
+      <div class="demo-label">.gap-4</div>
+      <div class="demo-item flex-align-center gap-4" style="width:100%;">
+        <span style="background:var(--border);padding:4px 8px;border-radius:3px;">A</span>
+        <span style="background:var(--border);padding:4px 8px;border-radius:3px;">B</span>
+        <span style="background:var(--border);padding:4px 8px;border-radius:3px;">C</span>
+        <span style="color:var(--subtle); font-size:0.72rem;">(gap: 4px)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE UTILITIES -->
+<div class="section">
+  <div class="section-label">.table-wrapper / .table-col-25 / .border-collapse</div>
+  <div class="section-desc"><code>.table-wrapper</code> ermöglicht horizontales Scrollen auf Mobile. <code>.table-col-25</code> setzt die Spaltenbreite auf 25%. <code>.border-collapse</code> setzt <code>border-collapse: collapse</code>.</div>
+  <div class="demo-box">
+    <div class="table-wrapper" style="max-width:400px;">
+      <table class="border-collapse" style="width:100%; font-size:0.8rem;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border);">
+            <th class="table-col-25" style="padding:6px 8px; text-align:left; color:var(--muted);">25%</th>
+            <th style="padding:6px 8px; text-align:left; color:var(--muted);">Spalte 2</th>
+            <th style="padding:6px 8px; text-align:left; color:var(--muted);">Spalte 3 (lang)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:6px 8px; color:var(--text);">Wert</td>
+            <td style="padding:6px 8px; color:var(--text);">Wert</td>
+            <td style="padding:6px 8px; color:var(--text); white-space:nowrap;">Langer Inhalt scrollt →</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SPACING -->
+<div class="section">
+  <div class="section-label">.mt-8 / .mt-12 / .mb-8 / .m-0 / .mt-0 / .pb-0 / .p-double-gap / .mb-1-5-gap / .p-2rem</div>
+  <div class="section-desc">Spacing-Utilities. Token-basierte Abstände nutzen <code>--card-gap</code> (20px); feste Pixel-Werte für spezifische Layouts.</div>
+  <div class="demo-box" style="flex-direction:column; gap:6px;">
+    <div class="demo-item mt-8" style="background:var(--panel-deep);">
+      <div class="demo-label">.mt-8</div>margin-top: 8px
+    </div>
+    <div class="demo-item mt-12" style="background:var(--panel-deep);">
+      <div class="demo-label">.mt-12</div>margin-top: 12px
+    </div>
+    <div class="demo-item mb-8" style="background:var(--panel-deep);">
+      <div class="demo-label">.mb-8</div>margin-bottom: 8px
+    </div>
+    <div class="demo-item p-double-gap" style="background:var(--panel-deep);">
+      <div class="demo-label">.p-double-gap</div>padding: calc(2 × 20px) = 40px
+    </div>
+    <div class="demo-item p-2rem" style="background:var(--panel-deep);">
+      <div class="demo-label">.p-2rem</div>padding: 2rem
+    </div>
+  </div>
+</div>
+
+<!-- POSITION & CURSOR & BORDER -->
+<div class="section">
+  <div class="section-label">.pos-relative / .cursor-pointer / .border-none / .no-dot-bg</div>
+  <div class="section-desc">Positionierung, Cursor und Border-Overrides.</div>
+  <div class="demo-box" style="gap:12px; flex-wrap:wrap;">
+    <div class="demo-item pos-relative" style="width:160px; height:60px;">
+      <div class="demo-label">.pos-relative</div>
+      <span style="position:absolute; top:6px; right:8px; font-size:0.62rem; background:var(--accent); color:#fff; padding:1px 5px; border-radius:3px;">abs. Kind</span>
+    </div>
+    <div class="demo-item cursor-pointer">
+      <div class="demo-label">.cursor-pointer</div>
+      Hover → Zeiger
+    </div>
+    <div class="demo-item border-none">
+      <div class="demo-label">.border-none</div>
+      Kein Rahmen
+    </div>
+    <div>
+      <div class="demo-label">.no-dot-bg</div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);"></div>
+        <span style="font-size:0.75rem;color:var(--muted);">Normal (.acc-dot)</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+        <div class="no-dot-bg" style="width:10px;height:10px;border-radius:50%;background:var(--accent);"></div>
+        <span style="font-size:0.75rem;color:var(--muted);">Mit .no-dot-bg</span>
       </div>
     </div>
   </div>
