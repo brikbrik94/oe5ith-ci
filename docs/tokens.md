@@ -23,6 +23,7 @@ Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcode
 | `--panel` | `#202020` | Sidebar, tiefere Panels |
 | `--panel-deep` | `#161616` | Tiefstes Panel, Code-Block-Hintergrund |
 | `--text` | `#e0e0e0` | Primärtext — Headings, Labels |
+| `--white` | `#ffffff` | Reines Weiß — Heading-Schrift, `.t-white` |
 | `--muted` | `#888888` | Sekundärtext — Beschreibungen, Body |
 | `--subtle` | `#555555` | Labels, Section-Titles, Metadaten |
 | `--border` | `#333333` | Alle Borders |
