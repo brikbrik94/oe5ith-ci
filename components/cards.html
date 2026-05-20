@@ -403,6 +403,15 @@ body {
 @media (max-width: 768px) {
   .page-content { padding: 20px 16px; }
 }
+
+.sprite-preview-img {
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  border-radius: 4px;
+  background: var(--bg, #1a1a1a);
+  object-fit: contain;
+}
 </style>
 </head>
 <body>
@@ -583,6 +592,21 @@ body {
         damit das Layout stabil bleibt.
       </div>
     </div>
+  </div>
+
+  <!-- ═══ SPRITE PREVIEW IMG ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">.sprite-preview-img</div>
+    <div class="demo-section-desc">
+      Quadratische Icon-/Bildvorschau (20×20px) innerhalb von Cards. Verwendet <code>object-fit: contain</code> und einen abgedunkelten Hintergrund.
+    </div>
+
+    <img class="sprite-preview-img"
+         src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%233b82f6'/%3E%3C/svg%3E"
+         alt="Demo Icon">
+    <img class="sprite-preview-img"
+         src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='4' y='4' width='16' height='16' rx='3' fill='%2322c55e'/%3E%3C/svg%3E"
+         alt="Demo Icon 2">
   </div>
 
 </div>
