@@ -143,7 +143,7 @@
   min-width: 100%;
   z-index: var(--z-dropdown);
   padding: 4px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  box-shadow: var(--shadow-dropdown);
 }
 
 .topbar-dropdown-menu.open {
@@ -163,7 +163,7 @@
 }
 
 .topbar-dropdown-item:hover {
-  background: rgba(59,130,246,0.1);
+  background: var(--accent-subtle-md);
   color: #fff;
 }
 
@@ -444,8 +444,8 @@
   transform: translateY(-50%);
   width: 16px;
   height: 44px;
-  background: rgba(59,130,246,0.15);       /* 15% statt 7% — besser sichtbar */
-  border: 1px solid rgba(59,130,246,0.35); /* 35% statt 25% — besser sichtbar */
+  background: var(--sidebar-tab-bg);
+  border: 1px solid var(--sidebar-tab-border);
   border-left: none;
   border-radius: 0 8px 8px 0;
   display: flex;
