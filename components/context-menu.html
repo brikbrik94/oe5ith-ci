@@ -7,15 +7,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/page.css">
 <link rel="stylesheet" href="../css/modal.css">
 <link rel="stylesheet" href="../css/demo.css">
 <style>
 .annotation { font-size: 0.8rem; color: var(--subtle); margin-top: 10px; line-height: 1.6; }
 .annotation code { background: #1e1e1e; padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 0.75rem; color: #7ba8d4; }
-.action-menu-btn { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; font-weight: 600; font-family: inherit; cursor: pointer; background: var(--panel); color: var(--muted); transition: all var(--transition-fast); }
-.action-menu-btn:hover { background: var(--accent-subtle-md); color: var(--accent); }
-.action-menu-wrap { position: relative; display: inline-block; }
-.action-menu-wrap .ctx-menu { top: 36px; left: 0; }
+.fake-map { height: 200px; cursor: crosshair; align-items: center; justify-content: center; overflow: hidden; user-select: none; }
 .fake-map-hint { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: rgba(255,255,255,0.25); pointer-events: none; white-space: nowrap; }
 .ci-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; background: var(--panel); }
 .ci-table thead tr { border-bottom: 1px solid var(--border); }
@@ -23,7 +21,8 @@
 .ci-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.03); transition: background var(--transition-fast); }
 .ci-table tbody tr:last-child { border-bottom: none; }
 .ci-table tbody tr:hover { background: rgba(255,255,255,0.025); }
-.ci-table td { padding: 8px 14px; vertical-align: middle; }
+.ci-table td { padding: 8px 14px; vertical-align: middle; color: var(--muted); }
+.ci-table td.actions { padding: 4px 10px; text-align: right; }
 </style>
 </head>
 <body>
