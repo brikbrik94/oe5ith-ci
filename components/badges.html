@@ -5,195 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CI Reference — Badges</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/badges.css">
+<link rel="stylesheet" href="../css/demo.css">
 <style>
-/* ═══════════════════════════════════════
-   DESIGN TOKENS
-   ═══════════════════════════════════════ */
-:root {
-  --bg:           #1a1a1a;
-  --card-bg:      #252525;
-  --text:         #e0e0e0;
-  --muted:        #888;
-  --accent:       #3b82f6;
-  --border:       #333;
-  --success:      #22c55e;
-  --topbar-height: 60px;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-
-/* ═══════════════════════════════════════
-   TOPBAR (minimal)
-   ═══════════════════════════════════════ */
-.topbar {
-  background: var(--card-bg);
-  height: var(--topbar-height);
-  border-bottom: 2px solid var(--accent);
-  display: flex; align-items: center;
-  padding: 0 20px; position: sticky; top: 0; z-index: 100;
-}
-.brand {
-  display: flex; align-items: center; gap: 9px;
-  color: #fff; font-weight: 700; font-size: 1.2rem;
-  letter-spacing: 1px; text-decoration: none;
-}
-.brand img { width: 26px; height: 26px; }
-
-/* ═══════════════════════════════════════
-   BADGE — BASE
-   Alle Badges teilen diese Basis.
-   ═══════════════════════════════════════ */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 4px;       /* eckig — kein Pill */
-  border: 1px solid;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-/* ── Dot (inline, CSS-only) ── */
-.badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-  flex-shrink: 0;
-}
-
-/* ── Icon (Font Awesome) ── */
-.badge i {
-  font-size: 0.65rem;
-  flex-shrink: 0;
-}
-
-/* ═══════════════════════════════════════
-   BADGE FARBEN — 6 Varianten
-   ═══════════════════════════════════════ */
-
-/* Blau — Info, allgemein */
-.badge-blue {
-  background: rgba(59,130,246, 0.10);
-  color: #3b82f6;
-  border-color: rgba(59,130,246, 0.25);
-}
-
-/* Grün — OK, Online, Aktiv */
-.badge-green {
-  background: rgba(34,197,94, 0.10);
-  color: #22c55e;
-  border-color: rgba(34,197,94, 0.25);
-}
-
-/* Gelb — Warnung, Auth required, Pending */
-.badge-yellow {
-  background: rgba(234,179,8, 0.10);
-  color: #eab308;
-  border-color: rgba(234,179,8, 0.25);
-}
-
-/* Rot — Fehler, Offline */
-.badge-red {
-  background: rgba(239,68,68, 0.10);
-  color: #ef4444;
-  border-color: rgba(239,68,68, 0.25);
-}
-
-/* Grau — Typ-Info, keine Semantik (z.B. "Basemap", "v1.4.2") */
-.badge-gray {
-  background: rgba(255,255,255, 0.04);
-  color: #666;
-  border-color: #2a2a2a;
-}
-
-/* Lila — Auth / Security (Authentik, SSO, OIDC) */
-.badge-purple {
-  background: rgba(139,92,246, 0.10);
-  color: #a78bfa;
-  border-color: rgba(139,92,246, 0.25);
-}
-
-/* ═══════════════════════════════════════
-   DEMO / REFERENZ STYLES
-   ═══════════════════════════════════════ */
-.page-content { padding: 40px; max-width: 900px; }
-
-.demo-section { margin-bottom: 44px; }
-
-.demo-section-title {
-  font-size: 0.7rem; font-weight: 700;
-  letter-spacing: 1.2px; text-transform: uppercase;
-  color: #555; margin-bottom: 6px;
-  padding-bottom: 8px; border-bottom: 1px solid #222;
-}
-
-.demo-section-desc {
-  font-size: 0.82rem; color: #555;
-  margin-bottom: 16px; line-height: 1.6;
-}
-.demo-section-desc code {
-  background: #1e1e1e; padding: 1px 5px; border-radius: 3px;
-  font-family: monospace; font-size: 0.78rem; color: #7ba8d4;
-}
-
+/* Demo-specific classes not in demo.css, topbar.css or badges.css */
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
-
-/* Kontext-Demo: Badge in Card */
-.demo-card {
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 12px; padding: 16px; max-width: 320px;
-}
-.demo-card-header {
-  display: flex; align-items: flex-start;
-  justify-content: space-between; gap: 10px; margin-bottom: 8px;
-}
-.demo-card-header h3 {
-  font-size: 0.9rem; font-weight: 600; color: #fff;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;
-}
+.demo-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--card-radius); padding: var(--card-padding); }
+.demo-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.demo-card-header h3 { font-size: 0.9rem; font-weight: 600; color: var(--white); }
 .demo-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
-
-/* Topbar-Kontext Demo */
-.demo-topbar-strip {
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-top: 2px solid var(--accent); border-radius: 8px;
-  padding: 0 16px; height: 48px;
-  display: flex; align-items: center; gap: 10px;
-  font-size: 0.8rem; color: var(--muted);
-}
-
-/* Sidebar-Kontext Demo */
-.demo-sidebar-strip {
-  background: #202020; border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px 14px;
-  display: flex; flex-direction: column; gap: 6px;
-  max-width: 220px;
-}
-.demo-nav-item {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 0.82rem; color: var(--muted);
-  padding: 6px 8px; border-radius: 5px;
-}
-.demo-nav-item.active {
-  color: var(--accent); background: rgba(59,130,246,.07);
-  border-left: 2px solid var(--accent);
-}
-
-@media (max-width: 768px) {
-  .page-content { padding: 20px 16px; }
-}
+.demo-topbar-strip { background: var(--card-bg); height: 36px; border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 12px; border-radius: 6px 6px 0 0; gap: 8px; }
+.demo-sidebar-strip { background: var(--panel); width: 140px; min-height: 80px; padding: 8px 6px; display: flex; flex-direction: column; gap: 2px; }
+.demo-nav-item { display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 4px; font-size: 0.72rem; color: var(--muted); cursor: default; }
+.demo-nav-item.active { background: var(--accent-subtle); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -326,7 +152,7 @@ body {
       Semantische Badges als Kontext-Labels, z.B. Auth-Hinweis, Service-Status.
     </div>
     <div class="demo-topbar-strip">
-      <span style="font-weight:700;color:#fff;font-size:.9rem;letter-spacing:.5px">INTERNAL ADMIN</span>
+      <span style="font-weight:700;color:var(--white);font-size:.9rem;letter-spacing:.5px">INTERNAL ADMIN</span>
       <span class="badge badge-purple" style="margin-left:10px">
         <i class="fa-solid fa-shield-halved"></i> Authentik
       </span>
