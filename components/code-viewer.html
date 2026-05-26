@@ -5,115 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CI Reference — Code Viewer</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/page.css">
+<link rel="stylesheet" href="../css/typography.css">
+<link rel="stylesheet" href="../css/forms.css">
+<link rel="stylesheet" href="../css/code-viewer.css">
+<link rel="stylesheet" href="../css/demo.css">
 <style>
-:root {
-  --bg:               #1a1a1a;
-  --card-bg:          #252525;
-  --panel:            #202020;
-  --panel-deep:       #161616;
-  --code-bg:          #000000;
-  --code-text:        #4ade80;
-  --text:             #e0e0e0;
-  --muted:            #888888;
-  --subtle:           #555555;
-  --border:           #333333;
-  --border-strong:    #444444;
-  --accent:           #3b82f6;
-  --accent-hover:     #2563eb;
-  --accent-subtle:    rgba(59,130,246,0.07);
-  --accent-subtle-md: rgba(59,130,246,0.10);
-  --accent-border:    rgba(59,130,246,0.25);
-  --success:          #22c55e;
-  --danger:           #ef4444;
-  --font-sans:        'Segoe UI', system-ui, sans-serif;
-  --font-mono:        'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-  --card-radius:      12px;
-  --card-padding:     20px;
-  --btn-radius:       6px;
-  --badge-radius:     4px;
-  --transition-fast:  0.15s ease;
-  --topbar-height:    60px;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); background: var(--bg); color: var(--text); min-height: 100vh; }
-
-/* TOPBAR */
-.topbar {
-  background: var(--card-bg); height: var(--topbar-height);
-  border-bottom: 2px solid var(--accent);
-  display: flex; align-items: center; padding: 0 20px;
-  position: sticky; top: 0; z-index: 100;
-}
-.brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; color: #fff; text-decoration: none; }
-
-/* DEMO LAYOUT */
+/* Demo layout — not in any linked CSS file */
 .demo-body { padding: 32px 40px; display: flex; flex-direction: column; gap: 32px; max-width: 860px; }
-.demo-section-label {
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;
-  text-transform: uppercase; color: var(--subtle); margin-bottom: 10px;
-}
-
-/* ── .panel (from page.css) ── */
-.panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--card-radius); overflow: hidden; }
-.panel-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
-.panel-title { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 600; color: #fff; }
-.panel-title i { font-size: 0.82rem; color: var(--accent); width: 16px; text-align: center; }
-.panel-header-right { display: flex; align-items: center; gap: 8px; }
-.panel-meta { font-size: 0.72rem; color: var(--subtle); white-space: nowrap; }
-.panel-body { padding: 14px 16px; }
-
-/* ── .panel-code (from code-viewer.css) ── */
-.panel-code { background: var(--code-bg); border-color: var(--border-strong); }
-.panel-code .panel-header { background: var(--panel-deep); border-bottom-color: var(--border-strong); }
-
-/* ── .code-viewer-pre (from code-viewer.css) ── */
-.code-viewer-pre {
-  font-family: var(--font-mono); font-size: 0.78rem; color: var(--code-text);
-  background: var(--code-bg); padding: 16px 20px; margin: 0;
-  white-space: pre-wrap; line-height: 1.6; max-height: 600px; overflow: auto;
-  border: none; border-radius: 0;
-}
-
-/* ── .form-row (from code-viewer.css) ── */
-.form-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
-
-/* ── .mono, .ci-label (from typography.css) ── */
-.mono { font-family: var(--font-mono); }
-.ci-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--subtle); }
-
-/* ── Forms (from forms.css) ── */
-.form-field { display: flex; flex-direction: column; gap: 5px; }
-.form-input {
-  background: var(--panel-deep); border: 1px solid var(--border); border-radius: 5px;
-  color: var(--text); font-size: 0.82rem; font-family: inherit;
-  padding: 0 10px; height: 34px; outline: none;
-  transition: border-color var(--transition-fast);
-}
-.form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(59,130,246,0.15); }
-.form-select {
-  background: var(--panel-deep); border: 1px solid var(--border); border-radius: 5px;
-  color: var(--text); font-size: 0.82rem; font-family: inherit;
-  padding: 0 30px 0 10px; height: 34px; outline: none; cursor: pointer;
-  appearance: none; -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 10px center;
-}
-.form-select option { background: var(--panel-deep); color: var(--text); }
-
-/* ── Badges (from badges.css) ── */
-.badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; border: 1px solid; white-space: nowrap; line-height: 1; }
-.badge-green { background: rgba(34,197,94,0.10); color: #22c55e; border-color: rgba(34,197,94,0.25); }
-.badge-red   { background: rgba(239,68,68,0.10);  color: #ef4444; border-color: rgba(239,68,68,0.25); }
-.badge-yellow { background: rgba(234,179,8,0.10); color: #eab308; border-color: rgba(234,179,8,0.25); }
-
-/* ── Buttons (from buttons.css) ── */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; font-family: inherit; cursor: pointer; border: none; white-space: nowrap; transition: background 0.15s; }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-.btn-ghost:hover { color: var(--text); border-color: #555; background: rgba(255,255,255,0.04); }
-.btn-sm { height: 28px; padding: 0 10px; font-size: 0.75rem; border-radius: 5px; }
+.demo-section-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--subtle); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #1e1e1e; }
 </style>
 </head>
 <body>
