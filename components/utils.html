@@ -4,83 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CI Reference — Utils</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/utils.css">
+<link rel="stylesheet" href="../css/demo.css">
 <style>
-:root {
-  --bg:#1a1a1a; --panel:#202020; --panel-deep:#161616;
-  --text:#e0e0e0; --muted:#888; --subtle:#555; --border:#333;
-  --accent:#3b82f6; --card-gap:20px;
-  --font-sans:'Segoe UI',system-ui,sans-serif;
-  --transition-fast:0.15s ease;
-}
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:var(--font-sans); background:var(--bg); color:var(--text); padding:40px; }
-
-.page-title { font-size:1.6rem; font-weight:300; color:#fff; margin-bottom:6px; }
-.page-title strong { font-weight:700; color:var(--accent); }
-.page-desc { font-size:0.85rem; color:var(--muted); margin-bottom:48px; max-width:640px; line-height:1.6; }
-
-.section { margin-bottom:56px; }
-.section-label {
-  font-size:0.68rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
-  color:var(--subtle); margin-bottom:6px; padding-bottom:8px; border-bottom:1px solid #222;
-}
-.section-desc { font-size:0.82rem; color:#444; margin-bottom:16px; line-height:1.6; }
-.annotation { font-size:0.8rem; color:var(--subtle); margin-top:10px; line-height:1.6; max-width:860px; }
-.annotation code { background:#1e1e1e; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:0.75rem; color:#7ba8d4; }
-
-/* Demo-Boxen */
-.demo-box {
-  background:var(--panel); border:1px solid var(--border); border-radius:6px;
-  padding:20px; display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;
-}
-.demo-item {
-  background:var(--panel-deep); border:1px dashed var(--border);
-  border-radius:4px; padding:12px 16px;
-  font-size:0.78rem; color:var(--muted);
-}
-.demo-label {
-  font-size:0.6rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase;
-  color:var(--subtle); margin-bottom:6px;
-}
-
-/* ── Utils (aus utils.css) ── */
-.full-map    { flex:1; height:100%; min-height:0; position:relative; }
-.m-gap       { margin:var(--card-gap); }
-.mb-gap      { margin-bottom:var(--card-gap); }
-.flex-col    { display:flex; flex-direction:column; }
-.flex-center { display:flex; align-items:center; justify-content:center; }
-/* Text & Visibility */
-.text-center    { text-align: center; }
-.text-left      { text-align: left; }
-.opacity-50     { opacity: 0.5; }
-.hidden         { display: none !important; }
-/* Flex Extensions */
-.flex-1            { flex: 1; }
-.flex-2            { flex: 2; }
-.w-full            { width: 100%; }
-.flex-align-center { display: flex; align-items: center; }
-.justify-between   { justify-content: space-between; }
-.gap-4             { gap: 4px; }
-/* Table */
-.table-wrapper   { overflow-x: auto; width: 100%; }
-.table-col-25    { width: 25%; }
-.border-collapse { border-collapse: collapse; }
-/* Spacing */
-.m-0   { margin: 0; }
-.mt-0  { margin-top: 0; }
-.mt-8  { margin-top: 8px; }
-.mt-12 { margin-top: 12px; }
-.mb-8  { margin-bottom: 8px; }
-.pb-0  { padding-bottom: 0; }
-.p-double-gap { padding: calc(2 * 20px); }
-.mb-1-5-gap   { margin-bottom: calc(1.5 * 20px); }
-.p-2rem       { padding: 2rem; }
-/* Position & Cursor */
-.pos-relative   { position: relative; }
-.cursor-pointer { cursor: pointer; }
-/* Border */
-.border-none { border: none; }
-.no-dot-bg   { background: none !important; box-shadow: none !important; }
+/* Demo-seitenspezifische Layout-Klassen — nicht in demo.css oder utils.css */
+.page-title { font-size: 1.6rem; font-weight: 300; color: var(--white); margin-bottom: 6px; }
+.page-title strong { font-weight: 700; color: var(--accent); }
+.page-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 48px; max-width: 640px; line-height: 1.6; }
+.section-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--subtle); margin-bottom: 6px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+.section-desc { font-size: 0.82rem; color: #444; margin-bottom: 16px; line-height: 1.6; }
+.annotation { font-size: 0.8rem; color: var(--subtle); margin-top: 10px; line-height: 1.6; max-width: 860px; }
+.annotation code { background: #1e1e1e; padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 0.75rem; color: #7ba8d4; }
+.demo-box { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 20px; display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+.demo-item { background: var(--panel-deep); border: 1px dashed var(--border); border-radius: 4px; padding: 12px 16px; font-size: 0.78rem; color: var(--muted); }
+.demo-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--subtle); margin-bottom: 6px; }
 </style>
 </head>
 <body>
@@ -247,7 +185,7 @@ body { font-family:var(--font-sans); background:var(--bg); color:var(--text); pa
   <div class="demo-box" style="gap:12px; flex-wrap:wrap;">
     <div class="demo-item pos-relative" style="width:160px; height:60px;">
       <div class="demo-label">.pos-relative</div>
-      <span style="position:absolute; top:6px; right:8px; font-size:0.62rem; background:var(--accent); color:#fff; padding:1px 5px; border-radius:3px;">abs. Kind</span>
+      <span style="position:absolute; top:6px; right:8px; font-size:0.62rem; background:var(--accent); color:var(--white); padding:1px 5px; border-radius:3px;">abs. Kind</span>
     </div>
     <div class="demo-item cursor-pointer">
       <div class="demo-label">.cursor-pointer</div>
