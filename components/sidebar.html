@@ -5,334 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CI Reference — Sidebar</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/sidebar.css">
+<link rel="stylesheet" href="../css/badges.css">
+<link rel="stylesheet" href="../css/demo.css">
 <style>
-:root {
-  --bg:               #1a1a1a;
-  --card-bg:          #252525;
-  --panel:            #202020;
-  --panel-deep:       #161616;
-  --text:             #e0e0e0;
-  --muted:            #888888;
-  --subtle:           #555555;
-  --border:           #333333;
-  --border-strong:    #444444;
-  --accent:           #3b82f6;
-  --accent-hover:     #2563eb;
-  --accent-subtle:    rgba(59,130,246,0.07);
-  --accent-subtle-md: rgba(59,130,246,0.10);
-  --accent-border:    rgba(59,130,246,0.25);
-  --success:          #22c55e;
-  --success-subtle:   rgba(34,197,94,0.10);
-  --success-border:   rgba(34,197,94,0.25);
-  --warning:          #eab308;
-  --danger:           #ef4444;
-  --font-sans:        'Segoe UI', system-ui, sans-serif;
-  --font-mono:        'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-  --topbar-height:    60px;
-  --sidebar-width:    300px;
-  --transition-fast:  0.15s ease;
-  --transition-base:  0.20s ease;
-  --transition-slow:  0.25s ease;
-  --shadow-sidebar:   4px 0 20px rgba(0,0,0,0.50);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); background: var(--bg); color: var(--text); min-height: 100vh; }
-
-/* TOPBAR */
-.topbar {
-  background: var(--card-bg); height: var(--topbar-height);
-  border-bottom: 2px solid var(--accent);
-  display: flex; align-items: center; padding: 0 20px;
-  position: sticky; top: 0; z-index: 100;
-}
-.brand { display: flex; align-items: center; gap: 9px; color: #fff;
-         font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; text-decoration: none; }
-.brand img { width: 26px; height: 26px; }
-
-/* LAYOUT */
-.layout {
-  display: flex;
-  height: calc(100vh - var(--topbar-height));  /* exakt Viewport minus Topbar */
-  overflow: hidden;                             /* verhindert dass Layout-Container scrollt */
-}
-
-/* ═══ SIDEBAR ═══ */
-.sidebar {
-  width: var(--sidebar-width); background: var(--panel);
-  border-right: 1px solid var(--border);
-  display: flex; flex-direction: column;        /* inner + footer als Flex-Children */
-  position: relative; flex-shrink: 0;
-  height: 100%;                                 /* füllt Layout-Container exakt aus */
-  transition: width var(--transition-slow);
-}
-.sidebar.collapsed { width: 0; border-right: none; overflow: visible; }
-
-.sidebar-inner {
-  flex: 1;                                      /* wächst, lässt Footer am Boden */
-  padding: 16px 12px;
-  overflow-y: auto;                             /* scrollt wenn Inhalt länger als Sidebar */
-  overflow-x: hidden;
-  min-width: var(--sidebar-width);
-}
-
-/* Section Label */
-.sidebar-section-label {
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 1.2px;
-  text-transform: uppercase; color: #555;
-  padding: 0 6px; margin-bottom: 6px; margin-top: 12px;
-}
-.sidebar-section-label:first-child { margin-top: 0; }
-.sidebar-sep { height: 1px; background: var(--border); margin: 10px 0; }
-
-/* Nav Item */
-.sidebar-nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 10px; border-radius: 5px;
-  border-left: 2px solid transparent;
-  font-size: 0.85rem; color: var(--muted);
-  cursor: pointer; text-decoration: none;
-  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
-  margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.sidebar-nav-item:hover { color: var(--text); background: rgba(255,255,255,0.03); }
-.sidebar-nav-item.active { color: var(--accent); background: var(--accent-subtle); border-left-color: var(--accent); }
+.layout { display: flex; height: calc(100vh - var(--topbar-height)); }
 .nav-icon { width: 16px; text-align: center; font-size: 0.85em; flex-shrink: 0; opacity: 0.7; }
-.sidebar-nav-item.active .nav-icon { opacity: 1; }
-.sidebar-nav-item.external { color: #666; }
-.sidebar-nav-item.external:hover { color: var(--muted); }
 .external-icon { font-size: 0.65em; margin-left: auto; opacity: 0.5; flex-shrink: 0; }
-
-/* Status-Dot im Nav-Item */
-.sidebar-status-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #444; margin-left: auto; flex-shrink: 0;
-}
-.sidebar-status-dot.online  { background: var(--success); box-shadow: 0 0 4px var(--success); }
-.sidebar-status-dot.offline { background: #ef4444; box-shadow: 0 0 4px rgba(239,68,68,0.5); }
-
-/* ═══ ACCORDION ═══ */
 .accordion { display: flex; flex-direction: column; gap: 2px; }
-
-.acc-filter {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--panel-deep); border: 1px solid var(--border);
-  border-radius: 5px; padding: 0 10px; height: 32px; margin-bottom: 8px;
-}
-.acc-filter input {
-  flex: 1; background: transparent; border: none; outline: none;
-  font-size: 0.82rem; color: var(--text); font-family: inherit;
-}
-.acc-filter input::placeholder { color: var(--subtle); }
-.acc-filter-icon { color: var(--subtle); font-size: 0.75rem; }
-
-.acc-group {
-  background: var(--panel); border: 1px solid var(--border);
-  border-radius: 6px; overflow: hidden;
-}
-.acc-header {
-  display: flex; align-items: center; gap: 8px; padding: 8px 10px;
-  cursor: pointer; user-select: none;
-  transition: background var(--transition-fast); min-height: 36px;
-}
-.acc-header:hover { background: rgba(255,255,255,0.03); }
-
-/* Dot — Farbe ist site-spezifisch, kein CI-Token */
-.acc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; background: var(--accent, #3b82f6); }
-
-.acc-title {
-  font-size: 0.85rem; font-weight: 600; color: var(--text);
-  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-
-.acc-status {
-  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.3px;
-  text-transform: uppercase; padding: 2px 6px;
-  border-radius: 4px; white-space: nowrap; flex-shrink: 0;
-}
-.acc-status.unloaded { background: rgba(255,255,255,0.04); color: #555; border: 1px solid #2a2a2a; }
-.acc-status.partial  { background: var(--accent-subtle-md); color: var(--accent); border: 1px solid var(--accent-border); }
-.acc-status.all-on   { background: var(--success-subtle); color: var(--success); border: 1px solid var(--success-border); }
-
-.acc-chevron {
-  font-size: 0.65rem; color: var(--subtle);
-  transition: transform var(--transition-base); flex-shrink: 0; margin-left: 2px;
-}
-.acc-group.open .acc-chevron { transform: rotate(180deg); }
-
-.acc-controls { display: none; padding: 0 10px 8px; gap: 6px; }
-.acc-group.open .acc-controls { display: flex; }
-
-.acc-ctrl-btn {
-  font-size: 0.68rem; font-weight: 600; padding: 3px 8px;
-  border-radius: 4px; border: 1px solid var(--border);
-  background: transparent; color: var(--muted);
-  cursor: pointer; font-family: inherit;
-  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
-}
-.acc-ctrl-btn:hover { background: var(--accent-subtle); color: var(--accent); border-color: var(--accent-border); }
-
-.acc-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height var(--transition-slow);
-}
-.acc-group.open .acc-body {
-  /* Wird per JS auf scrollHeight gesetzt — nie statisch begrenzen */
-  max-height: var(--acc-body-height, 9999px);
-}
-
-.acc-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 5px 10px 5px 24px;
-  transition: background var(--transition-fast); cursor: pointer; min-height: 30px;
-}
-.acc-item:last-child { padding-bottom: 8px; }
-.acc-item:hover { background: rgba(255,255,255,0.02); }
-
-.acc-checkbox {
-  width: 14px; height: 14px; border-radius: 3px;
-  border: 1px solid var(--border); background: transparent;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
-}
-.acc-item.checked .acc-checkbox { background: var(--accent); border-color: var(--accent); }
-.acc-item.checked .acc-checkbox::after {
-  content: ''; width: 8px; height: 5px;
-  border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff;
-  transform: rotate(-45deg) translateY(-1px); display: block;
-}
-.acc-item-label { font-size: 0.82rem; color: var(--muted); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.acc-item.checked .acc-item-label { color: var(--text); }
-
-.acc-item.loading-state {
-  padding-left: 24px;
-  color: var(--subtle, #555);
-  font-size: 0.8rem;
-}
-.acc-item.error-state {
-  padding-left: 24px;
-  color: var(--danger, #ef4444);
-  font-size: 0.8rem;
-}
-
-/* ═══ SIDEBAR TAB ═══ */
-.sidebar-tab {
-  position: absolute; right: -13px; top: 50%; transform: translateY(-50%);
-  width: 13px; height: 36px;
-  background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.25);
-  border-left: none; border-radius: 0 7px 7px 0;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--accent); font-size: 10px; font-weight: 700;
-  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
-  z-index: 10; user-select: none;
-}
-.sidebar-tab:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-/* ═══ SIDEBAR FOOTER ═══ */
-.sidebar-footer {
-  border-top: 1px solid var(--border); padding: 9px 14px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 8px; flex-shrink: 0;
-}
-.sidebar-footer-version { font-size: 0.65rem; font-family: var(--font-mono); color: #444; }
-.sidebar-footer-status { display: flex; align-items: center; gap: 5px; font-size: 0.65rem; }
-.footer-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.footer-dot.green { background: var(--success); box-shadow: 0 0 4px var(--success); }
-.footer-dot.red   { background: #ef4444; box-shadow: 0 0 4px rgba(239,68,68,0.5); }
-.footer-status-text.green { color: #4a7c59; }
-.footer-status-text.red   { color: #7c4a4a; }
-
-/* ═══ BACKDROP ═══ */
-.sidebar-backdrop {
-  display: none; position: fixed; inset: var(--topbar-height) 0 0 0;
-  background: rgba(0,0,0,0.55); z-index: 40;
-}
-.sidebar-backdrop.visible { display: block; }
-
-/* ═══ PAGE CONTENT ═══ */
-.page-content {
-  flex: 1; padding: 40px; min-width: 0;
-  overflow-y: auto;                             /* scrollt unabhängig von der Sidebar */
-  height: 100%;
-}
-
-/* ═══ MOBILE ═══ */
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed; top: var(--topbar-height); left: 0;
-    height: calc(100vh - var(--topbar-height));
-    z-index: 50; width: var(--sidebar-width);
-    transform: translateX(-100%); transition: transform var(--transition-slow);
-  }
-  .sidebar.mobile-open { transform: translateX(0); box-shadow: var(--shadow-sidebar); }
-  .sidebar.collapsed { width: var(--sidebar-width); }
-  .page-content { padding: 20px 16px; }
-}
-
-/* ═══ REFERENZ STYLES ═══ */
-.ref-title { font-size: 1.6rem; font-weight: 300; color: #fff; margin-bottom: 6px; }
-.ref-title strong { font-weight: 700; color: var(--accent); }
-.ref-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 32px; max-width: 560px; }
-
-.ref-section { margin-bottom: 48px; }
-.ref-section-title {
-  font-size: 0.7rem; font-weight: 700; letter-spacing: 1.2px;
-  text-transform: uppercase; color: var(--subtle);
-  margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #222;
-}
-
-/* Elementübersicht */
-.element-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 10px;
-}
-.element-card {
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px 14px;
-}
-.element-card-header { display: flex; align-items: center; gap: 9px; margin-bottom: 5px; }
-.element-card-icon { font-size: 0.85rem; color: var(--accent); width: 16px; text-align: center; flex-shrink: 0; }
-.element-card-name { font-size: 0.85rem; font-weight: 600; color: #fff; }
-.element-card-desc { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
-
-/* Typ-Switcher */
-.type-switcher { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-.type-btn {
-  background: #2a2a2a; border: 1px solid var(--border); border-radius: 5px;
-  color: var(--muted); font-size: 0.8rem; font-weight: 600;
-  padding: 6px 14px; cursor: pointer; font-family: inherit; transition: all var(--transition-fast);
-}
-.type-btn:hover { border-color: #555; color: var(--text); }
-.type-btn.active { background: var(--accent-subtle-md); color: var(--accent); border-color: var(--accent-border); }
-
-.type-info {
-  font-size: 0.82rem; color: var(--muted); background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border); border-radius: 5px;
-  padding: 10px 14px; margin-bottom: 0; line-height: 1.6;
-}
-
-/* Demo-Box */
-.demo-box {
-  background: var(--panel); border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px; max-width: 260px;
-}
-
-/* Event Log */
-.event-log {
-  background: #0d0d0d; border: 1px solid #222; border-radius: 6px;
-  padding: 12px 14px; font-family: var(--font-mono); font-size: 0.78rem;
-  color: #4ade80; min-height: 80px; max-height: 160px; overflow-y: auto; line-height: 1.9;
-}
-.log-muted { color: #444; }
-
-.bp-indicator {
-  display: inline-flex; font-size: 0.75rem; font-weight: 700;
-  padding: 4px 10px; border-radius: 4px;
-  background: var(--accent-subtle-md); border: 1px solid var(--accent-border);
-  color: var(--accent); margin-bottom: 20px;
-}
 </style>
 </head>
 <body>
@@ -383,7 +65,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
         <div class="acc-group" data-group="bezirke">
           <div class="acc-header" tabindex="0" role="button" aria-expanded="false"
                onclick="toggleGroup(this)" onkeydown="handleAccKey(event,this)">
-            <span class="acc-dot" style="background:#3b82f6"></span>
+            <span class="acc-dot" style="background:var(--accent)"></span>
             <span class="acc-title">Bezirke</span>
             <span class="acc-status unloaded">nicht geladen</span>
             <i class="fa-solid fa-chevron-down acc-chevron"></i>
@@ -405,7 +87,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
         <div class="acc-group open" data-group="leitstellen">
           <div class="acc-header" tabindex="0" role="button" aria-expanded="true"
                onclick="toggleGroup(this)" onkeydown="handleAccKey(event,this)">
-            <span class="acc-dot" style="background:#22c55e"></span>
+            <span class="acc-dot" style="background:var(--success)"></span>
             <span class="acc-title">Leitstellen-Bereiche</span>
             <span class="acc-status partial">2 Layer</span>
             <i class="fa-solid fa-chevron-down acc-chevron"></i>
@@ -436,7 +118,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
         <div class="acc-group" data-group="rd-dienststellen">
           <div class="acc-header" tabindex="0" role="button" aria-expanded="false"
                onclick="toggleGroup(this)" onkeydown="handleAccKey(event,this)">
-            <span class="acc-dot" style="background:#ef4444"></span>
+            <span class="acc-dot" style="background:var(--danger)"></span>
             <span class="acc-title">RD-Dienststellen</span>
             <span class="acc-status unloaded">nicht geladen</span>
             <i class="fa-solid fa-chevron-down acc-chevron"></i>
@@ -598,7 +280,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
         <div class="accordion">
           <div class="acc-group" data-group="demo-a">
             <div class="acc-header" onclick="toggleGroup(this)">
-              <span class="acc-dot" style="background:#555"></span>
+              <span class="acc-dot" style="background:var(--subtle)"></span>
               <span class="acc-title">Keine aktiv</span>
               <span class="acc-status unloaded">nicht geladen</span>
               <i class="fa-solid fa-chevron-down acc-chevron"></i>
@@ -614,7 +296,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
           </div>
           <div class="acc-group" data-group="demo-b">
             <div class="acc-header" onclick="toggleGroup(this)">
-              <span class="acc-dot" style="background:#555"></span>
+              <span class="acc-dot" style="background:var(--subtle)"></span>
               <span class="acc-title">Teilweise aktiv</span>
               <span class="acc-status partial">1 Layer</span>
               <i class="fa-solid fa-chevron-down acc-chevron"></i>
@@ -630,7 +312,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
           </div>
           <div class="acc-group" data-group="demo-c">
             <div class="acc-header" onclick="toggleGroup(this)">
-              <span class="acc-dot" style="background:#555"></span>
+              <span class="acc-dot" style="background:var(--subtle)"></span>
               <span class="acc-title">Alle aktiv</span>
               <span class="acc-status all-on">alle aktiv</span>
               <i class="fa-solid fa-chevron-down acc-chevron"></i>
