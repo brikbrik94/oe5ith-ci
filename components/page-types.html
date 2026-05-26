@@ -5,19 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CI Reference — Seitentypen</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/demo.css">
 <style>
-:root {
-  --bg: #1a1a1a; --card-bg: #252525; --panel: #202020; --panel-deep: #161616;
-  --text: #e0e0e0; --muted: #888; --subtle: #555; --border: #333;
-  --accent: #3b82f6; --accent-subtle: rgba(59,130,246,0.07);
-  --accent-subtle-md: rgba(59,130,246,0.10); --accent-border: rgba(59,130,246,0.25);
-  --success: #22c55e; --danger: #ef4444; --warning: #eab308;
-  --font-sans: 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); background: var(--bg); color: var(--text); min-height: 100vh; padding: 40px; }
-
 /* ── Seiten-Layout ── */
 .page-title-main { font-size: 1.6rem; font-weight: 300; color: #fff; margin-bottom: 8px; }
 .page-title-main strong { font-weight: 700; color: var(--accent); }
@@ -377,7 +367,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
               <div class="m-panel-title"><i class="fa-solid fa-sliders"></i> Empfangsfrequenz</div>
             </div>
             <div class="m-panel-body" style="display:flex;gap:6px;align-items:center">
-              <div class="m-input" style="flex:1"><div class="ph w-40" style="background:#e0e0e0"></div></div>
+              <div class="m-input" style="flex:1"><div class="ph w-40" style="background:var(--text)"></div></div>
               <button class="m-btn"><i class="fa-solid fa-rotate"></i> Aktualisieren</button>
             </div>
           </div>
@@ -643,7 +633,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
           <div class="m-nav-card-icon"><i class="fa-solid fa-folder-open"></i></div>
           <div class="m-nav-card-title">File Cloud</div>
           <div class="m-nav-card-desc">Dateispeicher und Kollaboration.</div>
-          <button class="m-btn" style="margin-top:4px;align-self:flex-start;background:#444;color:#666">Demnächst</button>
+          <button class="m-btn" style="margin-top:4px;align-self:flex-start;background:var(--border-strong);color:#666">Demnächst</button>
         </div>
 
       </div>
@@ -687,15 +677,15 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
     <div class="m-layout">
       <!-- Sidebar mit Accordion -->
       <div class="m-sb">
-        <div style="font-size:0.68rem;font-weight:600;color:#fff;padding:2px 4px 6px">Kategorien</div>
+        <div style="font-size:0.68rem;font-weight:600;color:var(--white);padding:2px 4px 6px">Kategorien</div>
         <div style="font-size:0.58rem;color:var(--subtle);padding:0 4px 6px">Layer beim Aktivieren laden.</div>
 
         <!-- Accordion Gruppe geschlossen -->
         <div style="background:var(--panel);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:3px">
           <div style="display:flex;align-items:center;gap:5px;padding:5px 7px;cursor:pointer">
-            <div style="width:7px;height:7px;border-radius:50%;background:#eab308;flex-shrink:0"></div>
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--warning);flex-shrink:0"></div>
             <span style="font-size:0.65rem;font-weight:600;color:var(--text);flex:1">Anfahrtszeit</span>
-            <span style="font-size:0.55rem;padding:1px 4px;border-radius:3px;background:rgba(255,255,255,0.04);color:#555;border:1px solid #2a2a2a">nicht geladen</span>
+            <span style="font-size:0.55rem;padding:1px 4px;border-radius:3px;background:rgba(255,255,255,0.04);color:var(--subtle);border:1px solid var(--code-inline-bg)">nicht geladen</span>
             <i class="fa-solid fa-chevron-right" style="font-size:0.5rem;color:var(--subtle)"></i>
           </div>
         </div>
@@ -703,14 +693,14 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
         <!-- Accordion Gruppe offen -->
         <div style="background:var(--panel);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:3px">
           <div style="display:flex;align-items:center;gap:5px;padding:5px 7px;cursor:pointer">
-            <div style="width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0"></div>
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--success);flex-shrink:0"></div>
             <span style="font-size:0.65rem;font-weight:600;color:var(--text);flex:1">RD-Dienststellen</span>
             <span style="font-size:0.55rem;padding:1px 4px;border-radius:3px;background:var(--accent-subtle-md);color:var(--accent);border:1px solid var(--accent-border)">3 Layer</span>
             <i class="fa-solid fa-chevron-down" style="font-size:0.5rem;color:var(--subtle)"></i>
           </div>
           <div style="padding:2px 7px 6px 18px;display:flex;flex-direction:column;gap:2px">
             <div style="display:flex;align-items:center;gap:5px;font-size:0.62rem;color:var(--text)">
-              <div style="width:10px;height:10px;border-radius:2px;background:var(--accent);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center"><div style="width:6px;height:3px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px)"></div></div>
+              <div style="width:10px;height:10px;border-radius:2px;background:var(--accent);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center"><div style="width:6px;height:3px;border-left:1.5px solid var(--white);border-bottom:1.5px solid var(--white);transform:rotate(-45deg) translateY(-1px)"></div></div>
               RD-OO-SEW
             </div>
             <div style="display:flex;align-items:center;gap:5px;font-size:0.62rem;color:var(--muted)">
@@ -726,9 +716,9 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--text);
 
         <div style="background:var(--panel);border:1px solid var(--border);border-radius:4px;overflow:hidden">
           <div style="display:flex;align-items:center;gap:5px;padding:5px 7px;cursor:pointer">
-            <div style="width:7px;height:7px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div>
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0"></div>
             <span style="font-size:0.65rem;font-weight:600;color:var(--text);flex:1">Bezirke</span>
-            <span style="font-size:0.55rem;padding:1px 4px;border-radius:3px;background:rgba(255,255,255,0.04);color:#555;border:1px solid #2a2a2a">nicht geladen</span>
+            <span style="font-size:0.55rem;padding:1px 4px;border-radius:3px;background:rgba(255,255,255,0.04);color:var(--subtle);border:1px solid var(--code-inline-bg)">nicht geladen</span>
             <i class="fa-solid fa-chevron-right" style="font-size:0.5rem;color:var(--subtle)"></i>
           </div>
         </div>
