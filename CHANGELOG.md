@@ -1,24 +1,25 @@
 # Changelog
 
 Alle relevanten Änderungen am `oe5ith-ci` Repository werden in dieser Datei dokumentiert.
+Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versioning.md`
 
-Das Format orientiert sich an semantischer Versionierung:
+---
 
-```text
-vMAJOR.MINOR.PATCH
-```
-
-Siehe auch:
-
-```text
-docs/versioning.md
-```
-
-## [Unreleased]
+## v1.10.0 - 2026-06-03
 
 ### Added
 
-- Sidebar Typ 8 — Tracking-Liste: scrollbare Liste aller empfangenen ADSB/AIS-Objekte mit Mode-Switch (Alle / ADS-B / AIS) und Expand-Verhalten. Klassen: `.tracking-list`, `.tracking-item`, `.tracking-item-header`, `.tracking-item-body`, `.tracking-item-icon`, `.tracking-item-name`, `.tracking-item-chevron`.
+- **calendar.css** (neu): Monatskalender-Komponente für Dienstplan-Darstellung aus ICS-Backend.
+  - `.calendar`, `.calendar-header`, `.calendar-title`, `.calendar-nav-btn` — Navigation mit Zurück/Vor-Pfeilen und Heute-Button.
+  - `.calendar-grid`, `.calendar-weekday` — 7-Spalten-Raster mit Wochentag-Köpfen.
+  - `.calendar-day`, `.calendar-day--today`, `.calendar-day--outside` — Tageszellen mit Heute-Indikator (Accent-Kreis) und gedimmten Außerhalb-Tagen (opacity: 0.35).
+  - `.calendar-entry`, `.calendar-entry-time`, `.calendar-entry-title`, `.calendar-entry-changed` — Eintragszeilen mit Uhrzeit, Titel und optionalem Änderungsindikator (`--warning`, fa-circle-exclamation).
+  - `.calendar-entry--early`, `.calendar-entry--late`, `.calendar-entry--night`, `.calendar-entry--default` — Diensttyp-Farbcodierung via bestehende semantische Tokens.
+  - `.cal-modal-*` — Modal-Inhalt-Klassen für Detailansicht (wiederverwendet `.modal-backdrop` aus `modal.css`).
+  - Mobile (≤768px): Grid kollabiert zu einspaltiger Liste, leere Tage ausgeblendet.
+- `components/calendar.html` — Referenzseite mit allen Zuständen: Heute, Außerhalb-Tage, 2 Einträge pro Tag, Änderungsindikator, funktionales Detail-Modal.
+- `docs/calendar.md` — vollständige Komponentendokumentation.
+- **Sidebar Typ 8 — Tracking-Liste**: scrollbare Liste aller empfangenen ADSB/AIS-Objekte mit Mode-Switch (Alle / ADS-B / AIS) und Expand-Verhalten. Klassen: `.tracking-list`, `.tracking-item`, `.tracking-item-header`, `.tracking-item-body`, `.tracking-item-icon`, `.tracking-item-name`, `.tracking-item-chevron`.
 - **utils.css** — Text/Visibility: `.text-center`, `.text-left`, `.opacity-50`, `.hidden`
 - **utils.css** — Flex: `.flex-1`, `.flex-2`, `.w-full`, `.flex-align-center`, `.justify-between`, `.gap-4`
 - **utils.css** — Table: `.table-wrapper`, `.table-col-25`, `.border-collapse`
@@ -29,25 +30,23 @@ docs/versioning.md
 - **sidebar.css** — `.acc-item.loading-state`, `.acc-item.error-state` für asynchrone Layer-Zustände
 - **cards.css** — `.sprite-preview-img` für Icon-/Asset-Vorschauen in Cards
 - **coords.css** — `.coord-header-status` für Zusatz-Text im Koordinaten-Block-Header
-- **sidebar.css** — `.acc-dot` erhält `background: var(--accent)` als CI-Default (site-spezifische Overrides möglich)
-- **common.css / tokens.md** — Neues Token `--white: #ffffff` für `.t-white` und Heading-Schrift
+- **sidebar.css** — `.acc-dot` erhält `background: var(--accent)` als CI-Default
+- **common.css / tokens.md** — Token `--white: #ffffff`
 - Referenz-Demos in `components/utils.html`, `components/typography.html`, `components/sidebar.html`, `components/cards.html` aktualisiert
 
 ### Changed
 
-- `docs/sidebar.md`: `.acc-dot` Dokumentation aktualisiert (CI-Default `var(--accent)`). Async-Zustände `.loading-state` / `.error-state` dokumentiert.
-
+- `docs/sidebar.md`: `.acc-dot` Dokumentation aktualisiert. Async-Zustände `.loading-state` / `.error-state` dokumentiert.
 - `docs/sidebar-types.md`: Typ 8 vollständig neu definiert (Tracking-Liste ersetzt Objekt-Detail).
+- `docs/topbar.md`: Regel ergänzt dass `.topbar-nav-dropdown-toggle` keine feste Breite benötigt (Label zur Laufzeit unveränderlich).
 
 ### Removed
 
-- `.object-detail`, `.object-detail-header`, `.object-detail-icon`, `.object-detail-name` aus `css/sidebar.css` entfernt (ersetzt durch `.tracking-*`).
-
-> **Hinweis Versioning:** Da `.object-detail*`-Klassen entfernt werden, ist das technisch ein MAJOR-Change (v3.0.0). Da diese Klassen erst mit v2.2.0 eingeführt wurden und noch keine Produktionsseite sie nutzt, kann auch v2.3.0 gewählt werden — Entscheidung liegt beim Maintainer.
+- `.object-detail`, `.object-detail-header`, `.object-detail-icon`, `.object-detail-name` aus `css/sidebar.css` — kein Produktionseinsatz, ersetzt durch `.tracking-*`.
 
 ---
 
-## [2.2.0] - 2026-05-11
+## v1.9.0 - 2026-05-11
 
 ### Added
 
@@ -57,44 +56,31 @@ docs/versioning.md
 
 ---
 
-## v2.1.0 - 2026-05-10
+## v1.8.0 - 2026-05-10
 
 ### Added
 
-- `css/topbar.css`: `.topbar-toggle--icon-only` Modifier — Icon-only Toggle-Schaltflächen
-  mit CSS-Tooltip auf Desktop (`data-tooltip` via `::after`) und Icon + Label im
-  Controls-Overlay (Tablet/Mobile). Pflichtfelder: `data-tooltip` + `.topbar-toggle-label`.
-- `css/topbar.css`: `.topbar-nav-dropdown` Komponente — Platzsparendes Navigations-Dropdown
-  für `topbar-right`. Ersetzt einzelne `.topbar-nav-link`-Einträge bei mehr als 2–3 Links.
-  Label frei wählbar im HTML. Menü rechts ausgerichtet. Auf Mobile ausgeblendet.
-- `css/common.css`: `--surface-hover` Token — `rgba(255,255,255,0.05)` für subtile
-  Hover-Hintergründe auf dunklen Oberflächen.
+- `css/topbar.css`: `.topbar-toggle--icon-only` Modifier — Icon-only Toggle-Schaltflächen mit CSS-Tooltip auf Desktop (`data-tooltip` via `::after`) und Icon + Label im Controls-Overlay (Tablet/Mobile).
+- `css/topbar.css`: `.topbar-nav-dropdown` Komponente — Navigations-Dropdown für `topbar-right`. Ersetzt einzelne `.topbar-nav-link`-Einträge bei mehr als 2–3 Links. Menü rechts ausgerichtet. Auf Mobile ausgeblendet.
+- `css/common.css`: Token `--surface-hover: rgba(255,255,255,0.05)` für subtile Hover-Hintergründe.
 
 ### Fixed
 
-- `css/topbar.css`: `.topbar-dropdown-menu` — `min-width: 180px` korrigiert auf
-  `min-width: 100%`. Dropdown-Menü öffnet sich nicht mehr breiter als der Toggle-Button.
-- `css/topbar.css`: `.topbar-nav-link:hover` — Hardcoded `rgba(255,255,255,0.05)`
-  durch `var(--surface-hover)` ersetzt.
+- `css/topbar.css`: `.topbar-dropdown-menu` — `min-width` korrigiert auf `min-width: 100%`.
+- `css/topbar.css`: `.topbar-nav-link:hover` — Hardcoded Wert durch `var(--surface-hover)` ersetzt.
 
 ---
 
-## v2.0.0 - 2026-05-07
-
-### Breaking
-
-- `css/page.css`: `.map-attribution`, `.map-attribution-sep`, `.map-attribution-info`
-  entfernt. Sites die diese Klassen verwenden müssen das `.map-attribution`-HTML-Element
-  entfernen und native MapLibre/Leaflet-Attribution aktivieren.
-- `css/page.css`: Hide-Regeln `.leaflet-control-attribution` und `.maplibregl-ctrl-attrib`
-  entfernt. Native Attribution wird jetzt im Standard-Stil der jeweiligen Bibliothek
-  angezeigt.
+## v1.7.0 - 2026-05-07
 
 ### Added
 
-- `css/page.css`: `.page-footer`, `.page-footer-version`, `.page-footer-copy`,
-  `.page-footer-links` — Fußzeilen-Komponente für Typ-5-Startseiten (ohne Sidebar).
-  Enthält Version, Copyright-Text und Linkliste (Impressum, Datenschutz etc.).
+- `css/page.css`: `.page-footer`, `.page-footer-version`, `.page-footer-copy`, `.page-footer-links` — Fußzeilen-Komponente für Typ-5-Startseiten.
+
+### Removed
+
+- `css/page.css`: `.map-attribution`, `.map-attribution-sep`, `.map-attribution-info` entfernt — kein Produktionseinsatz, native MapLibre/Leaflet-Attribution wird verwendet.
+- `css/page.css`: Hide-Regeln `.leaflet-control-attribution` und `.maplibregl-ctrl-attrib` entfernt.
 
 ---
 
@@ -102,28 +88,7 @@ docs/versioning.md
 
 ### Fixed
 
-- `css/topbar.css`: `.controls-panel` erhält `gap: 8px` als Fallback. Wenn `display: contents`
-  durch eine Utility-Klasse (z.B. `.desktop-only`) überschrieben wird, kleben die Kind-Elemente
-  nicht mehr zusammen. Gemeldet via `CI_FIXES_REPORT.md` aus `website-v3`.
-
----
-
-## v1.4.0 - 2026-05-05
-
-### Added
-
-- `css/coords.css` (neu): Sidebar Typ 7 — Koordinaten-Umrechner Pattern.
-  - `.coord-block` / `.coord-block.active` — Container mit Accent-Border-Links für aktives System.
-  - `.coord-block-header`, `.coord-block-title`, `.coord-copy` — Titelzeile mit Copy-Button.
-  - `.coord-row`, `.coord-label`, `.coord-input` — Standard-Zeile für 2-Feld-Systeme (WGS84 Dezimalgrad, UTM, BMN).
-  - `.coord-row-dms`, `.coord-input-dms`, `.coord-suffix` — DMS-Zeile mit 3 schmalen Feldern + N/S, E/W Suffix.
-  - `.coord-row-inline`, `.coord-input-short` — Inline-Zeile für 2 Feld-Paare nebeneinander (MGRS GZD + 100km-Square).
-  - `.coord-input-full` — Volles Feld ohne Label (Maidenhead Grid).
-  - `.coord-input-error` — Fehler-State (rote Border).
-  - `.coord-select` — Dropdown für Meridianstreifen (BMN M28/M31/M34).
-- `css/sidebar.css`: `.tool-sep` ergänzt (war bisher nur in Komponenten-Inline-Style definiert).
-- `components/sidebar-types.html`: Typ 7 Demo-Sektion mit allen 6 Koordinatensystemen.
-- `docs/sidebar-types.md`: Typ 7 Beschreibung, Entscheidungsbaum-Erweiterung.
+- `css/topbar.css`: `.controls-panel` erhält `gap: 8px` als Fallback für Utility-Klassen-Konflikte.
 
 ---
 
@@ -131,16 +96,12 @@ docs/versioning.md
 
 ### Added
 
-- `css/common.css`: Globale Scrollbar-Stilisierung. 6px breiter Thumb in `--border-strong`
-  auf transparentem Track. Hover-State `--subtle`. Unterstützt Firefox (`scrollbar-width`/
-  `scrollbar-color`) und Chrome/Safari/Edge (`::-webkit-scrollbar`).
+- `css/common.css`: Globale Scrollbar-Stilisierung. 6px breiter Thumb in `--border-strong` auf transparentem Track.
 
 ### Changed
 
-- `css/common.css`: `--sidebar-width` von 260px auf 300px erhöht. Verbessert die Lesbarkeit
-  von Formularen mit mehreren nebeneinanderstehenden Feldern (z.B. DMS-Zeilen im
-  Koordinaten-Umrechner). Auf aktuellen Displays (≥1366px Breite) unproblematisch.
-- `docs/tokens.md`: `--sidebar-width` und Änderungshistorie aktualisiert.
+- `css/common.css`: `--sidebar-width` von 260px auf 300px erhöht.
+- `docs/tokens.md`: `--sidebar-width` Änderungshistorie aktualisiert.
 
 ---
 
@@ -148,16 +109,23 @@ docs/versioning.md
 
 ### Added
 
-- `css/utils.css` (neu): Utility-Klassen ohne Komponenten-Kontext.
-  - `.full-map` — vollflächiger MapLibre/Leaflet-Container (`flex:1`, `height:100%`, `min-height:0`, `position:relative`).
-  - `.m-gap` / `.mb-gap` — Abstände via `var(--card-gap)`.
-  - `.flex-col` / `.flex-center` — grundlegende Flex-Steuerung.
-- `css/common.css`: `--sidebar-tab-width: 16px` und `--sidebar-tab-height: 44px` ergänzt.
-- `css/sidebar.css`: `.overlay-section-label` — Variante von `.sidebar-section-label` für schwebende Overlays.
-- `components/utils.html` — Referenzseite für alle Utils.
-- `components/sidebar-types.html`: `.overlay-section-label` Demo-Sektion.
-- `docs/tokens.md`: Z-Index-Bereichstabelle (0–999 App, 1000+ CI) und Tab-Maß-Token-Dokumentation.
-- `docs/for-coding-agents.md`: No-Inline-Style-Regel für dynamisch erzeugte HTML-Strings im JS/TS.
+- `css/utils.css` (neu): `.full-map`, `.m-gap`, `.mb-gap`, `.flex-col`, `.flex-center`
+- `css/common.css`: `--sidebar-tab-width: 18px`, `--sidebar-tab-height: 44px`
+- `css/sidebar.css`: `.overlay-section-label`
+- `components/utils.html` — Referenzseite
+- `docs/tokens.md`: Z-Index-Bereichstabelle und Tab-Maß-Token-Dokumentation
+- `docs/for-coding-agents.md`: No-Inline-Style-Regel für dynamisch erzeugte HTML-Strings
+
+---
+
+## v1.4.0 - 2026-05-05
+
+### Added
+
+- `css/coords.css` (neu): Sidebar Typ 7 — Koordinaten-Umrechner Pattern mit allen Eingabezeilen-Varianten (WGS84, UTM, BMN, DMS, MGRS, Maidenhead).
+- `css/sidebar.css`: `.tool-sep`
+- `components/sidebar-types.html`: Typ 7 Demo
+- `docs/sidebar-types.md`: Typ 7 Beschreibung
 
 ---
 
@@ -165,18 +133,11 @@ docs/versioning.md
 
 ### Added
 
-- `css/code-viewer.css` (neu): Code-Viewer / API-Debugger Pattern.
-  - `.panel-code` Modifier auf `.panel` — Terminal-Charakter (schwarzer Hintergrund, starke Border).
-  - `.code-viewer-pre` — scrollbarer Code-Block (`max-height: 600px`, `pre-wrap`, Mono-Font, grüne Schrift).
-  - `.form-row` — horizontales Flex-Layout für Control-Panel-Inputs (`flex-end` ausgerichtet).
-- `css/typography.css`: Utility-Klassen ergänzt.
-  - `.mono` — wendet `var(--font-mono)` auf beliebige Elemente an.
-  - `.ci-label` — kleines Uppercase-Label außerhalb von `.form-field` Kontexten.
-- `components/code-viewer.html` — Referenz-Seite mit allen Badge-Varianten (200 OK, 302 Found, 404 Not Found) und `.mono` Demo.
-- `docs/code-viewer.md` — vollständige Komponentendokumentation.
-- `docs/for-coding-agents.md`: Abschnitt 5a API-Debugger / Code-Viewer ergänzt.
-- `docs/tokens.md`: Verwendungshinweise für `--code-bg` und `--code-text` auf `.panel-code` ergänzt.
-- `.gitignore` hinzugefügt.
+- `css/code-viewer.css` (neu): `.panel-code`, `.code-viewer-pre`, `.form-row`
+- `css/typography.css`: `.mono`, `.ci-label`
+- `components/code-viewer.html` — Referenzseite
+- `docs/code-viewer.md` — Dokumentation
+- `.gitignore`
 
 ---
 
@@ -184,15 +145,9 @@ docs/versioning.md
 
 ### Changed
 
-- `css/page.css`: `.result-action` (Auge-Button) überarbeitet.
-  - Neuer unabhängiger Toggle-State: `.result-action.active` = Route sichtbar (Success-Grün).
-  - Kaputte Regel `result-item.active .result-action { color: accent }` entfernt (blau auf blau).
-  - Default-Farbe von `--subtle` auf `--muted` angehoben (dezent sichtbarer).
-- `css/page.css`: `.result-item-simple` (Typ 5) auf Card-Stil von `.result-item` angehoben.
-  - Gleicher Rahmen, Hover und Active-State wie Typ 4.
-  - `.result-simple-org` und `.result-simple-meta` mit `padding-left: 25px` (fluchtet mit Titel nach Badge).
+- `css/page.css`: `.result-action` überarbeitet — neuer Toggle-State `.result-action.active`.
+- `css/page.css`: `.result-item-simple` auf Card-Stil angehoben.
 - `docs/sidebar-types.md`: Typ 4 und Typ 5 aktualisiert.
-- `components/sidebar-types.html`: Typ 4 zeigt alle Auge-Zustände; Typ 5 mit Card-Stil und Nummer-Badge.
 
 ---
 
@@ -200,39 +155,16 @@ docs/versioning.md
 
 ### Added
 
-- `docs/concepts.md` ergänzt.
-  - Begriffe und Ebenen wie CI, Brand, Design System, CSS Library und Komponenten-Referenz definiert.
-- `docs/usage.md` ergänzt.
-  - CSS-Einbindung, Reihenfolge, Demo-CSS-Regel und Beispiele für Seitentypen dokumentiert.
-- `docs/for-coding-agents.md` ergänzt.
-  - Regeln für automatisierte Änderungen, Coding-Agenten und CI-konforme Umsetzung dokumentiert.
-- `docs/versioning.md` ergänzt.
-  - Semantische Versionierung, Release-Regeln, Git-Tags und Deprecation-Regeln dokumentiert.
+- `docs/concepts.md`, `docs/usage.md`, `docs/for-coding-agents.md`, `docs/versioning.md`
 
 ### Changed
 
 - `README.md` überarbeitet.
-  - Zweck des Repositories klarer beschrieben.
-  - Repo-Struktur aktualisiert.
-  - Bereiche `css/`, `components/`, `docs/` und `assets/` erklärt.
-  - wichtige Einstiegsdokumente ergänzt.
-  - Begriffsklärung zu CI, Design System, CSS Library und Komponenten-Referenz ergänzt.
-- `docs/tokens.md` überarbeitet.
-  - Master-Datei auf `css/common.css` vereinheitlicht.
-  - Sidebar-Tab-Tokens in die Akzent-Tabelle aufgenommen.
-  - eingebettete `common.css` mit den aktuellen Token-Werten synchronisiert.
+- `docs/tokens.md` überarbeitet und mit `css/common.css` synchronisiert.
 
 ### Fixed
 
-- Widerspruch zwischen `shared/assets/common.css` und `css/common.css` in der Token-Dokumentation korrigiert.
-- Veraltete Z-Index-Werte im eingebetteten `common.css`-Block von `docs/tokens.md` korrigiert.
-- Beispiel für `.layout` in `docs/tokens.md` auf `var(--topbar-height)` korrigiert.
-
-### Notes
-
-- Diese Version enthält nur Dokumentations- und Strukturverbesserungen.
-- Es wurden keine produktiven CSS-Klassen entfernt.
-- Bestehende Webseiten sollten mit dieser Version kompatibel bleiben.
+- Widerspruch zwischen Token-Dokumentation und `css/common.css` korrigiert.
 
 ---
 
@@ -240,14 +172,4 @@ docs/versioning.md
 
 ### Added
 
-- Initiale vollständige Token-Definition.
-- Basisfarben, Akzentfarben und semantische Farben definiert.
-- Typografie-, Spacing-, Z-Index-, Transition- und Shadow-Tokens ergänzt.
-- Komponentenstruktur für Topbar, Sidebar, Cards, Buttons, Badges, Forms, Modal und Typografie aufgebaut.
-- Referenz-HTMLs in `components/` ergänzt.
-- Spezifikationen in `docs/` ergänzt.
-- Logo und Favicons in `assets/` ergänzt.
-
-### Notes
-
-- Erste konsolidierte Version des OE5ITH CI / Design Systems.
+- Initiale vollständige Token-Definition, Komponentenstruktur, Referenz-HTMLs, Spezifikationen, Logo und Favicons.

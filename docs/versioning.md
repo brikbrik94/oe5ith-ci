@@ -49,7 +49,7 @@ Versionen werden über Git-Tags, Releases und ein zentrales `CHANGELOG.md` nachv
 
 ### MAJOR
 
-Die MAJOR-Version wird erhöht, wenn es Breaking Changes gibt.
+Die MAJOR-Version wird erhöht, wenn es Breaking Changes gibt **die mindestens eine bekannte Produktionssite betreffen**.
 
 Beispiel:
 
@@ -61,13 +61,15 @@ Ein Breaking Change ist eine Änderung, durch die bestehende Webseiten angepasst
 
 Beispiele:
 
-- CSS-Klassen werden entfernt oder umbenannt.
-- Tokens werden entfernt oder umbenannt.
+- CSS-Klassen werden entfernt oder umbenannt — und mindestens eine Produktionssite nutzt sie.
+- Tokens werden entfernt oder umbenannt — und mindestens eine Produktionssite nutzt sie.
 - bestehende Komponenten ändern ihre HTML-Struktur inkompatibel.
 - `css/index.css` importiert zentrale Dateien nicht mehr wie zuvor.
 - Seitentypen werden grundlegend umstrukturiert.
 - Standardpfade für Assets ändern sich.
 - bestehende Layoutannahmen werden gebrochen.
+
+**Wichtig:** Werden CSS-Klassen oder Tokens entfernt, die noch von keiner Produktionssite genutzt werden, ist das kein MAJOR — sondern ein MINOR mit `Removed`-Eintrag im CHANGELOG. Die Deprecation-Regel (siehe unten) muss trotzdem eingehalten werden.
 
 ---
 
@@ -133,32 +135,34 @@ Ein Release sollte enthalten:
 
 ## CHANGELOG.md
 
-Für zukünftige Änderungen soll ein zentrales `CHANGELOG.md` geführt werden.
+`CHANGELOG.md` ist die einzige Quelle der Wahrheit für die Versionshistorie.
 
-Empfohlenes Format:
+### Pflichtformat
 
 ```markdown
-# Changelog
-
-## v1.1.0 - 2026-04-27
+## vX.Y.Z - YYYY-MM-DD
 
 ### Added
-
-- `docs/usage.md` ergänzt.
-- `docs/for-coding-agents.md` ergänzt.
-- `docs/versioning.md` ergänzt.
+- ...
 
 ### Changed
-
-- README-Struktur überarbeitet.
-- Token-Dokumentation mit `css/common.css` synchronisiert.
+- ...
 
 ### Fixed
+- ...
 
-- falsche Z-Index-Werte in eingebetteter Token-Doku korrigiert.
+### Removed
+- ...
 ```
 
-Empfohlene Kategorien:
+**Regeln:**
+
+- Header immer `## vX.Y.Z - YYYY-MM-DD` — kein `[v1.2.0]`, kein `v1.2.0 -` ohne Datum.
+- Neueste Version steht oben. `[Unreleased]` steht ganz oben solange kein Tag gesetzt wurde.
+- Jeder Eintrag hat genau einen der Kategorieblöcke die zutreffen.
+- Kein Eintrag ohne zugehörigen Git-Tag. Kein Tag ohne CHANGELOG-Eintrag.
+
+### Kategorien
 
 | Kategorie | Bedeutung |
 |---|---|
@@ -166,9 +170,9 @@ Empfohlene Kategorien:
 | Changed | bestehendes Verhalten oder bestehende Doku geändert |
 | Fixed | Fehler korrigiert |
 | Deprecated | noch vorhanden, aber künftig zu vermeiden |
-| Removed | entfernt |
+| Removed | entfernt (nur MAJOR wenn Produktionssite betroffen) |
 | Security | sicherheitsrelevante Änderung |
-| Breaking | inkompatible Änderung |
+| Breaking | inkompatible Änderung die Produktionssites betrifft |
 
 ---
 
@@ -324,18 +328,22 @@ docs/migration-v2.md
 
 ---
 
-## Empfohlener Release-Ablauf
+## Release-Ablauf (Pflicht)
 
-1. Änderungen lokal prüfen.
-2. `git status --short` kontrollieren.
-3. `git diff` prüfen.
-4. `CHANGELOG.md` aktualisieren.
-5. Version festlegen.
-6. Commit erstellen.
-7. Tag erstellen.
-8. Tag pushen.
-9. Optional GitHub Release erstellen.
-10. Betroffene Webseiten aktualisieren.
+1. `[Unreleased]`-Abschnitt in `CHANGELOG.md` zu `## vX.Y.Z - YYYY-MM-DD` umbenennen.
+2. Neuen leeren `[Unreleased]`-Abschnitt an den Anfang setzen.
+3. Commit: `git add CHANGELOG.md && git commit -m "chore: release vX.Y.Z"`
+4. Annotierter Tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`
+5. Push: `git push origin main && git push origin vX.Y.Z`
+6. GitHub Release erstellen:
+   ```bash
+   gh release create vX.Y.Z \
+     --title "vX.Y.Z" \
+     --notes "$(sed -n '/## vX.Y.Z/,/^---/p' CHANGELOG.md | head -n -1)"
+   ```
+7. Betroffene Webseiten aktualisieren (HTML-Kommentar `<!-- OE5ITH CI: vX.Y.Z -->`).
+
+**Kein Tag ohne CHANGELOG. Kein CHANGELOG-Eintrag ohne Tag.**
 
 ---
 
