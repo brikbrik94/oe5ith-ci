@@ -30,6 +30,7 @@
 
 /* 4a. Komponenten */
 @import "code-viewer.css";
+@import "calendar.css";
 
 /* 5. Interaktion */
 @import "forms.css";
