@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Kalender</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/badges.css">
+<link rel="stylesheet" href="../css/buttons.css">
+<link rel="stylesheet" href="../css/modal.css">
+<link rel="stylesheet" href="../css/calendar.css">
+<link rel="stylesheet" href="../css/demo.css">
+</head>
+<body>
+
+<!-- ═══ DETAIL-MODAL ═══ -->
+<div class="modal-backdrop" id="cal-modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="cal-modal-title" onclick="handleModalBackdrop(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="cal-modal-title">Nachtdienst</span>
+      <span class="badge badge-purple" id="cal-modal-badge">Nacht</span>
+      <button class="modal-close" onclick="closeCalModal()" aria-label="Modal schließen">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="cal-modal-date" id="cal-modal-date">Dienstag, 03. Juni 2026</p>
+      <p class="cal-modal-time" id="cal-modal-time">20:00 – 08:00</p>
+      <p class="cal-modal-description" id="cal-modal-desc">RK Linz · Station 1</p>
+      <p class="cal-modal-location" id="cal-modal-loc">Linz, Garnisonstraße 1</p>
+      <div class="cal-modal-changed" id="cal-modal-changed" style="display:none">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <div>
+          <span id="cal-modal-changed-date">Zuletzt geändert: 01.06.2026</span>
+          <p class="cal-modal-changed-note" id="cal-modal-changed-note"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <span>CI</span>
+  </a>
+</header>
+
+<div class="page-content">
+
+  <!-- ═══ MONATSKALENDER ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Kalender — Monatsansicht</div>
+    <div class="demo-section-desc">
+      Freistehender Content-Block. Heute-Indikator (blauer Kreis), Diensttyp-Farben,
+      Änderungsindikator (gelbes Icon). Klick auf Eintrag öffnet Detail-Modal.
+      Außerhalb-Tage haben <code>opacity: 0.35</code>.
+    </div>
+
+    <div class="calendar">
+
+      <div class="calendar-header">
+        <button class="calendar-nav-btn calendar-prev" aria-label="Vorheriger Monat">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span class="calendar-title">Juni 2026</span>
+        <button class="calendar-nav-btn calendar-next" aria-label="Nächster Monat">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <button class="btn btn-secondary" style="margin-left:8px; height:32px; padding:0 12px; font-size:0.8rem">Heute</button>
+      </div>
+
+      <div class="calendar-grid">
+
+        <!-- Wochentag-Header -->
+        <div class="calendar-weekday">Mo</div>
+        <div class="calendar-weekday">Di</div>
+        <div class="calendar-weekday">Mi</div>
+        <div class="calendar-weekday">Do</div>
+        <div class="calendar-weekday">Fr</div>
+        <div class="calendar-weekday">Sa</div>
+        <div class="calendar-weekday">So</div>
+
+        <!-- Woche 1: 1–7 -->
+        <div class="calendar-day">
+          <span class="calendar-day-number">1</span>
+          <div class="calendar-entry calendar-entry--early" role="button" tabindex="0"
+               data-date="Montag, 01. Juni 2026" data-time="06:00 – 14:00"
+               data-title="Frühdienst" data-badge-class="badge-green"
+               data-badge-label="Früh" data-desc="RK Linz · Station 2" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">06:00</span>
+            <span class="calendar-entry-title">Frühdienst</span>
+          </div>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">2</span>
+        </div>
+        <div class="calendar-day calendar-day--today">
+          <span class="calendar-day-number">3</span>
+          <div class="calendar-entry calendar-entry--night" role="button" tabindex="0"
+               data-date="Mittwoch, 03. Juni 2026" data-time="20:00 – 08:00"
+               data-title="Nachtdienst" data-badge-class="badge-purple"
+               data-badge-label="Nacht" data-desc="RK Linz · Station 1" data-loc="Linz, Garnisonstraße 1"
+               data-changed="Zuletzt geändert: 01.06.2026" data-changed-note="Dienstabtausch mit Müller">
+            <span class="calendar-entry-time">20:00</span>
+            <span class="calendar-entry-title">Nachtdienst</span>
+            <i class="fa-solid fa-circle-exclamation calendar-entry-changed"
+               title="Zuletzt geändert: 01.06.2026"></i>
+          </div>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">4</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">5</span>
+          <div class="calendar-entry calendar-entry--early" role="button" tabindex="0"
+               data-date="Freitag, 05. Juni 2026" data-time="06:00 – 10:00"
+               data-title="Frühdienst A" data-badge-class="badge-green"
+               data-badge-label="Früh" data-desc="RK Linz · Station 3" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">06:00</span>
+            <span class="calendar-entry-title">Frühdienst A</span>
+          </div>
+          <div class="calendar-entry calendar-entry--night" role="button" tabindex="0"
+               data-date="Freitag, 05. Juni 2026" data-time="22:00 – 06:00"
+               data-title="Nachtdienst B" data-badge-class="badge-purple"
+               data-badge-label="Nacht" data-desc="RK Linz · Station 1" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">22:00</span>
+            <span class="calendar-entry-title">Nachtdienst B</span>
+          </div>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">6</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">7</span>
+        </div>
+
+        <!-- Woche 2: 8–14 -->
+        <div class="calendar-day">
+          <span class="calendar-day-number">8</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">9</span>
+          <div class="calendar-entry calendar-entry--late" role="button" tabindex="0"
+               data-date="Dienstag, 09. Juni 2026" data-time="14:00 – 22:00"
+               data-title="Spätdienst" data-badge-class="badge-yellow"
+               data-badge-label="Spät" data-desc="RK Linz · Station 2" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">14:00</span>
+            <span class="calendar-entry-title">Spätdienst</span>
+          </div>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">10</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">11</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">12</span>
+          <div class="calendar-entry calendar-entry--default" role="button" tabindex="0"
+               data-date="Freitag, 12. Juni 2026" data-time="08:00 – 16:00"
+               data-title="Bereitschaft" data-badge-class="badge-blue"
+               data-badge-label="Sonstiges" data-desc="Telefonbereitschaft" data-loc="">
+            <span class="calendar-entry-time">08:00</span>
+            <span class="calendar-entry-title">Bereitschaft</span>
+          </div>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">13</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">14</span>
+        </div>
+
+        <!-- Woche 3: 15–21 -->
+        <div class="calendar-day">
+          <span class="calendar-day-number">15</span>
+          <div class="calendar-entry calendar-entry--early" role="button" tabindex="0"
+               data-date="Montag, 15. Juni 2026" data-time="06:00 – 14:00"
+               data-title="Frühdienst" data-badge-class="badge-green"
+               data-badge-label="Früh" data-desc="RK Linz · Station 1" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">06:00</span>
+            <span class="calendar-entry-title">Frühdienst</span>
+          </div>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">16</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">17</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">18</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">19</span>
+          <div class="calendar-entry calendar-entry--night" role="button" tabindex="0"
+               data-date="Freitag, 19. Juni 2026" data-time="20:00 – 08:00"
+               data-title="Nachtdienst" data-badge-class="badge-purple"
+               data-badge-label="Nacht" data-desc="RK Linz · Station 1" data-loc="Linz, Garnisonstraße 1"
+               data-changed="Zuletzt geändert: 15.06.2026">
+            <span class="calendar-entry-time">20:00</span>
+            <span class="calendar-entry-title">Nachtdienst</span>
+            <i class="fa-solid fa-circle-exclamation calendar-entry-changed"
+               title="Zuletzt geändert: 15.06.2026"></i>
+          </div>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">20</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">21</span>
+        </div>
+
+        <!-- Woche 4: 22–28 -->
+        <div class="calendar-day">
+          <span class="calendar-day-number">22</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">23</span>
+          <div class="calendar-entry calendar-entry--late" role="button" tabindex="0"
+               data-date="Dienstag, 23. Juni 2026" data-time="14:00 – 22:00"
+               data-title="Spätdienst" data-badge-class="badge-yellow"
+               data-badge-label="Spät" data-desc="RK Linz · Station 2" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">14:00</span>
+            <span class="calendar-entry-title">Spätdienst</span>
+          </div>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">24</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">25</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">26</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">27</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">28</span>
+          <div class="calendar-entry calendar-entry--early" role="button" tabindex="0"
+               data-date="Samstag, 28. Juni 2026" data-time="06:00 – 14:00"
+               data-title="Frühdienst" data-badge-class="badge-green"
+               data-badge-label="Früh" data-desc="RK Linz · Station 3" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">06:00</span>
+            <span class="calendar-entry-title">Frühdienst</span>
+          </div>
+        </div>
+
+        <!-- Woche 5: 29–30 + Juli 1–5 (outside) -->
+        <div class="calendar-day">
+          <span class="calendar-day-number">29</span>
+        </div>
+        <div class="calendar-day">
+          <span class="calendar-day-number">30</span>
+          <div class="calendar-entry calendar-entry--night" role="button" tabindex="0"
+               data-date="Dienstag, 30. Juni 2026" data-time="20:00 – 08:00"
+               data-title="Nachtdienst" data-badge-class="badge-purple"
+               data-badge-label="Nacht" data-desc="RK Linz · Station 1" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">20:00</span>
+            <span class="calendar-entry-title">Nachtdienst</span>
+          </div>
+        </div>
+
+        <!-- Juli-Auffüller (outside) -->
+        <div class="calendar-day calendar-day--outside">
+          <span class="calendar-day-number">1</span>
+        </div>
+        <div class="calendar-day calendar-day--outside">
+          <span class="calendar-day-number">2</span>
+        </div>
+        <div class="calendar-day calendar-day--outside">
+          <span class="calendar-day-number">3</span>
+          <div class="calendar-entry calendar-entry--late" role="button" tabindex="0"
+               data-date="Freitag, 03. Juli 2026" data-time="14:00 – 22:00"
+               data-title="Spätdienst" data-badge-class="badge-yellow"
+               data-badge-label="Spät" data-desc="RK Linz · Station 2" data-loc="Linz, Garnisonstraße 1">
+            <span class="calendar-entry-time">14:00</span>
+            <span class="calendar-entry-title">Spätdienst</span>
+          </div>
+        </div>
+        <div class="calendar-day calendar-day--outside">
+          <span class="calendar-day-number">4</span>
+        </div>
+        <div class="calendar-day calendar-day--outside">
+          <span class="calendar-day-number">5</span>
+        </div>
+
+      </div><!-- /.calendar-grid -->
+    </div><!-- /.calendar -->
+  </div><!-- /.demo-section -->
+
+
+  <!-- ═══ EINTRAGSTYPEN ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Eintragstypen — Farbcodierung</div>
+    <div class="demo-section-desc">
+      Vier Modifier-Klassen für Diensttypen. Jede Klasse verwendet bestehende
+      semantische Tokens aus <code>common.css</code>. Änderungsindikator via
+      <code>.calendar-entry-changed</code> (fa-circle-exclamation, <code>--warning</code>).
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px; max-width:340px">
+      <div class="calendar-entry calendar-entry--early" style="pointer-events:none">
+        <span class="calendar-entry-time">06:00 – 14:00</span>
+        <span class="calendar-entry-title">Frühdienst (.--early)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--late" style="pointer-events:none">
+        <span class="calendar-entry-time">14:00 – 22:00</span>
+        <span class="calendar-entry-title">Spätdienst (.--late)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--night" style="pointer-events:none">
+        <span class="calendar-entry-time">20:00 – 08:00</span>
+        <span class="calendar-entry-title">Nachtdienst (.--night)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--default" style="pointer-events:none">
+        <span class="calendar-entry-time">08:00 – 16:00</span>
+        <span class="calendar-entry-title">Sonstiges (.--default)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--night" style="pointer-events:none">
+        <span class="calendar-entry-time">20:00 – 08:00</span>
+        <span class="calendar-entry-title">Nachtdienst + geändert</span>
+        <i class="fa-solid fa-circle-exclamation calendar-entry-changed"
+           title="Zuletzt geändert: 01.06.2026"></i>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.page-content -->
+
+<script>
+/* ── Modal ── */
+function openCalModal(entry) {
+  const backdrop = document.getElementById('cal-modal-backdrop');
+  document.getElementById('cal-modal-title').textContent = entry.dataset.title || '';
+  document.getElementById('cal-modal-date').textContent  = entry.dataset.date  || '';
+  document.getElementById('cal-modal-time').textContent  = entry.dataset.time  || '';
+  document.getElementById('cal-modal-desc').textContent  = entry.dataset.desc  || '';
+  document.getElementById('cal-modal-loc').textContent   = entry.dataset.loc   || '';
+
+  const badge = document.getElementById('cal-modal-badge');
+  badge.className = 'badge ' + (entry.dataset.badgeClass || 'badge-blue');
+  badge.textContent = entry.dataset.badgeLabel || '';
+
+  const changedBlock = document.getElementById('cal-modal-changed');
+  if (entry.dataset.changed) {
+    document.getElementById('cal-modal-changed-date').textContent = entry.dataset.changed;
+    document.getElementById('cal-modal-changed-note').textContent = entry.dataset.changedNote || '';
+    changedBlock.style.display = 'flex';
+  } else {
+    changedBlock.style.display = 'none';
+  }
+
+  backdrop.classList.add('open');
+  backdrop.querySelector('.modal-close').focus();
+}
+
+function closeCalModal() {
+  document.getElementById('cal-modal-backdrop').classList.remove('open');
+}
+
+function handleModalBackdrop(e) {
+  if (e.target === document.getElementById('cal-modal-backdrop')) closeCalModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeCalModal();
+});
+
+/* ── Entry-Klick-Handler ── */
+document.querySelectorAll('.calendar-entry[role="button"]').forEach(entry => {
+  entry.addEventListener('click', () => openCalModal(entry));
+  entry.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openCalModal(entry);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
