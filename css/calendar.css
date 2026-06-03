@@ -101,7 +101,7 @@
 
 .calendar-day--today .calendar-day-number {
   background: var(--accent);
-  color: #fff;
+  color: var(--white);
   border-radius: 50%;
   width: 22px;
   height: 22px;
