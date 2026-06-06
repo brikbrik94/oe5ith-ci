@@ -226,8 +226,7 @@
 
 .calendar-entry--multiline .calendar-entry-title {
   white-space: normal;
-  text-overflow: clip;
-  overflow: visible;
+  overflow: hidden;
 }
 
 /* ═══════════════════════════════════════

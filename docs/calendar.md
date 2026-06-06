@@ -179,6 +179,8 @@ Ellipsis bei Überlauf. Mit `.calendar-entry--multiline` wird ein gestapeltes La
 Hinweis: `.calendar-entry--multiline` nicht mit `.calendar-entry--continues-left` /
 `--continues-right` kombinieren — dieses Zusammenspiel ist nicht definiert.
 
+Hinweis: Auf Tablet (769px–1024px) wird `.calendar-entry-time` durch den Tablet-Breakpoint auf `max-width: 36px` begrenzt — auch in `--multiline`-Einträgen.
+
 ---
 
 ## Bis zu 2 Einträge pro Tag
