@@ -185,6 +185,29 @@
 .calendar-entry--night   { background: var(--cal-color-3-subtle);  border-color: var(--cal-color-3); }
 .calendar-entry--default { background: var(--cal-color-4-subtle);  border-color: var(--cal-color-4); }
 
+/* ─── Mehrtägige Events ─── */
+
+.calendar-entry--continues-right::after {
+  content: "›";
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.calendar-entry--continues-left {
+  border-left-color: transparent;
+}
+
+.calendar-entry--continues-left::before {
+  content: "‹";
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
 /* ═══════════════════════════════════════
    MODAL-INHALT (Detail-Ansicht)
    ═══════════════════════════════════════ */
