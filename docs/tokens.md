@@ -61,6 +61,37 @@ Jede semantische Farbe hat drei Varianten: Vollton, Subtle (10%), Border (25%).
 
 ---
 
+## Kalender-Farbslots
+
+10 nummerierte Farbslots für die Kalender-Komponente. Standardwerte sind in `css/common.css`
+definiert — jede Website kann einzelne Slots per `:root { --cal-color-N: … }` überschreiben.
+
+Jeder Slot hat drei Varianten: Vollton, Subtle (Hintergrund ~10%), Border (~25%).
+
+| Slot | Vollton | Farbe | Subtle | Border |
+|---|---|---|---|---|
+| `--cal-color-1` | `#22c55e` | grün | `rgba(34,197,94,0.10)` | `rgba(34,197,94,0.25)` |
+| `--cal-color-2` | `#eab308` | gelb | `rgba(234,179,8,0.10)` | `rgba(234,179,8,0.25)` |
+| `--cal-color-3` | `#a78bfa` | violett | `rgba(167,139,250,0.10)` | `rgba(167,139,250,0.25)` |
+| `--cal-color-4` | `#3b82f6` | blau | `rgba(59,130,246,0.07)` | `rgba(59,130,246,0.25)` |
+| `--cal-color-5` | `#f97316` | orange | `rgba(249,115,22,0.10)` | `rgba(249,115,22,0.25)` |
+| `--cal-color-6` | `#ef4444` | rot | `rgba(239,68,68,0.10)` | `rgba(239,68,68,0.25)` |
+| `--cal-color-7` | `#06b6d4` | cyan | `rgba(6,182,212,0.10)` | `rgba(6,182,212,0.25)` |
+| `--cal-color-8` | `#ec4899` | pink | `rgba(236,72,153,0.10)` | `rgba(236,72,153,0.25)` |
+| `--cal-color-9` | `#84cc16` | limette | `rgba(132,204,22,0.10)` | `rgba(132,204,22,0.25)` |
+| `--cal-color-10` | `#94a3b8` | grau | `rgba(148,163,184,0.10)` | `rgba(148,163,184,0.25)` |
+
+**Überschreiben auf Website-Ebene:**
+```css
+:root {
+  --cal-color-1:        #e11d48;
+  --cal-color-1-subtle: rgba(225,29,72,0.10);
+  --cal-color-1-border: rgba(225,29,72,0.25);
+}
+```
+
+---
+
 ## Code / Terminal Farben
 
 | Token | Wert | Verwendung |
@@ -266,6 +297,7 @@ html {
 
 | Datum | Änderung |
 |---|---|
+| 2026-06-06 | 10 Kalender-Farbslots (`--cal-color-1` bis `--cal-color-10`) mit Subtle- und Border-Varianten ergänzt. |
 | 2026-05-07 | `--sidebar-width` von 260px auf 300px erhöht. Globale Scrollbar-Stilisierung (`scrollbar-width: thin`, `--border-strong`/transparent) in `common.css` ergänzt. |
 | 2026-05-05 | `--sidebar-tab-width` und `--sidebar-tab-height` ergänzt. Z-Index-Bereichstabelle hinzugefügt. |
 | 2026-04-22 | Initiale vollständige Token-Definition. Alle Farben aus Badges/Buttons als Tokens. Z-Index, Transitions, Shadows ergänzt. |
