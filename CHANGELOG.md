@@ -5,6 +5,14 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.12.0 - 2026-06-06
+
+### Added
+- `.calendar--show-all` Modifier-Klasse für Mobile: zeigt alle Tageszellen inkl. leerer
+- Tablet-Breakpoint (769px–1024px) mit komprimierter Eintragsdarstellung in `css/calendar.css`
+
+---
+
 ## v1.11.0 - 2026-06-06
 
 ### Added
