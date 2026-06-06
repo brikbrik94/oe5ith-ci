@@ -165,27 +165,25 @@
   margin-left: auto;
 }
 
-/* ─── Diensttyp-Modifier ─── */
+/* ─── Generische Farbslots (color-1 … color-10) ─── */
 
-.calendar-entry--early {
-  background: var(--success-subtle);
-  border-color: var(--success);
-}
+.calendar-entry--color-1  { background: var(--cal-color-1-subtle);  border-color: var(--cal-color-1); }
+.calendar-entry--color-2  { background: var(--cal-color-2-subtle);  border-color: var(--cal-color-2); }
+.calendar-entry--color-3  { background: var(--cal-color-3-subtle);  border-color: var(--cal-color-3); }
+.calendar-entry--color-4  { background: var(--cal-color-4-subtle);  border-color: var(--cal-color-4); }
+.calendar-entry--color-5  { background: var(--cal-color-5-subtle);  border-color: var(--cal-color-5); }
+.calendar-entry--color-6  { background: var(--cal-color-6-subtle);  border-color: var(--cal-color-6); }
+.calendar-entry--color-7  { background: var(--cal-color-7-subtle);  border-color: var(--cal-color-7); }
+.calendar-entry--color-8  { background: var(--cal-color-8-subtle);  border-color: var(--cal-color-8); }
+.calendar-entry--color-9  { background: var(--cal-color-9-subtle);  border-color: var(--cal-color-9); }
+.calendar-entry--color-10 { background: var(--cal-color-10-subtle); border-color: var(--cal-color-10); }
 
-.calendar-entry--late {
-  background: var(--warning-subtle);
-  border-color: var(--warning);
-}
+/* ─── Aliase (rückwärtskompatibel — können später entfernt werden) ─── */
 
-.calendar-entry--night {
-  background: var(--auth-subtle);
-  border-color: var(--auth);
-}
-
-.calendar-entry--default {
-  background: var(--accent-subtle);
-  border-color: var(--accent);
-}
+.calendar-entry--early   { background: var(--cal-color-1-subtle);  border-color: var(--cal-color-1); }
+.calendar-entry--late    { background: var(--cal-color-2-subtle);  border-color: var(--cal-color-2); }
+.calendar-entry--night   { background: var(--cal-color-3-subtle);  border-color: var(--cal-color-3); }
+.calendar-entry--default { background: var(--cal-color-4-subtle);  border-color: var(--cal-color-4); }
 
 /* ═══════════════════════════════════════
    MODAL-INHALT (Detail-Ansicht)
