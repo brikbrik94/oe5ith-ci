@@ -2,7 +2,7 @@
 
 **Referenz-Datei:** `components/calendar.html`  
 **CSS:** `css/calendar.css`  
-**Status:** definiert · v1.0
+**Status:** definiert · v1.1
 
 ---
 
@@ -70,16 +70,34 @@ common.css → buttons.css → modal.css → calendar.css
 
 ---
 
-## Eintragstypen
+## Generische Farbslots
 
-| Modifier-Klasse | Diensttyp | Tokens |
-|---|---|---|
-| `.calendar-entry--early` | Frühdienst | `--success-subtle` / `--success` |
-| `.calendar-entry--late` | Spätdienst | `--warning-subtle` / `--warning` |
-| `.calendar-entry--night` | Nachtdienst | `--auth-subtle` / `--auth` |
-| `.calendar-entry--default` | Sonstiges / Fallback | `--accent-subtle` / `--accent` |
+| Modifier-Klasse | Token-Paar |
+|---|---|
+| `.calendar-entry--color-1` | `--cal-color-1-subtle` / `--cal-color-1` |
+| `.calendar-entry--color-2` | `--cal-color-2-subtle` / `--cal-color-2` |
+| `.calendar-entry--color-3` | `--cal-color-3-subtle` / `--cal-color-3` |
+| `.calendar-entry--color-4` | `--cal-color-4-subtle` / `--cal-color-4` |
+| `.calendar-entry--color-5` | `--cal-color-5-subtle` / `--cal-color-5` |
+| `.calendar-entry--color-6` | `--cal-color-6-subtle` / `--cal-color-6` |
+| `.calendar-entry--color-7` | `--cal-color-7-subtle` / `--cal-color-7` |
+| `.calendar-entry--color-8` | `--cal-color-8-subtle` / `--cal-color-8` |
+| `.calendar-entry--color-9` | `--cal-color-9-subtle` / `--cal-color-9` |
+| `.calendar-entry--color-10` | `--cal-color-10-subtle` / `--cal-color-10` |
 
-Neue Diensttypen als neue Modifier-Klasse ergänzen — bestehende Klassen nicht ändern.
+Die Standardfarben (grün, gelb, violett, blau, orange, rot, cyan, pink, limette, grau)
+können pro Website überschrieben werden — siehe `docs/tokens.md`.
+
+### Aliase (rückwärtskompatibel)
+
+| Alias-Klasse | Entspricht |
+|---|---|
+| `.calendar-entry--early` | `--color-1` (grün) |
+| `.calendar-entry--late` | `--color-2` (gelb) |
+| `.calendar-entry--night` | `--color-3` (violett) |
+| `.calendar-entry--default` | `--color-4` (blau) |
+
+Neue Diensttypen als `--color-N`-Klasse ergänzen — Aliase nicht für neue Typen verwenden.
 
 ---
 
@@ -94,6 +112,47 @@ Neue Diensttypen als neue Modifier-Klasse ergänzen — bestehende Klassen nicht
 - Farbe: `--warning`
 - Nur im DOM wenn vom Backend gesetzt
 - Änderungsdatum im `title`-Attribut
+
+---
+
+## Mehrtägige Events
+
+Events die sich über mehrere Tage erstrecken, erscheinen in jeder Tageszelle einzeln.
+Zwei Modifier-Klassen steuern die Fortsetzungsmarkierungen:
+
+| Klasse | Bedeutung | Visuell |
+|---|---|---|
+| `.calendar-entry--continues-right` | Event geht am Folgetag weiter | `›` rechts via `::after` |
+| `.calendar-entry--continues-left` | Event kommt vom Vortag | `‹` links via `::before`, `border-left` transparent |
+
+Kombinierbar: Ein mittlerer Tag trägt beide Klassen.
+
+```html
+<!-- Tag 1: Starttag — zeigt Uhrzeit -->
+<div class="calendar-entry calendar-entry--color-5 calendar-entry--continues-right"
+     role="button" tabindex="0"
+     aria-label="Konferenz, 08:00, läuft weiter, Details öffnen">
+  <span class="calendar-entry-time">08:00</span>
+  <span class="calendar-entry-title">Konferenz</span>
+</div>
+
+<!-- Tag 2: Mitteltag — keine Uhrzeit -->
+<div class="calendar-entry calendar-entry--color-5 calendar-entry--continues-left calendar-entry--continues-right"
+     role="button" tabindex="0"
+     aria-label="Konferenz, Fortsetzung, Details öffnen">
+  <span class="calendar-entry-title">Konferenz</span>
+</div>
+
+<!-- Tag 3: Endtag — keine Uhrzeit -->
+<div class="calendar-entry calendar-entry--color-5 calendar-entry--continues-left"
+     role="button" tabindex="0"
+     aria-label="Konferenz, Fortsetzung, Details öffnen">
+  <span class="calendar-entry-title">Konferenz</span>
+</div>
+```
+
+**Uhrzeit-Regel:** Nur der Starttag enthält `.calendar-entry-time` im DOM.
+Folgetage lassen das Element weg.
 
 ---
 
@@ -161,3 +220,4 @@ Keine. Alle Tokens kommen aus `css/common.css`.
 | Datum | Änderung |
 |---|---|
 | 2026-06-03 | Initiale Definition. Vier Diensttypen, Änderungsindikator, Mobile-Collapse. |
+| 2026-06-06 | Generische Farbslots `--color-1` bis `--color-10`. Aliase für bestehende Diensttypen. Mehrtägige Events mit `--continues-left` / `--continues-right`. |
