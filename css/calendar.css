@@ -284,4 +284,40 @@
   .calendar-day-number {
     font-size: 0.85rem;
   }
+
+  .calendar.calendar--show-all .calendar-day:not(:has(.calendar-entry)) {
+    display: flex;
+  }
+}
+
+/* ═══════════════════════════════════════
+   TABLET (769px–1024px)
+   ═══════════════════════════════════════ */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .calendar-day {
+    padding: 4px;
+    min-height: 64px;
+  }
+
+  .calendar-day-number {
+    font-size: 0.72rem;
+  }
+
+  .calendar-entry {
+    padding: 2px 4px;
+    font-size: 0.68rem;
+    gap: 2px;
+  }
+
+  .calendar-entry-time {
+    max-width: 36px;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+
+  .calendar-entry-title {
+    font-size: 0.68rem;
+  }
 }
