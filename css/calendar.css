@@ -313,7 +313,7 @@
   .calendar-entry-time {
     max-width: 36px;
     overflow: hidden;
-    text-overflow: clip;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 

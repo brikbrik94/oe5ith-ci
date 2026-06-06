@@ -70,7 +70,7 @@
           <i class="fa-solid fa-chevron-right"></i>
         </button>
         <button class="btn btn-secondary" style="margin-left:8px; height:32px; padding:0 12px; font-size:0.8rem">Heute</button>
-        <button class="btn btn-secondary" id="cal-toggle-btn" style="height:32px; padding:0 12px; font-size:0.8rem" onclick="toggleCalShowAll()">Alle Tage</button>
+        <button class="btn btn-secondary" id="cal-toggle-btn" style="margin-left:4px; height:32px; padding:0 12px; font-size:0.8rem" aria-pressed="false" onclick="toggleCalShowAll()">Alle Tage</button>
       </div>
 
       <div class="calendar-grid">
@@ -409,6 +409,7 @@ function toggleCalShowAll() {
   const btn = document.getElementById('cal-toggle-btn');
   const active = cal.classList.toggle('calendar--show-all');
   btn.textContent = active ? 'Nur mit Termin' : 'Alle Tage';
+  btn.setAttribute('aria-pressed', active ? 'true' : 'false');
 }
 
 /* ── Modal ── */

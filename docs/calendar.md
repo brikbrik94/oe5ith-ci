@@ -196,6 +196,8 @@ Standardmäßig werden leere Tageszellen (keine Einträge) ausgeblendet. Mit dem
 | Kompakt (Standard) | _(kein Modifier)_ | ausgeblendet |
 | Alle anzeigen | `.calendar--show-all` | sichtbar |
 
+Hinweis: `.calendar--show-all` zeigt auch leere Außerhalb-Tage (`.calendar-day--outside`) — dies ist beabsichtigt.
+
 Die CI definiert die CSS-Klasse. Die Website setzt/entfernt sie per JavaScript nach eigenem Ermessen.
 
 ```html
@@ -220,7 +222,7 @@ JavaScript, keine zusätzlichen Klassen erforderlich.
 | Tageszell-Padding | 6px | 4px |
 | Min-Height Zelle | 80px | 64px |
 | Entry-Schriftgröße | 0.72rem | 0.68rem |
-| Uhrzeit | vollständig | nur Startzeit (max. 36px, abgeschnitten) |
+| Uhrzeit | vollständig | abgeschnitten (max-width: 36px) |
 
 Für Detailinformationen (vollständige Zeit, Beschreibung, Ort) öffnet der Nutzer das Modal.
 
