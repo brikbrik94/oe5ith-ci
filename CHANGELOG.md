@@ -5,7 +5,7 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
-## v1.12.0 - 2026-06-06
+## v1.11.2 - 2026-06-06
 
 ### Added
 - Breitengrenze auf `.calendar` (`max-width: 100%`, `overflow: hidden`), `.calendar-day` (`min-width: 0`, `overflow: hidden`) und `.calendar-entry` (`max-width: 100%`)
