@@ -2,7 +2,7 @@
 
 **Referenz-Datei:** `components/calendar.html`  
 **CSS:** `css/calendar.css`  
-**Status:** definiert · v1.1
+**Status:** definiert · v1.2
 
 ---
 
@@ -185,9 +185,44 @@ Wiederverwendung der bestehenden `.modal-backdrop` / `.modal`-Komponente aus `mo
 
 Das 7-Spalten-Grid kollabiert zu einer einspaltigen Liste.
 Wochentag-Header werden ausgeblendet.
-Leere Tageszellen (keine Einträge) werden ausgeblendet.
+
+### Leere Tageszellen — Toggle
+
+Standardmäßig werden leere Tageszellen (keine Einträge) ausgeblendet. Mit dem Modifier
+`.calendar--show-all` auf `.calendar` werden alle Tageszellen angezeigt.
+
+| Zustand | Klasse | Leere Tage |
+|---|---|---|
+| Kompakt (Standard) | _(kein Modifier)_ | ausgeblendet |
+| Alle anzeigen | `.calendar--show-all` | sichtbar |
+
+Die CI definiert die CSS-Klasse. Die Website setzt/entfernt sie per JavaScript nach eigenem Ermessen.
+
+```html
+<!-- Alle Tage anzeigen -->
+<div class="calendar calendar--show-all">…</div>
+
+<!-- Nur Tage mit Einträgen (Standard) -->
+<div class="calendar">…</div>
+```
 
 Hinweis: Mobile-Collapse verwendet `:has()` — benötigt einen modernen Browser (Baseline 2023).
+
+---
+
+## Tablet (769px–1024px)
+
+Das 7-Spalten-Grid bleibt erhalten. Eintragsinhalt wird automatisch komprimiert — kein
+JavaScript, keine zusätzlichen Klassen erforderlich.
+
+| Element | Desktop | Tablet |
+|---|---|---|
+| Tageszell-Padding | 6px | 4px |
+| Min-Height Zelle | 80px | 64px |
+| Entry-Schriftgröße | 0.72rem | 0.68rem |
+| Uhrzeit | vollständig | nur Startzeit (max. 36px, abgeschnitten) |
+
+Für Detailinformationen (vollständige Zeit, Beschreibung, Ort) öffnet der Nutzer das Modal.
 
 ---
 
@@ -221,3 +256,4 @@ Keine. Alle Tokens kommen aus `css/common.css`.
 |---|---|
 | 2026-06-03 | Initiale Definition. Vier Diensttypen, Änderungsindikator, Mobile-Collapse. |
 | 2026-06-06 | Generische Farbslots `--color-1` bis `--color-10`. Aliase für bestehende Diensttypen. Mehrtägige Events mit `--continues-left` / `--continues-right`. |
+| 2026-06-06 | Mobile Show-All-Toggle (`.calendar--show-all`). Tablet-Breakpoint 769px–1024px mit komprimierter Darstellung. |
