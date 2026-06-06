@@ -5,6 +5,17 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## [1.2.0] — 2026-06-06
+
+### Added
+
+- 10 generische Kalender-Farbslots (`--cal-color-1` bis `--cal-color-10`) mit Subtle- und Border-Varianten in `css/common.css`
+- `.calendar-entry--color-1` bis `.calendar-entry--color-10` Modifier-Klassen in `css/calendar.css`
+- `.calendar-entry--continues-left` und `.calendar-entry--continues-right` für mehrtägige Events
+- Rückwärtskompatible Aliase (`.calendar-entry--early`, `.--late`, `.--night`, `.--default`) auf die neuen Slots
+
+---
+
 ## v1.10.0 - 2026-06-03
 
 ### Added
