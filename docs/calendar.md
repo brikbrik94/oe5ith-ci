@@ -2,7 +2,7 @@
 
 **Referenz-Datei:** `components/calendar.html`  
 **CSS:** `css/calendar.css`  
-**Status:** definiert · v1.2
+**Status:** definiert · v1.3
 
 ---
 
@@ -156,6 +156,31 @@ Folgetage lassen das Element weg.
 
 ---
 
+## Eintrags-Layout
+
+Jeder `.calendar-entry` ist standardmäßig einzeilig — Zeit und Titel nebeneinander, Titel mit
+Ellipsis bei Überlauf. Mit `.calendar-entry--multiline` wird ein gestapeltes Layout aktiviert.
+
+| Modifier | Layout | Überlauf |
+|---|---|---|
+| _(kein)_ | Zeit + Titel nebeneinander | Titel abgeschnitten (ellipsis) |
+| `.calendar-entry--multiline` | Zeit Zeile 1, Titel Zeile 2+ | Titel umbricht |
+
+```html
+<!-- Mehrzeilen-Eintrag -->
+<div class="calendar-entry calendar-entry--color-1 calendar-entry--multiline"
+     role="button" tabindex="0"
+     aria-label="Frühdienst, 08:00, Details öffnen">
+  <span class="calendar-entry-time">08:00</span>
+  <span class="calendar-entry-title">Frühdienst Station 1</span>
+</div>
+```
+
+Hinweis: `.calendar-entry--multiline` nicht mit `.calendar-entry--continues-left` /
+`--continues-right` kombinieren — dieses Zusammenspiel ist nicht definiert.
+
+---
+
 ## Bis zu 2 Einträge pro Tag
 
 Beide Einträge werden als separate `.calendar-entry`-Elemente untereinander in der
@@ -259,3 +284,4 @@ Keine. Alle Tokens kommen aus `css/common.css`.
 | 2026-06-03 | Initiale Definition. Vier Diensttypen, Änderungsindikator, Mobile-Collapse. |
 | 2026-06-06 | Generische Farbslots `--color-1` bis `--color-10`. Aliase für bestehende Diensttypen. Mehrtägige Events mit `--continues-left` / `--continues-right`. |
 | 2026-06-06 | Mobile Show-All-Toggle (`.calendar--show-all`). Tablet-Breakpoint 769px–1024px mit komprimierter Darstellung. |
+| 2026-06-06 | Breitengrenze auf `.calendar`, `.calendar-day`, `.calendar-entry`. Neuer Modifier `.calendar-entry--multiline` für gestapeltes Layout. |
