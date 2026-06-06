@@ -5,7 +5,7 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
-## [1.2.0] — 2026-06-06
+## v1.11.0 - 2026-06-06
 
 ### Added
 
