@@ -70,6 +70,7 @@
           <i class="fa-solid fa-chevron-right"></i>
         </button>
         <button class="btn btn-secondary" style="margin-left:8px; height:32px; padding:0 12px; font-size:0.8rem">Heute</button>
+        <button class="btn btn-secondary" id="cal-toggle-btn" style="height:32px; padding:0 12px; font-size:0.8rem" onclick="toggleCalShowAll()">Alle Tage</button>
       </div>
 
       <div class="calendar-grid">
@@ -295,6 +296,24 @@
   </div><!-- /.demo-section -->
 
 
+  <!-- ═══ MOBILE SHOW-ALL TOGGLE ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Mobile — Show-All-Toggle</div>
+    <div class="demo-section-desc">
+      Auf Mobile (≤768px) werden leere Tage standardmäßig ausgeblendet.
+      Mit <code>.calendar--show-all</code> auf <code>.calendar</code> werden alle Tage angezeigt.
+      Die Klasse wird von der Website per JS gesetzt — der Button im Monatskalender-Header
+      demonstriert dieses Verhalten (nur auf Mobile sichtbar wirksam).
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px; max-width:500px">
+      <div style="font-size:0.82rem; color:var(--muted)">Standard (kompakt):</div>
+      <code style="font-size:0.8rem; color:var(--text)">&lt;div class="calendar"&gt;</code>
+      <div style="font-size:0.82rem; color:var(--muted); margin-top:8px">Alle Tage sichtbar:</div>
+      <code style="font-size:0.8rem; color:var(--text)">&lt;div class="calendar calendar--show-all"&gt;</code>
+    </div>
+  </div>
+
+
   <!-- ═══ FARBSLOTS ═══ -->
   <div class="demo-section">
     <div class="demo-section-title">Generische Farbslots — color-1 bis color-10</div>
@@ -384,6 +403,14 @@
 </div><!-- /.page-content -->
 
 <script>
+/* ── Show-All Toggle ── */
+function toggleCalShowAll() {
+  const cal = document.querySelector('.calendar');
+  const btn = document.getElementById('cal-toggle-btn');
+  const active = cal.classList.toggle('calendar--show-all');
+  btn.textContent = active ? 'Nur mit Termin' : 'Alle Tage';
+}
+
 /* ── Modal ── */
 function openCalModal(entry) {
   const backdrop = document.getElementById('cal-modal-backdrop');
