@@ -295,36 +295,88 @@
   </div><!-- /.demo-section -->
 
 
-  <!-- ═══ EINTRAGSTYPEN ═══ -->
+  <!-- ═══ FARBSLOTS ═══ -->
   <div class="demo-section">
-    <div class="demo-section-title">Eintragstypen — Farbcodierung</div>
+    <div class="demo-section-title">Generische Farbslots — color-1 bis color-10</div>
     <div class="demo-section-desc">
-      Vier Modifier-Klassen für Diensttypen. Jede Klasse verwendet bestehende
-      semantische Tokens aus <code>common.css</code>. Änderungsindikator via
-      <code>.calendar-entry-changed</code> (fa-circle-exclamation, <code>--warning</code>).
+      10 nummerierte Farbslots. Pro Website via <code>--cal-color-N</code> Token in
+      <code>common.css</code> überschreibbar. Die 4 Alias-Klassen
+      (<code>--early</code>, <code>--late</code>, <code>--night</code>, <code>--default</code>)
+      sind rückwärtskompatibel und zeigen auf color-1..4.
     </div>
+    <div style="display:flex; flex-direction:column; gap:6px; max-width:340px">
+      <div class="calendar-entry calendar-entry--color-1" style="pointer-events:none">
+        <span class="calendar-entry-title">color-1 — grün (#22c55e)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-2" style="pointer-events:none">
+        <span class="calendar-entry-title">color-2 — gelb (#eab308)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-3" style="pointer-events:none">
+        <span class="calendar-entry-title">color-3 — violett (#a78bfa)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-4" style="pointer-events:none">
+        <span class="calendar-entry-title">color-4 — blau (#3b82f6)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-5" style="pointer-events:none">
+        <span class="calendar-entry-title">color-5 — orange (#f97316)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-6" style="pointer-events:none">
+        <span class="calendar-entry-title">color-6 — rot (#ef4444)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-7" style="pointer-events:none">
+        <span class="calendar-entry-title">color-7 — cyan (#06b6d4)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-8" style="pointer-events:none">
+        <span class="calendar-entry-title">color-8 — pink (#ec4899)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-9" style="pointer-events:none">
+        <span class="calendar-entry-title">color-9 — limette (#84cc16)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-10" style="pointer-events:none">
+        <span class="calendar-entry-title">color-10 — grau (#94a3b8)</span>
+      </div>
+    </div>
+
+    <div class="demo-section-desc" style="margin-top:16px">Aliase (rückwärtskompatibel):</div>
     <div style="display:flex; flex-direction:column; gap:6px; max-width:340px">
       <div class="calendar-entry calendar-entry--early" style="pointer-events:none">
         <span class="calendar-entry-time">06:00 – 14:00</span>
-        <span class="calendar-entry-title">Frühdienst (.--early)</span>
+        <span class="calendar-entry-title">Frühdienst (.--early → color-1)</span>
       </div>
       <div class="calendar-entry calendar-entry--late" style="pointer-events:none">
         <span class="calendar-entry-time">14:00 – 22:00</span>
-        <span class="calendar-entry-title">Spätdienst (.--late)</span>
+        <span class="calendar-entry-title">Spätdienst (.--late → color-2)</span>
       </div>
       <div class="calendar-entry calendar-entry--night" style="pointer-events:none">
         <span class="calendar-entry-time">20:00 – 08:00</span>
-        <span class="calendar-entry-title">Nachtdienst (.--night)</span>
+        <span class="calendar-entry-title">Nachtdienst (.--night → color-3)</span>
       </div>
       <div class="calendar-entry calendar-entry--default" style="pointer-events:none">
         <span class="calendar-entry-time">08:00 – 16:00</span>
-        <span class="calendar-entry-title">Sonstiges (.--default)</span>
+        <span class="calendar-entry-title">Sonstiges (.--default → color-4)</span>
       </div>
-      <div class="calendar-entry calendar-entry--night" style="pointer-events:none">
-        <span class="calendar-entry-time">20:00 – 08:00</span>
-        <span class="calendar-entry-title">Nachtdienst + geändert</span>
-        <i class="fa-solid fa-circle-exclamation calendar-entry-changed"
-           title="Zuletzt geändert: 01.06.2026"></i>
+    </div>
+  </div>
+
+  <!-- ═══ MEHRTÄGIGE EVENTS ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Mehrtägige Events — Fortsetzungsmarkierungen</div>
+    <div class="demo-section-desc">
+      Events über mehrere Tage werden in jeder Tageszelle einzeln gezeigt.
+      <code>.--continues-right</code> zeigt <code>›</code> rechts,
+      <code>.--continues-left</code> zeigt <code>‹</code> links und blendet den
+      linken Balken aus. Nur der Starttag zeigt die Uhrzeit.
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px; max-width:340px">
+      <div class="calendar-entry calendar-entry--color-5 calendar-entry--continues-right" style="pointer-events:none">
+        <span class="calendar-entry-time">08:00</span>
+        <span class="calendar-entry-title">Konferenz (Tag 1 — Start)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-5 calendar-entry--continues-left calendar-entry--continues-right" style="pointer-events:none">
+        <span class="calendar-entry-title">Konferenz (Tag 2 — Mitte)</span>
+      </div>
+      <div class="calendar-entry calendar-entry--color-5 calendar-entry--continues-left" style="pointer-events:none">
+        <span class="calendar-entry-title">Konferenz (Tag 3 — Ende)</span>
       </div>
     </div>
   </div>
