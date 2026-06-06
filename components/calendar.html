@@ -295,6 +295,27 @@
     </div><!-- /.calendar -->
   </div><!-- /.demo-section -->
 
+  <!-- ═══ EINTRAGS-LAYOUT ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Eintrags-Layout — Default vs. Mehrzeilen</div>
+    <div class="demo-section-desc">
+      Standard: Zeit + Titel einzeilig, Titel abgeschnitten.
+      Mit <code>.calendar-entry--multiline</code>: Zeit Zeile 1, Titel Zeile 2+ (umbricht).
+      Nicht mit <code>--continues-left/right</code> kombinieren.
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px; max-width:240px">
+      <div style="font-size:0.82rem; color:var(--muted)">Default (einzeilig):</div>
+      <div class="calendar-entry calendar-entry--color-1" style="pointer-events:none">
+        <span class="calendar-entry-time">08:00</span>
+        <span class="calendar-entry-title">Frühdienst Station 1 — langer Titel</span>
+      </div>
+      <div style="font-size:0.82rem; color:var(--muted); margin-top:8px">Mehrzeilen (.--multiline):</div>
+      <div class="calendar-entry calendar-entry--color-1 calendar-entry--multiline" style="pointer-events:none">
+        <span class="calendar-entry-time">08:00</span>
+        <span class="calendar-entry-title">Frühdienst Station 1 — langer Titel</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ MOBILE SHOW-ALL TOGGLE ═══ -->
   <div class="demo-section">
