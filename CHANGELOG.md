@@ -5,6 +5,28 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.12.0 - 2026-06-07
+
+### Added
+- **service-dashboard.css** (neu): CI-Baustein für lokale Raspberry-Pi-Dienst-Überwachung.
+  - `.svc-card-icon`, `.svc-info-line`, `.svc-status-line.online/offline/unknown` — Kachel-Elemente für die Übersichtsseite
+  - `.svc-page-icon` — FA-Icon im Page-Header der Detail-Seite
+  - `.svc-data-grid`, `.svc-data-cell`, `.svc-data-label`, `.svc-data-value`, `.svc-data-sub` — Live-Status-Datenpanel
+  - `.svc-back-link` — Zurück-Navigation auf der Config-Seite
+  - `.svc-field`, `.svc-field-readonly`, `.svc-field-hint` — Formular-Feld-Wrapper
+  - `.svc-input-prefix`, `.svc-input-prefix-label` — URL-Felder mit Protokoll-Prefix
+  - `.svc-secret`, `.svc-secret-toggle` — Passwort-Felder mit Auge-Toggle
+  - `.svc-toggle`, `.svc-toggle.warn`, `.svc-toggle-track`, `.svc-toggle-thumb`, `.svc-toggle-label`, `.svc-toggle-sublabel` — Toggle-Switch für Boolean-Config-Felder
+  - `.svc-form-actions`, `.svc-form-hint` — Aktionsleiste auf der Config-Seite
+  - `.sidebar-status-dot.unknown` — fehlende unknown-Variante für Sidebar-Dots ergänzt
+- Drei neue Referenz-HTML-Seiten: `components/service-dashboard-overview.html`, `components/service-dashboard-detail.html`, `components/service-dashboard-config.html`
+- Dokumentation: `docs/service-dashboard.md`
+
+### Fixed
+- `cards.css`: `.card-status-dot.unknown` verwendet jetzt `var(--warning)` und `var(--warning-subtle)` statt hardcodierten Amber-Werten
+
+---
+
 ## v1.11.2 - 2026-06-06
 
 ### Added
