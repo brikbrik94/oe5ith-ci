@@ -2,7 +2,10 @@
 
 **Referenz-Dateien:** `components/service-dashboard-overview.html` · `components/service-dashboard-detail.html` · `components/service-dashboard-config.html`
 **CSS:** `css/service-dashboard.css`
-**Status:** definiert · v1.12.0
+**Status:** definiert · v1.12.2
+
+> Diese Doc folgt `docs/doc-standard.md` (interpretationsfrei). Die Beispiel-HTML in
+> `components/` ist Verifikation, nicht Quelle — alles Nötige steht hier im Text.
 
 ---
 
@@ -17,7 +20,7 @@ CI-Klassen; `service-dashboard.css` ergänzt nur was kein bestehendes Muster abd
 css/common.css
 css/cards.css        /* card-dashboard, card-grid, card-status-dot */
 css/badges.css       /* badge-green/red/yellow */
-css/buttons.css      /* btn, btn-danger, btn-secondary, btn-ghost */
+css/buttons.css      /* btn, btn-danger, btn-secondary, btn-ghost, btn-primary */
 css/page.css         /* page-header, panel, content-body */
 css/sidebar.css      /* sidebar-nav-item, sidebar-status-dot */
 css/service-dashboard.css  /* svc-* Klassen — immer zuletzt */
@@ -29,136 +32,148 @@ css/service-dashboard.css  /* svc-* Klassen — immer zuletzt */
 
 Zeigt alle Dienste eines Pi als klickbare Kacheln im Card-Grid.
 
-### HTML-Struktur (Kachel)
+### Verschachtelung (G2)
 
-```html
-<a href="/lora-tracker" class="card card-dashboard card-dashboard-link">
-  <div class="card-status-dot online"></div>
-  <h3>
-    <i class="fa-solid fa-satellite-dish svc-card-icon"></i>
-    <span>LoRa-Tracker</span>
-  </h3>
-  <p class="svc-info-line">GPS Fix · 0.0 km/h</p>
-  <span class="svc-status-line online">● Online · TX in 4:58</span>
-  <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
-</a>
+```text
+.card-grid
+└── a.card.card-dashboard.card-dashboard-link
+    ├── div.card-status-dot[.online|.offline|.unknown]   (Pflicht)
+    ├── h3
+    │   ├── i.svc-card-icon                               (Optional)
+    │   └── span (Titel-Text)                             (Pflicht)
+    ├── p.svc-info-line                                   (Optional)
+    ├── span.svc-status-line[.online|.offline|.unknown]   (Pflicht)
+    └── i.card-dashboard-arrow                            (Pflicht)
 ```
 
-**Wichtig:** Wenn `.svc-card-icon` im h3 verwendet wird, den Textteil in `<span>` wrappen
-damit Truncation korrekt funktioniert.
+### Elemente (G1)
 
-### Neue Klassen
+| Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
+|---|---|---|---|
+| `.card-grid` | Grid-Container der Kacheln (aus `cards.css`) | Pflicht | — |
+| `.card.card-dashboard.card-dashboard-link` | Klickbare Dienst-Kachel (aus `cards.css`) | Pflicht | — |
+| `.card-status-dot` | Status-Punkt oben in der Kachel (aus `cards.css`) | Pflicht | `.online`, `.offline`, `.unknown` |
+| `.svc-card-icon` | FA-Icon inline im h3-Titel (accent, 0.85rem, flex-shrink:0) | Optional | — |
+| `.svc-info-line` | Kurzbeschreibung unter Titel (0.75rem, muted) | Optional | — |
+| `.svc-status-line` | Statuszeile unten (0.7rem) | Pflicht | `.online`, `.offline`, `.unknown` |
+| `.card-dashboard-arrow` | Pfeil-Icon rechts (aus `cards.css`) | Pflicht | — |
 
-| Klasse | Zweck |
-|---|---|
-| `.svc-card-icon` | FA-Icon inline im h3-Titel (accent, 0.85rem, flex-shrink:0) |
-| `.svc-info-line` | Kurzbeschreibung unter Titel (0.75rem, muted) |
-| `.svc-status-line` | Statuszeile unten (0.7rem) |
-| `.svc-status-line.online` | Farbe `--success` |
-| `.svc-status-line.offline` | Farbe `--danger` |
-| `.svc-status-line.unknown` | Farbe `--warning` |
+### Reihenfolge & Platzierung (G3)
 
-Bestehende Klassen: `.card-grid`, `.card`, `.card-dashboard`, `.card-dashboard-link`,
-`.card-status-dot.online/offline/unknown`, `.card-dashboard-arrow` — alle aus `cards.css`.
+- Reihenfolge in der Kachel: Status-Dot → h3 (Icon, dann Titel) → Info-Zeile → Status-Zeile → Pfeil.
+- Wenn `.svc-card-icon` im h3 verwendet wird, MUSS der Textteil in `<span>` stehen, damit
+  Truncation korrekt funktioniert.
 
 ---
 
 ## Seite 2 — Detail (Seitentyp 1: Detail-Seite)
 
-### Page-Header
+### Verschachtelung (G2)
 
-```html
-<div class="page-header">
-  <div class="page-header-left">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-      <i class="fa-solid fa-satellite-dish svc-page-icon"></i>
-      <h1 class="page-title" style="font-size:1.2rem;font-weight:600;">LoRa-Tracker</h1>
-      <span class="badge badge-green">ONLINE</span>
-    </div>
-    <p class="page-subtitle">GPS-Tracking · LoRaWAN · TTN</p>
-  </div>
-  <div class="page-header-right">
-    <button class="btn btn-danger">
-      <i class="fa-solid fa-rotate-right"></i> Neustart
-    </button>
-    <a href="/config" class="btn btn-secondary">
-      <i class="fa-solid fa-sliders"></i> Config
-    </a>
-  </div>
-</div>
+```text
+.page-header
+├── .page-header-left
+│   ├── (Titelzeile: i.svc-page-icon + h1.page-title + span.badge.badge-*)   (Pflicht)
+│   └── p.page-subtitle                                                      (Optional)
+└── .page-header-right
+    ├── button.btn.btn-danger     (destruktive Aktion, z. B. Neustart)       (Optional)
+    └── a.btn.btn-secondary       (Navigation, z. B. Config)                 (Optional)
+
+.svc-data-grid
+└── .svc-data-cell                                                          (Pflicht, n×)
+    ├── span.svc-data-label                                                 (Pflicht)
+    ├── span.svc-data-value[.success|.danger]                              (Pflicht)
+    └── span.svc-data-sub                                                   (Optional)
 ```
 
-Status-Badge: `badge badge-green` (online), `badge badge-red` (offline), `badge badge-yellow` (unknown) — aus `badges.css`.
+### Elemente (G1)
 
-Aktions-Buttons: `btn btn-danger` (destruktive Aktionen), `btn btn-secondary` (Navigation) — aus `buttons.css`.
+| Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
+|---|---|---|---|
+| `.svc-page-icon` | FA-Icon im Page-Header der Detailseite | Pflicht | — |
+| `.svc-data-grid` | Responsive Grid: 3/2/1 Spalten (Desktop/Tablet/Mobile) | Pflicht | — |
+| `.svc-data-cell` | Einzelne Zelle: panel-deep Hintergrund, 8px Radius | Pflicht | — |
+| `.svc-data-label` | Bezeichnung (0.68rem, uppercase, `--subtle`) | Pflicht | — |
+| `.svc-data-value` | Wert (0.95rem, 600, `--text`) | Pflicht | `.success`, `.danger` |
+| `.svc-data-sub` | Subtext (0.72rem, `--muted`) | Optional | — |
 
-### Data Grid
+Bestehende Klassen: `.page-header`, `.page-header-left`, `.page-header-right`,
+`.page-title`, `.page-subtitle`, `.badge.badge-green/red/yellow`, `.btn.btn-danger`,
+`.btn.btn-secondary`.
 
-```html
-<div class="svc-data-grid">
-  <div class="svc-data-cell">
-    <span class="svc-data-label">GPS Fix</span>
-    <span class="svc-data-value success">Gültig</span>
-    <span class="svc-data-sub">48.2643° / 14.2649°</span>
-  </div>
-</div>
-```
+### Reihenfolge & Platzierung (G3)
 
-| Klasse | Zweck |
-|---|---|
-| `.svc-data-grid` | Responsive Grid: 3/2/1 Spalten (Desktop/Tablet/Mobile) |
-| `.svc-data-cell` | Einzelne Zelle: panel-deep Hintergrund, 8px Radius |
-| `.svc-data-label` | Bezeichnung (0.68rem, uppercase, `--subtle`) |
-| `.svc-data-value` | Wert (0.95rem, 600, `--text`) |
-| `.svc-data-value.success` | Wert in `--success` |
-| `.svc-data-value.danger` | Wert in `--danger` |
-| `.svc-data-sub` | Subtext (0.72rem, `--muted`) |
-
-### Dynamische Aktionen
-
-Nur API-Endpunkte einblenden, die tatsächlich vorhanden sind. Destruktive Aktionen
-(Restart) immer mit `confirm()` absichern.
+- **Header links:** Icon → Titel → Status-Badge in einer Zeile; Subtitle darunter.
+- **Header rechts:** Aktions-Buttons. Destruktive Aktionen (Restart) als `btn-danger`,
+  Navigation (Config) als `btn-secondary`. Destruktive Aktion zuerst, Navigation danach.
+- Nur API-Endpunkte/Aktionen einblenden, die tatsächlich vorhanden sind. Destruktive
+  Aktionen immer mit `confirm()` absichern.
 
 ---
 
 ## Seite 3 — Config (Seitentyp 1: Detail-Seite)
 
-### Zurück-Link
+### Verschachtelung (G2)
 
-```html
-<a href="/dienst" class="svc-back-link">
-  <i class="fa-solid fa-arrow-left"></i> Zurück
-</a>
+```text
+a.svc-back-link                                              (Pflicht)
+
+(Formularfeld je Typ — siehe Feldtypen-Tabelle)
+
+.svc-form-actions                                            (Pflicht)
+├── button.btn.btn-primary   (Speichern, fa-floppy-disk)    (Pflicht)
+├── a.btn.btn-ghost          (Abbrechen)                    (Pflicht)
+└── span.svc-form-hint       (Hinweis, z. B. Neustart)      (Optional)
+
+.svc-toggle[.on|.warn]                                       (Toggle-Feldtyp)
+├── .svc-toggle-track
+│   └── .svc-toggle-thumb
+├── .svc-toggle-label
+└── .svc-toggle-sublabel                                     (Optional)
 ```
 
-### Feldtypen
+### Feldtypen / Elemente (G1)
 
-| Typ | HTML | Klassen |
+| Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
+|---|---|---|---|
+| `.svc-back-link` | Zurück-Navigation oben (mit `fa-arrow-left`) | Pflicht | — |
+| `.svc-field` | Standard-Feld: `<input text/number>`, `<select>`, `<textarea>` | Pflicht (je Feld) | — |
+| `.svc-field-readonly` | Read-only-Wert als `<div>` statt Input | Optional | — |
+| `.svc-field-hint` | Hilfstext unter einem Feld (`<span>`) | Optional | — |
+| `.svc-secret` | Wrapper für Passwort-Feld mit Auge-Toggle | Optional | — |
+| `.svc-secret-toggle` | Sichtbarkeits-Umschalter im Secret-Feld | Optional | — |
+| `.svc-input-prefix` | Wrapper für Input mit Protokoll-Prefix | Optional | — |
+| `.svc-input-prefix-label` | Prefix-Label (z. B. `https://`) | Optional | — |
+| `.svc-toggle` | Toggle-Switch für Boolean-Config | Optional | `.on` (aktiv), `.warn` (Warnfarbe wenn aktiv) |
+| `.svc-toggle-track` | Schiene des Toggles | Pflicht (im Toggle) | — |
+| `.svc-toggle-thumb` | Beweglicher Knopf im Track | Pflicht (im Toggle) | — |
+| `.svc-toggle-label` | Beschriftung des Toggles | Pflicht (im Toggle) | — |
+| `.svc-toggle-sublabel` | Zusatz-/Hilfstext unter dem Toggle-Label | Optional | — |
+| `.svc-form-actions` | Aktionsleiste am Formular-Ende | Pflicht | — |
+| `.svc-form-hint` | Hinweis in der Aktionsleiste | Optional | — |
+
+### Reihenfolge & Platzierung (G3)
+
+- Zurück-Link steht oben, vor dem Formular.
+- **Aktionsleiste (`.svc-form-actions`):** Speichern zuerst als `btn btn-primary`
+  (Disketten-Icon `fa-floppy-disk`), direkt daneben Abbrechen als `btn btn-ghost`. Ein
+  optionaler `.svc-form-hint` folgt rechts. (Projektweite Konvention: primär zuerst,
+  sekundär als Ghost daneben.)
+
+---
+
+## Zustände & Varianten (G4)
+
+| Zustand / Variante | Klasse / Modifier | Wann verwenden |
 |---|---|---|
-| Text | `<input type="text">` | `.svc-field` |
-| Zahl | `<input type="number">` | `.svc-field` |
-| Auswahl | `<select>` | `.svc-field` |
-| Read-only | `<div class="svc-field-readonly">` | — |
-| Secret | `.svc-secret` + Input + `.svc-secret-toggle` | — |
-| URL-Prefix | `.svc-input-prefix` + `.svc-input-prefix-label` + Input | — |
-| Toggle | `.svc-toggle` + `.svc-toggle-track` + `.svc-toggle-thumb` + `.svc-toggle-label` | `.on` (aktiv), `.warn` (Warnung wenn aktiv) |
-| Textarea | `<textarea>` | `.svc-field` |
-| Hilfstext | `<span class="svc-field-hint">` | — |
-
-### Aktionsleiste
-
-```html
-<div class="svc-form-actions">
-  <button class="btn btn-primary">
-    <i class="fa-solid fa-floppy-disk"></i> Speichern
-  </button>
-  <a href="/dienst" class="btn btn-ghost">Abbrechen</a>
-  <!-- Optional -->
-  <span class="svc-form-hint">
-    <i class="fa-solid fa-rotate"></i> Neustart erforderlich nach Speichern
-  </span>
-</div>
-```
+| Dienst online | `.card-status-dot.online`, `.svc-status-line.online`, `.badge-green` | Dienst erreichbar/läuft |
+| Dienst offline | `.card-status-dot.offline`, `.svc-status-line.offline`, `.badge-red` | Dienst nicht erreichbar |
+| Dienst unbekannt | `.card-status-dot.unknown`, `.svc-status-line.unknown`, `.sidebar-status-dot.unknown`, `.badge-yellow` | Status nicht ermittelbar |
+| Datenwert positiv | `.svc-data-value.success` | Wert ist im Soll-Zustand (z. B. „Gültig") |
+| Datenwert negativ | `.svc-data-value.danger` | Wert signalisiert Fehler/Ausfall |
+| Toggle aktiv | `.svc-toggle.on` | Boolean-Config ist eingeschaltet |
+| Toggle aktiv mit Warnung | `.svc-toggle.warn` | Eingeschalteter Zustand ist riskant (Warnfarbe) |
+| Feld schreibgeschützt | `.svc-field-readonly` | Wert anzeigen, aber nicht editierbar |
 
 ---
 
@@ -166,4 +181,5 @@ Nur API-Endpunkte einblenden, die tatsächlich vorhanden sind. Destruktive Aktio
 
 | Datum | Änderung |
 |---|---|
+| 2026-06-07 | Auf `docs/doc-standard.md` gehoben (G1–G4, interpretationsfrei). Toggle-Teile inkl. `.svc-toggle-sublabel` ergänzt, Button-Platzierung und Zustände-Tabelle ausformuliert. |
 | 2026-06-07 | Initiale Definition. 3 Seiten. svc-* Klassen. Feldtypen-Palette. |
