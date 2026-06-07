@@ -30,74 +30,81 @@ hardcodierte Styles auseinanderlaufen.
 
 ## Struktur
 
+<!-- AUTOGEN:structure START -->
 ```text
-oe5ith-ci/
-├── README.md                   # Einstieg und Übersicht
-├── CHANGELOG.md                # zentrale Änderungshistorie
-├── css/                        # Produktions-CSS und Demo-CSS
-│   ├── index.css               # Master-Import für alle produktiven Komponenten
-│   ├── common.css              # Tokens, Reset, Basislayout — immer zuerst einbinden
-│   ├── topbar.css              # Topbar / Header
-│   ├── sidebar.css             # Sidebar inkl. Accordion
-│   ├── cards.css               # Cards und Card-Grids
-│   ├── buttons.css             # Buttons und Button-Varianten
-│   ├── badges.css              # Status- und Info-Badges
-│   ├── page.css                # Page-Header, Content-Body, Panels, Tabellen, Column-Groups
-│   ├── forms.css               # Input, Select, Service-Selector, Segmented Controls
-│   ├── modal.css               # Modal + Karten-Popup + Leaflet/MapLibre Overrides
-│   ├── typography.css          # Typografie-Klassen
-│   ├── tokens.css              # Token-Darstellung / Token-spezifische Styles
-│   └── demo.css                # Nur für Komponenten-Demos und Referenzseiten
-├── assets/
-│   ├── logo.svg                # OE5ITH Logo
-│   ├── favicon.svg             # CI-konformes SVG-Favicon
-│   ├── favicon.ico             # ICO 16+32+48px für Browser-Kompatibilität
-│   ├── favicon-32.png          # PNG 32×32
-│   └── favicon-16.png          # PNG 16×16
-├── components/                 # Interaktive Referenz-HTMLs, live testbar
-│   ├── topbar.html
-│   ├── sidebar.html
-│   ├── cards.html
-│   ├── buttons.html
-│   ├── buttons-demo.html
-│   ├── badges.html
-│   ├── context-menu.html       # Context-Menu (Rechtsklick) + Action-Menu (⋮)
-│   ├── forms.html
-│   ├── modal.html
-│   ├── page-types.html         # Visuelle Mockups aller Seitentypen
-│   ├── sidebar-types.html      # Visuelle Mockups aller Sidebar-Typen
-│   ├── typography.html
-│   ├── typography-preview.html
-│   └── tokens.html
-├── docs/                       # Spezifikationen und Regeln
-│   ├── concepts.md             # Begriffe: CI, Brand, Design System, CSS Library
-│   ├── brand.md                # Brand-Grundregeln
-│   ├── naming.md               # Dienstnamen, Schreibweisen und UI-Begriffe
-│   ├── logo.md                 # Logo- und Favicon-Regeln
-│   ├── usage.md                # CSS-Einbindung und Nutzungsregeln
-│   ├── for-coding-agents.md    # Regeln für Coding-Agenten
-│   ├── versioning.md           # Versionierung, Releases, Git-Tags
-│   ├── tokens.md               # Farben, Tokens, Z-Index, Shadows, Transitions
-│   ├── typography.md
-│   ├── topbar.md
-│   ├── sidebar.md
-│   ├── sidebar-types.md        # Entscheidungshilfe: welchen Sidebar-Typ verwenden?
-│   ├── page.md
-│   ├── page-types.md           # Entscheidungshilfe: welchen Seitentyp verwenden?
-│   ├── cards.md
-│   ├── buttons.md
-│   ├── badges.md
-│   ├── forms.md
-│   ├── modal.md
-│   ├── context-menu.md         # Context-Menu + Action-Menu Spec
-│   ├── resources.md            # Self-Hosting Anleitung für externe Ressourcen
-│   ├── copyright.md            # Lizenzen aller verwendeten Ressourcen
-│   ├── copyright-display.md    # Wo und wie Copyright auf Webseiten darstellen
-│   └── cli.md
-└── scripts/cli/
-    ├── utils.sh
-    └── utils.py
+css/badges.css
+css/buttons.css
+css/calendar.css
+css/cards.css
+css/code-viewer.css
+css/common.css
+css/coords.css
+css/demo.css
+css/forms.css
+css/index.css
+css/modal.css
+css/page.css
+css/service-dashboard.css
+css/sidebar.css
+css/toast.css
+css/topbar.css
+css/typography.css
+css/utils.css
+components/badges.html
+components/buttons-demo.html
+components/buttons.html
+components/calendar.html
+components/cards.html
+components/code-viewer.html
+components/context-menu.html
+components/forms.html
+components/modal.html
+components/page-types.html
+components/service-dashboard-config.html
+components/service-dashboard-detail.html
+components/service-dashboard-overview.html
+components/sidebar-types.html
+components/sidebar.html
+components/toast.html
+components/tokens.html
+components/topbar.html
+components/typography-preview.html
+components/typography.html
+components/utils.html
+docs/badges.md
+docs/brand.md
+docs/buttons.md
+docs/calendar.md
+docs/cards.md
+docs/cli.md
+docs/code-viewer.md
+docs/concepts.md
+docs/context-menu.md
+docs/copyright-display.md
+docs/copyright.md
+docs/for-coding-agents.md
+docs/forms.md
+docs/geocoder-dropdown.md
+docs/logo.md
+docs/map-legend.md
+docs/map-routes.md
+docs/modal.md
+docs/naming.md
+docs/page-types.md
+docs/page.md
+docs/resources.md
+docs/roadmap.md
+docs/service-dashboard.md
+docs/sidebar-types.md
+docs/sidebar.md
+docs/toast.md
+docs/tokens.md
+docs/topbar.md
+docs/typography.md
+docs/usage.md
+docs/versioning.md
 ```
+<!-- AUTOGEN:structure END -->
 
 ---
 
@@ -192,27 +199,26 @@ docs/usage.md
 
 ## Status
 
+<!-- AUTOGEN:status START -->
 | Element | Spec | Referenz-HTML | CSS |
 |---|---|---|---|
-| Brand / CI-Grundregeln | ✅ | — | — |
-| Naming | ✅ | — | — |
-| Logo / Favicons | ✅ | — | — |
-| Versionierung | ✅ | — | — |
-| Usage / Einbindung | ✅ | — | — |
-| Coding-Agent-Regeln | ✅ | — | — |
 | Topbar | ✅ | ✅ | ✅ |
 | Sidebar + Accordion | ✅ | ✅ | ✅ |
 | Cards | ✅ | ✅ | ✅ |
 | Buttons | ✅ | ✅ | ✅ |
 | Badges | ✅ | ✅ | ✅ |
-| Seitenstruktur (Page-Header, Panel, Tabelle) | ✅ | ✅ | ✅ |
+| Seitenstruktur | ✅ | ✅ | ✅ |
 | Forms | ✅ | ✅ | ✅ |
 | Modal + Karten-Popup | ✅ | ✅ | ✅ |
-| Context-Menu + Action-Menu | ✅ | ✅ | ✅ |
+| Context-Menu + Action-Menu | ✅ | ✅ | — |
 | Typografie | ✅ | ✅ | ✅ |
-| Farben/Tokens | ✅ | ✅ | ✅ |
-| CLI Terminal | ✅ | — | — |
-| Demo-/Preview-Styles | — | ✅ | ✅ |
+| Kalender | ✅ | ✅ | ✅ |
+| Code-Viewer | ✅ | ✅ | ✅ |
+| Toast | ✅ | ✅ | ✅ |
+| Koordinaten-Umrechner (Sidebar Typ 7) | — | — | ✅ |
+| Utility-Klassen | — | ✅ | ✅ |
+| Service-Dashboard | ✅ | ✅ | ✅ |
+<!-- AUTOGEN:status END -->
 
 ---
 
