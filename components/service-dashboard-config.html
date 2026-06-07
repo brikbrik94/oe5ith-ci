@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Service Dashboard: Config</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/sidebar.css">
+<link rel="stylesheet" href="../css/page.css">
+<link rel="stylesheet" href="../css/badges.css">
+<link rel="stylesheet" href="../css/buttons.css">
+<link rel="stylesheet" href="../css/service-dashboard.css">
+<link rel="stylesheet" href="../css/demo.css">
+</head>
+<body>
+
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>Pi Dashboard</span>
+  </a>
+  <button class="topbar-menu-btn" id="sidebar-toggle" aria-label="Menü öffnen">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</header>
+
+<div class="layout">
+
+  <nav class="sidebar" id="sidebar" aria-label="Dienste-Navigation">
+    <div class="sidebar-inner">
+      <div class="sidebar-section-label">Dienste</div>
+      <a href="service-dashboard-overview.html" class="sidebar-nav-item">
+        <i class="fa-solid fa-grid-2 nav-icon"></i>
+        Übersicht
+      </a>
+      <a href="service-dashboard-detail.html" class="sidebar-nav-item active">
+        <i class="fa-solid fa-satellite-dish nav-icon"></i>
+        LoRa-Tracker
+        <div class="sidebar-status-dot online"></div>
+      </a>
+      <a href="#" class="sidebar-nav-item">
+        <i class="fa-solid fa-tower-broadcast nav-icon"></i>
+        APRS-Gate
+        <div class="sidebar-status-dot offline"></div>
+      </a>
+    </div>
+    <div class="sidebar-footer">
+      <span class="sidebar-footer-version">CI v1.12.0</span>
+      <button class="sidebar-footer-copyright">© 2026 OE5ITH</button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+
+    <div class="page-header">
+      <div class="page-header-left">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <i class="fa-solid fa-sliders svc-page-icon"></i>
+          <h1 class="page-title" style="font-size:1.2rem;font-weight:600;">Konfiguration — LoRa-Tracker</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-body">
+
+      <a href="service-dashboard-detail.html" class="svc-back-link">
+        <i class="fa-solid fa-arrow-left"></i> Zurück zur Detail-Seite
+      </a>
+
+      <!-- Panel: Text / Zahl / Select / Read-only -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fa-solid fa-pen-to-square"></i>
+            Einfache Felder
+          </div>
+          <span class="panel-meta">Text · Zahl · Auswahl · Read-only</span>
+        </div>
+        <div class="panel-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+            <div class="svc-field">
+              <label for="cfg-host">API-Host <span style="font-weight:400;color:var(--subtle)">(Text)</span></label>
+              <input type="text" id="cfg-host" value="0.0.0.0">
+              <span class="svc-field-hint">Bind-Adresse des API-Servers</span>
+            </div>
+
+            <div class="svc-field">
+              <label for="cfg-port">API-Port <span style="font-weight:400;color:var(--subtle)">(Zahl)</span></label>
+              <input type="number" id="cfg-port" value="8000" min="1024" max="65535">
+              <span class="svc-field-hint">1024–65535</span>
+            </div>
+
+            <div class="svc-field">
+              <label for="cfg-strategy">Beacon-Strategie <span style="font-weight:400;color:var(--subtle)">(Auswahl)</span></label>
+              <select id="cfg-strategy">
+                <option selected>fixed</option>
+                <option>adaptive</option>
+                <option>on-movement</option>
+              </select>
+              <span class="svc-field-hint">Bestimmt wann gesendet wird</span>
+            </div>
+
+            <div class="svc-field">
+              <label>Firmware-Version <span style="font-weight:400;color:var(--subtle)">(Read-only)</span></label>
+              <div class="svc-field-readonly">v2.3.1-stable</div>
+              <span class="svc-field-hint">Kann nicht über die API geändert werden</span>
+            </div>
+
+            <div class="svc-field">
+              <label for="cfg-tx">TX-Intervall <span style="font-weight:400;color:var(--subtle)">(Sekunden)</span></label>
+              <input type="number" id="cfg-tx" value="300" min="60">
+              <span class="svc-field-hint">Mindestens 60s empfohlen (Fair Use)</span>
+            </div>
+
+            <div class="svc-field">
+              <label for="cfg-gps-timeout">GPS-Timeout <span style="font-weight:400;color:var(--subtle)">(Sekunden)</span></label>
+              <input type="number" id="cfg-gps-timeout" value="30" min="5">
+              <span class="svc-field-hint">Wartezeit auf gültigen GPS-Fix</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Secret / URL-Prefix -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fa-solid fa-key"></i>
+            Zugangsdaten &amp; Verbindungen
+          </div>
+          <span class="panel-meta">Secret · URL</span>
+        </div>
+        <div class="panel-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+            <div class="svc-field">
+              <label>API-Key <span style="font-weight:400;color:var(--subtle)">(Secret)</span></label>
+              <div class="svc-secret">
+                <input type="password" id="cfg-apikey" value="sk-abc123xyz">
+                <button class="svc-secret-toggle" onclick="toggleSecret('cfg-apikey', this)" type="button">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <span class="svc-field-hint">Wird maskiert gespeichert</span>
+            </div>
+
+            <div class="svc-field">
+              <label>Network-Server <span style="font-weight:400;color:var(--subtle)">(URL)</span></label>
+              <div class="svc-input-prefix">
+                <span class="svc-input-prefix-label">https://</span>
+                <input type="text" value="router.oe5ith.at:1700" style="font-family:var(--font-mono);">
+              </div>
+              <span class="svc-field-hint">LoRaWAN Network Server</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Toggles -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fa-solid fa-toggle-on"></i>
+            Schalter
+          </div>
+          <span class="panel-meta">Boolean-Felder</span>
+        </div>
+        <div class="panel-body">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+
+            <div class="svc-toggle on" onclick="toggleSwitch(this)">
+              <div class="svc-toggle-track">
+                <div class="svc-toggle-thumb"></div>
+              </div>
+              <div>
+                <div class="svc-toggle-label">GPS aktiviert</div>
+                <div class="svc-toggle-sublabel">payload_gps</div>
+              </div>
+            </div>
+
+            <div class="svc-toggle" onclick="toggleSwitch(this)">
+              <div class="svc-toggle-track">
+                <div class="svc-toggle-thumb"></div>
+              </div>
+              <div>
+                <div class="svc-toggle-label">Debug-Logging</div>
+                <div class="svc-toggle-sublabel">debug_mode</div>
+              </div>
+            </div>
+
+            <div class="svc-toggle on" onclick="toggleSwitch(this)">
+              <div class="svc-toggle-track">
+                <div class="svc-toggle-thumb"></div>
+              </div>
+              <div>
+                <div class="svc-toggle-label">CPU-Temperatur</div>
+                <div class="svc-toggle-sublabel">payload_cpu_temp</div>
+              </div>
+            </div>
+
+            <div class="svc-toggle on" onclick="toggleSwitch(this)">
+              <div class="svc-toggle-track">
+                <div class="svc-toggle-thumb"></div>
+              </div>
+              <div>
+                <div class="svc-toggle-label">WiFi-RSSI</div>
+                <div class="svc-toggle-sublabel">payload_wifi_rssi</div>
+              </div>
+            </div>
+
+            <div class="svc-toggle on" onclick="toggleSwitch(this)">
+              <div class="svc-toggle-track">
+                <div class="svc-toggle-thumb"></div>
+              </div>
+              <div>
+                <div class="svc-toggle-label">RAM</div>
+                <div class="svc-toggle-sublabel">payload_ram</div>
+              </div>
+            </div>
+
+            <!-- warn-Variante: gelb wenn aktiv -->
+            <div class="svc-toggle warn on" onclick="toggleSwitch(this)">
+              <div class="svc-toggle-track">
+                <div class="svc-toggle-thumb"></div>
+              </div>
+              <div>
+                <div class="svc-toggle-label">Senden ohne Fix</div>
+                <div class="svc-toggle-sublabel" style="color:var(--warning);">⚠ sendet ungültige Pos.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Textarea -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fa-solid fa-align-left"></i>
+            Mehrzeilig
+          </div>
+          <span class="panel-meta">Freitext · JSON</span>
+        </div>
+        <div class="panel-body">
+          <div class="svc-field">
+            <label for="cfg-meta">Zusatz-Metadaten <span style="font-weight:400;color:var(--subtle)">(JSON)</span></label>
+            <textarea id="cfg-meta" rows="4" style="font-family:var(--font-mono);font-size:.8rem;color:#4ade80;resize:vertical;">{"comment": "Test-Pi OE5ITH-3",
+  "location": "Linz/AUT"}</textarea>
+            <span class="svc-field-hint">Optional · wird unverändert weitergegeben</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aktionsleiste -->
+      <div class="svc-form-actions">
+        <button class="btn btn-primary" type="button" onclick="alert('POST /api/config würde hier ausgeführt.')">
+          <i class="fa-solid fa-floppy-disk"></i> Speichern
+        </button>
+        <a href="service-dashboard-detail.html" class="btn btn-ghost">Abbrechen</a>
+        <span class="svc-form-hint">
+          <i class="fa-solid fa-rotate"></i> Neustart erforderlich nach Speichern
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const toggle = document.getElementById('sidebar-toggle');
+const sidebar = document.getElementById('sidebar');
+const backdrop = document.getElementById('sidebar-backdrop');
+if (toggle) {
+  toggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('visible');
+  });
+  backdrop.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('visible');
+  });
+}
+
+function toggleSecret(id, btn) {
+  const input = document.getElementById(id);
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  btn.innerHTML = isHidden
+    ? '<i class="fa-solid fa-eye-slash"></i>'
+    : '<i class="fa-solid fa-eye"></i>';
+}
+
+function toggleSwitch(el) {
+  el.classList.toggle('on');
+}
+</script>
+
+</body>
+</html>
