@@ -5,6 +5,30 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.12.2 - 2026-06-07
+
+### Added
+- **docs/doc-standard.md** (neu): verbindlicher Doku-Standard für `category: component`-Docs.
+  Vier Pflicht-Garantien — G1 vollständige Element-Tabelle, G2 Verschachtelungs-Baum,
+  G3 Reihenfolge/Platzierung, G4 Zustände/Varianten — damit Coding-Agenten Komponenten allein
+  aus der Doc bauen können, ohne die `components/*.html` zu interpretieren. Registriert in
+  `docs/registry.json` (concept). Verankert in `docs/for-coding-agents.md` (neuer Abschnitt +
+  Prüflisten-Punkt).
+- **service-dashboard.css**: neue Layout-Klassen `.svc-page-title-row`, `.svc-field-grid`
+  (+ `.svc-field-grid--cols-3`), `.svc-label-type`, `.svc-field-code` sowie Regel
+  `.svc-toggle.warn .svc-toggle-sublabel`.
+
+### Changed
+- `docs/service-dashboard.md` auf den Doku-Standard gehoben (interpretationsfrei, G1–G4 für alle
+  drei Seiten: vollständige Element-Tabellen, Verschachtelungs-Bäume, Button-/Header-Platzierung,
+  Zustände-Tabelle).
+
+### Fixed
+- `service-dashboard-*.html`: Layout-Inline-Styles durch CI-Klassen ersetzt; hartcodierte Farbe
+  `#4ade80` der JSON-Textarea durch `var(--code-text)` ersetzt.
+
+---
+
 ## v1.12.1 - 2026-06-07
 
 ### Added
