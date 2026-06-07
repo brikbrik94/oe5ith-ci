@@ -199,6 +199,7 @@ Ersetzt mehrere einzelne `.topbar-nav-link`-Einträge wenn mehr als 2–3 Links 
 ```
 
 - Label ("Portale") ist frei wählbar im HTML — keine CSS-Änderung nötig.
+- **Keine feste Breite** — der Toggle passt sich dem Label an (`width: auto`). Da das Label zur Laufzeit unveränderlich ist, gibt es kein Sprung-Problem. Kein `width` setzen.
 - Menü öffnet sich **rechts ausgerichtet** (`right: 0`).
 
 **Breakpoints:**
