@@ -231,7 +231,7 @@ Separate Seite zum Bearbeiten der Dienstkonfiguration via `POST /api/config`. Fe
 ## Versionierung
 
 Dieser Baustein ist eine **MINOR**-Ergänzung (neues CSS, neue Docs, neue Referenz-HTML — keine Breaking Changes).  
-Version nach Fertigstellung: **v1.13.0**
+Version nach Fertigstellung: **v1.12.0**
 
 ---
 
