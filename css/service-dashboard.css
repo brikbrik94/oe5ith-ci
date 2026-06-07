@@ -234,35 +234,15 @@
   align-items: center;
 }
 
-.svc-input-prefix > input {
-  border-radius: 0 6px 6px 0;
-  flex: 1;
-  min-width: 0;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  padding: 8px 10px;
-  color: var(--text);
-  font-size: 0.85rem;
-  font-family: inherit;
-  box-sizing: border-box;
-  transition: border-color var(--transition-fast);
-}
-
-.svc-input-prefix > input:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
 /* Secret / Password mit Auge-Toggle */
 .svc-secret {
   display: flex;
   align-items: stretch;
 }
 
+/* Shared base styling for nested inputs (direct child selector won't match here) */
+.svc-input-prefix > input,
 .svc-secret > input {
-  border-radius: 6px 0 0 6px;
-  flex: 1;
-  min-width: 0;
   background: var(--card-bg);
   border: 1px solid var(--border);
   padding: 8px 10px;
@@ -273,9 +253,22 @@
   transition: border-color var(--transition-fast);
 }
 
+.svc-input-prefix > input:focus,
 .svc-secret > input:focus {
   outline: none;
   border-color: var(--accent);
+}
+
+.svc-input-prefix > input {
+  border-radius: 0 6px 6px 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.svc-secret > input {
+  border-radius: 6px 0 0 6px;
+  flex: 1;
+  min-width: 0;
 }
 
 .svc-secret-toggle {
@@ -325,7 +318,7 @@
 }
 
 .svc-toggle.on .svc-toggle-track { background: var(--success); }
-.svc-toggle.on .svc-toggle-thumb { left: 19px; background: #fff; }
+.svc-toggle.on .svc-toggle-thumb { left: 19px; background: var(--white); }
 
 /* Warn-Variante: on = gelb */
 .svc-toggle.warn.on .svc-toggle-track { background: var(--warning); }

@@ -229,7 +229,7 @@
 
 .card-status-dot.online  { background: var(--success); box-shadow: 0 0 5px var(--success); }
 .card-status-dot.offline { background: var(--danger); box-shadow: 0 0 5px var(--danger); }
-.card-status-dot.unknown { background: #f59e0b; box-shadow: 0 0 5px rgba(245,158,11,0.5); }
+.card-status-dot.unknown { background: var(--warning); box-shadow: 0 0 5px var(--warning-subtle); }
 
 /* ═══════════════════════════════════════
    TYP 3 — CONTENT CARD
