@@ -5,6 +5,23 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.12.1 - 2026-06-07
+
+### Added
+- **scripts/cli/check_consistency.py** (neu): Manifest-getriebener Konsistenz-Check. Prüft `docs/registry.json` gegen die realen Dateien — Dangling-Verweise, verwaiste Dateien, fehlende `css/index.css`-Imports und den Dreiklang Spec→Referenz→CSS. Exit-Code-basiert (CI-tauglich), inkl. `unittest`-Tests.
+- **docs/registry.json** (neu): deklaratives Manifest als Single Source of Truth dafür, welche Dateien zu welchem Feature gehören (Kategorien `component`/`concept`/`infra`).
+- `docs/for-coding-agents.md`: Abschnitt „Neue Komponente registrieren"; CLAUDE.md Regel 8 verweist darauf.
+- `README.md`: Datei-Baum und Status-Tabelle werden via `check_consistency.py --write` zwischen AUTOGEN-Markern generiert und können nicht mehr veralten.
+
+### Changed
+- `README.md`: veraltete Übersicht korrigiert — `calendar.css`, `code-viewer.css`, `coords.css`, `service-dashboard.css`, `toast.css`, `utils.css` ergänzt; nicht existierende `tokens.css` entfernt.
+- `CLAUDE.md`: „CSS loading order" an die reale Reihenfolge in `css/index.css` angeglichen.
+
+### Removed
+- `CI_FIXES_REPORT.md`: obsolet — die beschriebenen Z-Index-Tokens und `--topbar-height-mobile` sind vollständig umgesetzt.
+
+---
+
 ## v1.12.0 - 2026-06-07
 
 ### Added
