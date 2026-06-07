@@ -389,3 +389,25 @@ Wenn du an OE5ITH-Webseiten arbeitest:
 6. Erfinde keine lokalen Sonderstyles.
 7. Ändere keine Pfade ohne Auftrag.
 8. Dokumentiere neue Patterns zuerst im CI-Repo.
+
+---
+
+## Neue Komponente registrieren
+
+`docs/registry.json` ist die Single Source of Truth darüber, welche Dateien zu
+welchem Feature gehören. Jede neue Komponente bzw. jedes neue Feature MUSS dort
+eingetragen werden. Reihenfolge:
+
+1. Eintrag in `docs/registry.json` (`id`, `title`, `category`, `css`/`doc`/`html`).
+2. Spec in `docs/`.
+3. Referenz-HTML in `components/`.
+4. CSS in `css/` + `@import` in `css/index.css`.
+5. `python3 scripts/cli/check_consistency.py` muss ohne Fehler durchlaufen.
+
+Der Check prüft Dangling-Verweise, verwaiste Dateien, fehlende index.css-Imports
+und den Dreiklang Spec→Referenz→CSS. `--write` regeneriert die README-Übersicht
+(Datei-Baum und Status-Tabelle zwischen den AUTOGEN-Markern).
+
+Kategorien: `component` (voller Dreiklang erwartet), `concept` (reine Doku),
+`infra` (`common`, `index`, `demo`). Bewusste Lücken über leere Arrays + `note`
+dokumentieren.
