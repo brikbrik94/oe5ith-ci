@@ -354,3 +354,46 @@
 @media (max-width: 768px) {
   .svc-form-hint { margin-left: 0; }
 }
+
+/* ═══════════════════════════════════════
+   LAYOUT-WRAPPER (ersetzen frühere Inline-Styles)
+   ═══════════════════════════════════════ */
+
+.svc-page-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.svc-page-title-row .page-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.svc-field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.svc-field-grid--cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.svc-label-type {
+  font-weight: 400;
+  color: var(--subtle);
+}
+
+.svc-field-code {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--code-text);
+  resize: vertical;
+}
+
+/* Warn-Toggle: Sublabel in Warnfarbe */
+.svc-toggle.warn .svc-toggle-sublabel {
+  color: var(--warning);
+}

@@ -86,11 +86,11 @@ Zeigt alle Dienste eines Pi als Kacheln im Card-Grid. Kacheln existieren in zwei
 ```text
 .page-header
 ├── .page-header-left
-│   ├── div  (Flex-Wrapper-div: Icon + Titel + Badge auf einer Linie)        (Pflicht)
+│   ├── .svc-page-title-row      (Icon + Titel + Badge auf einer Linie)      (Pflicht)
 │   │   ├── i.svc-page-icon                                                  (Pflicht)
 │   │   ├── h1.page-title                                                    (Pflicht)
 │   │   └── span.badge.badge-*   (Statusbadge, z. B. badge-green)           (Optional)
-│   └── p.page-subtitle          (Subtitle, Geschwister des Flex-Wrappers)   (Optional)
+│   └── p.page-subtitle          (Subtitle, Geschwister von .svc-page-title-row) (Optional)
 └── .page-header-right
     ├── button.btn.btn-danger     (destruktive Aktion, z. B. Neustart)       (Optional)
     └── a.btn.btn-secondary       (Navigation, z. B. Config)                 (Optional)
@@ -114,6 +114,7 @@ Zeigt alle Dienste eines Pi als Kacheln im Card-Grid. Kacheln existieren in zwei
 
 | Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
 |---|---|---|---|
+| `.svc-page-title-row` | Flex-Wrapper für Icon, Titel und Badge im Page-Header; setzt auch die Größe von `.page-title` (1.2rem, 600) | Pflicht | — |
 | `.svc-page-icon` | FA-Icon im Page-Header der Detailseite | Pflicht | — |
 | `.svc-data-grid` | Responsive Grid: 3/2/1 Spalten (Desktop/Tablet/Mobile) | Pflicht | — |
 | `.svc-data-cell` | Einzelne Zelle: panel-deep Hintergrund, 8px Radius | Pflicht | — |
@@ -130,10 +131,11 @@ Weitere bestehende Klassen: `.badge.badge-green/red/yellow`, `.btn.btn-danger`,
 
 ### Reihenfolge & Platzierung (G3)
 
-- **Header links:** Icon, Titel und Status-Badge sitzen gemeinsam in einem Flex-Wrapper-`div`
-  (erste Ebene unterhalb `.page-header-left`). Dieser `div` sorgt dafür, dass Icon, `h1` und Badge
-  auf einer horizontalen Linie ausgerichtet sind. Die optionale Subtitle (`p.page-subtitle`) ist ein
-  Geschwisterelement dieses Flex-Wrappers, also ein zweites direktes Kind von `.page-header-left`.
+- **Header links:** Icon, Titel und Status-Badge sitzen gemeinsam in `.svc-page-title-row`
+  (erste Ebene unterhalb `.page-header-left`). Diese Klasse sorgt dafür, dass Icon, `h1` und Badge
+  auf einer horizontalen Linie ausgerichtet sind und setzt gleichzeitig die Schriftgröße von
+  `.page-title` auf 1.2rem/600. Die optionale Subtitle (`p.page-subtitle`) ist ein
+  Geschwisterelement von `.svc-page-title-row`, also ein zweites direktes Kind von `.page-header-left`.
 - **Header rechts:** Aktions-Buttons. Destruktive Aktionen (Restart) als `btn-danger`,
   Navigation (Config) als `btn-secondary`. Destruktive Aktion zuerst, Navigation danach.
 - Nur API-Endpunkte/Aktionen einblenden, die tatsächlich vorhanden sind. Destruktive
@@ -145,7 +147,7 @@ Weitere bestehende Klassen: `.badge.badge-green/red/yellow`, `.btn.btn-danger`,
 
 ## Seite 3 — Config (Seitentyp 1: Detail-Seite)
 
-Der Page-Header enthält auf der Config-Seite einen Flex-Wrapper-`div` (erste Ebene unter
+Der Page-Header enthält auf der Config-Seite `.svc-page-title-row` (erste Ebene unter
 `.page-header-left`) mit Icon und h1, aber kein Badge (da kein Live-Status gezeigt wird).
 
 ### Verschachtelung (G2)
@@ -158,7 +160,7 @@ Der Page-Header enthält auf der Config-Seite einen Flex-Wrapper-`div` (erste Eb
 │   │   ├── .panel-title                   (Icon + Bezeichnung)
 │   │   └── span.panel-meta               (Typ-Hinweis, z. B. „Text · Zahl") (Optional)
 │   └── .panel-body
-│       └── div  (2-Spalten-Grid-div für Felder — alle Felder dieses Panels) (Pflicht)
+│       └── .svc-field-grid[.svc-field-grid--cols-3]  (Grid-Wrapper für Felder dieses Panels) (Pflicht)
 │           └── .svc-field                                                   (Pflicht, n×)
 │               ├── label
 │               ├── input | select | textarea | .svc-field-readonly
@@ -170,7 +172,7 @@ Der Page-Header enthält auf der Config-Seite einen Flex-Wrapper-`div` (erste Eb
     └── span.svc-form-hint       (Hinweis, z. B. Neustart-Erfordernis)      (Optional)
 ```
 
-Toggle-Struktur (innerhalb des 2-Spalten-Grid-`div` im Panel-Body, als Alternative zu `.svc-field`):
+Toggle-Struktur (innerhalb von `.svc-field-grid` im Panel-Body, als Alternative zu `.svc-field`):
 
 ```text
 .svc-toggle[.on][.warn]
@@ -186,6 +188,10 @@ Toggle-Struktur (innerhalb des 2-Spalten-Grid-`div` im Panel-Body, als Alternati
 | Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
 |---|---|---|---|
 | `.svc-back-link` | Zurück-Navigation oben (mit `fa-arrow-left`) | Pflicht | — |
+| `.svc-field-grid` | Pflicht-Wrapper für Feldgruppen im Panel-Body (2-Spalten-Grid); Struktur: `.panel-body > .svc-field-grid > .svc-field` | Pflicht | `.svc-field-grid--cols-3` |
+| `.svc-field-grid--cols-3` | Modifier: 3-Spalten-Grid statt 2 (z. B. für Toggle-Felder) | Optional | — |
+| `.svc-label-type` | Typ-Hinweis im Label (z. B. „(Text)", „(Zahl)"); schriftgewicht 400, Farbe `--subtle` | Optional | — |
+| `.svc-field-code` | Code/JSON-Textarea: Monospace-Font (`--font-mono`), 0.8rem, Farbe `--code-text`, vertikal resizable | Optional | — |
 | `.svc-field` | Standard-Feld: `<input text/number>`, `<select>`, `<textarea>` | Pflicht (je Feld) | — |
 | `.svc-field-readonly` | Read-only-Wert als `<div>` statt Input | Optional | — |
 | `.svc-field-hint` | Hilfstext unter einem Feld (`<span>`) | Optional | — |
@@ -208,9 +214,9 @@ Bestehende Klassen (aus `page.css`): `.panel`, `.panel-header`, `.panel-title`, 
 ### Reihenfolge & Platzierung (G3)
 
 - Zurück-Link steht als erstes Kind von `.content-body`, vor allen Panels.
-- Felder sind in Panels gruppiert. Innerhalb von `.panel-body` sitzt ein anonymer
-  2-Spalten-Grid-`div` (kein CI-Klassenname), der alle `.svc-field`-Elemente des jeweiligen
-  Panels enthält. Toggle-Felder verwenden einen 3-Spalten-Grid-`div` (ebenfalls ohne CI-Klasse).
+- Felder sind in Panels gruppiert. Innerhalb von `.panel-body` sitzt `.svc-field-grid`, der alle
+  `.svc-field`-Elemente (oder Toggle-Elemente) des jeweiligen Panels enthält. Toggle-Felder
+  verwenden `.svc-field-grid.svc-field-grid--cols-3` (3-Spalten-Variante).
 - In jedem `.svc-toggle` folgt auf `.svc-toggle-track` ein namenloser `div`, der
   `.svc-toggle-label` und optional `.svc-toggle-sublabel` enthält. Diese Labels sind damit NICHT
   direkte Kinder von `.svc-toggle`, sondern Enkel.
@@ -242,6 +248,7 @@ Bestehende Klassen (aus `page.css`): `.panel`, `.panel-header`, `.panel-title`, 
 
 | Datum | Änderung |
 |---|---|
+| 2026-06-07 | Layout-Inline-Styles durch CI-Klassen ersetzt: `.svc-page-title-row` (Detail+Config Page-Header), `.svc-field-grid` + `.svc-field-grid--cols-3` (Config Panel-Body), `.svc-label-type` (Label-Typ-Hinweise), `.svc-field-code` (JSON-Textarea); G2-Bäume und G3-Text aktualisiert. |
 | 2026-06-07 | Strukturkorrekturen: Panel-Verschachtelung für svc-data-grid dokumentiert; Flex-Wrapper-div in page-header-left für Detail+Config; Toggle-Beschriftungs-Wrapper-div; nicht-klickbare Kachel-Variante (div.card.card-dashboard); card-dashboard-link/arrow als Optional; card-warn ergänzt; 2-Spalten-Grid-div in Panel-Body; panel-Klassen in G1-Hinweis; G4 um sidebar-status-dot.online/offline und Toggle-inaktiv-Zeile ergänzt. |
 | 2026-06-07 | Auf `docs/doc-standard.md` gehoben (G1–G4, interpretationsfrei). Toggle-Teile inkl. `.svc-toggle-sublabel` ergänzt, Button-Platzierung und Zustände-Tabelle ausformuliert. |
 | 2026-06-07 | Initiale Definition. 3 Seiten. svc-* Klassen. Feldtypen-Palette. |

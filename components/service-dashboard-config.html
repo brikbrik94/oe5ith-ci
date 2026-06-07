@@ -58,9 +58,9 @@
 
     <div class="page-header">
       <div class="page-header-left">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="svc-page-title-row">
           <i class="fa-solid fa-sliders svc-page-icon"></i>
-          <h1 class="page-title" style="font-size:1.2rem;font-weight:600;">Konfiguration — LoRa-Tracker</h1>
+          <h1 class="page-title">Konfiguration — LoRa-Tracker</h1>
         </div>
       </div>
     </div>
@@ -81,22 +81,22 @@
           <span class="panel-meta">Text · Zahl · Auswahl · Read-only</span>
         </div>
         <div class="panel-body">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="svc-field-grid">
 
             <div class="svc-field">
-              <label for="cfg-host">API-Host <span style="font-weight:400;color:var(--subtle)">(Text)</span></label>
+              <label for="cfg-host">API-Host <span class="svc-label-type">(Text)</span></label>
               <input type="text" id="cfg-host" value="0.0.0.0">
               <span class="svc-field-hint">Bind-Adresse des API-Servers</span>
             </div>
 
             <div class="svc-field">
-              <label for="cfg-port">API-Port <span style="font-weight:400;color:var(--subtle)">(Zahl)</span></label>
+              <label for="cfg-port">API-Port <span class="svc-label-type">(Zahl)</span></label>
               <input type="number" id="cfg-port" value="8000" min="1024" max="65535">
               <span class="svc-field-hint">1024–65535</span>
             </div>
 
             <div class="svc-field">
-              <label for="cfg-strategy">Beacon-Strategie <span style="font-weight:400;color:var(--subtle)">(Auswahl)</span></label>
+              <label for="cfg-strategy">Beacon-Strategie <span class="svc-label-type">(Auswahl)</span></label>
               <select id="cfg-strategy">
                 <option selected>fixed</option>
                 <option>adaptive</option>
@@ -106,19 +106,19 @@
             </div>
 
             <div class="svc-field">
-              <label>Firmware-Version <span style="font-weight:400;color:var(--subtle)">(Read-only)</span></label>
+              <label>Firmware-Version <span class="svc-label-type">(Read-only)</span></label>
               <div class="svc-field-readonly">v2.3.1-stable</div>
               <span class="svc-field-hint">Kann nicht über die API geändert werden</span>
             </div>
 
             <div class="svc-field">
-              <label for="cfg-tx">TX-Intervall <span style="font-weight:400;color:var(--subtle)">(Sekunden)</span></label>
+              <label for="cfg-tx">TX-Intervall <span class="svc-label-type">(Sekunden)</span></label>
               <input type="number" id="cfg-tx" value="300" min="60">
               <span class="svc-field-hint">Mindestens 60s empfohlen (Fair Use)</span>
             </div>
 
             <div class="svc-field">
-              <label for="cfg-gps-timeout">GPS-Timeout <span style="font-weight:400;color:var(--subtle)">(Sekunden)</span></label>
+              <label for="cfg-gps-timeout">GPS-Timeout <span class="svc-label-type">(Sekunden)</span></label>
               <input type="number" id="cfg-gps-timeout" value="30" min="5">
               <span class="svc-field-hint">Wartezeit auf gültigen GPS-Fix</span>
             </div>
@@ -137,10 +137,10 @@
           <span class="panel-meta">Secret · URL</span>
         </div>
         <div class="panel-body">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="svc-field-grid">
 
             <div class="svc-field">
-              <label>API-Key <span style="font-weight:400;color:var(--subtle)">(Secret)</span></label>
+              <label>API-Key <span class="svc-label-type">(Secret)</span></label>
               <div class="svc-secret">
                 <input type="password" id="cfg-apikey" value="sk-abc123xyz">
                 <button class="svc-secret-toggle" onclick="toggleSecret('cfg-apikey', this)" type="button">
@@ -151,10 +151,10 @@
             </div>
 
             <div class="svc-field">
-              <label>Network-Server <span style="font-weight:400;color:var(--subtle)">(URL)</span></label>
+              <label>Network-Server <span class="svc-label-type">(URL)</span></label>
               <div class="svc-input-prefix">
                 <span class="svc-input-prefix-label">https://</span>
-                <input type="text" value="router.oe5ith.at:1700" style="font-family:var(--font-mono);">
+                <input type="text" value="router.oe5ith.at:1700" class="mono">
               </div>
               <span class="svc-field-hint">LoRaWAN Network Server</span>
             </div>
@@ -173,7 +173,7 @@
           <span class="panel-meta">Boolean-Felder</span>
         </div>
         <div class="panel-body">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <div class="svc-field-grid svc-field-grid--cols-3">
 
             <div class="svc-toggle on" onclick="toggleSwitch(this)">
               <div class="svc-toggle-track">
@@ -232,7 +232,7 @@
               </div>
               <div>
                 <div class="svc-toggle-label">Senden ohne Fix</div>
-                <div class="svc-toggle-sublabel" style="color:var(--warning);">⚠ sendet ungültige Pos.</div>
+                <div class="svc-toggle-sublabel">⚠ sendet ungültige Pos.</div>
               </div>
             </div>
 
@@ -251,8 +251,8 @@
         </div>
         <div class="panel-body">
           <div class="svc-field">
-            <label for="cfg-meta">Zusatz-Metadaten <span style="font-weight:400;color:var(--subtle)">(JSON)</span></label>
-            <textarea id="cfg-meta" rows="4" style="font-family:var(--font-mono);font-size:.8rem;color:#4ade80;resize:vertical;">{"comment": "Test-Pi OE5ITH-3",
+            <label for="cfg-meta">Zusatz-Metadaten <span class="svc-label-type">(JSON)</span></label>
+            <textarea id="cfg-meta" rows="4" class="svc-field-code">{"comment": "Test-Pi OE5ITH-3",
   "location": "Linz/AUT"}</textarea>
             <span class="svc-field-hint">Optional · wird unverändert weitergegeben</span>
           </div>
