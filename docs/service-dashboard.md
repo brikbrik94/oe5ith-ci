@@ -30,20 +30,28 @@ css/service-dashboard.css  /* svc-* Klassen — immer zuletzt */
 
 ## Seite 1 — Übersicht (Seitentyp 3: Dashboard)
 
-Zeigt alle Dienste eines Pi als klickbare Kacheln im Card-Grid.
+Zeigt alle Dienste eines Pi als Kacheln im Card-Grid. Kacheln existieren in zwei Varianten:
+**klickbar** (Link zur Detail-Seite) und **nicht klickbar** (kein Link, keine Detail-Seite vorhanden).
 
 ### Verschachtelung (G2)
 
 ```text
 .card-grid
-└── a.card.card-dashboard.card-dashboard-link
+├── a.card.card-dashboard.card-dashboard-link        (klickbare Variante — Optional)
+│   ├── div.card-status-dot[.online|.offline|.unknown]   (Pflicht)
+│   ├── h3
+│   │   ├── i.svc-card-icon                               (Optional)
+│   │   └── span (Titel-Text)                             (Pflicht)
+│   ├── p.svc-info-line                                   (Optional)
+│   ├── span.svc-status-line[.online|.offline|.unknown]   (Pflicht)
+│   └── i.card-dashboard-arrow                            (Optional, nur klickbare Variante)
+└── div.card.card-dashboard                          (nicht klickbare Variante — Optional)
     ├── div.card-status-dot[.online|.offline|.unknown]   (Pflicht)
     ├── h3
     │   ├── i.svc-card-icon                               (Optional)
     │   └── span (Titel-Text)                             (Pflicht)
     ├── p.svc-info-line                                   (Optional)
-    ├── span.svc-status-line[.online|.offline|.unknown]   (Pflicht)
-    └── i.card-dashboard-arrow                            (Pflicht)
+    └── span.svc-status-line[.online|.offline|.unknown]   (Pflicht)
 ```
 
 ### Elemente (G1)
@@ -51,16 +59,21 @@ Zeigt alle Dienste eines Pi als klickbare Kacheln im Card-Grid.
 | Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
 |---|---|---|---|
 | `.card-grid` | Grid-Container der Kacheln (aus `cards.css`) | Pflicht | — |
-| `.card.card-dashboard.card-dashboard-link` | Klickbare Dienst-Kachel (aus `cards.css`) | Pflicht | — |
+| `.card.card-dashboard` | Dienst-Kachel (aus `cards.css`); Basis für beide Varianten | Pflicht | — |
+| `.card-dashboard-link` | Zusatzklasse auf `<a>` für klickbare Variante (aus `cards.css`) | Optional | — |
 | `.card-status-dot` | Status-Punkt oben in der Kachel (aus `cards.css`) | Pflicht | `.online`, `.offline`, `.unknown` |
 | `.svc-card-icon` | FA-Icon inline im h3-Titel (accent, 0.85rem, flex-shrink:0) | Optional | — |
 | `.svc-info-line` | Kurzbeschreibung unter Titel (0.75rem, muted) | Optional | — |
 | `.svc-status-line` | Statuszeile unten (0.7rem) | Pflicht | `.online`, `.offline`, `.unknown` |
-| `.card-dashboard-arrow` | Pfeil-Icon rechts (aus `cards.css`) | Pflicht | — |
+| `.card-dashboard-arrow` | Pfeil-Icon rechts — nur in klickbarer Variante (aus `cards.css`) | Optional | — |
 
 ### Reihenfolge & Platzierung (G3)
 
-- Reihenfolge in der Kachel: Status-Dot → h3 (Icon, dann Titel) → Info-Zeile → Status-Zeile → Pfeil.
+- **Klickbare Variante** (`<a>` als Wurzel): Reihenfolge Status-Dot → h3 (Icon, dann Titel) →
+  Info-Zeile → Status-Zeile → Pfeil-Icon. Das Pfeil-Icon (`.card-dashboard-arrow`) ist das letzte
+  Kind; es zeigt visuell an, dass die Kachel zu einer Detail-Seite führt.
+- **Nicht klickbare Variante** (`<div>` als Wurzel): gleiche Reihenfolge ohne `.card-dashboard-link`
+  und ohne `.card-dashboard-arrow`. Verwenden, wenn für diesen Dienst keine Detail-Seite existiert.
 - Wenn `.svc-card-icon` im h3 verwendet wird, MUSS der Textteil in `<span>` stehen, damit
   Truncation korrekt funktioniert.
 
@@ -73,17 +86,28 @@ Zeigt alle Dienste eines Pi als klickbare Kacheln im Card-Grid.
 ```text
 .page-header
 ├── .page-header-left
-│   ├── (Titelzeile: i.svc-page-icon + h1.page-title + span.badge.badge-*)   (Pflicht)
-│   └── p.page-subtitle                                                      (Optional)
+│   ├── div  (Flex-Wrapper-div: Icon + Titel + Badge auf einer Linie)        (Pflicht)
+│   │   ├── i.svc-page-icon                                                  (Pflicht)
+│   │   ├── h1.page-title                                                    (Pflicht)
+│   │   └── span.badge.badge-*   (Statusbadge, z. B. badge-green)           (Optional)
+│   └── p.page-subtitle          (Subtitle, Geschwister des Flex-Wrappers)   (Optional)
 └── .page-header-right
     ├── button.btn.btn-danger     (destruktive Aktion, z. B. Neustart)       (Optional)
     └── a.btn.btn-secondary       (Navigation, z. B. Config)                 (Optional)
 
-.svc-data-grid
-└── .svc-data-cell                                                          (Pflicht, n×)
-    ├── span.svc-data-label                                                 (Pflicht)
-    ├── span.svc-data-value[.success|.danger]                              (Pflicht)
-    └── span.svc-data-sub                                                   (Optional)
+.content-body
+├── .panel                                                                   (Pflicht, n×)
+│   ├── .panel-header
+│   │   ├── .panel-title         (Icon + Bezeichnung)
+│   │   └── .panel-header-right
+│   │       └── span.panel-meta  (z. B. Zeitstempel, Badge)                 (Optional)
+│   └── .panel-body
+│       └── .svc-data-grid
+│           └── .svc-data-cell                                               (Pflicht, n×)
+│               ├── span.svc-data-label                                      (Pflicht)
+│               ├── span.svc-data-value[.success|.danger]                   (Pflicht)
+│               └── span.svc-data-sub                                        (Optional)
+└── div.card-warn                (Hinweis bei destruktiven Aktionen)         (Optional)
 ```
 
 ### Elemente (G1)
@@ -96,40 +120,65 @@ Zeigt alle Dienste eines Pi als klickbare Kacheln im Card-Grid.
 | `.svc-data-label` | Bezeichnung (0.68rem, uppercase, `--subtle`) | Pflicht | — |
 | `.svc-data-value` | Wert (0.95rem, 600, `--text`) | Pflicht | `.success`, `.danger` |
 | `.svc-data-sub` | Subtext (0.72rem, `--muted`) | Optional | — |
+| `.card-warn` | Warnbox für destruktive Aktionen (gelber Warn-Hinweis) | Optional | — |
 
-Bestehende Klassen: `.page-header`, `.page-header-left`, `.page-header-right`,
-`.page-title`, `.page-subtitle`, `.badge.badge-green/red/yellow`, `.btn.btn-danger`,
+Bestehende Klassen (aus `page.css`): `.page-header`, `.page-header-left`, `.page-header-right`,
+`.page-title`, `.page-subtitle`, `.panel`, `.panel-header`, `.panel-title`,
+`.panel-header-right`, `.panel-body`, `.panel-meta`.
+Weitere bestehende Klassen: `.badge.badge-green/red/yellow`, `.btn.btn-danger`,
 `.btn.btn-secondary`.
 
 ### Reihenfolge & Platzierung (G3)
 
-- **Header links:** Icon → Titel → Status-Badge in einer Zeile; Subtitle darunter.
+- **Header links:** Icon, Titel und Status-Badge sitzen gemeinsam in einem Flex-Wrapper-`div`
+  (erste Ebene unterhalb `.page-header-left`). Dieser `div` sorgt dafür, dass Icon, `h1` und Badge
+  auf einer horizontalen Linie ausgerichtet sind. Die optionale Subtitle (`p.page-subtitle`) ist ein
+  Geschwisterelement dieses Flex-Wrappers, also ein zweites direktes Kind von `.page-header-left`.
 - **Header rechts:** Aktions-Buttons. Destruktive Aktionen (Restart) als `btn-danger`,
   Navigation (Config) als `btn-secondary`. Destruktive Aktion zuerst, Navigation danach.
 - Nur API-Endpunkte/Aktionen einblenden, die tatsächlich vorhanden sind. Destruktive
   Aktionen immer mit `confirm()` absichern.
+- `.card-warn` folgt unmittelbar nach dem Panel mit den Daten und dient als Hinweis,
+  dass die destruktive Aktion (z. B. Neustart) Konsequenzen hat.
 
 ---
 
 ## Seite 3 — Config (Seitentyp 1: Detail-Seite)
 
+Der Page-Header enthält auf der Config-Seite einen Flex-Wrapper-`div` (erste Ebene unter
+`.page-header-left`) mit Icon und h1, aber kein Badge (da kein Live-Status gezeigt wird).
+
 ### Verschachtelung (G2)
 
 ```text
-a.svc-back-link                                              (Pflicht)
+.content-body
+├── a.svc-back-link                                                          (Pflicht)
+├── .panel                                 (ein oder mehrere Panels)        (Pflicht, n×)
+│   ├── .panel-header
+│   │   ├── .panel-title                   (Icon + Bezeichnung)
+│   │   └── span.panel-meta               (Typ-Hinweis, z. B. „Text · Zahl") (Optional)
+│   └── .panel-body
+│       └── div  (2-Spalten-Grid-div für Felder — alle Felder dieses Panels) (Pflicht)
+│           └── .svc-field                                                   (Pflicht, n×)
+│               ├── label
+│               ├── input | select | textarea | .svc-field-readonly
+│               │   (oder .svc-secret | .svc-input-prefix als Wrapper)
+│               └── span.svc-field-hint                                      (Optional)
+└── .svc-form-actions                                                        (Pflicht)
+    ├── button.btn.btn-primary   (Speichern, fa-floppy-disk)                 (Pflicht)
+    ├── a.btn.btn-ghost          (Abbrechen)                                 (Pflicht)
+    └── span.svc-form-hint       (Hinweis, z. B. Neustart-Erfordernis)      (Optional)
+```
 
-(Formularfeld je Typ — siehe Feldtypen-Tabelle)
+Toggle-Struktur (innerhalb des 2-Spalten-Grid-`div` im Panel-Body, als Alternative zu `.svc-field`):
 
-.svc-form-actions                                            (Pflicht)
-├── button.btn.btn-primary   (Speichern, fa-floppy-disk)    (Pflicht)
-├── a.btn.btn-ghost          (Abbrechen)                    (Pflicht)
-└── span.svc-form-hint       (Hinweis, z. B. Neustart)      (Optional)
-
-.svc-toggle[.on|.warn]                                       (Toggle-Feldtyp)
-├── .svc-toggle-track
-│   └── .svc-toggle-thumb
-├── .svc-toggle-label
-└── .svc-toggle-sublabel                                     (Optional)
+```text
+.svc-toggle[.on][.warn]
+├── .svc-toggle-track                                                        (Pflicht)
+│   └── .svc-toggle-thumb                                                    (Pflicht)
+└── div  (Beschriftungs-Wrapper-div, Geschwister von .svc-toggle-track)      (Pflicht)
+    ├── .svc-toggle-label                                                    (Pflicht)
+    └── .svc-toggle-sublabel                                                  (Optional)
 ```
 
 ### Feldtypen / Elemente (G1)
@@ -152,13 +201,24 @@ a.svc-back-link                                              (Pflicht)
 | `.svc-form-actions` | Aktionsleiste am Formular-Ende | Pflicht | — |
 | `.svc-form-hint` | Hinweis in der Aktionsleiste | Optional | — |
 
+Bestehende Klassen (aus `page.css`): `.panel`, `.panel-header`, `.panel-title`, `.panel-body`,
+`.panel-meta`. (`.panel-header-right` wird auf der Config-Seite nicht verwendet — dort steht
+`span.panel-meta` direkt im `.panel-header` als Geschwister von `.panel-title`.)
+
 ### Reihenfolge & Platzierung (G3)
 
-- Zurück-Link steht oben, vor dem Formular.
+- Zurück-Link steht als erstes Kind von `.content-body`, vor allen Panels.
+- Felder sind in Panels gruppiert. Innerhalb von `.panel-body` sitzt ein anonymer
+  2-Spalten-Grid-`div` (kein CI-Klassenname), der alle `.svc-field`-Elemente des jeweiligen
+  Panels enthält. Toggle-Felder verwenden einen 3-Spalten-Grid-`div` (ebenfalls ohne CI-Klasse).
+- In jedem `.svc-toggle` folgt auf `.svc-toggle-track` ein namenloser `div`, der
+  `.svc-toggle-label` und optional `.svc-toggle-sublabel` enthält. Diese Labels sind damit NICHT
+  direkte Kinder von `.svc-toggle`, sondern Enkel.
 - **Aktionsleiste (`.svc-form-actions`):** Speichern zuerst als `btn btn-primary`
   (Disketten-Icon `fa-floppy-disk`), direkt daneben Abbrechen als `btn btn-ghost`. Ein
   optionaler `.svc-form-hint` folgt rechts. (Projektweite Konvention: primär zuerst,
   sekundär als Ghost daneben.)
+- `.svc-form-actions` ist letztes Kind von `.content-body`, nach allen Panels.
 
 ---
 
@@ -166,13 +226,14 @@ a.svc-back-link                                              (Pflicht)
 
 | Zustand / Variante | Klasse / Modifier | Wann verwenden |
 |---|---|---|
-| Dienst online | `.card-status-dot.online`, `.svc-status-line.online`, `.badge-green` | Dienst erreichbar/läuft |
-| Dienst offline | `.card-status-dot.offline`, `.svc-status-line.offline`, `.badge-red` | Dienst nicht erreichbar |
+| Dienst online | `.card-status-dot.online`, `.svc-status-line.online`, `.sidebar-status-dot.online`, `.badge-green` | Dienst erreichbar/läuft |
+| Dienst offline | `.card-status-dot.offline`, `.svc-status-line.offline`, `.sidebar-status-dot.offline`, `.badge-red` | Dienst nicht erreichbar |
 | Dienst unbekannt | `.card-status-dot.unknown`, `.svc-status-line.unknown`, `.sidebar-status-dot.unknown`, `.badge-yellow` | Status nicht ermittelbar |
 | Datenwert positiv | `.svc-data-value.success` | Wert ist im Soll-Zustand (z. B. „Gültig") |
 | Datenwert negativ | `.svc-data-value.danger` | Wert signalisiert Fehler/Ausfall |
+| Toggle inaktiv | kein Modifier (Default-/Aus-Zustand) | Boolean-Config ist ausgeschaltet |
 | Toggle aktiv | `.svc-toggle.on` | Boolean-Config ist eingeschaltet |
-| Toggle aktiv mit Warnung | `.svc-toggle.warn` | Eingeschalteter Zustand ist riskant (Warnfarbe) |
+| Toggle aktiv mit Warnung | `.svc-toggle.warn.on` | Eingeschalteter Zustand ist riskant (Warnfarbe) |
 | Feld schreibgeschützt | `.svc-field-readonly` | Wert anzeigen, aber nicht editierbar |
 
 ---
@@ -181,5 +242,6 @@ a.svc-back-link                                              (Pflicht)
 
 | Datum | Änderung |
 |---|---|
+| 2026-06-07 | Strukturkorrekturen: Panel-Verschachtelung für svc-data-grid dokumentiert; Flex-Wrapper-div in page-header-left für Detail+Config; Toggle-Beschriftungs-Wrapper-div; nicht-klickbare Kachel-Variante (div.card.card-dashboard); card-dashboard-link/arrow als Optional; card-warn ergänzt; 2-Spalten-Grid-div in Panel-Body; panel-Klassen in G1-Hinweis; G4 um sidebar-status-dot.online/offline und Toggle-inaktiv-Zeile ergänzt. |
 | 2026-06-07 | Auf `docs/doc-standard.md` gehoben (G1–G4, interpretationsfrei). Toggle-Teile inkl. `.svc-toggle-sublabel` ergänzt, Button-Platzierung und Zustände-Tabelle ausformuliert. |
 | 2026-06-07 | Initiale Definition. 3 Seiten. svc-* Klassen. Feldtypen-Palette. |
