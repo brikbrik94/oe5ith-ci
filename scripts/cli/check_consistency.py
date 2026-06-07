@@ -4,8 +4,8 @@
 Validiert docs/registry.json gegen css/, components/, docs/ und generiert
 optional die AUTOGEN-Abschnitte in README.md.
 
-    python scripts/cli/check_consistency.py            # nur prüfen (read-only)
-    python scripts/cli/check_consistency.py --write    # + README generieren
+    python3 scripts/cli/check_consistency.py           # nur prüfen (read-only)
+    python3 scripts/cli/check_consistency.py --write   # + README generieren
 """
 
 import argparse
@@ -72,7 +72,8 @@ def check(root: Path) -> dict:
     index = root / "css" / "index.css"
     imported = set()
     if index.is_file():
-        imported = set(re.findall(r'@import\s+["\']([^"\']+)["\']', index.read_text()))
+        raw = re.findall(r'@import\s+["\']([^"\']+)["\']', index.read_text())
+        imported = {p[2:] if p.startswith("./") else p for p in raw}
     for fname in sorted(claimed["css"]):
         if fname in ("index.css", "demo.css"):
             continue
