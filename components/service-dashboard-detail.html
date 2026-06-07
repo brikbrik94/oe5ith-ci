@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Service Dashboard: Detail</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/sidebar.css">
+<link rel="stylesheet" href="../css/page.css">
+<link rel="stylesheet" href="../css/cards.css">
+<link rel="stylesheet" href="../css/badges.css">
+<link rel="stylesheet" href="../css/buttons.css">
+<link rel="stylesheet" href="../css/service-dashboard.css">
+<link rel="stylesheet" href="../css/demo.css">
+</head>
+<body>
+
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>Pi Dashboard</span>
+  </a>
+  <button class="topbar-menu-btn" id="sidebar-toggle" aria-label="Menü öffnen">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</header>
+
+<div class="layout">
+
+  <nav class="sidebar" id="sidebar" aria-label="Dienste-Navigation">
+    <div class="sidebar-inner">
+      <div class="sidebar-section-label">Dienste</div>
+      <a href="service-dashboard-overview.html" class="sidebar-nav-item">
+        <i class="fa-solid fa-grid-2 nav-icon"></i>
+        Übersicht
+      </a>
+      <a href="#" class="sidebar-nav-item active">
+        <i class="fa-solid fa-satellite-dish nav-icon"></i>
+        LoRa-Tracker
+        <div class="sidebar-status-dot online"></div>
+      </a>
+      <a href="#" class="sidebar-nav-item">
+        <i class="fa-solid fa-tower-broadcast nav-icon"></i>
+        APRS-Gate
+        <div class="sidebar-status-dot offline"></div>
+      </a>
+      <a href="#" class="sidebar-nav-item">
+        <i class="fa-solid fa-cloud-sun nav-icon"></i>
+        Wetterdienst
+        <div class="sidebar-status-dot unknown"></div>
+      </a>
+    </div>
+    <div class="sidebar-footer">
+      <span class="sidebar-footer-version">CI v1.12.0</span>
+      <button class="sidebar-footer-copyright">© 2026 OE5ITH</button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+
+    <div class="page-header">
+      <div class="page-header-left">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <i class="fa-solid fa-satellite-dish svc-page-icon"></i>
+          <h1 class="page-title" style="font-size:1.2rem;font-weight:600;">LoRa-Tracker</h1>
+          <span class="badge badge-green">ONLINE</span>
+        </div>
+        <p class="page-subtitle">GPS-Tracking · LoRaWAN · TTN</p>
+      </div>
+      <div class="page-header-right">
+        <!-- Nur Aktionen einblenden, die die API anbietet (hier: restart) -->
+        <button class="btn btn-danger" onclick="confirmRestart()">
+          <i class="fa-solid fa-rotate-right"></i> Neustart
+        </button>
+        <a href="service-dashboard-config.html" class="btn btn-secondary">
+          <i class="fa-solid fa-sliders"></i> Config
+        </a>
+      </div>
+    </div>
+
+    <div class="content-body">
+
+      <!-- Live-Status-Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fa-solid fa-chart-line"></i>
+            Live-Status
+          </div>
+          <div class="panel-header-right">
+            <span class="panel-meta">aktualisiert vor 12s</span>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="svc-data-grid">
+
+            <div class="svc-data-cell">
+              <span class="svc-data-label">GPS Fix</span>
+              <span class="svc-data-value success">Gültig</span>
+              <span class="svc-data-sub">48.2643° / 14.2649°</span>
+            </div>
+
+            <div class="svc-data-cell">
+              <span class="svc-data-label">Geschwindigkeit</span>
+              <span class="svc-data-value">0.018 km/h</span>
+              <span class="svc-data-sub">stationär</span>
+            </div>
+
+            <div class="svc-data-cell">
+              <span class="svc-data-label">Nächste TX</span>
+              <span class="svc-data-value">4:58</span>
+              <span class="svc-data-sub">300s Intervall · fixed</span>
+            </div>
+
+            <div class="svc-data-cell">
+              <span class="svc-data-label">Payload</span>
+              <span class="svc-data-value">31 Bytes</span>
+              <span class="svc-data-sub">GPS + Telemetrie</span>
+            </div>
+
+            <div class="svc-data-cell">
+              <span class="svc-data-label">Strategie</span>
+              <span class="svc-data-value">fixed</span>
+              <span class="svc-data-sub">festes Intervall</span>
+            </div>
+
+            <div class="svc-data-cell">
+              <span class="svc-data-label">Dienst</span>
+              <span class="svc-data-value success">Aktiv</span>
+              <span class="svc-data-sub">service_active: true</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Hinweis: Neustart-Bestätigung -->
+      <div class="card-warn">
+        <i class="fa-solid fa-triangle-exclamation" style="margin-right:6px;"></i>
+        Neustart unterbricht die TX-Sequenz. Der Button öffnet eine Bestätigungsabfrage vor der Ausführung.
+      </div>
+
+      <!-- Demo-Variante: Dienst offline -->
+      <div class="demo-section">
+        <div class="demo-section-title">Variante — Dienst offline</div>
+        <div class="demo-section-desc">
+          Bei Offline-Dienst: Badge <code>.badge-red</code>, Datenzellen zeigen letzten bekannten Wert in <code>--muted</code>.
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-tower-broadcast"></i>
+              APRS-Gate
+            </div>
+            <div class="panel-header-right">
+              <span class="badge badge-red">OFFLINE</span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="svc-data-grid">
+              <div class="svc-data-cell">
+                <span class="svc-data-label">Status</span>
+                <span class="svc-data-value danger">Nicht erreichbar</span>
+                <span class="svc-data-sub">Letzter Kontakt vor 2h</span>
+              </div>
+              <div class="svc-data-cell">
+                <span class="svc-data-label">Port</span>
+                <span class="svc-data-value">14580</span>
+                <span class="svc-data-sub">aprs.fi</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const toggle = document.getElementById('sidebar-toggle');
+const sidebar = document.getElementById('sidebar');
+const backdrop = document.getElementById('sidebar-backdrop');
+if (toggle) {
+  toggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('visible');
+  });
+  backdrop.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('visible');
+  });
+}
+
+function confirmRestart() {
+  if (confirm('LoRa-Tracker wirklich neu starten?\nDie laufende TX-Sequenz wird unterbrochen.')) {
+    alert('POST /api/service/restart würde hier ausgeführt.');
+  }
+}
+</script>
+
+</body>
+</html>
