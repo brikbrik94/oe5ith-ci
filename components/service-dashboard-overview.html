@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Service Dashboard: Übersicht</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/sidebar.css">
+<link rel="stylesheet" href="../css/page.css">
+<link rel="stylesheet" href="../css/cards.css">
+<link rel="stylesheet" href="../css/badges.css">
+<link rel="stylesheet" href="../css/service-dashboard.css">
+<link rel="stylesheet" href="../css/demo.css">
+</head>
+<body>
+
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <img src="assets/logo.svg" alt="Logo" width="26" height="26">
+    <span>Pi Dashboard</span>
+  </a>
+  <button class="topbar-menu-btn" id="sidebar-toggle" aria-label="Menü öffnen">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</header>
+
+<div class="layout">
+
+  <nav class="sidebar" id="sidebar" aria-label="Dienste-Navigation">
+    <div class="sidebar-inner">
+      <div class="sidebar-section-label">Dienste</div>
+
+      <a href="#" class="sidebar-nav-item active">
+        <i class="fa-solid fa-grid-2 nav-icon"></i>
+        Übersicht
+        <div class="sidebar-status-dot online" style="margin-left:auto" title="3 von 4 online"></div>
+      </a>
+      <a href="service-dashboard-detail.html" class="sidebar-nav-item">
+        <i class="fa-solid fa-satellite-dish nav-icon"></i>
+        LoRa-Tracker
+        <div class="sidebar-status-dot online"></div>
+      </a>
+      <a href="#" class="sidebar-nav-item">
+        <i class="fa-solid fa-tower-broadcast nav-icon"></i>
+        APRS-Gate
+        <div class="sidebar-status-dot offline"></div>
+      </a>
+      <a href="#" class="sidebar-nav-item">
+        <i class="fa-solid fa-cloud-sun nav-icon"></i>
+        Wetterdienst
+        <div class="sidebar-status-dot unknown"></div>
+      </a>
+      <a href="#" class="sidebar-nav-item">
+        <i class="fa-solid fa-location-dot nav-icon"></i>
+        GPS-Logger
+        <div class="sidebar-status-dot online"></div>
+      </a>
+    </div>
+    <div class="sidebar-footer">
+      <span class="sidebar-footer-version">CI v1.12.0</span>
+      <button class="sidebar-footer-copyright">© 2026 OE5ITH</button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+
+    <div class="page-header">
+      <div class="page-header-left">
+        <h1 class="page-title">System-Übersicht</h1>
+      </div>
+    </div>
+
+    <div class="content-body">
+
+      <div class="demo-section">
+        <div class="demo-section-title">Kacheln — klickbar (.card-dashboard-link)</div>
+        <div class="demo-section-desc">
+          Jede Kachel verlinkt auf eine Detail-Seite. Icon inline im h3 mit <code>.svc-card-icon</code>,
+          Info-Zeile mit <code>.svc-info-line</code>, Statuszeile mit <code>.svc-status-line.online/offline/unknown</code>.
+          Status-Dot kommt aus <code>cards.css .card-status-dot</code>.
+        </div>
+
+        <div class="card-grid">
+
+          <!-- Online + klickbar -->
+          <a href="service-dashboard-detail.html" class="card card-dashboard card-dashboard-link">
+            <div class="card-status-dot online" title="Online"></div>
+            <h3>
+              <i class="fa-solid fa-satellite-dish svc-card-icon"></i>
+              <span>LoRa-Tracker</span>
+            </h3>
+            <p class="svc-info-line">GPS Fix · 0.0 km/h</p>
+            <span class="svc-status-line online">● Online · nächste TX in 4:58</span>
+            <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
+          </a>
+
+          <!-- Offline + klickbar -->
+          <a href="#" class="card card-dashboard card-dashboard-link">
+            <div class="card-status-dot offline" title="Offline"></div>
+            <h3>
+              <i class="fa-solid fa-tower-broadcast svc-card-icon"></i>
+              <span>APRS-Gate</span>
+            </h3>
+            <p class="svc-info-line">aprs.fi · Port 14580</p>
+            <span class="svc-status-line offline">● Offline · zuletzt gesehen vor 2h</span>
+            <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
+          </a>
+
+          <!-- Unknown + klickbar -->
+          <a href="#" class="card card-dashboard card-dashboard-link">
+            <div class="card-status-dot unknown" title="Status unbekannt"></div>
+            <h3>
+              <i class="fa-solid fa-cloud-sun svc-card-icon"></i>
+              <span>Wetterdienst</span>
+            </h3>
+            <p class="svc-info-line">BME280 · I²C</p>
+            <span class="svc-status-line unknown">● Unbekannt · API nicht erreichbar</span>
+            <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
+          </a>
+
+          <!-- Online + nicht klickbar (kein Link, keine Detail-Seite) -->
+          <div class="card card-dashboard">
+            <div class="card-status-dot online" title="Online"></div>
+            <h3>
+              <i class="fa-solid fa-location-dot svc-card-icon"></i>
+              <span>GPS-Logger</span>
+            </h3>
+            <p class="svc-info-line">NMEA · /dev/ttyAMA0</p>
+            <span class="svc-status-line online">● Online · 8 Satelliten</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const toggle = document.getElementById('sidebar-toggle');
+const sidebar = document.getElementById('sidebar');
+const backdrop = document.getElementById('sidebar-backdrop');
+if (toggle) {
+  toggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('visible');
+  });
+  backdrop.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('visible');
+  });
+}
+</script>
+
+</body>
+</html>
