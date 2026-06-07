@@ -87,8 +87,49 @@ def check(root: Path) -> dict:
     return {"errors": errors, "warnings": warnings}
 
 
-def write_readme(root, manifest):
-    raise NotImplementedError  # implementiert in Task 3
+def render_structure(manifest: dict) -> str:
+    """Gruppierte Datei-Übersicht aus dem Manifest (deterministisch sortiert)."""
+    buckets = {"css": [], "components": [], "docs": []}
+    kind_dir = {"css": "css", "html": "components", "doc": "docs"}
+    for e in manifest["components"]:
+        for kind, sub in kind_dir.items():
+            for fname in e.get(kind, []):
+                buckets[sub].append(f"{sub}/{fname}")
+    lines = ["```text"]
+    for sub in ("css", "components", "docs"):
+        for path in sorted(buckets[sub]):
+            lines.append(path)
+    lines.append("```")
+    return "\n".join(lines)
+
+
+def render_status(manifest: dict) -> str:
+    """Status-Tabelle nur für category=component."""
+    mark = lambda xs: "✅" if xs else "—"
+    rows = ["| Element | Spec | Referenz-HTML | CSS |", "|---|---|---|---|"]
+    for e in manifest["components"]:
+        if e.get("category") != "component":
+            continue
+        rows.append(f"| {e['title']} | {mark(e.get('doc'))} | "
+                    f"{mark(e.get('html'))} | {mark(e.get('css'))} |")
+    return "\n".join(rows)
+
+
+def _replace_block(text: str, name: str, body: str) -> str:
+    pattern = re.compile(
+        rf"(<!-- AUTOGEN:{name} START -->\n).*?(\n<!-- AUTOGEN:{name} END -->)",
+        re.DOTALL)
+    if not pattern.search(text):
+        raise ValueError(f"AUTOGEN-Marker '{name}' nicht in README gefunden")
+    return pattern.sub(lambda m: m.group(1) + body + m.group(2), text)
+
+
+def write_readme(root: Path, manifest: dict) -> None:
+    readme = root / "README.md"
+    text = readme.read_text()
+    text = _replace_block(text, "structure", render_structure(manifest))
+    text = _replace_block(text, "status", render_status(manifest))
+    readme.write_text(text)
 
 
 def repo_root() -> Path:

@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
-from check_consistency import check
+from check_consistency import check, render_structure, render_status, write_readme
 
 
 def make_repo(tmp, manifest, css, components, docs, index_imports):
@@ -125,6 +125,45 @@ class TestCheck(unittest.TestCase):
                 "shared.css" in e and ("beansprucht" in e or "mehreren" in e)
                 for e in result["errors"]
             ))
+
+
+class TestRender(unittest.TestCase):
+    MANIFEST = {"components": [
+        {"id": "topbar", "title": "Topbar", "category": "component",
+         "css": ["topbar.css"], "doc": ["topbar.md"], "html": ["topbar.html"]},
+        {"id": "brand", "title": "Brand", "category": "concept",
+         "css": [], "doc": ["brand.md"], "html": []},
+    ]}
+
+    def test_structure_lists_files_grouped(self):
+        out = render_structure(self.MANIFEST)
+        self.assertIn("css/topbar.css", out)
+        self.assertIn("docs/brand.md", out)
+        self.assertIn("components/topbar.html", out)
+
+    def test_status_table_marks_component_columns(self):
+        out = render_status(self.MANIFEST)
+        self.assertIn("Topbar", out)
+        self.assertIn("✅", out)
+        self.assertNotIn("Brand", out)
+
+    def test_write_readme_only_touches_markers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "README.md").write_text(
+                "Intro bleibt.\n"
+                "<!-- AUTOGEN:structure START -->\nALT\n<!-- AUTOGEN:structure END -->\n"
+                "Mitte bleibt.\n"
+                "<!-- AUTOGEN:status START -->\nALT\n<!-- AUTOGEN:status END -->\n"
+                "Schluss bleibt.\n")
+            write_readme(root, self.MANIFEST)
+            text = (root / "README.md").read_text()
+            self.assertIn("Intro bleibt.", text)
+            self.assertIn("Mitte bleibt.", text)
+            self.assertIn("Schluss bleibt.", text)
+            self.assertNotIn("ALT", text)
+            self.assertIn("css/topbar.css", text)
+            self.assertIn("Topbar", text)
 
 
 if __name__ == "__main__":
