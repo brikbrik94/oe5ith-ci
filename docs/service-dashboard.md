@@ -160,7 +160,7 @@ Der Page-Header enthält auf der Config-Seite `.svc-page-title-row` (erste Ebene
 │   │   ├── .panel-title                   (Icon + Bezeichnung)
 │   │   └── span.panel-meta               (Typ-Hinweis, z. B. „Text · Zahl") (Optional)
 │   └── .panel-body
-│       └── .svc-field-grid[.svc-field-grid--cols-3]  (Grid-Wrapper für Felder dieses Panels) (Pflicht)
+│       └── .svc-field-grid[.svc-field-grid--cols-3]  (Grid-Wrapper bei ≥2 Feldern)  (s. Hinweis)
 │           └── .svc-field                                                   (Pflicht, n×)
 │               ├── label
 │               ├── input | select | textarea | .svc-field-readonly
@@ -171,6 +171,10 @@ Der Page-Header enthält auf der Config-Seite `.svc-page-title-row` (erste Ebene
     ├── a.btn.btn-ghost          (Abbrechen)                                 (Pflicht)
     └── span.svc-form-hint       (Hinweis, z. B. Neustart-Erfordernis)      (Optional)
 ```
+
+**Hinweis (Einzelfeld):** Enthält ein Panel nur ein einzelnes, volle Breite nutzendes Feld
+(z. B. eine JSON-Textarea), entfällt der `.svc-field-grid`-Wrapper — die `.svc-field` sitzt dann
+direkt im `.panel-body`. Der Grid-Wrapper ist nur ab zwei Feldern erforderlich.
 
 Toggle-Struktur (innerhalb von `.svc-field-grid` im Panel-Body, als Alternative zu `.svc-field`):
 
@@ -188,7 +192,7 @@ Toggle-Struktur (innerhalb von `.svc-field-grid` im Panel-Body, als Alternative 
 | Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
 |---|---|---|---|
 | `.svc-back-link` | Zurück-Navigation oben (mit `fa-arrow-left`) | Pflicht | — |
-| `.svc-field-grid` | Pflicht-Wrapper für Feldgruppen im Panel-Body (2-Spalten-Grid); Struktur: `.panel-body > .svc-field-grid > .svc-field` | Pflicht | `.svc-field-grid--cols-3` |
+| `.svc-field-grid` | Grid-Wrapper für Feldgruppen im Panel-Body (2-Spalten-Grid); Struktur: `.panel-body > .svc-field-grid > .svc-field`. Bei einzelnem volle-Breite-Feld entfällt der Wrapper. | Pflicht ab ≥2 Feldern | `.svc-field-grid--cols-3` |
 | `.svc-field-grid--cols-3` | Modifier: 3-Spalten-Grid statt 2 (z. B. für Toggle-Felder) | Optional | — |
 | `.svc-label-type` | Typ-Hinweis im Label (z. B. „(Text)", „(Zahl)"); schriftgewicht 400, Farbe `--subtle` | Optional | — |
 | `.svc-field-code` | Code/JSON-Textarea: Monospace-Font (`--font-mono`), 0.8rem, Farbe `--code-text`, vertikal resizable | Optional | — |
@@ -197,9 +201,9 @@ Toggle-Struktur (innerhalb von `.svc-field-grid` im Panel-Body, als Alternative 
 | `.svc-field-hint` | Hilfstext unter einem Feld (`<span>`) | Optional | — |
 | `.svc-secret` | Wrapper für Passwort-Feld mit Auge-Toggle | Optional | — |
 | `.svc-secret-toggle` | Sichtbarkeits-Umschalter im Secret-Feld | Optional | — |
-| `.svc-input-prefix` | Wrapper für Input mit Protokoll-Prefix | Optional | — |
+| `.svc-input-prefix` | Wrapper für Input mit Protokoll-Prefix; der innere `<input>` erhält `.mono` (Monospace, aus `typography.css`) | Optional | — |
 | `.svc-input-prefix-label` | Prefix-Label (z. B. `https://`) | Optional | — |
-| `.svc-toggle` | Toggle-Switch für Boolean-Config | Optional | `.on` (aktiv), `.warn` (Warnfarbe wenn aktiv) |
+| `.svc-toggle` | Toggle-Switch für Boolean-Config | Optional | `.on` (aktiv, Track grün), `.warn` (Sublabel in Warnfarbe; Track-Warnfarbe nur zusammen mit `.on`) |
 | `.svc-toggle-track` | Schiene des Toggles | Pflicht (im Toggle) | — |
 | `.svc-toggle-thumb` | Beweglicher Knopf im Track | Pflicht (im Toggle) | — |
 | `.svc-toggle-label` | Beschriftung des Toggles | Pflicht (im Toggle) | — |
