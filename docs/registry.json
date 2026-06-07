@@ -64,6 +64,8 @@
       "css": [], "doc": ["usage.md"], "html": [] },
     { "id": "for-coding-agents", "title": "Coding-Agent-Regeln", "category": "concept",
       "css": [], "doc": ["for-coding-agents.md"], "html": [] },
+    { "id": "doc-standard", "title": "Doku-Standard", "category": "concept",
+      "css": [], "doc": ["doc-standard.md"], "html": [] },
     { "id": "versioning", "title": "Versionierung", "category": "concept",
       "css": [], "doc": ["versioning.md"], "html": [] },
     { "id": "resources", "title": "Self-Hosting Ressourcen", "category": "concept",

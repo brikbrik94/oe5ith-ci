@@ -82,6 +82,7 @@ docs/concepts.md
 docs/context-menu.md
 docs/copyright-display.md
 docs/copyright.md
+docs/doc-standard.md
 docs/for-coding-agents.md
 docs/forms.md
 docs/geocoder-dropdown.md
