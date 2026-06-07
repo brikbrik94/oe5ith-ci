@@ -72,7 +72,7 @@ def check(root: Path) -> dict:
     index = root / "css" / "index.css"
     imported = set()
     if index.is_file():
-        imported = set(re.findall(r'@import\s+"([^"]+)"', index.read_text()))
+        imported = set(re.findall(r'@import\s+["\']([^"\']+)["\']', index.read_text()))
     for fname in sorted(claimed["css"]):
         if fname in ("index.css", "demo.css"):
             continue

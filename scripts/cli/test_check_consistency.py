@@ -26,28 +26,23 @@ def make_repo(tmp, manifest, css, components, docs, index_imports):
     return root
 
 
-BASE_MANIFEST = {"components": [
-    {"id": "topbar", "title": "Topbar", "category": "component",
-     "css": ["topbar.css"], "doc": ["topbar.md"], "html": ["topbar.html"]},
-    {"id": "index", "title": "Index", "category": "infra",
-     "css": ["index.css"], "doc": [], "html": []},
-]}
-
-
 class TestCheck(unittest.TestCase):
     def test_clean_repo_has_no_problems(self):
+        m = {"components": [
+            {"id": "topbar", "title": "Topbar", "category": "component",
+             "css": ["topbar.css"], "doc": ["topbar.md"], "html": ["topbar.html"]},
+            {"id": "common", "title": "Common", "category": "infra",
+             "css": ["common.css"], "doc": [], "html": []},
+            {"id": "index", "title": "Index", "category": "infra",
+             "css": ["index.css"], "doc": [], "html": []},
+        ]}
         with tempfile.TemporaryDirectory() as tmp:
-            root = make_repo(tmp, BASE_MANIFEST,
-                             css=["topbar.css"], components=["topbar.html"],
-                             docs=["topbar.md"], index_imports=["common.css", "topbar.css"])
-            # common.css referenced in index but listed? add it
-            (root / "css" / "common.css").write_text("/* x */")
-            BASE_MANIFEST["components"].append(
-                {"id": "common", "title": "Common", "category": "infra",
-                 "css": ["common.css"], "doc": [], "html": []})
-            (root / "docs" / "registry.json").write_text(json.dumps(BASE_MANIFEST))
+            root = make_repo(tmp, m,
+                             css=["topbar.css", "common.css"],
+                             components=["topbar.html"],
+                             docs=["topbar.md"],
+                             index_imports=["common.css", "topbar.css"])
             result = check(root)
-            BASE_MANIFEST["components"].pop()  # cleanup shared dict
             self.assertEqual(result["errors"], [])
 
     def test_dangling_file_is_error(self):
@@ -109,6 +104,27 @@ class TestCheck(unittest.TestCase):
             result = check(root)
             self.assertEqual(result["errors"], [])
             self.assertTrue(any("coords" in w for w in result["warnings"]))
+
+    def test_file_claimed_by_two_entries_is_error(self):
+        m = {"components": [
+            {"id": "alpha", "title": "Alpha", "category": "component",
+             "css": ["shared.css"], "doc": [], "html": []},
+            {"id": "beta", "title": "Beta", "category": "component",
+             "css": ["shared.css"], "doc": [], "html": []},
+            {"id": "index", "title": "Index", "category": "infra",
+             "css": ["index.css"], "doc": [], "html": []},
+        ]}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = make_repo(tmp, m,
+                             css=["shared.css"],
+                             components=[],
+                             docs=[],
+                             index_imports=["shared.css"])
+            result = check(root)
+            self.assertTrue(any(
+                "shared.css" in e and ("beansprucht" in e or "mehreren" in e)
+                for e in result["errors"]
+            ))
 
 
 if __name__ == "__main__":
