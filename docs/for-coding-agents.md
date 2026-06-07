@@ -374,6 +374,7 @@ Vor Abschluss einer Änderung prüfen:
 - [ ] Keine Pfade oder Deploy-Strukturen wurden unbeabsichtigt geändert.
 - [ ] Änderungen sind klein und nachvollziehbar.
 - [ ] Karten-Seiten wurden als Sonderfall behandelt.
+- [ ] Geänderte/neue Komponenten-Docs erfüllen `docs/doc-standard.md` (G1–G4, interpretationsfrei).
 
 ---
 
@@ -411,3 +412,22 @@ und den Dreiklang Spec→Referenz→CSS. `--write` regeneriert die README-Übers
 Kategorien: `component` (voller Dreiklang erwartet), `concept` (reine Doku),
 `infra` (`common`, `index`, `demo`). Bewusste Lücken über leere Arrays + `note`
 dokumentieren.
+
+---
+
+## Komponenten-Docs schreiben
+
+Beschreibende Docs für `category: component` folgen `docs/doc-standard.md` und müssen
+**interpretationsfrei** sein: Ein Agent muss die Komponente allein aus der Doc bauen können,
+ohne die Beispiel-HTML in `components/*.html` zu interpretieren. Pflicht sind die vier
+Garantien:
+
+1. **G1** — vollständige Element-Tabelle (jede Klasse mit Zweck, Pflicht/Optional, Modifier).
+2. **G2** — Verschachtelungs-Baum (Eltern-Kind-Hierarchie).
+3. **G3** — Reihenfolge & Platzierung als Text-Regel (z. B. Speichern primär zuerst,
+   Abbrechen als `btn-ghost` daneben).
+4. **G4** — Zustände-/Varianten-Tabelle mit „wann verwenden".
+
+Wenn ein Layout nur über Inline-Styles im Beispiel-HTML existiert, ist das eine
+Interpretations-Lücke UND ein CI-Regelverstoß — stattdessen eine CI-Klasse einführen und in
+der Doc dokumentieren. `docs/service-dashboard.md` ist das Referenz-Beispiel.
