@@ -5,6 +5,21 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.12.3 - 2026-06-08
+
+### Added
+- **docs/service-dashboard.md** — Abschnitt „Inhalt & Semantik" für Detail- und Config-Seite:
+  - **Detail:** Ein-Endpunkt-Regel (eine Detailseite zeigt genau einen Dienst/Endpunkt);
+    festes Set erlaubter Panel-Typen (Live-Status [Pflicht], Verbindung/Endpoint,
+    Konfiguration read-only, Diagnose/Fehler); Zellen-Regel (ein Wert = eine `.svc-data-cell`).
+  - **Config:** Kategorien-Gruppierung als offenes Prinzip (Beispiele: Allgemein, Verbindung,
+    Authentifizierung, Erweitert); Pflicht-Überschrift je Panel.
+
+### Changed
+- `.panel-title` auf der Config-Seite von „bestehende Klasse" zu **Pflicht je Panel** hochgestuft.
+
+---
+
 ## v1.12.2 - 2026-06-07
 
 ### Added
