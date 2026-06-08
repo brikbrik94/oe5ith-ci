@@ -288,6 +288,7 @@ Feld hat.
 
 | Datum | Änderung |
 |---|---|
+| 2026-06-08 | Inhaltlich-semantische Regeln ergänzt: Detail-Seite „Inhalt & Semantik" (Ein-Endpunkt-Regel, festes Panel-Typen-Set, Zellen-Regel); Config-Seite „Inhalt & Semantik" (Kategorien-Gruppierung als offenes Prinzip, `.panel-title` als Pflicht je Panel). |
 | 2026-06-07 | Layout-Inline-Styles durch CI-Klassen ersetzt: `.svc-page-title-row` (Detail+Config Page-Header), `.svc-field-grid` + `.svc-field-grid--cols-3` (Config Panel-Body), `.svc-label-type` (Label-Typ-Hinweise), `.svc-field-code` (JSON-Textarea); G2-Bäume und G3-Text aktualisiert. |
 | 2026-06-07 | Strukturkorrekturen: Panel-Verschachtelung für svc-data-grid dokumentiert; Flex-Wrapper-div in page-header-left für Detail+Config; Toggle-Beschriftungs-Wrapper-div; nicht-klickbare Kachel-Variante (div.card.card-dashboard); card-dashboard-link/arrow als Optional; card-warn ergänzt; 2-Spalten-Grid-div in Panel-Body; panel-Klassen in G1-Hinweis; G4 um sidebar-status-dot.online/offline und Toggle-inaktiv-Zeile ergänzt. |
 | 2026-06-07 | Auf `docs/doc-standard.md` gehoben (G1–G4, interpretationsfrei). Toggle-Teile inkl. `.svc-toggle-sublabel` ergänzt, Button-Platzierung und Zustände-Tabelle ausformuliert. |
