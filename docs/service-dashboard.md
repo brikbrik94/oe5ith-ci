@@ -236,6 +236,8 @@ Toggle-Struktur (innerhalb von `.svc-field-grid` im Panel-Body, als Alternative 
 Bestehende Klassen (aus `page.css`): `.panel`, `.panel-header`, `.panel-title`, `.panel-body`,
 `.panel-meta`. (`.panel-header-right` wird auf der Config-Seite nicht verwendet — dort steht
 `span.panel-meta` direkt im `.panel-header` als Geschwister von `.panel-title`.)
+`.panel-title` (Icon + Bezeichnung) ist auf der Config-Seite **Pflicht je Panel** — auch
+bei einem Panel mit nur einem Feld (siehe „Inhalt & Semantik").
 
 ### Reihenfolge & Platzierung (G3)
 
@@ -251,6 +253,18 @@ Bestehende Klassen (aus `page.css`): `.panel`, `.panel-header`, `.panel-title`, 
   optionaler `.svc-form-hint` folgt rechts. (Projektweite Konvention: primär zuerst,
   sekundär als Ghost daneben.)
 - `.svc-form-actions` ist letztes Kind von `.content-body`, nach allen Panels.
+
+### Inhalt & Semantik
+
+**Gruppierung nach Kategorien (offenes Prinzip):** Einstellungen werden thematisch in
+Panels („Kategorien") gruppiert. Dienste wählen die passenden Kategorien selbst — es gibt
+keine geschlossene Liste. Empfohlene Beispiel-Kategorien: **Allgemein, Verbindung,
+Authentifizierung, Erweitert**. Reihenfolge: allgemeine/häufig genutzte Kategorien zuerst,
+„Erweitert" bzw. riskante Einstellungen zuletzt.
+
+**Pflicht-Überschrift je Panel:** Jedes Config-Panel **muss** eine Überschrift
+(`.panel-title` mit Icon + Bezeichnung) enthalten — auch wenn das Panel nur ein einzelnes
+Feld hat.
 
 ---
 
