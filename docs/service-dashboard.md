@@ -143,6 +143,28 @@ Weitere bestehende Klassen: `.badge.badge-green/red/yellow`, `.btn.btn-danger`,
 - `.card-warn` folgt unmittelbar nach dem Panel mit den Daten und dient als Hinweis,
   dass die destruktive Aktion (z. B. Neustart) Konsequenzen hat.
 
+### Inhalt & Semantik
+
+**Ein Endpunkt pro Seite:** Eine Detailseite zeigt **genau einen Dienst/Endpunkt**.
+Alle Panels der Seite beziehen sich auf diesen einen Endpunkt; mehrere Dienste werden
+**nie** auf einer Detailseite gemischt — jeder Dienst hat seine eigene Detailseite,
+der Wechsel erfolgt über die Sidebar. (Die „Variante – Dienst offline" in
+`components/service-dashboard-detail.html` ist eine Zustands-Demo, kein zweiter Dienst.)
+
+**Festes Set an Panel-Typen:** Jede Kachel (`.panel`) muss **genau einem** der
+folgenden Typen entsprechen — andere Panel-Typen sind nicht zulässig:
+
+| Panel-Typ | Inhalt | Pflicht/Optional |
+|---|---|---|
+| **Live-Status** | Echtzeit-Laufzeitwerte, per JS aktualisiert (z. B. GPS-Fix, Geschwindigkeit, nächste TX, Payload, Dienst aktiv) | Pflicht (mind. 1 pro Seite) |
+| **Verbindung / Endpoint** | Statische Verbindungsdaten: Host, Port, Protokoll, URL, letzter Kontakt | Optional |
+| **Konfiguration (read-only)** | Aktuell geladene Einstellungen nur zur Anzeige; Ändern erfolgt über die Config-Seite | Optional |
+| **Diagnose / Fehler** | Letzte Fehler, Warnungen, Diagnosehinweise | Optional |
+
+**Zellen-Regel:** Ein Wert = eine `.svc-data-cell` (Label / Wert / optional Subtext).
+Eine Zelle enthält keinen zusammengesetzten oder mehrwertigen Inhalt — mehrere Werte
+werden auf mehrere Zellen aufgeteilt.
+
 ---
 
 ## Seite 3 — Config (Seitentyp 1: Detail-Seite)
