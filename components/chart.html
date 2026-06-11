@@ -84,23 +84,31 @@
   </div>
 
   <!-- 4. Multi-Serie mit Legende -->
-  <h2>Multi-Serie + Legende</h2>
+  <h2>Multi-Serie + Legende (4 Serien)</h2>
   <div class="chart">
     <div class="chart-header">
-      <p class="chart-title">Durchsatz</p>
+      <p class="chart-title">Durchsatz je Knoten</p>
       <div class="chart-legend">
-        <span class="chart-legend-item chart-s1"><span class="chart-legend-swatch"></span>Download</span>
-        <span class="chart-legend-item chart-s2"><span class="chart-legend-swatch"></span>Upload</span>
+        <span class="chart-legend-item chart-s1"><span class="chart-legend-swatch"></span>Knoten A</span>
+        <span class="chart-legend-item chart-s2"><span class="chart-legend-swatch"></span>Knoten B</span>
+        <span class="chart-legend-item chart-s3"><span class="chart-legend-swatch"></span>Knoten C</span>
+        <span class="chart-legend-item chart-s4"><span class="chart-legend-swatch"></span>Knoten D</span>
       </div>
     </div>
     <div class="chart-plot">
       <svg class="chart-svg" viewBox="0 0 300 100" preserveAspectRatio="none"
-           role="img" aria-label="Durchsatz Download und Upload">
+           role="img" aria-label="Durchsatz von vier Knoten A bis D">
         <g class="chart-series chart-s1">
           <polyline class="chart-line" points="0,70 60,50 120,55 180,30 240,40 300,20"></polyline>
         </g>
         <g class="chart-series chart-s2">
           <polyline class="chart-line" points="0,85 60,80 120,75 180,78 240,70 300,72"></polyline>
+        </g>
+        <g class="chart-series chart-s3">
+          <polyline class="chart-line" points="0,60 60,65 120,45 180,55 240,35 300,48"></polyline>
+        </g>
+        <g class="chart-series chart-s4">
+          <polyline class="chart-line" points="0,90 60,70 120,82 180,60 240,72 300,55"></polyline>
         </g>
       </svg>
     </div>
