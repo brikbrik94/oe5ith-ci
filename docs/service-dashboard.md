@@ -2,7 +2,7 @@
 
 **Referenz-Dateien:** `components/service-dashboard-overview.html` · `components/service-dashboard-detail.html` · `components/service-dashboard-config.html`
 **CSS:** `css/service-dashboard.css`
-**Status:** definiert · v1.12.2
+**Status:** definiert · v1.13.0
 
 > Diese Doc folgt `docs/doc-standard.md` (interpretationsfrei). Die Beispiel-HTML in
 > `components/` ist Verifikation, nicht Quelle — alles Nötige steht hier im Text.
@@ -44,6 +44,7 @@ Zeigt alle Dienste eines Pi als Kacheln im Card-Grid. Kacheln existieren in zwei
 │   │   └── span (Titel-Text)                             (Pflicht)
 │   ├── p.svc-info-line                                   (Optional)
 │   ├── span.svc-status-line[.online|.offline|.unknown]   (Pflicht)
+│   ├── .chart.chart-sparkline                            (Optional)
 │   └── i.card-dashboard-arrow                            (Optional, nur klickbare Variante)
 └── div.card.card-dashboard                          (nicht klickbare Variante — Optional)
     ├── div.card-status-dot[.online|.offline|.unknown]   (Pflicht)
@@ -51,7 +52,8 @@ Zeigt alle Dienste eines Pi als Kacheln im Card-Grid. Kacheln existieren in zwei
     │   ├── i.svc-card-icon                               (Optional)
     │   └── span (Titel-Text)                             (Pflicht)
     ├── p.svc-info-line                                   (Optional)
-    └── span.svc-status-line[.online|.offline|.unknown]   (Pflicht)
+    ├── span.svc-status-line[.online|.offline|.unknown]   (Pflicht)
+    └── .chart.chart-sparkline                            (Optional)
 ```
 
 ### Elemente (G1)
@@ -76,6 +78,8 @@ Zeigt alle Dienste eines Pi als Kacheln im Card-Grid. Kacheln existieren in zwei
   und ohne `.card-dashboard-arrow`. Verwenden, wenn für diesen Dienst keine Detail-Seite existiert.
 - Wenn `.svc-card-icon` im h3 verwendet wird, MUSS der Textteil in `<span>` stehen, damit
   Truncation korrekt funktioniert.
+- Eine Kachel darf optional eine `.chart.chart-sparkline` (siehe `docs/chart.md`) als letztes
+  Inhalts-Element vor dem Pfeil-Icon zeigen, um den Trend des Status-/Kennwerts anzudeuten.
 
 ---
 
@@ -106,7 +110,8 @@ Zeigt alle Dienste eines Pi als Kacheln im Card-Grid. Kacheln existieren in zwei
 │           └── .svc-data-cell                                               (Pflicht, n×)
 │               ├── span.svc-data-label                                      (Pflicht)
 │               ├── span.svc-data-value[.success|.danger]                   (Pflicht)
-│               └── span.svc-data-sub                                        (Optional)
+│               ├── span.svc-data-sub                                        (Optional)
+│               └── .chart.chart-sparkline                                   (Optional, letztes Kind)
 └── div.card-warn                (Hinweis bei destruktiven Aktionen)         (Optional)
 ```
 
@@ -160,10 +165,21 @@ folgenden Typen entsprechen — andere Panel-Typen sind nicht zulässig:
 | **Verbindung / Endpoint** | Statische Verbindungsdaten: Host, Port, Protokoll, URL, letzter Kontakt | Optional |
 | **Konfiguration (read-only)** | Aktuell geladene Einstellungen nur zur Anzeige; Ändern erfolgt über die Config-Seite | Optional |
 | **Diagnose / Fehler** | Letzte Fehler, Warnungen, Diagnosehinweise | Optional |
+| **Verlauf / Historie** | Ein `.chart`-Volldiagramm (Linie/Fläche/Balken, siehe `docs/chart.md`) im `.panel-body`, das die kurze gespeicherte Historie einer Kennzahl zeigt | Optional |
 
 **Zellen-Regel:** Ein Wert = eine `.svc-data-cell` (Label / Wert / optional Subtext).
 Eine Zelle enthält keinen zusammengesetzten oder mehrwertigen Inhalt — mehrere Werte
 werden auf mehrere Zellen aufgeteilt.
+
+**Verlauf-Panel:** Ein Panel vom Typ „Verlauf / Historie" enthält **genau ein** `.chart`
+(analog Ein-Endpunkt-Regel) im `.panel-body`. `.panel-title` (Icon + Bezeichnung) bleibt
+Pflicht; eine optionale Zeitspanne (z. B. „letzte 24 h") steht als `span.panel-meta` im
+`.panel-header-right`. Mechanik und Klassen des Diagramms regelt `docs/chart.md`.
+
+**Sparkline in Datenzelle:** Eine `.svc-data-cell` darf **optional** als **letztes** Kind eine
+`.chart.chart-sparkline` enthalten (nach `svc-data-label`/`svc-data-value`/optional
+`svc-data-sub`). Die Zellen-Regel bleibt: die Sparkline ist der Verlauf **desselben** Werts,
+kein zweiter Wert.
 
 ---
 
@@ -288,6 +304,7 @@ Feld hat.
 
 | Datum | Änderung |
 |---|---|
+| 2026-06-11 | Panel-Typ „Verlauf / Historie" ergänzt (ein `.chart` pro Panel); Sparkline als optionales letztes Kind in `.svc-data-cell` und in Übersichts-Kacheln. Mechanik in `docs/chart.md`. |
 | 2026-06-08 | Inhaltlich-semantische Regeln ergänzt: Detail-Seite „Inhalt & Semantik" (Ein-Endpunkt-Regel, festes Panel-Typen-Set, Zellen-Regel); Config-Seite „Inhalt & Semantik" (Kategorien-Gruppierung als offenes Prinzip, `.panel-title` als Pflicht je Panel). |
 | 2026-06-07 | Layout-Inline-Styles durch CI-Klassen ersetzt: `.svc-page-title-row` (Detail+Config Page-Header), `.svc-field-grid` + `.svc-field-grid--cols-3` (Config Panel-Body), `.svc-label-type` (Label-Typ-Hinweise), `.svc-field-code` (JSON-Textarea); G2-Bäume und G3-Text aktualisiert. |
 | 2026-06-07 | Strukturkorrekturen: Panel-Verschachtelung für svc-data-grid dokumentiert; Flex-Wrapper-div in page-header-left für Detail+Config; Toggle-Beschriftungs-Wrapper-div; nicht-klickbare Kachel-Variante (div.card.card-dashboard); card-dashboard-link/arrow als Optional; card-warn ergänzt; 2-Spalten-Grid-div in Panel-Body; panel-Klassen in G1-Hinweis; G4 um sidebar-status-dot.online/offline und Toggle-inaktiv-Zeile ergänzt. |
