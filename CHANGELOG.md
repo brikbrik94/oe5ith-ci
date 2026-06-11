@@ -5,6 +5,20 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.13.0 - 2026-06-11
+
+### Added
+- **Chart-Komponente** (`css/chart.css`, `docs/chart.md`, `components/chart.html`, neu):
+  datengetriebene Verlaufsdarstellung per Inline-SVG. Typen: Linie, Fläche (`chart-area`),
+  Balken (`chart-bar`), Sparkline (`chart-sparkline`). Serien- und Schwellwert-Färbung,
+  Achsen, Grid, Legende, Tooltip, Empty-State.
+- **Chart-Token** in `common.css`: `--chart-1`–`--chart-4`, `--chart-grid`, `--chart-axis`,
+  `--chart-area-opacity` (dokumentiert in `docs/tokens.md`).
+- **service-dashboard**: neuer Panel-Typ „Verlauf / Historie"; Sparkline als optionales
+  letztes Kind in `.svc-data-cell` und in Übersichts-Kacheln.
+
+---
+
 ## v1.12.3 - 2026-06-08
 
 ### Added
