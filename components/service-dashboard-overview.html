@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../css/sidebar.css">
 <link rel="stylesheet" href="../css/page.css">
 <link rel="stylesheet" href="../css/cards.css">
+<link rel="stylesheet" href="../css/chart.css">
 <link rel="stylesheet" href="../css/badges.css">
 <link rel="stylesheet" href="../css/service-dashboard.css">
 <link rel="stylesheet" href="../css/demo.css">
@@ -95,6 +96,11 @@
             </h3>
             <p class="svc-info-line">GPS Fix · 0.0 km/h</p>
             <span class="svc-status-line online">● Online · nächste TX in 4:58</span>
+            <div class="chart chart-sparkline chart-s1" aria-hidden="true">
+              <svg class="chart-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline class="chart-line" points="0,20 25,12 50,16 75,9 100,6"></polyline>
+              </svg>
+            </div>
             <i class="fa-solid fa-arrow-right card-dashboard-arrow"></i>
           </a>
 
