@@ -7,6 +7,8 @@
       "html": ["sidebar.html", "sidebar-types.html"] },
     { "id": "cards", "title": "Cards", "category": "component",
       "css": ["cards.css"], "doc": ["cards.md"], "html": ["cards.html"] },
+    { "id": "chart", "title": "Chart", "category": "component",
+      "css": ["chart.css"], "doc": ["chart.md"], "html": ["chart.html"] },
     { "id": "buttons", "title": "Buttons", "category": "component",
       "css": ["buttons.css"], "doc": ["buttons.md"],
       "html": ["buttons.html", "buttons-demo.html"] },
