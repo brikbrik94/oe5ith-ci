@@ -5,6 +5,18 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.13.1 - 2026-06-11
+
+### Fixed
+- **Kalender**: Wochenzeilen sind jetzt einheitlich hoch. Bisher richtete sich jede
+  Zeile nach ihrem Inhalt (`grid-auto-rows` ungesetzt → `auto`), wodurch Wochen mit
+  mehreren Einträgen pro Tag höher wurden als spärliche Wochen. Über
+  `grid-template-rows: auto` (kompakter Wochentag-Header) + `grid-auto-rows: 1fr`
+  werden alle Wochenzeilen auf die höchste angeglichen. In der einspaltigen
+  Mobilansicht (≤768px) bleibt `grid-auto-rows: auto`.
+
+---
+
 ## v1.13.0 - 2026-06-11
 
 ### Added
