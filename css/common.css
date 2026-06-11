@@ -91,6 +91,15 @@
   --cal-color-10-subtle: rgba(148,163,184,0.10);
   --cal-color-10-border: rgba(148,163,184,0.25);
 
+  /* ── FARBEN: Chart-Serienfarben (Verlaufs-/Diagramm-Komponente) ── */
+  --chart-1:            var(--accent);   /* #3b82f6 — Datenreihe 1 (Default) */
+  --chart-2:            #14b8a6;          /* Teal   — Datenreihe 2 */
+  --chart-3:            #a855f7;          /* Violett — Datenreihe 3 */
+  --chart-4:            #f59e0b;          /* Amber  — Datenreihe 4 */
+  --chart-grid:         var(--border);   /* Gridlines */
+  --chart-axis:         var(--subtle);   /* Achsenlinien + Tick-Labels */
+  --chart-area-opacity: 0.15;            /* Füll-Transparenz Bereichsdiagramm */
+
   /* ── FARBEN: Code / Terminal ── */
   --code-bg:          #000000;
   --code-text:        #4ade80;
