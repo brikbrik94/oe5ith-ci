@@ -92,6 +92,24 @@ Jeder Slot hat drei Varianten: Vollton, Subtle (Hintergrund ~10%), Border (~25%)
 
 ---
 
+## Chart-Farbslots
+
+Für die Verlaufs-/Diagramm-Komponente (`docs/chart.md`). Serienfarben sind pro Diagramm den
+Datenreihen 1–4 zugeordnet; Schwellwert-Färbung nutzt die semantischen Farben (`--success`/
+`--warning`/`--danger`), nicht diese Slots.
+
+| Token | Wert | Verwendung |
+|---|---|---|
+| `--chart-1` | `var(--accent)` (#3b82f6) | Datenreihe 1 (Default-Serie) |
+| `--chart-2` | `#14b8a6` | Datenreihe 2 (Teal) |
+| `--chart-3` | `#a855f7` | Datenreihe 3 (Violett) |
+| `--chart-4` | `#f59e0b` | Datenreihe 4 (Amber) |
+| `--chart-grid` | `var(--border)` | Gridlines im Diagramm |
+| `--chart-axis` | `var(--subtle)` | Achsenlinien und Tick-Beschriftungen |
+| `--chart-area-opacity` | `0.15` | Füll-Transparenz für Bereichsdiagramme |
+
+---
+
 ## Code / Terminal Farben
 
 | Token | Wert | Verwendung |
@@ -223,6 +241,15 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
   --auth:             #a78bfa;
   --auth-subtle:      rgba(139,92,246,0.10);
   --auth-border:      rgba(139,92,246,0.25);
+
+  /* ── FARBEN: Chart-Serienfarben (Verlaufs-/Diagramm-Komponente) ── */
+  --chart-1:            var(--accent);   /* #3b82f6 — Datenreihe 1 (Default) */
+  --chart-2:            #14b8a6;          /* Teal   — Datenreihe 2 */
+  --chart-3:            #a855f7;          /* Violett — Datenreihe 3 */
+  --chart-4:            #f59e0b;          /* Amber  — Datenreihe 4 */
+  --chart-grid:         var(--border);   /* Gridlines */
+  --chart-axis:         var(--subtle);   /* Achsenlinien + Tick-Labels */
+  --chart-area-opacity: 0.15;            /* Füll-Transparenz Bereichsdiagramm */
 
   /* Code */
   --code-bg:          #000000;
