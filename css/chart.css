@@ -1,0 +1,204 @@
+/*
+ * OE5ITH CI — chart.css
+ * Datengetriebene Verlaufs-/Diagramm-Komponente (Inline-SVG).
+ * Die App liefert die SVG-Geometrie (Koordinaten aus Daten);
+ * diese Datei liefert ausschließlich Farbe/Stroke/Fill via common.css-Tokens.
+ *
+ * Verwendung:
+ *   1. common.css einbinden (Tokens)
+ *   2. Diese Datei einbinden
+ *
+ * <link rel="stylesheet" href="shared/css/common.css">
+ * <link rel="stylesheet" href="shared/css/chart.css">
+ */
+
+/* ═══════════════════════════════════════
+   CHART BASE
+   ═══════════════════════════════════════ */
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* ── Header: Titel + Legende ── */
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.chart-title {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.chart-legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--chart-series-color, var(--chart-1));
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   PLOT / SVG
+   ═══════════════════════════════════════ */
+
+.chart-plot {
+  position: relative;
+  width: 100%;
+}
+
+.chart-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* ═══════════════════════════════════════
+   SERIENFARBE
+   Serien-Modifier setzen die Custom-Property; Leaf-Elemente lesen sie.
+   Status-Modifier (weiter unten) überschreiben sie auf dem Leaf → Status gewinnt.
+   ═══════════════════════════════════════ */
+
+.chart-s1 { --chart-series-color: var(--chart-1); }
+.chart-s2 { --chart-series-color: var(--chart-2); }
+.chart-s3 { --chart-series-color: var(--chart-3); }
+.chart-s4 { --chart-series-color: var(--chart-4); }
+
+/* ═══════════════════════════════════════
+   GRID & ACHSEN
+   ═══════════════════════════════════════ */
+
+.chart-gridline {
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-axis-line {
+  stroke: var(--chart-axis);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-tick-label {
+  fill: var(--subtle);
+  font-size: 0.62rem;
+  font-family: var(--font-sans);
+}
+
+/* ═══════════════════════════════════════
+   DATENREIHEN
+   ═══════════════════════════════════════ */
+
+.chart-line {
+  fill: none;
+  stroke: var(--chart-series-color, var(--chart-1));
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-area-fill {
+  fill: var(--chart-series-color, var(--chart-1));
+  fill-opacity: var(--chart-area-opacity);
+  stroke: none;
+}
+
+.chart-bar-rect {
+  fill: var(--chart-series-color, var(--chart-1));
+}
+
+.chart-point {
+  fill: var(--chart-series-color, var(--chart-1));
+  stroke: var(--bg);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-point-last {
+  stroke: var(--text);
+}
+
+/* ── Status-Färbung (überschreibt Serienfarbe auf dem Leaf) ── */
+.chart-ok     { --chart-series-color: var(--success); }
+.chart-warn   { --chart-series-color: var(--warning); }
+.chart-danger { --chart-series-color: var(--danger); }
+
+/* ═══════════════════════════════════════
+   TOOLTIP (CI-positioniert, App toggelt .is-visible)
+   ═══════════════════════════════════════ */
+
+.chart-tooltip {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  pointer-events: none;
+  background: var(--panel-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 6px 9px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -100%);
+  transition: opacity var(--transition-fast);
+}
+
+.chart-tooltip.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.chart-tooltip-label { color: var(--muted); }
+.chart-tooltip-value { color: var(--text); font-weight: 600; }
+
+/* ═══════════════════════════════════════
+   EMPTY-STATE
+   ═══════════════════════════════════════ */
+
+.chart-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  color: var(--subtle);
+  font-size: 0.75rem;
+}
+
+/* ═══════════════════════════════════════
+   SPARKLINE (achsenlos, kompakt — in Zelle/Kachel)
+   ═══════════════════════════════════════ */
+
+.chart-sparkline {
+  gap: 0;
+}
+
+.chart-sparkline .chart-svg {
+  height: 2rem;
+  width: 100%;
+}
