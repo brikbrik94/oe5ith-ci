@@ -123,6 +123,10 @@
   --btn-radius:           6px;
   --badge-radius:         4px;
 
+  /* Split-View (Master-Detail, Typ 6) */
+  --split-master-width:  300px;   /* Breite der Master-Spalte (Desktop) */
+  --split-master-max-h:  320px;   /* max. Höhe der Master-Spalte im gestapelten Mobile-Layout */
+
   /* ── Z-INDEX ── */
   /* Z-Index Kaskade
    * Werte sind für Karten-Applikationen ausgelegt:

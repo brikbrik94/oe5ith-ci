@@ -145,6 +145,8 @@ Datenreihen 1–4 zugeordnet; Schwellwert-Färbung nutzt die semantischen Farben
 | `--card-gap` | `20px` | Grid-Gap zwischen Cards |
 | `--btn-radius` | `6px` | Buttons |
 | `--badge-radius` | `4px` | Badges — eckig |
+| `--split-master-width` | `300px` | Breite der Master-Spalte (Split-View Typ 6, Desktop) |
+| `--split-master-max-h` | `320px` | max. Höhe der Master-Spalte im gestapelten Mobile-Layout (Split-View Typ 6) |
 
 ---
 
