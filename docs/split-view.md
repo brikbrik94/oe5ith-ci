@@ -33,7 +33,8 @@ Event-Listen, Geräteverwaltung.
 Split View aktiviert einen **Fixed-Height-Modus automatisch** — ohne zusätzliche
 Klassen am Seiten-Wrapper. Sobald `.split-view` im DOM vorhanden ist, greift in
 `css/split.css` ein `:has(.split-view)`-Selektor, der `.page-content` auf
-`overflow: hidden` setzt und `.content-body` auf `flex: 1; min-height: 0;`.
+`display: flex; flex-direction: column; overflow: hidden` setzt und `.content-body`
+auf `flex: 1; min-height: 0; overflow: hidden`.
 
 Dadurch nehmen Master und Detail die verbleibende Viewport-Höhe vollständig ein
 und scrollen jeweils intern. `css/common.css` und `css/page.css` bleiben unverändert.
