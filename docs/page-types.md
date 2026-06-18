@@ -211,6 +211,48 @@ Topbar
 
 ---
 
+## Typ 6 — Split-View (Master-Detail)
+
+**Beispiele:** Log-Explorer, Alarm-/Event-Listen, Geräteverwaltung, Ressourcenlisten mit Detailansicht
+
+**Wann verwenden:**
+Der Inhalt besteht aus einer scrollbaren Auswahlliste (Master) und einem abhängigen
+Detailbereich (Detail), die nebeneinander angezeigt werden. Der Nutzer wählt aus der
+Master-Liste einen Eintrag aus und sieht das Ergebnis sofort im Detailbereich —
+ohne Seitenneuladen. Beide Spalten scrollen unabhängig voneinander.
+
+**Struktur:**
+```
+Topbar
+└── Layout
+    ├── Sidebar
+    └── page-content
+        ├── page-header          ← Titel + Untertitel + optionale Aktion
+        └── content-body
+            └── split-view       ← einziges direktes Kind von content-body
+                ├── split-master ← linke Spalte: scrollbare Auswahlliste
+                │   ├── split-master-header  (Optional — Titel, Aktions-Buttons)
+                │   └── split-master-body
+                │       └── split-item [.active]
+                │           ├── status-dot [.on|.warn|.off]  (Optional)
+                │           ├── split-item-label
+                │           └── split-item-meta              (Optional)
+                └── split-detail ← rechte Spalte: Panels, Tabellen, etc.
+```
+
+**Merkmale:**
+- Der Fixed-Height-Modus aktiviert sich **automatisch** sobald `.split-view` im DOM vorhanden ist — kein zusätzliches Klassen-Markup am Seiten-Wrapper nötig.
+- `css/split.css` zusätzlich zu `css/page.css` einbinden.
+- `.split-view` ist das **einzige direkte Kind** von `.content-body`.
+- Auf Mobile (≤ 768 px) werden Master und Detail automatisch gestapelt.
+- Komponenten-Doku: `docs/split-view.md`
+
+**Nicht geeignet wenn:**
+- Es keine persistente Auswahlliste gibt → Typ 1 (Panel-Stapel)
+- Der Hauptinhalt nur eine einzelne Tabelle ohne Selektion ist → Typ 2
+
+---
+
 ## Karten-Seite (Sonderfall)
 
 **Beispiele:** karte.oe5ith.at, vector-map-test, Routing-Karte
@@ -257,13 +299,14 @@ Topbar (mit Controls-Panel: Kartentyp, Zoom, Legende, Labels)
 | Lange Liste von Einträgen / Feed | 2 — Listen |
 | Katalog mit thematischen Gruppen | 4 — Karten-Grid |
 | Interaktive Karte als Hauptinhalt | Karten-Sonderfall |
+| Master-Detail / Split-View | Typ 6 |
 | Keines davon passt | Neues Design erforderlich |
 
 ---
 
 ## Neues Design erforderlich wenn...
 
-- Der Inhalt in zwei gleichwertige Hälften aufgeteilt ist (Split-View)
+- Der Inhalt eine selektierbare Liste mit Detailbereich ist → **Typ 6** (Split-View ist definiert, siehe `docs/split-view.md`)
 - Es eine Step-by-Step Wizard-Logik gibt
 - Der Inhalt primär aus Diagrammen / Charts besteht
 - Es eine vollständige Einstellungsseite mit Kategorien ist (Settings-Pattern)
@@ -278,5 +321,6 @@ das bestehende Basis-CSS (`common.css`, `topbar.css`, `sidebar.css`) wiederverwe
 
 | Datum | Änderung |
 |---|---|
+| 2026-06-18 | Typ 6 — Split-View (Master-Detail) ergänzt. Schnellreferenz + „Neues Design"-Punkt aktualisiert. |
 | 2026-05-07 | `.map-attribution`-Verweis entfernt (Breaking: v2.0.0). `.page-footer` als Pflichtbaustein für Typ 5 dokumentiert. Footer/Copyright-Regeltabelle ergänzt. |
 | 2026-04-24 | Initiale Definition. 5 Typen + Karten-Sonderfall. Entscheidungsbaum. Schnellreferenz. |
