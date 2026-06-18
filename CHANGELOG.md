@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.14.0 - 2026-06-18
+
+### Added
+- **Split-View (Typ 6)** — generische Master-Detail-Komponente: schmale scrollbare Auswahlliste links, Detailbereich rechts, beide unabhängig scrollbar. Neue `css/split.css`, Tokens `--split-master-width`/`--split-master-max-h`, Doku `docs/split-view.md`, Referenz `components/split-view.html`, Seitentyp Typ 6 in `docs/page-types.md`.
+
+---
+
 ## v1.13.1 - 2026-06-11
 
 ### Fixed

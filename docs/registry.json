@@ -31,6 +31,8 @@
       "css": ["calendar.css"], "doc": ["calendar.md"], "html": ["calendar.html"] },
     { "id": "code-viewer", "title": "Code-Viewer", "category": "component",
       "css": ["code-viewer.css"], "doc": ["code-viewer.md"], "html": ["code-viewer.html"] },
+    { "id": "split-view", "title": "Split-View (Master-Detail)", "category": "component",
+      "css": ["split.css"], "doc": ["split-view.md"], "html": ["split-view.html"] },
     { "id": "toast", "title": "Toast", "category": "component",
       "css": ["toast.css"], "doc": ["toast.md"], "html": ["toast.html"] },
     { "id": "coords", "title": "Koordinaten-Umrechner (Sidebar Typ 7)", "category": "component",

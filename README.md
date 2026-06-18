@@ -36,6 +36,7 @@ css/badges.css
 css/buttons.css
 css/calendar.css
 css/cards.css
+css/chart.css
 css/code-viewer.css
 css/common.css
 css/coords.css
@@ -46,6 +47,7 @@ css/modal.css
 css/page.css
 css/service-dashboard.css
 css/sidebar.css
+css/split.css
 css/toast.css
 css/topbar.css
 css/typography.css
@@ -55,6 +57,7 @@ components/buttons-demo.html
 components/buttons.html
 components/calendar.html
 components/cards.html
+components/chart.html
 components/code-viewer.html
 components/context-menu.html
 components/forms.html
@@ -65,6 +68,7 @@ components/service-dashboard-detail.html
 components/service-dashboard-overview.html
 components/sidebar-types.html
 components/sidebar.html
+components/split-view.html
 components/toast.html
 components/tokens.html
 components/topbar.html
@@ -76,6 +80,7 @@ docs/brand.md
 docs/buttons.md
 docs/calendar.md
 docs/cards.md
+docs/chart.md
 docs/cli.md
 docs/code-viewer.md
 docs/concepts.md
@@ -98,6 +103,7 @@ docs/roadmap.md
 docs/service-dashboard.md
 docs/sidebar-types.md
 docs/sidebar.md
+docs/split-view.md
 docs/toast.md
 docs/tokens.md
 docs/topbar.md
@@ -206,6 +212,7 @@ docs/usage.md
 | Topbar | ✅ | ✅ | ✅ |
 | Sidebar + Accordion | ✅ | ✅ | ✅ |
 | Cards | ✅ | ✅ | ✅ |
+| Chart | ✅ | ✅ | ✅ |
 | Buttons | ✅ | ✅ | ✅ |
 | Badges | ✅ | ✅ | ✅ |
 | Seitenstruktur | ✅ | ✅ | ✅ |
@@ -215,6 +222,7 @@ docs/usage.md
 | Typografie | ✅ | ✅ | ✅ |
 | Kalender | ✅ | ✅ | ✅ |
 | Code-Viewer | ✅ | ✅ | ✅ |
+| Split-View (Master-Detail) | ✅ | ✅ | ✅ |
 | Toast | ✅ | ✅ | ✅ |
 | Koordinaten-Umrechner (Sidebar Typ 7) | — | — | ✅ |
 | Utility-Klassen | — | ✅ | ✅ |
