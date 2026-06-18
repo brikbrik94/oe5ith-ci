@@ -1,0 +1,149 @@
+/*
+ * OE5ITH CI — split.css
+ * Split-View (Master-Detail, Seitentyp Typ 6).
+ * Schmale scrollbare Auswahlliste links, Detailbereich rechts,
+ * beide unabhängig scrollbar.
+ *
+ * Voraussetzung: css/common.css, css/page.css
+ * Status-Dot wird aus page.css wiederverwendet (.status-dot .on/.warn/.off).
+ */
+
+/* ═══════════════════════════════════════
+   FIXED-HEIGHT-MODUS (Auto-Aktivierung)
+   Bei vorhandener .split-view scrollt nicht
+   mehr die Seite, sondern Master/Detail je
+   für sich. common.css/page.css bleiben
+   unverändert.
+   ═══════════════════════════════════════ */
+.page-content:has(.split-view) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.content-body:has(.split-view) {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SPLIT-VIEW CONTAINER
+   ═══════════════════════════════════════ */
+.split-view {
+  display: flex;
+  gap: var(--card-gap);
+  height: 100%;
+  min-height: 0;
+}
+
+/* ═══════════════════════════════════════
+   MASTER (linke Spalte)
+   ═══════════════════════════════════════ */
+.split-master {
+  width: var(--split-master-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+}
+
+.split-master-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.split-master-header > :last-child {
+  margin-left: auto;
+}
+
+.split-master-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* ═══════════════════════════════════════
+   SPLIT-ITEM (Listen-Eintrag)
+   Als <button> oder <a> umsetzbar.
+   ═══════════════════════════════════════ */
+.split-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.split-item:last-child { border-bottom: none; }
+.split-item:hover { background: var(--surface-hover); }
+.split-item:focus-visible {
+  outline: 2px solid var(--accent-border);
+  outline-offset: -2px;
+}
+.split-item.active {
+  background: var(--accent-subtle);
+  box-shadow: inset 2px 0 0 var(--accent-border);
+}
+
+.split-item-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.split-item-meta {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════
+   DETAIL (rechte Spalte)
+   min-width:0 verhindert, dass lange
+   ci-table-/Log-Zeilen das Layout sprengen.
+   ═══════════════════════════════════════ */
+.split-detail {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-gap);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — gestapelt unter Tablet
+   (Breakpoint analog col-groups)
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .split-view { flex-direction: column; }
+  .split-master {
+    width: 100%;
+    max-height: var(--split-master-max-h);
+  }
+}
+
+/* ═══════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .split-item { transition: none; }
+}
