@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.15.2 - 2026-06-19
+
+### Fixed
+- **split.css** — Detail-Spalte (`.split-detail`) staucht ihre Kinder nicht mehr zusammen. Da `.split-detail` ein `flex`-`column` mit `overflow-y:auto` ist, schrumpften die Panels per Default-`flex-shrink:1` (z. B. wurde das Filter-Panel über der Ergebnis-Tabelle unsichtbar gequetscht) statt dass die Spalte scrollte. `.split-detail > * { flex-shrink: 0 }` lässt jedes Kind seine natürliche Höhe behalten, sodass das Detail bei Überlänge wie vorgesehen als Ganzes scrollt.
+
+---
+
 ## v1.15.1 - 2026-06-19
 
 ### Fixed

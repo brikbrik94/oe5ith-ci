@@ -141,6 +141,14 @@
   flex-direction: column;
   gap: var(--card-gap);
 }
+/* Detail ist ein flex-column mit overflow-y:auto. Flex-Kinder haben jedoch
+   per Default flex-shrink:1 und würden zusammengestaucht (z. B. das Filter-
+   Panel wird unsichtbar), statt dass das Detail scrollt. flex-shrink:0 lässt
+   jedes Kind seine natürliche Höhe behalten, sodass .split-detail bei zu viel
+   Inhalt wie vorgesehen als Ganzes scrollt. */
+.split-detail > * {
+  flex-shrink: 0;
+}
 
 /* ═══════════════════════════════════════
    RESPONSIVE — gestapelt unter Tablet
