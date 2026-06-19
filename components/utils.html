@@ -209,5 +209,48 @@
   </div>
 </div>
 
+<!-- WIDTH UTILITIES -->
+<div class="section">
+  <div class="section-label">.col-w-80 / .col-w-100 / .col-w-120 / .col-w-180</div>
+  <div class="section-desc">Feste Spaltenbreiten für Tabellen-<code>&lt;th&gt;</code> (Timestamp-, ID-, Baud-Spalten o.ä.). Setzen nur <code>width</code> in Pixel. Die letzte Spalte ohne Klasse füllt den Rest.</div>
+  <div class="demo-box">
+    <table class="border-collapse" style="width:100%; font-size:0.8rem;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border);">
+          <th class="col-w-80"  style="padding:6px 8px; text-align:left; color:var(--muted);">.col-w-80</th>
+          <th class="col-w-100" style="padding:6px 8px; text-align:left; color:var(--muted);">.col-w-100</th>
+          <th class="col-w-120" style="padding:6px 8px; text-align:left; color:var(--muted);">.col-w-120</th>
+          <th class="col-w-180" style="padding:6px 8px; text-align:left; color:var(--muted);">.col-w-180</th>
+          <th style="padding:6px 8px; text-align:left; color:var(--muted);">Auto (Rest)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:6px 8px; color:var(--text);">80px</td>
+          <td style="padding:6px 8px; color:var(--text);">100px</td>
+          <td style="padding:6px 8px; color:var(--text);">120px</td>
+          <td style="padding:6px 8px; color:var(--text);">180px</td>
+          <td style="padding:6px 8px; color:var(--text);">füllt den verbleibenden Platz</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MAX-WIDTH UTILITIES -->
+<div class="section">
+  <div class="section-label">.max-w-300</div>
+  <div class="section-desc">Begrenzt die maximale Breite eines Containers oder Selects auf 300px. Element bleibt darunter flexibel schmaler.</div>
+  <div class="demo-box" style="flex-direction:column; gap:10px;">
+    <div class="demo-item max-w-300" style="width:100%; background:var(--panel-deep);">
+      <div class="demo-label">.max-w-300</div>
+      max-width: 300px — wächst nicht über 300px hinaus
+    </div>
+    <select class="max-w-300" style="width:100%; padding:6px 8px; background:var(--panel-deep); color:var(--text); border:1px solid var(--border); border-radius:4px;">
+      <option>Select mit max-width 300px</option>
+    </select>
+  </div>
+</div>
+
 </body>
 </html>
