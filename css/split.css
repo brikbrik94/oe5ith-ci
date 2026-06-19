@@ -25,6 +25,19 @@
   min-height: 0;
   overflow: hidden;
 }
+/* Zwischen-Wrapper (z. B. SPA-View-Container) durchreichen: liegt zwischen
+   .page-content und .content-body ein eigener Wrapper, muss auch dieser ein
+   flex-füllendes Element werden, sonst reißt die Höhenkette und die Seite
+   scrollt statt Master/Detail. Greift nur den Wrapper, der den Split enthält
+   (nicht z. B. einen .page-header daneben). Idempotent, wenn .content-body
+   selbst direktes Kind ist. */
+.page-content:has(.split-view) > *:has(.split-view) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
 
 /* ═══════════════════════════════════════
    SPLIT-VIEW CONTAINER

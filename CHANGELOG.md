@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.15.1 - 2026-06-19
+
+### Fixed
+- **split.css** — Fixed-Height-Modus funktioniert jetzt auch, wenn zwischen `.page-content` und `.content-body` ein eigener Wrapper liegt (z. B. SPA-View-Container wie `.view-section`). Bisher setzte die Aktivierung voraus, dass `.content-body` direktes Kind von `.page-content` ist; ein Zwischen-Wrapper unterbrach die Flex-Höhenkette, wodurch die Seite über die Viewport-Höhe hinaus wuchs und abgeschnitten wurde (kein Scroll) statt Master/Detail separat scrollen zu lassen. Neue Regel reicht den Wrapper, der den Split enthält, als flex-füllendes Element durch.
+
+---
+
 ## v1.15.0 - 2026-06-19
 
 ### Added
