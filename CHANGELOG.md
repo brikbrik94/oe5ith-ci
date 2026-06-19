@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.15.3 - 2026-06-19
+
+### Added
+- **split.css** — Optionaler zweizeiliger Master-Eintrag: `.split-item-text` (umschließt Label + Unterzeile) und `.split-item-sub` (gedämpfte, einzeilige Unterzeile mit Ellipsis) für eine sekundäre Info pro Quelle (z. B. letzte Meldung). Rückwärtskompatibel — bestehende einzeilige `.split-item-label`-Nutzung bleibt unverändert. Beispiel in `components/split-view.html`.
+
+---
+
 ## v1.15.2 - 2026-06-19
 
 ### Fixed
