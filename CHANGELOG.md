@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.15.0 - 2026-06-19
+
+### Added
+- **utils.css** — Breiten-Utilities: `.col-w-80`, `.col-w-100`, `.col-w-120`, `.col-w-180` (feste Spaltenbreiten für Tabellen-`<th>`) und `.max-w-300` (Max-Breite für Container/Select). Referenz-Demo in `components/utils.html`. Behebt zuvor wirkungslose No-op-Klassen in den website-v3-Views (logs, POCSAG).
+
+---
+
 ## v1.14.0 - 2026-06-18
 
 ### Added
