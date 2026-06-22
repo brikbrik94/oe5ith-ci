@@ -7,8 +7,8 @@
 
 ## Überblick
 
-Fünf definierte Seitentypen. Jeder Typ hat eine klare Struktur und einen
-bestimmten Anwendungsfall. Wenn keine der fünf Varianten passt, ist ein
+Sieben definierte Seitentypen. Jeder Typ hat eine klare Struktur und einen
+bestimmten Anwendungsfall. Wenn keine der sieben Varianten passt, ist ein
 neues Design erforderlich.
 
 ---
@@ -27,6 +27,10 @@ Hat die Seite eine Sidebar?
     │
     ├── Gibt es mehrere thematische Spalten nebeneinander?
     │   └── JA → Typ 4: Karten-Grid
+    │
+    ├── Ist der Hauptinhalt eine konfigurierbare Statistik-Tabelle mit Steuer-Feld
+    │   (Tabellenwahl + Zeitraum)?
+    │   └── JA → Typ 7: Statistik-Explorer
     │
     ├── Ist der Hauptinhalt eine Datentabelle oder Feed?
     │   └── JA → Typ 2: Listen-Seite
@@ -253,6 +257,49 @@ Topbar
 
 ---
 
+## Typ 7 — Statistik-Explorer
+
+**Beispiele:** Alarmierungsstatistik, Empfangsstatistik, Nutzungsauswertung
+
+**Wann verwenden:**
+Der Hauptinhalt ist eine einzelne, sortierbare Datentabelle, die über ein fixiertes
+Steuer-Feld konfiguriert wird (Tabellenwahl, Zeitraum-Preset, optionaler Freitext-Filter).
+Das Steuer-Feld bleibt stets sichtbar am oberen Rand; nur die Tabelle scrollt in sich.
+
+**Struktur:**
+```
+Topbar
+└── Layout
+    ├── Sidebar
+    └── page-content
+        ├── page-header          ← Titel + Untertitel
+        └── content-body
+            └── stats-explorer   ← einziges direktes Kind von content-body
+                ├── stats-controls          ← Steuer-Feld (fix oben)
+                │   ├── stats-control-group ← Tabellenwahl (form-select)
+                │   ├── stats-control-group ← Zeitraum (segmented + date inputs)
+                │   ├── stats-control-group.stats-search  ← Filter (form-input)
+                │   └── stats-actions       ← Aktions-Buttons (Aktualisieren, Export)
+                └── section.panel.stats-table-panel
+                    └── panel-body-flush--scroll
+                        └── table.ci-table.ci-table--sortable   (oder .stats-empty)
+```
+
+**Merkmale:**
+- Der Fixed-Height-Modus aktiviert sich **automatisch**, sobald `.stats-explorer` im DOM vorhanden ist — kein zusätzliches Klassen-Markup am Seiten-Wrapper nötig.
+- `css/stats.css` zusätzlich zu `css/page.css`, `css/forms.css` und `css/buttons.css` einbinden.
+- `.stats-explorer` ist das **einzige direkte Kind** von `.content-body`.
+- Sortierung, Filterung und Datenwechsel liegen vollständig in der Verantwortung des seiteneigenen JavaScript.
+- Auf Mobile (≤ 768 px) wechselt `.stats-controls` auf `flex-direction: column`.
+- Komponenten-Doku: `docs/page-stats.md`
+
+**Nicht geeignet wenn:**
+- Die Tabelle keine Steuerfeld-Konfiguration benötigt → Typ 2 (Listen-Seite)
+- Es mehrere unabhängige Tabellen nebeneinander gibt → Typ 4 oder Typ 1
+- Ein Master-Detail-Pattern benötigt wird → Typ 6 (Split-View)
+
+---
+
 ## Karten-Seite (Sonderfall)
 
 **Beispiele:** karte.oe5ith.at, vector-map-test, Routing-Karte
@@ -283,7 +330,7 @@ Topbar (mit Controls-Panel: Kartentyp, Zoom, Legende, Labels)
 
 | Seitentyp | Sidebar | Copyright-Anzeige |
 |---|---|---|
-| Typ 1–4 | Pflicht | Sidebar-Footer: Version + `.sidebar-footer-copyright`-Button |
+| Typ 1–4, Typ 6–7 | Pflicht | Sidebar-Footer: Version + `.sidebar-footer-copyright`-Button |
 | Typ 5 — Startseite | Nicht vorhanden | `.page-footer` mit Version, Copyright-Text, Links |
 | Karten-Sonderfall | Pflicht (auch wenn leer) | Sidebar-Footer + native MapLibre/Leaflet-Attribution |
 
@@ -300,13 +347,13 @@ Topbar (mit Controls-Panel: Kartentyp, Zoom, Legende, Labels)
 | Katalog mit thematischen Gruppen | 4 — Karten-Grid |
 | Interaktive Karte als Hauptinhalt | Karten-Sonderfall |
 | Master-Detail / Split-View | Typ 6 |
+| Konfigurierbare Statistik-Tabelle (Wahl + Zeitraum) | 7 |
 | Keines davon passt | Neues Design erforderlich |
 
 ---
 
 ## Neues Design erforderlich wenn...
 
-- Der Inhalt eine selektierbare Liste mit Detailbereich ist → **Typ 6** (Split-View ist definiert, siehe `docs/split-view.md`)
 - Es eine Step-by-Step Wizard-Logik gibt
 - Der Inhalt primär aus Diagrammen / Charts besteht
 - Es eine vollständige Einstellungsseite mit Kategorien ist (Settings-Pattern)
@@ -321,6 +368,7 @@ das bestehende Basis-CSS (`common.css`, `topbar.css`, `sidebar.css`) wiederverwe
 
 | Datum | Änderung |
 |---|---|
+| 2026-06-22 | Typ 7 — Statistik-Explorer ergänzt. Entscheidungsbaum + Schnellreferenz aktualisiert. |
 | 2026-06-18 | Typ 6 — Split-View (Master-Detail) ergänzt. Schnellreferenz + „Neues Design"-Punkt aktualisiert. |
 | 2026-05-07 | `.map-attribution`-Verweis entfernt (Breaking: v2.0.0). `.page-footer` als Pflichtbaustein für Typ 5 dokumentiert. Footer/Copyright-Regeltabelle ergänzt. |
 | 2026-04-24 | Initiale Definition. 5 Typen + Karten-Sonderfall. Entscheidungsbaum. Schnellreferenz. |
