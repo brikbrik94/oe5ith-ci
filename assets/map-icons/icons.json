@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "grid": { "marker": [64, 64], "bubble": [64, 64], "pin": [64, 80] },
+  "icons": [
+    { "name": "ci-pin", "category": "pin", "file": "ci-pin.svg", "viewBox": [64, 80], "anchor": "bottom", "sdf": true, "recommendedColor": "--accent" },
+    { "name": "ci-pin-hole", "category": "pin", "file": "ci-pin-hole.svg", "viewBox": [64, 80], "anchor": "bottom", "sdf": true, "recommendedColor": "--accent" },
+    { "name": "ci-bubble-label", "category": "bubble", "file": "ci-bubble-label.svg", "viewBox": [64, 64], "anchor": "center", "sdf": true, "recommendedColor": "--panel", "stretchX": [[20, 44]], "stretchY": [[28, 36]], "content": [12, 24, 52, 40] },
+    { "name": "ci-marker-dot", "category": "marker", "file": "ci-marker-dot.svg", "viewBox": [64, 64], "anchor": "center", "sdf": true, "recommendedColor": "--accent" },
+    { "name": "ci-marker-ring", "category": "marker", "file": "ci-marker-ring.svg", "viewBox": [64, 64], "anchor": "center", "sdf": true, "recommendedColor": "--accent" },
+    { "name": "ci-symbol-location", "category": "symbol", "file": "ci-symbol-location.svg", "viewBox": [64, 64], "anchor": "center", "sdf": true, "recommendedColor": "--accent" },
+    { "name": "ci-symbol-warning", "category": "symbol", "file": "ci-symbol-warning.svg", "viewBox": [64, 64], "anchor": "center", "sdf": true, "recommendedColor": "--warning" }
+  ]
+}
