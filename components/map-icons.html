@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OE5ITH CI — Map-Icons (SDF)</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/demo.css">
+  <style>
+    .mi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+    .mi-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--card-radius); padding:16px; }
+    .mi-swatches { display:flex; gap:14px; align-items:flex-end; margin-bottom:10px; min-height:56px; }
+    .mi-swatch svg { width:40px; height:auto; display:block; }
+    .mi-swatch.accent  { color:var(--accent); }
+    .mi-swatch.text    { color:var(--text); }
+    .mi-swatch.warning { color:var(--warning); }
+    .mi-name { font-family:var(--font-mono); color:var(--text); font-size:.85rem; }
+    .mi-meta { color:var(--muted); font-size:.78rem; margin-top:2px; }
+    /* Bubble-Stretch-Visualisierung */
+    .mi-bubble-demo { position:relative; width:128px; }
+    .mi-bubble-demo svg { width:128px; height:128px; color:var(--panel); display:block; }
+    .mi-bubble-demo .content-box { position:absolute; outline:1px dashed var(--accent);
+      /* content [12,24,52,40] im 64-Raster → ×2 für 128px-Darstellung */
+      left:24px; top:48px; width:80px; height:32px; }
+  </style>
+</head>
+<body>
+  <h1>OE5ITH CI — Map-Icons (SDF)</h1>
+  <p>Einfarbige, über MapLibre <code>icon-color</code> umfärbbare SDF-Form-Quellen.
+     Jedes Icon wird hier in drei CI-Token-Farben (accent · text · warning) gezeigt —
+     dieselbe Form, beliebige Farbe.</p>
+
+  <div class="mi-grid">
+
+    <!-- ci-pin -->
+    <div class="mi-card">
+      <div class="mi-swatches">
+        <span class="mi-swatch accent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80"><path fill="currentColor" d="M32 6C18.7 6 8 16.7 8 30c0 16 24 48 24 48s24-32 24-48C56 16.7 45.3 6 32 6Z"/></svg></span>
+        <span class="mi-swatch text"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80"><path fill="currentColor" d="M32 6C18.7 6 8 16.7 8 30c0 16 24 48 24 48s24-32 24-48C56 16.7 45.3 6 32 6Z"/></svg></span>
+        <span class="mi-swatch warning"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80"><path fill="currentColor" d="M32 6C18.7 6 8 16.7 8 30c0 16 24 48 24 48s24-32 24-48C56 16.7 45.3 6 32 6Z"/></svg></span>
+      </div>
+      <div class="mi-name">ci-pin</div>
+      <div class="mi-meta">pin · 64×80 · anchor bottom</div>
+    </div>
+
+    <!-- ci-pin-hole -->
+    <div class="mi-card">
+      <div class="mi-swatches">
+        <span class="mi-swatch accent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80"><path fill="currentColor" fill-rule="evenodd" d="M32 6C18.7 6 8 16.7 8 30c0 16 24 48 24 48s24-32 24-48C56 16.7 45.3 6 32 6ZM32 21a9 9 0 1 0 0 18 9 9 0 1 0 0-18Z"/></svg></span>
+        <span class="mi-swatch text"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80"><path fill="currentColor" fill-rule="evenodd" d="M32 6C18.7 6 8 16.7 8 30c0 16 24 48 24 48s24-32 24-48C56 16.7 45.3 6 32 6ZM32 21a9 9 0 1 0 0 18 9 9 0 1 0 0-18Z"/></svg></span>
+        <span class="mi-swatch warning"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80"><path fill="currentColor" fill-rule="evenodd" d="M32 6C18.7 6 8 16.7 8 30c0 16 24 48 24 48s24-32 24-48C56 16.7 45.3 6 32 6ZM32 21a9 9 0 1 0 0 18 9 9 0 1 0 0-18Z"/></svg></span>
+      </div>
+      <div class="mi-name">ci-pin-hole</div>
+      <div class="mi-meta">pin · 64×80 · anchor bottom</div>
+    </div>
+
+    <!-- ci-bubble-label -->
+    <div class="mi-card">
+      <div class="mi-swatches">
+        <span class="mi-swatch accent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="6" y="18" width="52" height="28" rx="8" fill="currentColor"/></svg></span>
+        <span class="mi-swatch text"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="6" y="18" width="52" height="28" rx="8" fill="currentColor"/></svg></span>
+        <span class="mi-swatch warning"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="6" y="18" width="52" height="28" rx="8" fill="currentColor"/></svg></span>
+      </div>
+      <div class="mi-name">ci-bubble-label</div>
+      <div class="mi-meta">bubble · 64×64 · anchor center · dehnbar</div>
+    </div>
+
+    <!-- ci-marker-dot -->
+    <div class="mi-card">
+      <div class="mi-swatches">
+        <span class="mi-swatch accent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="currentColor"/></svg></span>
+        <span class="mi-swatch text"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="currentColor"/></svg></span>
+        <span class="mi-swatch warning"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="currentColor"/></svg></span>
+      </div>
+      <div class="mi-name">ci-marker-dot</div>
+      <div class="mi-meta">marker · 64×64 · anchor center</div>
+    </div>
+
+    <!-- ci-marker-ring -->
+    <div class="mi-card">
+      <div class="mi-swatches">
+        <span class="mi-swatch accent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="currentColor" fill-rule="evenodd" d="M32 12a20 20 0 1 0 0 40 20 20 0 1 0 0-40ZM32 20a12 12 0 1 1 0 24 12 12 0 1 1 0-24Z"/></svg></span>
+        <span class="mi-swatch text"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="currentColor" fill-rule="evenodd" d="M32 12a20 20 0 1 0 0 40 20 20 0 1 0 0-40ZM32 20a12 12 0 1 1 0 24 12 12 0 1 1 0-24Z"/></svg></span>
+        <span class="mi-swatch warning"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="currentColor" fill-rule="evenodd" d="M32 12a20 20 0 1 0 0 40 20 20 0 1 0 0-40ZM32 20a12 12 0 1 1 0 24 12 12 0 1 1 0-24Z"/></svg></span>
+      </div>
+      <div class="mi-name">ci-marker-ring</div>
+      <div class="mi-meta">marker · 64×64 · anchor center</div>
+    </div>
+
+    <!-- ci-symbol-location -->
+    <div class="mi-card">
+      <div class="mi-swatches">
+        <span class="mi-swatch accent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="currentColor"><path fill-rule="evenodd" d="M32 14a18 18 0 1 0 0 36 18 18 0 1 0 0-36ZM32 19a13 13 0 1 1 0 26 13 13 0 1 1 0-26Z"/><circle cx="32" cy="32" r="4"/><rect x="30" y="6" width="4" height="10" rx="1"/><rect x="30" y="48" width="4" height="10" rx="1"/><rect x="6" y="30" width="10" height="4" rx="1"/><rect x="48" y="30" width="10" height="4" rx="1"/></g></svg></span>
+        <span class="mi-swatch text"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="currentColor"><path fill-rule="evenodd" d="M32 14a18 18 0 1 0 0 36 18 18 0 1 0 0-36ZM32 19a13 13 0 1 1 0 26 13 13 0 1 1 0-26Z"/><circle cx="32" cy="32" r="4"/><rect x="30" y="6" width="4" height="10" rx="1"/><rect x="30" y="48" width="4" height="10" rx="1"/><rect x="6" y="30" width="10" height="4" rx="1"/><rect x="48" y="30" width="10" height="4" rx="1"/></g></svg></span>
+        <span class="mi-swatch warning"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="currentColor"><path fill-rule="evenodd" d="M32 14a18 18 0 1 0 0 36 18 18 0 1 0 0-36ZM32 19a13 13 0 1 1 0 26 13 13 0 1 1 0-26Z"/><circle cx="32" cy="32" r="4"/><rect x="30" y="6" width="4" height="10" rx="1"/><rect x="30" y="48" width="4" height="10" rx="1"/><rect x="6" y="30" width="10" height="4" rx="1"/><rect x="48" y="30" width="10" height="4" rx="1"/></g></svg></span>
+      </div>
+      <div class="mi-name">ci-symbol-location</div>
+      <div class="mi-meta">symbol · 64×64 · anchor center</div>
+    </div>
+
+    <!-- ci-symbol-warning -->
+    <div class="mi-card">
+      <div class="mi-swatches">
+        <span class="mi-swatch accent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="currentColor" fill-rule="evenodd" d="M32 8 57 53H7L32 8ZM29 24h6v16h-6zM32 43a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/></svg></span>
+        <span class="mi-swatch text"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="currentColor" fill-rule="evenodd" d="M32 8 57 53H7L32 8ZM29 24h6v16h-6zM32 43a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/></svg></span>
+        <span class="mi-swatch warning"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="currentColor" fill-rule="evenodd" d="M32 8 57 53H7L32 8ZM29 24h6v16h-6zM32 43a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/></svg></span>
+      </div>
+      <div class="mi-name">ci-symbol-warning</div>
+      <div class="mi-meta">symbol · 64×64 · anchor center</div>
+    </div>
+
+  </div>
+
+  <h2>Dehnbarer Label-Hintergrund (<code>ci-bubble-label</code>)</h2>
+  <p>Mit <code>icon-text-fit: both</code> dehnt MapLibre die Bubble auf die Textbreite.
+     Gestrichelt: die Content-Box (<code>[12,24,52,40]</code>), in der der Text sitzt;
+     gedehnt werden nur die Bereiche <code>stretchX [20,44]</code> / <code>stretchY [28,36]</code>.</p>
+  <div class="mi-bubble-demo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="6" y="18" width="52" height="28" rx="8" fill="currentColor"/></svg>
+    <span class="content-box"></span>
+  </div>
+
+</body>
+</html>
