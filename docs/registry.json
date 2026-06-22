@@ -93,8 +93,8 @@
     { "id": "geocoder-dropdown", "title": "Geocoder-Dropdown", "category": "concept",
       "css": [], "doc": ["geocoder-dropdown.md"], "html": [],
       "note": "Nutzt forms.css" },
-    { "id": "map-icons", "title": "Map-Icons (SDF)", "category": "concept",
-      "css": [], "doc": [], "html": ["map-icons.html"],
+    { "id": "map-icons", "title": "Map-Icons (SDF)", "category": "asset",
+      "css": [], "doc": ["map-icons.md"], "html": ["map-icons.html"],
       "note": "SDF-Form-Quellen für MapLibre icon-color; keine produktiven CSS-Klassen" }
   ]
 }
