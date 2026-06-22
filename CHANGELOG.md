@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.17.0 - 2026-06-22
+
+### Added
+- **Map-Icons (SDF)** — Neue Asset-Kategorie `assets/map-icons/`: einfarbige, über MapLibre `icon-color` umfärbbare SDF-Form-Quellen für Karten. Initialer Katalog (7): `ci-pin`, `ci-pin-hole`, `ci-bubble-label` (dehnbar), `ci-marker-dot`, `ci-marker-ring`, `ci-symbol-location`, `ci-symbol-warning`. Manifest `icons.json` (Builder- + Konsumenten-API inkl. Stretch-Zonen), Referenz `components/map-icons.html`, Doku `docs/map-icons.md`. Der Sprite-Build erfolgt extern (Submodul-Repo); keine neuen Tokens.
+
+---
+
 ## v1.16.0 - 2026-06-22
 
 ### Added

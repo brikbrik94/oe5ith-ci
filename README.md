@@ -48,6 +48,7 @@ css/page.css
 css/service-dashboard.css
 css/sidebar.css
 css/split.css
+css/stats.css
 css/toast.css
 css/topbar.css
 css/typography.css
@@ -61,6 +62,7 @@ components/chart.html
 components/code-viewer.html
 components/context-menu.html
 components/forms.html
+components/map-icons.html
 components/modal.html
 components/page-types.html
 components/service-dashboard-config.html
@@ -69,6 +71,7 @@ components/service-dashboard-overview.html
 components/sidebar-types.html
 components/sidebar.html
 components/split-view.html
+components/stats-explorer.html
 components/toast.html
 components/tokens.html
 components/topbar.html
@@ -92,10 +95,12 @@ docs/for-coding-agents.md
 docs/forms.md
 docs/geocoder-dropdown.md
 docs/logo.md
+docs/map-icons.md
 docs/map-legend.md
 docs/map-routes.md
 docs/modal.md
 docs/naming.md
+docs/page-stats.md
 docs/page-types.md
 docs/page.md
 docs/resources.md
@@ -223,6 +228,7 @@ docs/usage.md
 | Kalender | ✅ | ✅ | ✅ |
 | Code-Viewer | ✅ | ✅ | ✅ |
 | Split-View (Master-Detail) | ✅ | ✅ | ✅ |
+| Statistik-Explorer (Typ 7) | ✅ | ✅ | ✅ |
 | Toast | ✅ | ✅ | ✅ |
 | Koordinaten-Umrechner (Sidebar Typ 7) | — | — | ✅ |
 | Utility-Klassen | — | ✅ | ✅ |
