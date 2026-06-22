@@ -181,7 +181,7 @@ const accent = getComputedStyle(document.documentElement)
 paint: { 'icon-color': accent }
 ```
 
-Eigene Farbwahl ist jederzeit möglich — `recommendedColor` ist eine Empfehlung, keine Einschränkung. Für Status-Semantiken (warn, off) die entsprechenden `--warning`- bzw. `--error`-Tokens verwenden.
+Eigene Farbwahl ist jederzeit möglich — `recommendedColor` ist eine Empfehlung, keine Einschränkung. Für Status-Semantiken (warn, off) die entsprechenden `--warning`- bzw. `--danger`-Tokens verwenden.
 
 ---
 
