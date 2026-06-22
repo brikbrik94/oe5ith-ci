@@ -111,11 +111,14 @@
 
 /* Sticky-Header NUR in diesem Kontext — Typ 2 bleibt unberührt.
    th trägt bereits background: var(--panel) aus page.css und
-   verdeckt damit die scrollenden Zeilen. */
+   verdeckt damit die scrollenden Zeilen. Der Trenner steht in page.css
+   auf thead tr — beim Sticky-th bleibt er nicht mit, daher hier als
+   inset-Shadow auf der Zelle, damit die 1px-Linie beim Scrollen bleibt. */
 .stats-table-panel .ci-table thead th {
   position: sticky;
   top: 0;
   z-index: 1;
+  box-shadow: inset 0 -1px 0 var(--border);
 }
 
 /* ═══════════════════════════════════════

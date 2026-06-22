@@ -3,7 +3,7 @@
 **CSS:** `css/stats.css`  
 **Referenz:** `components/stats-explorer.html`  
 **Seitentyp:** Typ 7 — Statistik-Explorer  
-**Status:** definiert · v1.15
+**Status:** definiert · v1.16
 
 ---
 
@@ -101,7 +101,7 @@ ein. Nur die Tabelle scrollt intern; `css/common.css` und `css/page.css` bleiben
     │   │       └── .stats-range-sep         (Optional — Trennzeichen zwischen Datumsfeldern)
     │   └── .stats-actions                   (Optional — rechtsbündig, letztes Kind)
     │       ├── .btn.btn-ghost.btn-sm        (sekundäre Aktion, z. B. Aktualisieren)
-    │       └── .btn.btn-secondary.btn-sm    (primäre Export-Aktion)
+    │       └── .btn.btn-secondary.btn-sm    (Export-Aktion)
     └── section.panel.stats-table-panel      (Pflicht — Tabellenbereich)
         └── .panel-body-flush.panel-body-flush--scroll
             ├── table.ci-table.ci-table--sortable   (Normalzustand)
@@ -127,9 +127,11 @@ ein. Nur die Tabelle scrollt intern; `css/common.css` und `css/page.css` bleiben
 - Innerhalb jeder `.stats-control-group` steht `.ci-label` **vor** `.stats-control-row`.
 - `.stats-range-sep` steht **zwischen** zwei `.form-input`-Datumseingaben in der
   `.stats-control-row` des Zeitraum-Steuerblocks.
-- Im Aktionsbereich gilt die projektweite Button-Konvention: der primäre Button
-  (z. B. „Export" als `.btn-secondary`) steht rechts, der sekundäre Ghost-Button
-  (z. B. „Aktualisieren" als `.btn-ghost`) steht links davon.
+- Der Aktionsbereich ist eine **Werkzeugleiste**, keine Formular-Button-Zeile —
+  hier gilt **nicht** die „primärer Button zuerst/links"-Konvention aus
+  `docs/doc-standard.md` (G3), die nur für Formular-Aktionen greift. Stattdessen:
+  die wiederholbare Ansicht-Aktion („Aktualisieren" als `.btn-ghost`) steht links,
+  die abschließende Daten-Aktion („Export" als `.btn-secondary`) rechts.
 - `.stats-table-panel` muss als `<section>` oder `<div>` ausgeführt werden und trägt
   **beide** Klassen `panel` und `stats-table-panel` — `panel` liefert das Basis-Styling,
   `stats-table-panel` überschreibt Höhe und Overflow.
