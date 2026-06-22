@@ -36,6 +36,7 @@
 
 /* 5. Interaktion */
 @import "forms.css";
+@import "stats.css";
 @import "coords.css";
 @import "utils.css";
 @import "modal.css";
