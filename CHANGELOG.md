@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.16.0 - 2026-06-22
+
+### Added
+- Seitentyp **Typ 7 — Statistik-Explorer**: fixiertes Steuer-Feld (Tabellen-Auswahl, Zeitraum-Presets + Von–Bis, Filter, Aktionen) über einer in sich scrollbaren, sortierbaren `ci-table` mit Sticky-Header. Neue Datei `css/stats.css`, Referenz `components/stats-explorer.html`, Doku `docs/page-stats.md`. Keine neuen Tokens. (`docs/page-types.md` Typ 7 ergänzt.)
+
+---
+
 ## v1.15.3 - 2026-06-19
 
 ### Added

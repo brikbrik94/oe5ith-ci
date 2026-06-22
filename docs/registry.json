@@ -33,6 +33,8 @@
       "css": ["code-viewer.css"], "doc": ["code-viewer.md"], "html": ["code-viewer.html"] },
     { "id": "split-view", "title": "Split-View (Master-Detail)", "category": "component",
       "css": ["split.css"], "doc": ["split-view.md"], "html": ["split-view.html"] },
+    { "id": "stats-explorer", "title": "Statistik-Explorer (Typ 7)", "category": "component",
+      "css": ["stats.css"], "doc": ["page-stats.md"], "html": ["stats-explorer.html"] },
     { "id": "toast", "title": "Toast", "category": "component",
       "css": ["toast.css"], "doc": ["toast.md"], "html": ["toast.html"] },
     { "id": "coords", "title": "Koordinaten-Umrechner (Sidebar Typ 7)", "category": "component",
