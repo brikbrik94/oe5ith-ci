@@ -91,11 +91,11 @@ Zeilen korrekt.)
 
       <div class="stats-control-group">
         <label class="ci-label">Zeitraum</label>
-        <div class="stats-presets">
-          <button class="stats-preset active">Heute</button>
-          <button class="stats-preset">7 T</button>
-          <button class="stats-preset">30 T</button>
-          <button class="stats-preset">Alles</button>
+        <div class="segmented">
+          <button class="segmented-btn active">Heute</button>
+          <button class="segmented-btn">7 T</button>
+          <button class="segmented-btn">30 T</button>
+          <button class="segmented-btn">Alles</button>
         </div>
         <input type="date" class="form-input">
         <span class="stats-range-sep">–</span>
@@ -146,9 +146,6 @@ gegen `forms.css`/`buttons.css` verifiziert und ggf. angepasst.
 | `.stats-explorer` | Flex-Column, füllt `content-body`. `gap:var(--card-gap)`, `height:100%`, `min-height:0`. Aktiviert Fixed-Height via `:has()`. |
 | `.stats-controls` | Steuer-Feld oben. Flex-Row mit Umbruch (`flex-wrap:wrap`), `gap`, `align-items:flex-end`, `flex-shrink:0`. Karten-Optik: `--card-bg`, `1px solid --border`, `--card-radius`, Innen-Padding. |
 | `.stats-control-group` | Gruppe Label + Element(e). Flex (Spalte für Label über Element, oder Row), `gap`. |
-| `.stats-presets` | Segmentierte Button-Gruppe (Zeitraum-Presets). Flex-Row, zusammenhängend (gemeinsame Border / Radius an Enden). |
-| `.stats-preset` | Einzel-Preset (`<button>`). Token-basiert, `--muted`-Text, Hover `--surface-hover`. Tastatur-fokussierbar (`:focus-visible`). |
-| `.stats-preset.active` | Aktiver Preset: BG `--accent-subtle`, Text `--text`, Marker via `--accent-border`. |
 | `.stats-range-sep` | Trenner „–" zwischen Von/Bis. `--subtle`, klein, `flex-shrink:0`. |
 | `.stats-search` | Such-/Filter-Gruppe. Wächst (`flex:1`, `min-width:0`) damit Aktionen nach rechts rücken. |
 | `.stats-actions` | Aktions-Buttons. Flex-Row, `gap`, `margin-left:auto` (rechtsbündig). |
@@ -157,8 +154,10 @@ gegen `forms.css`/`buttons.css` verifiziert und ggf. angepasst.
 
 **Reuse:** `ci-table` + `ci-table--sortable` + `.sortable`/`.sort-asc`/`.sort-desc`
 (page.css), `.panel`/`.panel-body-flush`/`--scroll` (page.css), Form-Elemente
-(forms.css), Buttons (buttons.css), `.ci-label` (typography/forms). **Keine** neue
-Tabellen-, Button- oder Input-Variante.
+`.form-select`/`.form-input` (forms.css), Zeitraum-Presets über bestehende
+`.segmented`/`.segmented-btn`(`.active`/`:focus-visible`) aus forms.css, Buttons
+(buttons.css), `.ci-label` (typography/forms). **Keine** neue Tabellen-, Button-,
+Preset- oder Input-Variante — `.stats-*` definiert nur Layout-Container.
 
 ---
 
@@ -219,9 +218,9 @@ Höhen-/Scroll-Modell realistisch dargestellt wird (analog `split-view.html`).
 - [ ] `.stats-explorer` füllt `content-body`; Steuer-Feld fix, nur Tabelle scrollt.
 - [ ] Sticky-Header **nur** im `.stats-table-panel`-Kontext — Typ 2 unverändert.
 - [ ] Tabelle nutzt bestehendes `ci-table` + `ci-table--sortable` (JS-Marker, kein neues Sort-Styling).
-- [ ] Steuer-Feld enthält: Tabellen-Dropdown, Zeitraum (Presets `.active` + Von–Bis), Suchfeld, Aktionen (rechtsbündig).
+- [ ] Steuer-Feld enthält: Tabellen-Dropdown, Zeitraum (`.segmented` Presets `.active` + Von–Bis), Suchfeld, Aktionen (rechtsbündig).
 - [ ] `.stats-table-panel` hat `min-width:0` (lange `ci-table`-Zeilen sprengen das Layout nicht).
-- [ ] Presets/Buttons/Inputs reusen forms.css/buttons.css — keine neuen Varianten.
+- [ ] Presets reusen `.segmented`/`.segmented-btn`, Inputs/Buttons forms.css/buttons.css — keine neuen Varianten.
 - [ ] Leerzustand `.stats-empty` vorhanden.
 - [ ] Responsive: unter 768px gestapeltes Steuer-Feld, Aktionen linksbündig.
 - [ ] `prefers-reduced-motion`: Transitions aus.
