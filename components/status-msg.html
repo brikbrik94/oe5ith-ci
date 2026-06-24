@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Status-Message</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/page.css">
+<link rel="stylesheet" href="../css/demo.css">
+<style>
+.page-title { font-size: 1.6rem; font-weight: 300; color: var(--white); margin-bottom: 6px; }
+.page-title strong { font-weight: 700; color: var(--accent); }
+.page-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 48px; max-width: 640px; line-height: 1.6; }
+.section-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--subtle); margin-bottom: 6px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+.demo-box { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.annotation { font-size: 0.8rem; color: var(--subtle); margin-top: 10px; line-height: 1.6; }
+.annotation code { background: #1e1e1e; padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 0.75rem; color: #7ba8d4; }
+</style>
+</head>
+<body>
+
+<div class="page-title">CI Reference — <strong>Status-Message</strong></div>
+<p class="page-desc">Inline-Hinweiszeilen aus <code>css/page.css</code>. Drei Varianten: <code>.info</code>, <code>.warn</code>, <code>.error</code>. Sichtbarkeit via HTML-Attribut <code>hidden</code> steuern.</p>
+
+<!-- Alle drei Varianten -->
+<div class="section-label">Varianten</div>
+<div class="demo-box">
+  <div class="status-msg info">
+    <i class="fa-solid fa-circle-info"></i>
+    Konfiguration wurde gespeichert.
+  </div>
+  <div class="status-msg warn">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    Verbindung zum Server wird hergestellt…
+  </div>
+  <div class="status-msg error">
+    <i class="fa-solid fa-circle-xmark"></i>
+    Fehler beim Laden der Quellenliste. Bitte Seite neu laden.
+  </div>
+</div>
+<p class="annotation">
+  Modifier: <code>.info</code> (Accent), <code>.warn</code> (Warning), <code>.error</code> (Danger).<br>
+  Verwendung: <code>&lt;div class="status-msg info" hidden&gt;…&lt;/div&gt;</code> — <code>hidden</code>-Attribut entfernen zum Einblenden.
+</p>
+
+</body>
+</html>

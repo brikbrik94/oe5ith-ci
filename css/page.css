@@ -510,3 +510,38 @@
 .status-dot.on    { background: var(--success); box-shadow: 0 0 4px var(--success); }
 .status-dot.warn  { background: var(--warning); box-shadow: 0 0 4px rgba(234,179,8,0.5); }
 .status-dot.off   { background: var(--danger);  box-shadow: 0 0 4px rgba(239,68,68,0.5); }
+
+/* ═══════════════════════════════════════
+   STATUS-MESSAGE
+   Inline-Hinweiszeilen (info / warn / error).
+   Modifier via .info / .warn / .error;
+   show/hide über HTML-Attribut hidden.
+   ═══════════════════════════════════════ */
+.status-msg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--btn-radius);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  border: 1px solid transparent;
+}
+
+.status-msg.info {
+  background: var(--accent-subtle);
+  border-color: var(--accent-border);
+  color: var(--text);
+}
+
+.status-msg.warn {
+  background: var(--warning-subtle);
+  border-color: var(--warning-border);
+  color: var(--text);
+}
+
+.status-msg.error {
+  background: var(--danger-subtle);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
