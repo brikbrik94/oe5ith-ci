@@ -5,6 +5,16 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## [1.18.0] — 2026-06-24
+
+### Added
+- `page.css`: `.status-msg` Komponente mit Modifier-Klassen `.info`, `.warn`, `.error` — Inline-Statusmeldungen für Aktions-Feedback, Fehlerzustände und Leer-Zustände; behebt gleichzeitig unstyled usage in bestehenden Portal-Views (`logs.html`, `pocsag.html`)
+- `utils.css`: `.max-w-150`, `.max-w-200` — Max-Width-Utilities für kurze Formularfelder
+- `utils.css`: `.text-right` — Text-Alignment-Utility, ergänzt `.text-center` und `.text-left`
+- `components/status-msg.html` — Referenz-Demo für alle drei `.status-msg`-Varianten
+
+---
+
 ## v1.17.0 - 2026-06-22
 
 ### Added
