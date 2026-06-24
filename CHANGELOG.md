@@ -5,7 +5,7 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
-## [1.18.0] — 2026-06-24
+## v1.18.0 - 2026-06-24
 
 ### Added
 - `page.css`: `.status-msg` Komponente mit Modifier-Klassen `.info`, `.warn`, `.error` — Inline-Statusmeldungen für Aktions-Feedback, Fehlerzustände und Leer-Zustände; behebt gleichzeitig unstyled usage in bestehenden Portal-Views (`logs.html`, `pocsag.html`)
