@@ -40,6 +40,7 @@
 
 .text-center { text-align: center; }
 .text-left   { text-align: left; }
+.text-right  { text-align: right; }
 .opacity-50  { opacity: 0.5; }
 .hidden      { display: none !important; }
 
@@ -67,6 +68,8 @@
    MAX-WIDTH UTILITIES
    ═══════════════════════════════════════ */
 
+.max-w-150 { max-width: 150px; }
+.max-w-200 { max-width: 200px; }
 .max-w-300 { max-width: 300px; }
 
 /* ═══════════════════════════════════════
