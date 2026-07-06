@@ -310,6 +310,74 @@ function handleItemKey(e, item) {
 
 ---
 
+## Disclosure (Single-Panel)
+
+Einzelnes auf-/zuklappbares Panel ohne Auswahlzustand. Nativ auf
+`<details>`/`<summary>` aufgebaut — **kein JS** für Auf-/Zuklappen nötig,
+im Unterschied zum Accordion.
+
+### Wann Accordion, wann Disclosure
+
+| Situation | Komponente |
+|---|---|
+| Mehrere gleichartige, unabhängig togglebare Kategorien mit Status pro Kategorie (z.B. Layer-Gruppen) | `.accordion` |
+| Einzelne Kopfzeile klappt einen Inhaltsbereich auf/zu, kein Auswahlzustand, keine Checkbox-Liste (z.B. Turn-by-Turn-Wegbeschreibung) | `.disclosure` |
+
+### Struktur
+
+```
+<details class="disclosure">
+└── <summary class="disclosure-header">
+    ├── .disclosure-title
+    ├── .disclosure-count (.badge)
+    └── .disclosure-chevron
+└── .disclosure-body
+    └── .disclosure-item (mehrfach)
+        ├── .disclosure-item-text
+        └── .disclosure-item-meta
+```
+
+### Klassen
+
+| Klasse | Zweck |
+|---|---|
+| `.disclosure` | Wrapper (`<details>`). Kein eigener Rahmen nötig — in `.panel`/`.panel-body` einbetten. |
+| `.disclosure-header` | `<summary>`. Klickbar, Hover-BG `--surface-hover`, nativer Marker entfernt. |
+| `.disclosure-title` | Primärtext. |
+| `.disclosure-count` | Zähler/Badge — reuse `.badge`, **keine** neue Badge-Variante. |
+| `.disclosure-chevron` | Rotiert bei `details[open]`, analog `.acc-chevron`. |
+| `.disclosure-body` | Inhaltscontainer. Kein JS-Höhen-Contract — `<details>` blendet nativ ein/aus. |
+| `.disclosure-item` | Einzelner Eintrag: Text · Meta. |
+| `.disclosure-item-text` | Primärtext. |
+| `.disclosure-item-meta` | Sekundärtext rechts, `--muted`. |
+
+### Beispiel
+
+```html
+<details class="disclosure">
+  <summary class="disclosure-header">
+    <span class="disclosure-title">Wegbeschreibung</span>
+    <span class="disclosure-count badge">18 Schritte</span>
+    <i class="fa-solid fa-chevron-down disclosure-chevron"></i>
+  </summary>
+  <div class="disclosure-body">
+    <div class="disclosure-item">
+      <span class="disclosure-item-text">Head northeast on Untere Donauländer, B129</span>
+      <span class="disclosure-item-meta">280 m</span>
+    </div>
+  </div>
+</details>
+```
+
+### Regeln
+
+1. Kein JS für Auf-/Zuklappen — `<details>`/`<summary>` übernimmt das nativ.
+2. `.disclosure-count` reuse `.badge` — keine neue Badge-Variante anlegen.
+3. Hover-Hintergrund immer `--surface-hover`, nie hardcodiert.
+4. Für Gruppen mit Auswahlzustand/Checkboxen/Status-Badge weiterhin `.accordion` verwenden, nicht `.disclosure`.
+
+---
+
 ## Sidebar Footer
 
 Immer sichtbar wenn die Sidebar sichtbar ist.
@@ -388,3 +456,4 @@ Symbol: `‹` (offen) / `›` (geschlossen)
 | 2026-04-24 | v1.3: © Button im Footer. Karten-Attribution ⓘ Button in page.css. |
 | 2026-04-22 | v1.2: Höhe & Scroll-Verhalten definiert. Layout `height` statt `min-height`. Sidebar `height: 100%`, inner `flex: 1 / overflow-y: auto`, Footer `flex-shrink: 0`. |
 | 2026-05-20 | `.acc-dot` erhält `var(--accent)` als CI-Default. `.acc-item.loading-state` und `.acc-item.error-state` hinzugefügt. |
+| 2026-07-06 | Disclosure (Single-Panel) ergänzt — `.disclosure`, Abgrenzung zu Accordion. |
