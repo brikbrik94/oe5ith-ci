@@ -25,6 +25,7 @@
 /* 3. Layout */
 @import "topbar.css";
 @import "sidebar.css";
+@import "disclosure.css";
 
 /* 4. Seitenstruktur */
 @import "page.css";
