@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Disclosure</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/typography.css">
+<link rel="stylesheet" href="../css/badges.css">
+<link rel="stylesheet" href="../css/page.css">
+<link rel="stylesheet" href="../css/disclosure.css">
+<link rel="stylesheet" href="../css/demo.css">
+</head>
+<body>
+
+<div class="page-content">
+
+  <!-- ═══ GESCHLOSSEN / OFFEN NEBENEINANDER ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Disclosure — Geschlossen / Offen</div>
+    <div class="demo-section-desc">
+      Einzelnes auf-/zuklappbares Panel ohne Auswahlzustand, nativ auf
+      <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> aufgebaut.
+      Kein JS für Auf-/Zu nötig — Unterschied zum Accordion.
+    </div>
+    <div class="demo-row" style="align-items:flex-start; gap:16px;">
+
+      <div class="panel" style="width:320px;">
+        <div class="panel-body">
+          <details class="disclosure">
+            <summary class="disclosure-header">
+              <span class="disclosure-title">Wegbeschreibung</span>
+              <span class="disclosure-count badge">18 Schritte</span>
+              <i class="fa-solid fa-chevron-down disclosure-chevron"></i>
+            </summary>
+            <div class="disclosure-body">
+              <div class="disclosure-item">
+                <span class="disclosure-item-text">Head northeast on Untere Donauländer, B129</span>
+                <span class="disclosure-item-meta mono">280 m</span>
+              </div>
+              <div class="disclosure-item">
+                <span class="disclosure-item-text">Turn right onto Welser Straße</span>
+                <span class="disclosure-item-meta mono">1.2 km</span>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="panel" style="width:320px;">
+        <div class="panel-body">
+          <details class="disclosure" open>
+            <summary class="disclosure-header">
+              <span class="disclosure-title">Wegbeschreibung</span>
+              <span class="disclosure-count badge">18 Schritte</span>
+              <i class="fa-solid fa-chevron-down disclosure-chevron"></i>
+            </summary>
+            <div class="disclosure-body">
+              <div class="disclosure-item">
+                <span class="disclosure-item-text">Head northeast on Untere Donauländer, B129</span>
+                <span class="disclosure-item-meta mono">280 m</span>
+              </div>
+              <div class="disclosure-item">
+                <span class="disclosure-item-text">Turn right onto Welser Straße, ein sehr langer Straßenname zum Testen der Ellipsis-Abschneidung im schmalen Panel</span>
+                <span class="disclosure-item-meta mono">1.2 km</span>
+              </div>
+              <div class="disclosure-item">
+                <span class="disclosure-item-text">Continue onto Kaiser-Josef-Platz</span>
+                <span class="disclosure-item-meta mono">340 m</span>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
