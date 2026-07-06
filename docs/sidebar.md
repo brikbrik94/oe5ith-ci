@@ -357,7 +357,7 @@ im Unterschied zum Accordion.
 <details class="disclosure">
   <summary class="disclosure-header">
     <span class="disclosure-title">Wegbeschreibung</span>
-    <span class="disclosure-count badge">18 Schritte</span>
+    <span class="disclosure-count badge badge-gray">18 Schritte</span>
     <i class="fa-solid fa-chevron-down disclosure-chevron"></i>
   </summary>
   <div class="disclosure-body">
