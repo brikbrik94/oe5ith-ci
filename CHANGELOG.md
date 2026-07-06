@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.18.1 - 2026-07-06
+
+### Fixed
+- `modal.css`: `.modal-backdrop` setzte `z-index: var(--z-backdrop)` (1040) statt `var(--z-modal)` (1500) — durch den eigenen Stacking-Context von `position: fixed` + `z-index` rendert das gesamte Modal (inkl. `.modal`) dadurch unter einer stickyen `.topbar` (`--z-topbar`: 1100), unabhängig vom `z-index` von `.modal` selbst. Betrifft jedes Portal, das `modal.css` mit stickyer Topbar kombiniert. `--z-backdrop` bleibt unverändert (weiterhin für `sidebar-backdrop`/`controls-backdrop`, die bewusst unter der Topbar bleiben sollen).
+
+---
+
 ## v1.18.0 - 2026-06-24
 
 ### Added
