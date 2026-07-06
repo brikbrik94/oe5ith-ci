@@ -41,6 +41,7 @@ css/code-viewer.css
 css/common.css
 css/coords.css
 css/demo.css
+css/disclosure.css
 css/forms.css
 css/index.css
 css/modal.css
@@ -61,6 +62,7 @@ components/cards.html
 components/chart.html
 components/code-viewer.html
 components/context-menu.html
+components/disclosure.html
 components/forms.html
 components/map-icons.html
 components/modal.html
@@ -72,6 +74,7 @@ components/sidebar-types.html
 components/sidebar.html
 components/split-view.html
 components/stats-explorer.html
+components/status-msg.html
 components/toast.html
 components/tokens.html
 components/topbar.html
@@ -215,7 +218,7 @@ docs/usage.md
 | Element | Spec | Referenz-HTML | CSS |
 |---|---|---|---|
 | Topbar | ✅ | ✅ | ✅ |
-| Sidebar + Accordion | ✅ | ✅ | ✅ |
+| Sidebar + Accordion + Disclosure | ✅ | ✅ | ✅ |
 | Cards | ✅ | ✅ | ✅ |
 | Chart | ✅ | ✅ | ✅ |
 | Buttons | ✅ | ✅ | ✅ |

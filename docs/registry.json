@@ -2,9 +2,9 @@
   "components": [
     { "id": "topbar", "title": "Topbar", "category": "component",
       "css": ["topbar.css"], "doc": ["topbar.md"], "html": ["topbar.html"] },
-    { "id": "sidebar", "title": "Sidebar + Accordion", "category": "component",
-      "css": ["sidebar.css"], "doc": ["sidebar.md", "sidebar-types.md"],
-      "html": ["sidebar.html", "sidebar-types.html"] },
+    { "id": "sidebar", "title": "Sidebar + Accordion + Disclosure", "category": "component",
+      "css": ["sidebar.css", "disclosure.css"], "doc": ["sidebar.md", "sidebar-types.md"],
+      "html": ["sidebar.html", "sidebar-types.html", "disclosure.html"] },
     { "id": "cards", "title": "Cards", "category": "component",
       "css": ["cards.css"], "doc": ["cards.md"], "html": ["cards.html"] },
     { "id": "chart", "title": "Chart", "category": "component",

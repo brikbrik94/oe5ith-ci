@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.19.0 - 2026-07-06
+
+### Added
+- **Disclosure (Single-Panel)** — generische Komponente für ein einzelnes auf-/zuklappbares Panel ohne Auswahlzustand, nativ auf `<details>`/`<summary>` aufgebaut, kein JS nötig. Neue `css/disclosure.css`, Referenz `components/disclosure.html`, Doku-Abschnitt in `docs/sidebar.md` (Abgrenzung zu `.accordion`). Keine neuen Tokens — reuse `.badge`, `--surface-hover`.
+
+---
+
 ## v1.18.1 - 2026-07-06
 
 ### Fixed
