@@ -5,6 +5,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.20.0 - 2026-07-07
+
+### Added
+- **Maneuver-Icons (Turn-by-Turn)** — 14 line-art SVG-Richtungssymbole (`ci-maneuver-*`), 1:1 zu OpenRouteService-Manöver-Codes 0–13 (Left/Right/Sharp/Slight/Straight/Roundabout Enter+Exit/U-turn/Goal/Depart/Keep Left+Right). Neues Asset-Verzeichnis `assets/maneuver-icons/` mit `icons.json`-Manifest (ORS-Code-Mapping), Referenz `components/maneuver-icons.html`, Doku `docs/maneuver-icons.md`. Neuer `.disclosure-item-icon`-Slot in `css/disclosure.css` für die Turn-by-Turn-Sidebar-Liste — keine neuen Tokens, reuse `--text`.
+
+---
+
 ## v1.19.0 - 2026-07-06
 
 ### Added
