@@ -83,6 +83,13 @@ details.disclosure[open] .disclosure-chevron {
   border-bottom: none;
 }
 
+.disclosure-item-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--text);
+}
+
 .disclosure-item-text {
   flex: 1;
   min-width: 0;
