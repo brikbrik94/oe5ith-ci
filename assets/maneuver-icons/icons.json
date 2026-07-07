@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "grid": [16, 16],
+  "icons": [
+    { "orsCode": 0,  "name": "ci-maneuver-turn-left",        "file": "ci-maneuver-turn-left.svg",        "label": "Left" },
+    { "orsCode": 1,  "name": "ci-maneuver-turn-right",       "file": "ci-maneuver-turn-right.svg",       "label": "Right" },
+    { "orsCode": 2,  "name": "ci-maneuver-sharp-left",       "file": "ci-maneuver-sharp-left.svg",       "label": "Sharp left" },
+    { "orsCode": 3,  "name": "ci-maneuver-sharp-right",      "file": "ci-maneuver-sharp-right.svg",      "label": "Sharp right" },
+    { "orsCode": 4,  "name": "ci-maneuver-slight-left",      "file": "ci-maneuver-slight-left.svg",      "label": "Slight left" },
+    { "orsCode": 5,  "name": "ci-maneuver-slight-right",     "file": "ci-maneuver-slight-right.svg",     "label": "Slight right" },
+    { "orsCode": 6,  "name": "ci-maneuver-straight",         "file": "ci-maneuver-straight.svg",         "label": "Straight" },
+    { "orsCode": 7,  "name": "ci-maneuver-roundabout-enter", "file": "ci-maneuver-roundabout-enter.svg", "label": "Enter roundabout" },
+    { "orsCode": 8,  "name": "ci-maneuver-roundabout-exit",  "file": "ci-maneuver-roundabout-exit.svg",  "label": "Exit roundabout" },
+    { "orsCode": 9,  "name": "ci-maneuver-uturn",            "file": "ci-maneuver-uturn.svg",            "label": "U-turn" },
+    { "orsCode": 10, "name": "ci-maneuver-goal",             "file": "ci-maneuver-goal.svg",             "label": "Goal" },
+    { "orsCode": 11, "name": "ci-maneuver-depart",           "file": "ci-maneuver-depart.svg",           "label": "Depart" },
+    { "orsCode": 12, "name": "ci-maneuver-keep-left",        "file": "ci-maneuver-keep-left.svg",        "label": "Keep left" },
+    { "orsCode": 13, "name": "ci-maneuver-keep-right",       "file": "ci-maneuver-keep-right.svg",       "label": "Keep right" }
+  ]
+}
