@@ -95,6 +95,9 @@
       "note": "Nutzt forms.css" },
     { "id": "map-icons", "title": "Map-Icons (SDF)", "category": "asset",
       "css": [], "doc": ["map-icons.md"], "html": ["map-icons.html"],
-      "note": "SDF-Form-Quellen für MapLibre icon-color; keine produktiven CSS-Klassen" }
+      "note": "SDF-Form-Quellen für MapLibre icon-color; keine produktiven CSS-Klassen" },
+    { "id": "maneuver-icons", "title": "Maneuver-Icons (Turn-by-Turn)", "category": "asset",
+      "css": [], "doc": ["maneuver-icons.md"], "html": ["maneuver-icons.html"],
+      "note": "Line-Art-Richtungssymbole 1:1 zu ORS-Manöver-Codes 0-13; .disclosure-item-icon lebt in disclosure.css" }
   ]
 }

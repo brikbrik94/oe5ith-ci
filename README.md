@@ -64,6 +64,7 @@ components/code-viewer.html
 components/context-menu.html
 components/disclosure.html
 components/forms.html
+components/maneuver-icons.html
 components/map-icons.html
 components/modal.html
 components/page-types.html
@@ -98,6 +99,7 @@ docs/for-coding-agents.md
 docs/forms.md
 docs/geocoder-dropdown.md
 docs/logo.md
+docs/maneuver-icons.md
 docs/map-icons.md
 docs/map-legend.md
 docs/map-routes.md
