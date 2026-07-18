@@ -7,6 +7,10 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+---
+
+## v1.21.1 - 2026-07-18
+
 ### Fixed
 - `coords.css`: in `.coord-vals`-Zeilen (`.coord-row-wgs`) bekommen Nicht-Dezimal-Felder (Grad,
   ganzzahlige Minuten) jetzt eine feste, schmale Breite (36px) statt sich die Zeile gleichmäßig
