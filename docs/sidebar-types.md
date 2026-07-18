@@ -313,6 +313,9 @@ und der Punkt auf der Karte gesetzt.
 - `.coord-row`: Standard-Zeile mit `.coord-label` + `.coord-input`
 - `.coord-row-dms`: DMS-Zeile mit 3 × `.coord-input-dms` + `.coord-suffix` (N/S, E/W)
 - `.coord-row-inline`: 2 Feld-Paare nebeneinander (MGRS: GZD + 100km-Square)
+- `.coord-row-wgs` + `.coord-vals`: einheitliche Zeilenbreite über DD/DDM/DMS hinweg — beliebig
+  viele `.coord-input-dms`-Felder in `.coord-vals` teilen sich den Platz, das Suffix sitzt immer
+  am selben rechten Anschlag (statt fester 52px-Feldbreite wie in `.coord-row-dms`)
 - `.coord-input-full`: Volles Feld ohne Label (Maidenhead)
 - `.coord-select`: Dropdown für Meridianstreifen (BMN: M28/M31/M34)
 - `tool-sep` zwischen Blöcken

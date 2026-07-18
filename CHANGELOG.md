@@ -14,6 +14,9 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 - `common.css`: neuer Token `--map-bg` (Default `#ffffff`) für den Karten-Container-Hintergrund;
   `utils.css`: `.full-map` nutzt `background: var(--map-bg)`. Übernahme aus `website-v3`
   (Koordinaten-Umrechner-Karte), vorher nur als lokaler App-Override vorhanden.
+- `coords.css`: neue Klassen `.coord-row-wgs` / `.coord-vals` — einheitliche Gesamtbreite für
+  WGS84-Koordinatenzeilen unabhängig von der Feldanzahl (DD/DDM/DMS), baut auf `.coord-input-dms`
+  auf. Übernahme aus `website-v3` (Koordinaten-Umrechner), vorher nur lokal in der App vorhanden.
 
 ---
 
