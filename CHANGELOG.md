@@ -7,6 +7,10 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+---
+
+## v1.21.0 - 2026-07-18
+
 ### Added
 - `badges.css`: `.badge-wrap` Modifier-Klasse — erlaubt internen Zeilenumbruch für Badges mit
   langem/variablem Text (z.B. Warnungen in schmalen Sidebars), ohne das `nowrap`-Standardverhalten
