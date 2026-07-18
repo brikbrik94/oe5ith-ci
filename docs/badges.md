@@ -114,6 +114,30 @@ Für einfache Typ-Kennzeichnung ohne Semantik. **Immer `.badge-gray`.**
 
 ---
 
+## Zeilenumbruch
+
+Default ist `white-space: nowrap` — kurze Status-Badges ("Online", "v1.4.2") sollen nie umbrechen.
+Für Badges mit langem oder variablem Text (Warnungen, Freitext-Meldungen in schmalen Containern)
+das Modifier `.badge-wrap` ergänzen:
+
+```html
+<span class="badge badge-yellow badge-wrap">
+  Zufahrtsbeschränkungen auf der Strecke
+</span>
+```
+
+```css
+.badge-wrap {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+```
+
+Kombinierbar mit jeder Farbvariante. Nicht nötig für `.badge-gray`-Typlabels oder kurze
+Status-Badges — dort bleibt der `nowrap`-Default aktiv.
+
+---
+
 ## Verwendungsregeln
 
 ### In Content Cards (Typ 3)
@@ -174,4 +198,5 @@ Hier sind alle semantischen Farben erlaubt.
 
 | Datum | Änderung |
 |---|---|
+| 2026-07-18 | `.badge-wrap` Modifier ergänzt — erlaubt internen Zeilenumbruch für Badges mit langem/variablem Text, ohne den `nowrap`-Default für kurze Status-Badges zu ändern. |
 | 2026-04-22 | Initiale Definition. 6 Farben. Eckig (4px). Dot oder Icon erlaubt. Gray-Regel für Cards. Lila für Auth/Security. |
