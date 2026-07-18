@@ -193,6 +193,10 @@
             <div class="map-legend-area" style="background:#f59e0b;"></div>
             <span class="map-legend-label">Sperrzone</span>
           </div>
+          <div class="map-legend-entry">
+            <i class="fa-solid fa-helicopter map-legend-icon" style="color:var(--success);"></i>
+            <span class="map-legend-label">Aktiv</span>
+          </div>
         </div>
       </div>
     </div>
@@ -243,15 +247,19 @@ class MapLegend {
     this._titleEl.style.display = text ? '' : 'none';
   }
 
-  addEntry({ type, color, label }) {
-    const typeClass = { dot: 'map-legend-dot', line: 'map-legend-line', area: 'map-legend-area' }[type];
+  addEntry({ type, color, label, icon }) {
+    const typeClass = { dot: 'map-legend-dot', line: 'map-legend-line', area: 'map-legend-area', icon: 'map-legend-icon' }[type];
     if (!typeClass) throw new Error(`MapLegend.addEntry: unknown type "${type}"`);
     const entry = document.createElement('div');
     entry.className = 'map-legend-entry';
 
-    const indicator = document.createElement('div');
-    indicator.className = typeClass;
-    indicator.style.background = color;
+    const indicator = document.createElement(type === 'icon' ? 'i' : 'div');
+    indicator.className = type === 'icon' ? `${icon} ${typeClass}` : typeClass;
+    if (type === 'icon') {
+      indicator.style.color = color;
+    } else {
+      indicator.style.background = color;
+    }
 
     const labelEl = document.createElement('span');
     labelEl.className = 'map-legend-label';
@@ -298,6 +306,7 @@ function demoLegendReset() {
   demoLegend.addEntry({ type: 'line', color: '#3b82f6', label: 'Anfahrtsroute' });
   demoLegend.addEntry({ type: 'area', color: '#f59e0b', label: 'Sperrzone' });
   demoLegend.addEntry({ type: 'area', color: '#8b5cf6', label: 'Einsatzgebiet' });
+  demoLegend.addEntry({ type: 'icon', icon: 'fa-solid fa-helicopter', color: '#22c55e', label: 'Luftrettung aktiv' });
   demoLegend.show();
 }
 

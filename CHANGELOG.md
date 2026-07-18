@@ -17,6 +17,10 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 - `coords.css`: neue Klassen `.coord-row-wgs` / `.coord-vals` — einheitliche Gesamtbreite für
   WGS84-Koordinatenzeilen unabhängig von der Feldanzahl (DD/DDM/DMS), baut auf `.coord-input-dms`
   auf. Übernahme aus `website-v3` (Koordinaten-Umrechner), vorher nur lokal in der App vorhanden.
+- `modal.css` / `MapLegend`: neuer Eintragstyp `icon` (`.map-legend-icon`, 12×12px) für
+  Legenden-Einträge mit Formsemantik (z.B. Fahrzeug-/Stations-Icons statt reiner Farbfläche).
+  Additiv — bestehende `dot`/`line`/`area`-Konsumenten bleiben unverändert funktionsfähig.
+  Angefragt aus `website-v3` (NAH-Luftrettungs-Legende).
 
 ---
 

@@ -28,6 +28,7 @@ legend.setTitle('Kartenschlüssel');
 legend.addEntry({ type: 'dot',  color: '#22c55e', label: 'Aktiv' });
 legend.addEntry({ type: 'line', color: '#3b82f6', label: 'Route' });
 legend.addEntry({ type: 'area', color: '#f59e0b', label: 'Sperrzone' });
+legend.addEntry({ type: 'icon', icon: 'fa-solid fa-helicopter', color: '#22c55e', label: 'Aktiv' });
 
 legend.clearEntries();
 legend.show();
@@ -44,8 +45,13 @@ legend.destroy();   // entfernt Panel aus DOM
 | `dot` | Kreis 10×10px | Punktmarker, Stationen |
 | `line` | Linie 24×3px | Routen, Grenzen, Verbindungen |
 | `area` | Rechteck 16×12px | Zonen, Flächen, Polygone |
+| `icon` | FontAwesome-Glyph 12×12px | Symbol-Marker mit Formsemantik (z.B. Fahrzeuge, Stationen) |
 
 `color` akzeptiert jeden gültigen CSS-Farbwert (`#hex`, `rgb()`, Farbnamen).
+
+Bei `type: 'icon'` wird `color` als `style.color` (statt `style.background`) auf das Glyph
+angewendet; `icon` ist dann erforderlich und enthält die vollständigen FontAwesome-Klassen
+(z.B. `'fa-solid fa-helicopter'`).
 
 ## Topbar-Button
 
@@ -69,9 +75,10 @@ btn.addEventListener('click', () => {
 
 ```ts
 interface LegendEntry {
-  type: 'dot' | 'line' | 'area';
+  type: 'dot' | 'line' | 'area' | 'icon';
   color: string;
   label: string;
+  icon?: string; // FontAwesome-Klassen, nur bei type: 'icon' relevant, z.B. 'fa-solid fa-helicopter'
 }
 ```
 
