@@ -315,7 +315,11 @@ und der Punkt auf der Karte gesetzt.
 - `.coord-row-inline`: 2 Feld-Paare nebeneinander (MGRS: GZD + 100km-Square)
 - `.coord-row-wgs` + `.coord-vals`: einheitliche Zeilenbreite über DD/DDM/DMS hinweg — beliebig
   viele `.coord-input-dms`-Felder in `.coord-vals` teilen sich den Platz, das Suffix sitzt immer
-  am selben rechten Anschlag (statt fester 52px-Feldbreite wie in `.coord-row-dms`)
+  am selben rechten Anschlag (statt fester 52px-Feldbreite wie in `.coord-row-dms`). Innerhalb
+  eines `.coord-vals`-Blocks bekommt genau ein Feld — das mit `inputmode="decimal"` (immer das
+  letzte in der Zeile: Minuten bei DDM, Sekunden bei DMS) — den verbleibenden Platz (`flex: 1`);
+  alle anderen Felder (Grad, ganzzahlige Minuten) bleiben fix bei 36px breit, unabhängig von der
+  Feldanzahl in der Zeile
 - `.coord-input-full`: Volles Feld ohne Label (Maidenhead)
 - `.coord-select`: Dropdown für Meridianstreifen (BMN: M28/M31/M34)
 - `tool-sep` zwischen Blöcken

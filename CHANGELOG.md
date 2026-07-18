@@ -7,6 +7,14 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+### Fixed
+- `coords.css`: in `.coord-vals`-Zeilen (`.coord-row-wgs`) bekommen Nicht-Dezimal-Felder (Grad,
+  ganzzahlige Minuten) jetzt eine feste, schmale Breite (36px) statt sich die Zeile gleichmäßig
+  mit dem Dezimalfeld zu teilen; das Dezimalfeld (`inputmode="decimal"`, immer das letzte in der
+  Zeile) bekommt dadurch den verbleibenden Platz. Additiv zur bestehenden `flex: 1`-Regel, DD-Format
+  (ein Dezimalfeld pro Zeile) bleibt optisch unverändert. Angefragt aus `website-v3`
+  (Koordinaten-Umrechner, `Wgs84Block.ts`).
+
 ---
 
 ## v1.21.0 - 2026-07-18
