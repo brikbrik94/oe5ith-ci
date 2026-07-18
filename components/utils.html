@@ -29,7 +29,7 @@
 <!-- .full-map -->
 <div class="section">
   <div class="section-label">.full-map</div>
-  <div class="section-desc">Vollflächiger Container für MapLibre / Leaflet. <code>flex:1 · height:100% · min-height:0 · position:relative</code>. Verhindert Layout-Sprünge beim Initialisieren der Karte in einem Flex-Parent.</div>
+  <div class="section-desc">Vollflächiger Container für MapLibre / Leaflet. <code>flex:1 · height:100% · min-height:0 · position:relative · background:var(--map-bg)</code>. Verhindert Layout-Sprünge beim Initialisieren der Karte in einem Flex-Parent. Der Hintergrund ist per <code>--map-bg</code>-Token überschreibbar (Default: weiß).</div>
   <div class="demo-box" style="height:120px; padding:0; overflow:hidden; border-radius:6px;">
     <div class="full-map" style="background:#2d3a2d; display:flex; align-items:center; justify-content:center;">
       <span style="font-size:0.7rem; color:rgba(255,255,255,0.2)">Karte füllt den verfügbaren Bereich</span>

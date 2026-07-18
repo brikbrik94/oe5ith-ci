@@ -11,6 +11,9 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 - `badges.css`: `.badge-wrap` Modifier-Klasse — erlaubt internen Zeilenumbruch für Badges mit
   langem/variablem Text (z.B. Warnungen in schmalen Sidebars), ohne das `nowrap`-Standardverhalten
   für kurze Status-Badges zu ändern. Behebt Meldung aus `website-v3` (Routing-Sidebar-Warn-Badges).
+- `common.css`: neuer Token `--map-bg` (Default `#ffffff`) für den Karten-Container-Hintergrund;
+  `utils.css`: `.full-map` nutzt `background: var(--map-bg)`. Übernahme aus `website-v3`
+  (Koordinaten-Umrechner-Karte), vorher nur als lokaler App-Override vorhanden.
 
 ---
 

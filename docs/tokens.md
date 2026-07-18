@@ -29,6 +29,7 @@ Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcode
 | `--border` | `#333333` | Alle Borders |
 | `--border-strong` | `#444444` | Hover-Borders, aktive Elemente |
 | `--surface-hover` | `rgba(255,255,255, 0.05)` | Subtiler Hover auf dunklen Hintergründen |
+| `--map-bg` | `#ffffff` | Hintergrund des Karten-Containers (`.full-map`), per Stylesheet überschreibbar |
 
 ---
 
@@ -218,6 +219,7 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
   --subtle:           #555555;
   --border:           #333333;
   --border-strong:    #444444;
+  --map-bg:           #ffffff;
 
   /* Akzent */
   --accent:              #3b82f6;
