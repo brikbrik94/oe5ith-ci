@@ -9,6 +9,16 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.22.0 - 2026-07-19
+
+### Added
+- `common.css`: neue Token-Gruppe `--scale-reach-1..10` + `--scale-reach-gradient` — 10-stufige
+  Rot-nach-Grün-Skala für Dauer-/Entfernungs-basierte Zonenfärbung auf Kartenseiten (Stufe 1 =
+  `--danger`, Stufe 10 = `--success`). `utils.css`: neue Utility-Klasse `.scale-reach-bar` rendert
+  den Verlauf als Balken. Dokumentiert in `docs/tokens.md` und `components/tokens.html`.
+
+---
+
 ## v1.21.1 - 2026-07-18
 
 ### Fixed
