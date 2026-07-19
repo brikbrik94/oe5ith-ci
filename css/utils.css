@@ -115,3 +115,15 @@
 
 /* Unterdrückt Dot-Hintergrund für reine Icon-Status-Anzeigen */
 .no-dot-bg { background: none !important; box-shadow: none !important; }
+
+/* ═══════════════════════════════════════
+   SCALE UTILITIES
+   ═══════════════════════════════════════ */
+
+/* Durchgehender Verlaufs-Balken über die volle --scale-reach-Skala,
+   z.B. als visuelle Legende unter/neben Zonen-Karten. */
+.scale-reach-bar {
+  height: 8px;
+  border-radius: var(--badge-radius);
+  background: var(--scale-reach-gradient);
+}
