@@ -111,6 +111,49 @@ Datenreihen 1–4 zugeordnet; Schwellwert-Färbung nutzt die semantischen Farben
 
 ---
 
+## Erreichbarkeits-/Zonen-Skala
+
+10-stufige Farbskala für Dauer-/Entfernungs-basierte Zonierung auf Kartenseiten
+(z.B. Erreichbarkeits-/Sicherheitszonen als Leaflet/MapLibre-Polygon-Fill).
+Stufe 1 = Rot = schlechteste Erreichbarkeit (weit/lang), Stufe 10 = Grün =
+beste Erreichbarkeit (nah/kurz). Endpunkte sind identisch zu `--danger`/
+`--success`; die 8 Zwischenstufen sind eine lineare HSL-Interpolation.
+
+| Token | Wert | Bedeutung |
+|---|---|---|
+| `--scale-reach-1` | `#ef4444` | Stufe 1 — schlechteste Erreichbarkeit (= `--danger`) |
+| `--scale-reach-2` | `#ec6b3d` | Stufe 2 |
+| `--scale-reach-3` | `#ea9537` | Stufe 3 |
+| `--scale-reach-4` | `#e8c131` | Stufe 4 |
+| `--scale-reach-5` | `#dbe52b` | Stufe 5 |
+| `--scale-reach-6` | `#a7e225` | Stufe 6 |
+| `--scale-reach-7` | `#71e01f` | Stufe 7 |
+| `--scale-reach-8` | `#3dd620` | Stufe 8 |
+| `--scale-reach-9` | `#21cd33` | Stufe 9 |
+| `--scale-reach-10` | `#22c55e` | Stufe 10 — beste Erreichbarkeit (= `--success`) |
+| `--scale-reach-gradient` | `linear-gradient(to right, --scale-reach-1 … --scale-reach-10)` | Durchgehender Verlauf über alle 10 Stufen |
+
+**Utility-Klasse:** `.scale-reach-bar` (`css/utils.css`) — rendert
+`--scale-reach-gradient` als 8px hoher horizontaler Balken, z.B. als
+Legenden-Streifen unter/neben der Karte.
+
+**Verwendung (App-Code, nicht Teil dieses Repos):**
+
+```js
+// Duration/Distance-Wert in Bucket 1-10 mappen (App-Logik, nicht CI)
+const step = bucketize(zone.durationMinutes); // 1..10
+polygon.setStyle({
+  fillColor: getComputedStyle(document.documentElement)
+    .getPropertyValue(`--scale-reach-${step}`).trim(),
+});
+```
+
+Für die Legende die bestehende `MapLegend`-Klasse verwenden
+(`docs/map-legend.md`, `type: 'area'`) — sie akzeptiert jeden CSS-Farbwert,
+keine CI-Änderung nötig.
+
+---
+
 ## Code / Terminal Farben
 
 | Token | Wert | Verwendung |
