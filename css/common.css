@@ -47,6 +47,28 @@
   --danger-subtle:    rgba(239,68,68,0.10);
   --danger-border:    rgba(239,68,68,0.25);
 
+  /* ── FARBEN: Erreichbarkeits-/Zonen-Skala ── */
+  /* Stufe 1 = schlechteste Erreichbarkeit (weit/lang) = --danger.
+     Stufe 10 = beste Erreichbarkeit (nah/kurz) = --success.
+     Für Dauer-/Entfernungs-Zonierung auf Kartenseiten (Polygon-Fill). */
+  --scale-reach-1:  #ef4444;
+  --scale-reach-2:  #ec6b3d;
+  --scale-reach-3:  #ea9537;
+  --scale-reach-4:  #e8c131;
+  --scale-reach-5:  #dbe52b;
+  --scale-reach-6:  #a7e225;
+  --scale-reach-7:  #71e01f;
+  --scale-reach-8:  #3dd620;
+  --scale-reach-9:  #21cd33;
+  --scale-reach-10: #22c55e;
+  --scale-reach-gradient: linear-gradient(
+    to right,
+    var(--scale-reach-1), var(--scale-reach-2), var(--scale-reach-3),
+    var(--scale-reach-4), var(--scale-reach-5), var(--scale-reach-6),
+    var(--scale-reach-7), var(--scale-reach-8), var(--scale-reach-9),
+    var(--scale-reach-10)
+  );
+
   --auth:             #a78bfa;
   --auth-subtle:      rgba(139,92,246,0.10);
   --auth-border:      rgba(139,92,246,0.25);
