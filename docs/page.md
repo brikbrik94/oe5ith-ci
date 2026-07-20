@@ -209,6 +209,102 @@ CSS liefert die visuellen States — echte Sortierlogik ist **JS-Pflicht**.
 
 ---
 
+## Editierbare Tabellenzellen
+
+Erweiterung von `.ci-table` um zwei inline-bearbeitbare Zellen-Varianten: fester
+Wertebereich per Dropdown (`.cell-select`) oder einzeiliger Freitext
+(`.cell-text`). Dual-Markup pro Zelle — Anzeige- und Eingabeelement liegen
+gleichzeitig im DOM, der Zustand wird ausschließlich über CSS-Klassen auf dem
+`<td>` gesteuert (kein DOM-Swap per `innerHTML`).
+
+**Keine Persistenz-Logik in der CI.** Wie ein Commit gespeichert wird
+(API-Call, Optimistic Update, Fehlerbehandlung), ist Sache der Website —
+analog zum Sortable Contract oben: CSS liefert die Zustände, JS-Pflicht ist
+die eigentliche Logik.
+
+### Struktur
+
+```text
+<td class="cell-editable cell-select|cell-text">
+├── .cell-value                    (Pflicht — Anzeige, role="button", tabindex="0")
+├── <select class="form-select">   (Pflicht bei .cell-select)
+├── <input class="form-input">     (Pflicht bei .cell-text)
+└── .cell-error-tip                (Optional — nur bei is-error, role="alert")
+```
+
+### Elemente
+
+| Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
+|---|---|---|---|
+| `.cell-editable` | Basis-Klasse auf `<td>` — aktiviert den Zustands-Kontrakt | Pflicht | `.cell-select`, `.cell-text` |
+| `.cell-select` | Variante: Dropdown mit festem Wertebereich | Pflicht (genau eine der beiden Varianten) | — |
+| `.cell-text` | Variante: einzeiliger Freitext | Pflicht (genau eine der beiden Varianten) | — |
+| `.cell-value` | Anzeigeelement im Ruhezustand, `role="button" tabindex="0"` | Pflicht | — |
+| `<select class="form-select">` | Eingabeelement der `.cell-select`-Variante, unverändert aus `docs/forms.md` | Pflicht bei `.cell-select` | — |
+| `<input class="form-input" type="text">` | Eingabeelement der `.cell-text`-Variante, unverändert aus `docs/forms.md` | Pflicht bei `.cell-text` | — |
+| `.cell-error-tip` | Fehlermeldung, `role="alert"`, per `aria-describedby` mit dem Eingabeelement verknüpft | Optional (nur bei `.is-error`) | — |
+
+### Reihenfolge & Platzierung
+
+- `.cell-value` steht immer als **erstes** Kind im `<td>`, direkt gefolgt vom Eingabeelement (`<select class="form-select">` oder `<input class="form-input">`). `.cell-error-tip` ist immer das **letzte** Kind, wenn vorhanden.
+- `.cell-error-tip` wird **erst bei Eintritt in `.is-error`** ins DOM eingefügt (bzw. sichtbar) — nicht vorab unsichtbar mitgerendert. Position: `position: absolute; bottom: 100%; left: 0;` — der Tooltip öffnet **oberhalb** der Zelle, linksbündig zur Zellkante, nie nach rechts oder unten (Tabellenzeilen darunter dürfen nicht verdeckt werden).
+- Beim Verlassen des Fehlerzustands (erneuter Klick auf `.cell-value`) wird `.cell-error-tip` aus dem DOM entfernt und `aria-describedby` vom Eingabeelement wieder entfernt — kein verwaistes `aria-describedby` auf ein nicht mehr existierendes Element.
+- Innerhalb einer Tabellenzeile ist die Reihenfolge der Spalten frei wählbar — `.cell-editable`-Spalten dürfen beliebig mit normalen, nicht editierbaren `<td>`-Spalten gemischt werden (siehe Beispiel `components/table-editable.html`).
+
+### Zustände (auf `<td class="cell-editable …">`)
+
+| Zustand / Variante | Klasse / Modifier | Wann verwenden |
+|---|---|---|
+| Ruhezustand | *(kein Modifier)* | Zelle ist editierbar, aber nicht aktiv in Bearbeitung. `.cell-value` sichtbar, Eingabeelement `display:none`, Hintergrund `--accent-subtle` als Discoverability-Hinweis. |
+| Editing | `.is-editing` | Nutzer hat die Zelle aktiviert (Klick/Enter/Space auf `.cell-value`). Eingabeelement sichtbar + fokussiert, `.cell-value` versteckt. |
+| Saving | `.is-saving` | Commit-Request läuft (transient). Eingabeelement `opacity:0.6`, nicht interagierbar. |
+| Saved | `.is-saved` | Commit war erfolgreich (transient, JS entfernt die Klasse nach eigenem Timeout, empfohlen ~1200 ms). Kurzer Hintergrund-Flash `--accent-subtle-md`. |
+| Error | `.is-error` | Commit oder Validierung ist fehlgeschlagen und bleibt bestehen, bis erneut editiert wird. Rahmen `--danger`, Hintergrund `--danger-subtle`, `.cell-error-tip` sichtbar. |
+
+**Zustandsübergänge (Text-Regel):**
+
+```
+Ruhezustand ──Klick/Enter/Space──▶ is-editing
+is-editing ──Blur/Change/Enter──▶ is-saving
+is-editing ──Escape (nur .cell-text)──▶ Ruhezustand (kein Commit, Wert zurückgesetzt)
+is-saving ──Commit OK──▶ is-saved ──Timeout──▶ Ruhezustand
+is-saving ──Commit fehlgeschlagen──▶ is-error
+is-error ──erneuter Klick──▶ is-editing
+```
+
+Der Zustands-Satz ist für `.cell-select` und `.cell-text` identisch.
+
+### JS-Verantwortlichkeiten (Pflicht)
+
+- Klick oder `Enter`/`Space` auf `.cell-value`: `.is-editing` auf dem `<td>` setzen, Eingabeelement fokussieren.
+- `change` (Select) / `blur` oder `Enter` (Input): `.is-editing` entfernen, `.is-saving` setzen, Commit auslösen.
+- `Escape` nur bei `.cell-text`: Eingabewert auf zuletzt committeten Wert zurücksetzen, `.is-editing` entfernen, kein Commit.
+- Commit erfolgreich: `.is-saving` entfernen, `.cell-value`-Text aktualisieren, `.is-saved` setzen und nach ~1200 ms wieder entfernen.
+- Commit fehlgeschlagen: `.is-saving` entfernen, `.is-error` setzen, Fehlertext in `.cell-error-tip` schreiben.
+- Klick auf `.cell-value` im `.is-error`-Zustand: `.is-error` entfernen, zurück in `.is-editing`.
+
+### Beispiel
+
+```html
+<td class="cell-editable cell-select">
+  <span class="cell-value" tabindex="0" role="button">Aktiv</span>
+  <select class="form-select" aria-label="Status">
+    <option value="active" selected>Aktiv</option>
+    <option value="inactive">Inaktiv</option>
+  </select>
+</td>
+```
+
+### Regeln
+
+1. Dual-Markup ist Pflicht — kein `innerHTML`-Ersatz des Zellinhalts beim Zustandswechsel (Fokus-Erhalt, Barrierefreiheit).
+2. `.cell-select`/`.cell-text` nutzen unverändert `.form-select`/`.form-input` (`docs/forms.md`) — kein eigenes Input-Styling in `page.css`.
+3. `.cell-text` ist bewusst einzeilig. Für mehrzeilige Werte ist dies nicht das passende Pattern.
+4. Persistenz (API-Call, Fehlerbehandlung bei Netzwerkfehlern) ist Sache der Website, nicht der CI.
+5. `.form-select`/`.form-input` in editierbaren Zellen bekommen `aria-label` aus dem Spalten-Header-Kontext.
+
+---
+
 ## Column-Groups
 
 Für Seiten mit mehreren thematischen Spalten (Tiles Registry, Font-Galerie).
@@ -337,4 +433,5 @@ Ohne Sidebar. Inhalt zentriert.
 
 | Datum | Änderung |
 |---|---|
+| 2026-07-20 | Editierbare Tabellenzellen ergänzt — `.cell-select`, `.cell-text`, Zustands-Kontrakt (is-editing/is-saving/is-saved/is-error). |
 | 2026-04-24 | Initiale Definition. 5 Seitentypen. Page-Header, Content-Body, Panel, Tabelle, Column-Groups, Landing. |
