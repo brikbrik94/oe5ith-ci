@@ -76,6 +76,7 @@ components/sidebar.html
 components/split-view.html
 components/stats-explorer.html
 components/status-msg.html
+components/table-editable.html
 components/toast.html
 components/tokens.html
 components/topbar.html

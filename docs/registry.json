@@ -16,7 +16,7 @@
       "css": ["badges.css"], "doc": ["badges.md"], "html": ["badges.html"] },
     { "id": "page", "title": "Seitenstruktur", "category": "component",
       "css": ["page.css"], "doc": ["page.md", "page-types.md"],
-      "html": ["page-types.html", "status-msg.html"] },
+      "html": ["page-types.html", "status-msg.html", "table-editable.html"] },
     { "id": "forms", "title": "Forms", "category": "component",
       "css": ["forms.css"], "doc": ["forms.md"], "html": ["forms.html"] },
     { "id": "modal", "title": "Modal + Karten-Popup", "category": "component",

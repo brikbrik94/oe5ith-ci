@@ -9,6 +9,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v1.23.0 - 2026-07-20
+
+### Added
+- **Editierbare Tabellenzellen** — Erweiterung von `.ci-table` um `.cell-select` (Dropdown mit festem Wertebereich) und `.cell-text` (einzeiliger Freitext) für Inline-Bearbeitung. Gemeinsamer Zustands-Kontrakt (`is-editing`/`is-saving`/`is-saved`/`is-error`) in `css/page.css`, Referenz `components/table-editable.html`, Doku-Abschnitt in `docs/page.md`. Keine neuen Tokens — reuse `--accent-subtle`, `--accent-subtle-md`, `--danger`, `--danger-subtle`, `.form-select`/`.form-input`.
+
+---
+
 ## v1.22.0 - 2026-07-19
 
 ### Added
