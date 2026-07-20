@@ -281,6 +281,80 @@
 .ci-table td.empty { color: var(--subtle); }
 
 /* ═══════════════════════════════════════
+   EDITIERBARE ZELLEN (.cell-editable)
+   Dual-Markup: .cell-value (Anzeige) +
+   .form-select/.form-input (Eingabe) liegen
+   gleichzeitig im DOM. Zustand ausschließlich
+   über Klassen auf <td>, kein DOM-Swap.
+   Voraussetzung: css/forms.css
+   ═══════════════════════════════════════ */
+.cell-editable {
+  position: relative;
+  background: var(--accent-subtle);
+  cursor: pointer;
+}
+
+.cell-editable .form-select,
+.cell-editable .form-input {
+  display: none;
+}
+
+.cell-editable .cell-value {
+  cursor: pointer;
+}
+.cell-editable .cell-value:focus-visible {
+  outline: 2px solid var(--accent-border);
+  outline-offset: -2px;
+}
+
+/* Editing: Eingabeelement sichtbar, Anzeige versteckt */
+.cell-editable.is-editing {
+  background: transparent;
+  cursor: default;
+}
+.cell-editable.is-editing .cell-value {
+  display: none;
+}
+.cell-editable.is-editing .form-select,
+.cell-editable.is-editing .form-input {
+  display: block;
+}
+
+/* Saving: transiente Sperre während Commit läuft */
+.cell-editable.is-saving .form-select,
+.cell-editable.is-saving .form-input {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Saved: kurzes Erfolgs-Feedback (JS entfernt Klasse nach eigenem Timeout) */
+.cell-editable.is-saved {
+  background: var(--accent-subtle-md);
+  transition: background var(--transition-slow);
+}
+
+/* Error: Commit fehlgeschlagen / Validierung fehlgeschlagen */
+.cell-editable.is-error {
+  border: 1px solid var(--danger);
+  background: var(--danger-subtle);
+}
+
+.cell-error-tip {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 4px;
+  background: var(--panel-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 6px 9px;
+  font-size: 0.72rem;
+  color: var(--danger);
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
    COLUMN GROUPS
    Für Seiten mit mehreren thematischen Spalten
    (z.B. Tiles: Basemap / Overlay / Elevation).
