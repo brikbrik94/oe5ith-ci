@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Reference — Editierbare Tabellenzellen</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/forms.css">
+<link rel="stylesheet" href="../css/page.css">
+<link rel="stylesheet" href="../css/demo.css">
+</head>
+<body>
+
+<div class="page-content">
+
+  <!-- ═══ LIVE-DEMO: Klick-Interaktion mit vollem Zustands-Kontrakt ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Editierbare Tabellenzellen — Live-Demo</div>
+    <div class="demo-section-desc">
+      Klick auf eine Zelle mit blauem Hintergrund öffnet den Bearbeitungsmodus.
+      Dropdown-Zelle (Status): Auswahl committet sofort. Freitext-Zelle (Notiz):
+      <code>Enter</code>/Blur committet, <code>Escape</code> verwirft. Commit wird
+      simuliert (kein echter API-Call) — nach ~600&nbsp;ms erfolgreich, bei Eingabe
+      des Worts <code>fehler</code> in der Notiz-Zelle schlägt der Commit absichtlich fehl.
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Nachrichten-Übersicht</div>
+      </div>
+      <div class="panel-body-flush panel-body-flush--scroll">
+        <table class="ci-table" id="demo-table">
+          <thead>
+            <tr>
+              <th class="mono">Zeitstempel</th>
+              <th>Status</th>
+              <th>Notiz</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">24.4.2026 13:46</td>
+              <td class="cell-editable cell-select">
+                <span class="cell-value" tabindex="0" role="button">Aktiv</span>
+                <select class="form-select" aria-label="Status">
+                  <option value="active" selected>Aktiv</option>
+                  <option value="inactive">Inaktiv</option>
+                  <option value="pending">Ausstehend</option>
+                </select>
+              </td>
+              <td class="cell-editable cell-text">
+                <span class="cell-value" tabindex="0" role="button">BH Jurist benötigt 4020 Linz…</span>
+                <input class="form-input" type="text" aria-label="Notiz" value="BH Jurist benötigt 4020 Linz…">
+              </td>
+            </tr>
+            <tr>
+              <td class="mono">24.4.2026 13:38</td>
+              <td class="cell-editable cell-select">
+                <span class="cell-value" tabindex="0" role="button">Ausstehend</span>
+                <select class="form-select" aria-label="Status">
+                  <option value="active">Aktiv</option>
+                  <option value="inactive">Inaktiv</option>
+                  <option value="pending" selected>Ausstehend</option>
+                </select>
+              </td>
+              <td class="cell-editable cell-text">
+                <span class="cell-value" tabindex="0" role="button">–</span>
+                <input class="form-input" type="text" aria-label="Notiz" value="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STATISCHE ZUSTÄNDE (ohne JS nachvollziehbar) ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Zustands-Kontrakt (statisch)</div>
+    <div class="demo-section-desc">
+      Alle fünf Zustände einer <code>.cell-text</code>-Zelle nebeneinander, jeweils
+      mit der Klasse fest im HTML gesetzt (kein Klick nötig).
+    </div>
+    <table class="ci-table" style="max-width: 720px;">
+      <thead>
+        <tr>
+          <th>Zustand</th>
+          <th>Notiz</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ruhezustand</td>
+          <td class="cell-editable cell-text">
+            <span class="cell-value" tabindex="0" role="button">BH Jurist benötigt 4020 Linz…</span>
+            <input class="form-input" type="text" value="BH Jurist benötigt 4020 Linz…">
+          </td>
+        </tr>
+        <tr>
+          <td>is-editing</td>
+          <td class="cell-editable cell-text is-editing">
+            <span class="cell-value" tabindex="0" role="button">BH Jurist benötigt 4020 Linz…</span>
+            <input class="form-input" type="text" value="BH Jurist benötigt 4020 Linz…">
+          </td>
+        </tr>
+        <tr>
+          <td>is-saving</td>
+          <td class="cell-editable cell-text is-editing is-saving">
+            <span class="cell-value" tabindex="0" role="button">BH Jurist benötigt 4020 Linz…</span>
+            <input class="form-input" type="text" value="BH Jurist benötigt 4020 Linz…">
+          </td>
+        </tr>
+        <tr>
+          <td>is-saved</td>
+          <td class="cell-editable cell-text is-saved">
+            <span class="cell-value" tabindex="0" role="button">BH Jurist benötigt 4020 Linz…</span>
+            <input class="form-input" type="text" value="BH Jurist benötigt 4020 Linz…">
+          </td>
+        </tr>
+        <tr>
+          <td>is-error</td>
+          <td class="cell-editable cell-text is-error">
+            <span class="cell-value" tabindex="0" role="button">BH Jurist benötigt 4020 Linz…</span>
+            <input class="form-input" type="text" value="BH Jurist benötigt 4020 Linz…" aria-describedby="static-err-tip">
+            <div class="cell-error-tip" id="static-err-tip" role="alert">Speichern fehlgeschlagen</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var activeCell = null;
+
+  var errTipSeq = 0;
+
+  function commitCell(cell, valueEl, inputEl, newValue) {
+    cell.classList.remove('is-editing');
+    cell.classList.add('is-saving');
+
+    setTimeout(function () {
+      cell.classList.remove('is-saving');
+
+      if (newValue.toLowerCase().indexOf('fehler') !== -1) {
+        cell.classList.add('is-error');
+        var tip = cell.querySelector('.cell-error-tip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.className = 'cell-error-tip';
+          tip.setAttribute('role', 'alert');
+          tip.id = 'demo-err-tip-' + (++errTipSeq);
+          cell.appendChild(tip);
+          if (inputEl) inputEl.setAttribute('aria-describedby', tip.id);
+        }
+        tip.textContent = 'Speichern fehlgeschlagen';
+        return;
+      }
+
+      valueEl.textContent = newValue;
+      cell.classList.add('is-saved');
+      setTimeout(function () { cell.classList.remove('is-saved'); }, 1200);
+    }, 600);
+  }
+
+  function openEditing(cell) {
+    if (activeCell && activeCell !== cell) {
+      activeCell.classList.remove('is-editing');
+    }
+    cell.classList.remove('is-error');
+    var tip = cell.querySelector('.cell-error-tip');
+    if (tip) {
+      tip.remove();
+      var describedInput = cell.querySelector('.form-select, .form-input');
+      if (describedInput) describedInput.removeAttribute('aria-describedby');
+    }
+
+    cell.classList.add('is-editing');
+    activeCell = cell;
+
+    var input = cell.querySelector('.form-select, .form-input');
+    if (input) input.focus();
+  }
+
+  document.querySelectorAll('#demo-table .cell-editable').forEach(function (cell) {
+    var valueEl = cell.querySelector('.cell-value');
+    var selectEl = cell.querySelector('.form-select');
+    var inputEl = cell.querySelector('.form-input');
+
+    valueEl.addEventListener('click', function () { openEditing(cell); });
+    valueEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openEditing(cell);
+      }
+    });
+
+    if (selectEl) {
+      selectEl.addEventListener('change', function () {
+        var label = selectEl.options[selectEl.selectedIndex].text;
+        commitCell(cell, valueEl, selectEl, label);
+      });
+    }
+
+    if (inputEl) {
+      inputEl.addEventListener('blur', function () {
+        if (cell.classList.contains('is-editing')) {
+          commitCell(cell, valueEl, inputEl, inputEl.value);
+        }
+      });
+      inputEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          inputEl.blur();
+        } else if (e.key === 'Escape') {
+          inputEl.value = valueEl.textContent;
+          cell.classList.remove('is-editing');
+          activeCell = null;
+        }
+      });
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
