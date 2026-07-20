@@ -257,7 +257,7 @@ die eigentliche Logik.
 |---|---|---|
 | Ruhezustand | *(kein Modifier)* | Zelle ist editierbar, aber nicht aktiv in Bearbeitung. `.cell-value` sichtbar, Eingabeelement `display:none`, Hintergrund `--accent-subtle` als Discoverability-Hinweis. |
 | Editing | `.is-editing` | Nutzer hat die Zelle aktiviert (Klick/Enter/Space auf `.cell-value`). Eingabeelement sichtbar + fokussiert, `.cell-value` versteckt. |
-| Saving | `.is-saving` | Commit-Request läuft (transient). Eingabeelement `opacity:0.6`, nicht interagierbar. |
+| Saving | `.is-editing is-saving` (beide gemeinsam) | Commit-Request läuft (transient). Eingabeelement bleibt sichtbar (dank fortbestehendem `.is-editing`), `opacity:0.6`, nicht interagierbar. |
 | Saved | `.is-saved` | Commit war erfolgreich (transient, JS entfernt die Klasse nach eigenem Timeout, empfohlen ~1200 ms). Kurzer Hintergrund-Flash `--accent-subtle-md`. |
 | Error | `.is-error` | Commit oder Validierung ist fehlgeschlagen und bleibt bestehen, bis erneut editiert wird. Rahmen `--danger`, Hintergrund `--danger-subtle`, `.cell-error-tip` sichtbar. |
 
@@ -265,10 +265,10 @@ die eigentliche Logik.
 
 ```
 Ruhezustand ──Klick/Enter/Space──▶ is-editing
-is-editing ──Blur/Change/Enter──▶ is-saving
+is-editing ──Blur/Change/Enter──▶ is-editing + is-saving
 is-editing ──Escape (nur .cell-text)──▶ Ruhezustand (kein Commit, Wert zurückgesetzt)
-is-saving ──Commit OK──▶ is-saved ──Timeout──▶ Ruhezustand
-is-saving ──Commit fehlgeschlagen──▶ is-error
+is-editing + is-saving ──Commit OK──▶ is-saved ──Timeout──▶ Ruhezustand
+is-editing + is-saving ──Commit fehlgeschlagen──▶ is-error
 is-error ──erneuter Klick──▶ is-editing
 ```
 
@@ -277,10 +277,10 @@ Der Zustands-Satz ist für `.cell-select` und `.cell-text` identisch.
 ### JS-Verantwortlichkeiten (Pflicht)
 
 - Klick oder `Enter`/`Space` auf `.cell-value`: `.is-editing` auf dem `<td>` setzen, Eingabeelement fokussieren.
-- `change` (Select) / `blur` oder `Enter` (Input): `.is-editing` entfernen, `.is-saving` setzen, Commit auslösen.
-- `Escape` nur bei `.cell-text`: Eingabewert auf zuletzt committeten Wert zurücksetzen, `.is-editing` entfernen, kein Commit.
-- Commit erfolgreich: `.is-saving` entfernen, `.cell-value`-Text aktualisieren, `.is-saved` setzen und nach ~1200 ms wieder entfernen.
-- Commit fehlgeschlagen: `.is-saving` entfernen, `.is-error` setzen, Fehlertext in `.cell-error-tip` schreiben.
+- `change` (Select) / `blur` oder `Enter` (Input): `.is-saving` zusätzlich zu `.is-editing` setzen (`.is-editing` bleibt bestehen, damit das Eingabeelement sichtbar bleibt — nur `.is-editing` steuert `display:block`), Commit auslösen.
+- `Escape` nur bei `.cell-text`: Eingabewert auf zuletzt committeten Wert zurücksetzen, `.is-editing` entfernen, kein Commit, Fokus zurück auf `.cell-value` setzen.
+- Commit erfolgreich: `.is-saving` und `.is-editing` entfernen, `.cell-value`-Text aktualisieren, `.is-saved` setzen und nach ~1200 ms wieder entfernen, Fokus zurück auf `.cell-value` setzen.
+- Commit fehlgeschlagen: `.is-saving` und `.is-editing` entfernen, `.is-error` setzen, Fehlertext in `.cell-error-tip` schreiben, Fokus zurück auf `.cell-value` setzen.
 - Klick auf `.cell-value` im `.is-error`-Zustand: `.is-error` entfernen, zurück in `.is-editing`.
 
 ### Beispiel
