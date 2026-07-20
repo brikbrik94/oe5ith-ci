@@ -433,5 +433,5 @@ Ohne Sidebar. Inhalt zentriert.
 
 | Datum | Änderung |
 |---|---|
-| 2026-07-20 | Editierbare Tabellenzellen ergänzt — `.cell-select`, `.cell-text`, Zustands-Kontrakt (is-editing/is-saving/is-saved/is-error). |
 | 2026-04-24 | Initiale Definition. 5 Seitentypen. Page-Header, Content-Body, Panel, Tabelle, Column-Groups, Landing. |
+| 2026-07-20 | Editierbare Tabellenzellen ergänzt — `.cell-select`, `.cell-text`, Zustands-Kontrakt (is-editing/is-saving/is-saved/is-error). |
