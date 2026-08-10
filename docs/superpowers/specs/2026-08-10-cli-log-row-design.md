@@ -67,33 +67,51 @@ werden müsste.
 Trennzeichen zwischen allen Spalten ist fix `" | "` (Leerzeichen-Pipe-
 Leerzeichen) — CI-weiter Standard, nicht pro Aufruf konfigurierbar.
 
-**Einschränkung — keine Doppelpunkte in Nicht-letzten Spalten:** `wert` in
-allen Spalten außer der letzten darf selbst keinen Doppelpunkt enthalten.
-Grund: Die Bash- und Python-Implementierung parsen `"wert:align:breite"`
-aus unterschiedlichen Richtungen (Bash `IFS=':' read` von links, Python
-`rsplit(":", 2)` von rechts) — bei einem Doppelpunkt im Wert einer
-Nicht-letzten Spalte ergibt das unterschiedliches, implementierungs-
-abhängiges Verhalten (siehe Task-2-Review vom 2026-08-10) statt der
-geforderten identischen Ausgabe zwischen Bash und Python. Da Nicht-letzte
-Spalten in der Praxis kurze, kontrollierte Werte sind (Mode-Kürzel,
-IDs, Codes), ist das keine reale Einschränkung für den POCSAG-Anwendungsfall
-— wird aber bewusst nur dokumentiert, nicht durch Angleichung der
-Parsing-Strategien technisch gelöst (YAGNI, kein realer Call-Site betroffen).
+**Einschränkung — keine Doppelpunkte oder Backslashes in Nicht-letzten
+Spalten:** `wert` in allen Spalten außer der letzten darf selbst weder
+Doppelpunkt noch Backslash enthalten.
+
+Grund Doppelpunkt: Die Bash- und Python-Implementierung parsen
+`"wert:align:breite"` aus unterschiedlichen Richtungen (Bash
+`IFS=':' read` von links, Python `rsplit(":", 2)` von rechts) — bei
+einem Doppelpunkt im Wert einer Nicht-letzten Spalte ergibt das
+unterschiedliches, implementierungsabhängiges Verhalten (siehe
+Task-2-Review vom 2026-08-10) statt der geforderten identischen Ausgabe
+zwischen Bash und Python.
+
+Grund Backslash: Die Bash-Implementierung gibt die Zeile über
+`printf '%b%s\n' "$out" "${!n}"` aus — `%b` interpretiert
+Escape-Sequenzen (`\n`, `\t`, `\c` etc.) im gesamten `$out`, also in
+allen Nicht-letzten Spalten, nicht nur dort wo Farbcodes stehen
+könnten. Ein `\c` in einer Nicht-letzten Spalte löscht in Bash den Rest
+der Zeile inkl. der eigentlich rohen letzten Spalte und des
+Zeilenumbruchs, ohne Fehlermeldung. Python ist davon nicht betroffen,
+da `print()` keine Escape-Sequenzen interpretiert.
+
+Da Nicht-letzte Spalten in der Praxis meist kurze, kontrollierte Werte
+sind (Mode-Kürzel, IDs, Codes), ist das für die meisten Aufrufer keine
+reale Einschränkung — im dokumentierten POCSAG-Anwendungsfall stammen
+einzelne Nicht-letzte Spalten (z. B. der RIC) allerdings aus über Funk
+dekodierten Daten, nicht aus einer festen Lookup-Tabelle; die
+Einschränkung ist daher bewusst dokumentiert statt stillschweigend
+vorausgesetzt. Sie wird bewusst nur dokumentiert, nicht durch Validierung
+oder Angleichung der Parsing-Strategien technisch erzwungen (YAGNI, kein
+realer Call-Site betroffen).
 
 ### Beispiel
 
 ```bash
-log_row "POCSAG1200:l:11" "RIC $ric:r:7" "$func:l:2" "$label:l:34" "$value"
+log_row "POCSAG1200:l:11" "RIC $ric:r:12" "$func:l:2" "$label:l:34" "$value"
 ```
 
 ```python
-log_row("POCSAG1200:l:11", f"RIC {ric}:r:7", f"{func}:l:2", f"{label}:l:34", value)
+log_row("POCSAG1200:l:11", f"RIC {ric}:r:12", f"{func}:l:2", f"{label}:l:34", value)
 ```
 
 Ergebnis:
 
 ```
-POCSAG1200 |    RIC 208 | F3 | Zeit lokal (Swissphone)          | 2026-08-10 10:58:00 Lokalzeit
+POCSAG1200  |      RIC 208 | F3 | Zeit lokal (Swissphone)            | 2026-08-10 10:58:00 Lokalzeit
 ```
 
 ---

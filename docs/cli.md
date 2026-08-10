@@ -88,19 +88,30 @@ POCSAG1200  |      RIC 208 | F3 | Zeit lokal (Swissphone)            | 2026-08-1
 3. `log_row` hat keine Farbe und kein Symbol. Wenn eine Zeile farblich
    hervorgehoben werden soll, umschließt der Aufrufer den jeweiligen
    Spaltenwert selbst mit den bestehenden `C_*`-Variablen, bevor er ihn
-   an `log_row` übergibt.
+   an `log_row` übergibt. Hinweis: Eine eingefärbte Spalte zählt ihre
+   Escape-Bytes mit zur Padding-Breite — die sichtbare Ausrichtung
+   verschiebt sich dadurch, und zwar in Bash und Python unterschiedlich
+   stark (Bash-`C_*`-Variablen enthalten längere, noch nicht
+   interpretierte Escape-Literale als die Python-Variablen). Empfehlung:
+   nur die letzte (rohe) Spalte einfärben, oder die Verschiebung bei
+   mittleren Spalten bewusst in Kauf nehmen.
 4. **Bekannte Einschränkung:** Labels mit Umlauten (`Niederöst.`,
    `Kärnten`, `Oberösterr.`) können je nach Bash-/Terminal-Umgebung die
    Padding-Breite um 1–2 Spalten verfälschen, da `printf` nicht überall
    Terminal-Anzeigebreite statt Byte-/Zeichenanzahl zählt. Rein
    kosmetisch, kein Datenverlust.
-5. **Einschränkung:** `wert` in Spalten außer der letzten darf keinen
-   Doppelpunkt enthalten. Die Bash- und Python-Implementierung parsen
-   `"wert:align:breite"` aus unterschiedlichen Richtungen (Bash von
-   links, Python von rechts) — ein Doppelpunkt im Wert einer
-   Nicht-letzten Spalte führt zu unterschiedlichem Verhalten zwischen
-   beiden Implementierungen. In der letzten Spalte (roher String) sind
-   Doppelpunkte dagegen unproblematisch.
+5. **Einschränkung:** `wert` in Spalten außer der letzten darf weder
+   Doppelpunkt noch Backslash enthalten. Grund Doppelpunkt: Bash- und
+   Python-Implementierung parsen `"wert:align:breite"` aus
+   unterschiedlichen Richtungen (Bash von links, Python von rechts) —
+   ein Doppelpunkt im Wert einer Nicht-letzten Spalte führt zu
+   unterschiedlichem Verhalten zwischen beiden Implementierungen. Grund
+   Backslash: Die Bash-Implementierung interpretiert Escape-Sequenzen
+   (`\n`, `\t`, `\c` etc.) in allen Spalten außer der letzten — ein `\c`
+   dort löscht in Bash den Rest der Zeile inkl. der eigentlich rohen
+   letzten Spalte und des Zeilenumbruchs. Python ist davon nicht
+   betroffen. In der letzten Spalte (roher String) sind beide Zeichen
+   unproblematisch.
 
 ---
 
@@ -166,4 +177,4 @@ log_sep()
 | Datum | Änderung |
 |---|---|
 | 2026-04-22 | Initiale Definition. Farben auf CI-Tokens gemappt. `log_auth` und `log_sep` neu. `require_cmd` in Bash ergänzt. |
-| 2026-08-10 | `log_row` ergänzt (Bash + Python) — strukturierte Datenzeilen mit festem Trennzeichen `" | "`, generisches Spalten-Modell, letzte Spalte roh für Freitext-Werte. |
+| 2026-08-10 | `log_row` ergänzt (Bash + Python) — strukturierte Datenzeilen mit festem Trennzeichen `" \| "`, generisches Spalten-Modell, letzte Spalte roh für Freitext-Werte. |

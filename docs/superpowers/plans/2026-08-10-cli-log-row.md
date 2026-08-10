@@ -28,7 +28,7 @@
 - Verify with: `/tmp/claude-0/-root-git-oe5ith-ci/89ae54c4-5529-41db-a1cf-1b42182f89f4/scratchpad/verify_log_row.sh` (scratch verification script, not committed)
 
 **Interfaces:**
-- Produces: `log_row` (Bash function) — variadic, last arg raw string, all prior args `"wert:align:breite"`. Prints the joined row to stdout via `echo -e`. Returns 1 and calls `log_error` if any non-last spec has an invalid `align` token.
+- Produces: `log_row` (Bash function) — variadic, last arg raw string, all prior args `"wert:align:breite"`. Prints the joined row to stdout via `printf '%b%s\n'`. Returns 1 and calls `log_error` if any non-last spec has an invalid `align` token.
 
 - [ ] **Step 1: Add the `log_row` function to `scripts/cli/utils.sh`**
 
