@@ -110,12 +110,20 @@ log_sep() {
 # Jede Spalte außer der letzten: "wert:align:breite" (align = l|r).
 # Letzte Spalte: roher String, kein Padding.
 log_row() {
+    if [ $# -eq 0 ]; then
+        log_error "log_row: mindestens ein Argument (die letzte, rohe Spalte) erforderlich"
+        return 1
+    fi
     local n=$#
     local out=""
     local i spec val align width
     for ((i = 1; i < n; i++)); do
         spec="${!i}"
         IFS=':' read -r val align width <<< "$spec"
+        if ! [[ "$width" =~ ^[0-9]+$ ]]; then
+            log_error "log_row: ungültige Breite '$width' in Spec '$spec'"
+            return 1
+        fi
         case "$align" in
             l) out+="$(printf "%-${width}s" "$val")" ;;
             r) out+="$(printf "%${width}s" "$val")" ;;
