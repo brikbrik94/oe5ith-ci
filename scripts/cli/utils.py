@@ -88,3 +88,20 @@ def get_rel_path(full_path: str, root_path: str) -> str:
     if full_path.startswith(root_path + "/"):
         return full_path[len(root_path) + 1:]
     return full_path
+
+def log_row(*cols: str) -> None:
+    """Strukturierte Datenzeile mit festem Trennzeichen ' | '.
+    Jede Spalte außer der letzten: 'wert:align:breite' (align = l|r).
+    Letzte Spalte: roher String, kein Padding."""
+    parts = []
+    for spec in cols[:-1]:
+        val, align, width = spec.rsplit(":", 2)
+        width = int(width)
+        if align == "l":
+            parts.append(f"{val:<{width}}")
+        elif align == "r":
+            parts.append(f"{val:>{width}}")
+        else:
+            raise ValueError(f"log_row: ungültiges align '{align}' in Spec '{spec}'")
+    parts.append(cols[-1])
+    print(" | ".join(parts))
