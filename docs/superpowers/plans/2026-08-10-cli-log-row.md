@@ -286,6 +286,13 @@ Paste the exact "Zeile 1" line captured in Task 1 Step 3 (and cross-checked agai
    Padding-Breite um 1–2 Spalten verfälschen, da `printf` nicht überall
    Terminal-Anzeigebreite statt Byte-/Zeichenanzahl zählt. Rein
    kosmetisch, kein Datenverlust.
+5. **Einschränkung:** `wert` in Spalten außer der letzten darf keinen
+   Doppelpunkt enthalten. Die Bash- und Python-Implementierung parsen
+   `"wert:align:breite"` aus unterschiedlichen Richtungen (Bash von
+   links, Python von rechts) — ein Doppelpunkt im Wert einer
+   Nicht-letzten Spalte führt zu unterschiedlichem Verhalten zwischen
+   beiden Implementierungen. In der letzten Spalte (roher String) sind
+   Doppelpunkte dagegen unproblematisch.
 
 ---
 ```

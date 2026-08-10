@@ -67,6 +67,19 @@ werden müsste.
 Trennzeichen zwischen allen Spalten ist fix `" | "` (Leerzeichen-Pipe-
 Leerzeichen) — CI-weiter Standard, nicht pro Aufruf konfigurierbar.
 
+**Einschränkung — keine Doppelpunkte in Nicht-letzten Spalten:** `wert` in
+allen Spalten außer der letzten darf selbst keinen Doppelpunkt enthalten.
+Grund: Die Bash- und Python-Implementierung parsen `"wert:align:breite"`
+aus unterschiedlichen Richtungen (Bash `IFS=':' read` von links, Python
+`rsplit(":", 2)` von rechts) — bei einem Doppelpunkt im Wert einer
+Nicht-letzten Spalte ergibt das unterschiedliches, implementierungs-
+abhängiges Verhalten (siehe Task-2-Review vom 2026-08-10) statt der
+geforderten identischen Ausgabe zwischen Bash und Python. Da Nicht-letzte
+Spalten in der Praxis kurze, kontrollierte Werte sind (Mode-Kürzel,
+IDs, Codes), ist das keine reale Einschränkung für den POCSAG-Anwendungsfall
+— wird aber bewusst nur dokumentiert, nicht durch Angleichung der
+Parsing-Strategien technisch gelöst (YAGNI, kein realer Call-Site betroffen).
+
 ### Beispiel
 
 ```bash
