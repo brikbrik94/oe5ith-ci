@@ -136,10 +136,20 @@ log_row() {
         esac
         out+=" | "
     done
-    out+="${!n}"
-    echo -e "$out"
+    printf '%b%s\n' "$out" "${!n}"
 }
 ```
+
+**Warum `printf '%b%s\n'` statt `echo -e "$out"`:** Die letzte Spalte ist per
+Design ein roher String für unkontrollierten externen Freitext (z. B.
+POCSAG-Nachrichten). `echo -e` würde Backslash-Sequenzen (`\n`, `\t`, `\c`
+etc.) auch dort interpretieren — ein zufälliges `\c` im Freitext würde den
+Rest der Zeile inkl. Zeilenumbruch lautlos verschlucken, was der Regel aus
+Abschnitt 3 widerspricht ("Vollständigkeit der Log-Daten hat Vorrang").
+`%b` interpretiert Escapes nur im bereits gebauten Struktur-Teil (`$out`,
+Spalten 1..n-1 — kurze, kontrollierte Werte, dort funktioniert optionales
+Einfärben über `C_*`-Variablen weiterhin), `%s` gibt die letzte Spalte
+unverändert aus.
 
 ### Python (`scripts/cli/utils.py`)
 

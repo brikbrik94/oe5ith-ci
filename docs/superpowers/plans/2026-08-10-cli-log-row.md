@@ -56,10 +56,11 @@ log_row() {
         esac
         out+=" | "
     done
-    out+="${!n}"
-    echo -e "$out"
+    printf '%b%s\n' "$out" "${!n}"
 }
 ```
+
+**Note (post-Task-1-review fix):** the original plan draft used `out+="${!n}"; echo -e "$out"`. Task 1's review caught that `echo -e` interprets backslash escapes (`\n`, `\t`, `\c`) in the raw last column too — which can silently truncate free-text values (e.g. POCSAG messages) containing a stray backslash, violating the "never truncate" rule in Global Constraints. `printf '%b%s\n' "$out" "${!n}"` keeps escape interpretation (for optional `C_*` coloring) scoped to the structural columns in `$out` only; the raw last column via `%s` is never escape-interpreted. This is the corrected, authoritative version of Step 1 — implement this, not the version any earlier commit message may reference.
 
 - [ ] **Step 2: Write a scratch verification script**
 
