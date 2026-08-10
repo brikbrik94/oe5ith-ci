@@ -7,6 +7,9 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+### Added
+- **`log_row`** (`scripts/cli/utils.sh`, `scripts/cli/utils.py`) — strukturierte, spaltenausgerichtete CLI-Log-Zeilen mit festem Trennzeichen `" | "`. Generisches Spalten-Modell (`"wert:align:breite"`), letzte Spalte immer roher String für Freitext-Werte mit Doppelpunkten. Dokumentiert in `docs/cli.md`.
+
 ---
 
 ## v1.23.0 - 2026-07-20

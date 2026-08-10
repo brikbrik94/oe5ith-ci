@@ -42,6 +42,65 @@ Die Farben sind direkt auf die CI Design Tokens gemappt.
 | `log_auth` | Lila | `  ℹ` | Auth/Security-Ereignis |
 | `log_debug` | Dim | `  ·` | Debug — nur wenn `DEBUG=1` |
 | `log_sep` | Dim | `  ───` | Trennlinie |
+| `log_row` | keine (farblos) | keine | Strukturierte Datenzeile, siehe eigener Abschnitt unten |
+
+---
+
+## Strukturierte Datenzeilen
+
+`log_row` deckt einen zweiten Anwendungsfall ab: mehrere Werte in festen,
+ausgerichteten Spalten mit einheitlichem Trennzeichen — z. B. für
+Decoder-Logs, die pro Ereignis eine Zeile mit mehreren Feldern ausgeben
+(Beispiel: POCSAG-Pager-Decoder).
+
+**Trennzeichen** zwischen allen Spalten ist immer fix `" | "` — nicht pro
+Aufruf konfigurierbar.
+
+**Syntax:** Jede Spalte außer der letzten wird als Compact-String
+`"wert:align:breite"` übergeben (`align` = `l` linksbündig oder `r`
+rechtsbündig, `breite` = Padding-Zielbreite in Zeichen). Die **letzte
+Spalte ist immer ein roher String** ohne Spezifikation, ohne Padding —
+das erlaubt Freitext-Werte, die selbst Doppelpunkte enthalten.
+
+```bash
+log_row "POCSAG1200:l:11" "RIC 208:r:12" "F3:l:2" "Zeit lokal (Swissphone):l:34" "2026-08-10 10:58:00 Lokalzeit"
+```
+
+```python
+log_row("POCSAG1200:l:11", "RIC 208:r:12", "F3:l:2", "Zeit lokal (Swissphone):l:34", "2026-08-10 10:58:00 Lokalzeit")
+```
+
+**Ausgabe:**
+
+```
+POCSAG1200  |      RIC 208 | F3 | Zeit lokal (Swissphone)            | 2026-08-10 10:58:00 Lokalzeit
+```
+
+**Regeln:**
+
+1. Ist ein Wert länger als seine `breite`: **kein Abschneiden** — die
+   Spalte wächst über die Zielbreite hinaus, nachfolgende Spalten
+   verschieben sich in dieser einen Zeile optisch. Vollständigkeit der
+   Log-Daten hat Vorrang vor perfekter Spaltentreue.
+2. Ungültiges `align`-Token (nicht `l`/`r`): Die Zeile wird abgebrochen
+   und der Fehler über `log_error` gemeldet (Bash: `return 1`, Python:
+   `ValueError`) — kein stiller Default.
+3. `log_row` hat keine Farbe und kein Symbol. Wenn eine Zeile farblich
+   hervorgehoben werden soll, umschließt der Aufrufer den jeweiligen
+   Spaltenwert selbst mit den bestehenden `C_*`-Variablen, bevor er ihn
+   an `log_row` übergibt.
+4. **Bekannte Einschränkung:** Labels mit Umlauten (`Niederöst.`,
+   `Kärnten`, `Oberösterr.`) können je nach Bash-/Terminal-Umgebung die
+   Padding-Breite um 1–2 Spalten verfälschen, da `printf` nicht überall
+   Terminal-Anzeigebreite statt Byte-/Zeichenanzahl zählt. Rein
+   kosmetisch, kein Datenverlust.
+5. **Einschränkung:** `wert` in Spalten außer der letzten darf keinen
+   Doppelpunkt enthalten. Die Bash- und Python-Implementierung parsen
+   `"wert:align:breite"` aus unterschiedlichen Richtungen (Bash von
+   links, Python von rechts) — ein Doppelpunkt im Wert einer
+   Nicht-letzten Spalte führt zu unterschiedlichem Verhalten zwischen
+   beiden Implementierungen. In der letzten Spalte (roher String) sind
+   Doppelpunkte dagegen unproblematisch.
 
 ---
 
@@ -107,3 +166,4 @@ log_sep()
 | Datum | Änderung |
 |---|---|
 | 2026-04-22 | Initiale Definition. Farben auf CI-Tokens gemappt. `log_auth` und `log_sep` neu. `require_cmd` in Bash ergänzt. |
+| 2026-08-10 | `log_row` ergänzt (Bash + Python) — strukturierte Datenzeilen mit festem Trennzeichen `" | "`, generisches Spalten-Modell, letzte Spalte roh für Freitext-Werte. |
