@@ -126,6 +126,5 @@ log_row() {
         esac
         out+=" | "
     done
-    out+="${!n}"
-    echo -e "$out"
+    printf '%b%s\n' "$out" "${!n}"
 }
