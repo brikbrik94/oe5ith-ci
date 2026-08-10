@@ -105,3 +105,27 @@ require_cmd() {
 log_sep() {
     echo -e "${C_DIM}  ─────────────────────────────────${C_RESET}"
 }
+
+# Strukturierte Datenzeile mit festem Trennzeichen " | ".
+# Jede Spalte außer der letzten: "wert:align:breite" (align = l|r).
+# Letzte Spalte: roher String, kein Padding.
+log_row() {
+    local n=$#
+    local out=""
+    local i spec val align width
+    for ((i = 1; i < n; i++)); do
+        spec="${!i}"
+        IFS=':' read -r val align width <<< "$spec"
+        case "$align" in
+            l) out+="$(printf "%-${width}s" "$val")" ;;
+            r) out+="$(printf "%${width}s" "$val")" ;;
+            *)
+                log_error "log_row: ungültiges align '$align' in Spec '$spec'"
+                return 1
+                ;;
+        esac
+        out+=" | "
+    done
+    out+="${!n}"
+    echo -e "$out"
+}
