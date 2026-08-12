@@ -557,6 +557,22 @@
   flex-shrink: 0;
 }
 
+.map-legend-line-cased {
+  position: relative;
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.map-legend-line-cased-outline,
+.map-legend-line-cased-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 2px;
+}
+
 .map-legend-label {
   font-size: 0.8rem;
   color: var(--text);
