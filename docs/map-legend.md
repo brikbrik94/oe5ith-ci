@@ -50,7 +50,10 @@ legend.destroy();   // entfernt Panel aus DOM
 | `line` | Linie 24px lang, Höhe 3px (Default) oder `width`-geclampt 1–6px; optional `dasharray` | Routen, Grenzen, Verbindungen |
 | `area` | Rechteck 16×12px, optional Rand via `outline_color`/`outline_width` (geclampt 1–3px) | Zonen, Flächen, Polygone |
 | `icon` | FontAwesome-Glyph 12×12px | Symbol-Marker mit Formsemantik (z.B. Fahrzeuge, Stationen) |
-| `line-cased` | Linie mit Umrandung — Innenfarbe/-breite (`width`, geclampt 1–6px) + Außenfarbe/-breite (`outline_width`, geclampt 2–8px) | Straßen-/Liftsymbole mit Casing (z.B. Skilifte) |
+| `line-cased` | Linie mit Umrandung — Innenfarbe/-breite (`width`, geclampt 1–6px, zusätzlich gedeckelt auf geclampte `outline_width` − 1) + Außenfarbe/-breite (`outline_width`, geclampt 2–8px) | Straßen-/Liftsymbole mit Casing (z.B. Skilifte) |
+
+Hinweis: `.map-legend-area` hat `opacity: 0.8` — ein per `outline_color` gesetzter Rand erscheint
+dadurch leicht abgeschwächt, nicht in Reinfarbe.
 
 `color` akzeptiert jeden gültigen CSS-Farbwert (`#hex`, `rgb()`, Farbnamen).
 
@@ -64,10 +67,15 @@ angewendet; `icon` ist dann erforderlich und enthält die vollständigen FontAwe
 gestapelten Balken (Outline zuerst im DOM, Inner darüber — die DOM-Reihenfolge reicht für die
 Stapelung, kein `z-index` nötig):
 
+Layer-Objekte, die mit `type: 'line'` sowie `outline_color`/`outline_width` ankommen (wie
+`geodata-plugin-standard`-Layer, z.B. `ski-lifts`), müssen vom Aufrufer explizit auf
+`type: 'line-cased'` gemappt werden — bei `type: 'line'` werden `outline_color`/`outline_width`
+vollständig ignoriert (kein Fehler, keine Casing-Darstellung).
+
 ```
 .map-legend-line-cased
 ├── .map-legend-line-cased-outline   (Außenfarbe, Höhe = outline_width, geclampt 2–8px)
-└── .map-legend-line-cased-inner     (Innenfarbe, Höhe = width, geclampt 1–6px, max. outline_width − 1)
+└── .map-legend-line-cased-inner     (Innenfarbe, Höhe = width, geclampt 1–6px, zusätzlich gedeckelt auf geclampte outline_width − 1)
 ```
 
 | Element / Klasse | Zweck | Pflicht/Optional |
@@ -114,6 +122,8 @@ interface LegendEntry {
 }
 ```
 
+Die `MapLegend`-Klasse kann direkt in TS importiert oder mit Typen annotiert werden.
+
 ## Validierung
 
 `addEntry()` wirft einen Fehler in folgenden Fällen:
@@ -126,8 +136,6 @@ interface LegendEntry {
 | `type:'line-cased'` — eines der 4 Pflichtfelder (`color`, `width`, `outline_color`, `outline_width`) fehlt | `MapLegend.addEntry: type 'line-cased' benötigt color, width, outline_color, outline_width` |
 
 ---
-
-Die `MapLegend`-Klasse kann direkt in TS importiert oder mit Typen annotiert werden.
 
 ## Referenz
 
