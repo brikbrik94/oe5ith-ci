@@ -27,8 +27,12 @@ legend.setTitle('Kartenschlüssel');
 
 legend.addEntry({ type: 'dot',  color: '#22c55e', label: 'Aktiv' });
 legend.addEntry({ type: 'line', color: '#3b82f6', label: 'Route' });
+legend.addEntry({ type: 'line', color: '#3b82f6', width: 5, label: 'Skiroute (breit)' });
+legend.addEntry({ type: 'line', color: '#3b82f6', dasharray: [2, 1], label: 'Wanderweg (gestrichelt)' });
 legend.addEntry({ type: 'area', color: '#f59e0b', label: 'Sperrzone' });
+legend.addEntry({ type: 'area', color: '#3b82f6', outline_color: '#1d4ed8', outline_width: 1, label: 'Bezirksgrenze' });
 legend.addEntry({ type: 'icon', icon: 'fa-solid fa-helicopter', color: '#22c55e', label: 'Aktiv' });
+legend.addEntry({ type: 'line-cased', color: '#3b82f6', width: 3, outline_color: '#ffffff', outline_width: 5, label: 'Skilift (Casing)' });
 
 legend.clearEntries();
 legend.show();
@@ -43,15 +47,39 @@ legend.destroy();   // entfernt Panel aus DOM
 | `type` | Indikator | Verwendung |
 |---|---|---|
 | `dot` | Kreis 10×10px | Punktmarker, Stationen |
-| `line` | Linie 24×3px | Routen, Grenzen, Verbindungen |
-| `area` | Rechteck 16×12px | Zonen, Flächen, Polygone |
+| `line` | Linie 24px lang, Höhe 3px (Default) oder `width`-geclampt 1–6px; optional `dasharray` | Routen, Grenzen, Verbindungen |
+| `area` | Rechteck 16×12px, optional Rand via `outline_color`/`outline_width` (geclampt 1–3px) | Zonen, Flächen, Polygone |
 | `icon` | FontAwesome-Glyph 12×12px | Symbol-Marker mit Formsemantik (z.B. Fahrzeuge, Stationen) |
+| `line-cased` | Linie mit Umrandung — Innenfarbe/-breite (`width`, geclampt 1–6px) + Außenfarbe/-breite (`outline_width`, geclampt 2–8px) | Straßen-/Liftsymbole mit Casing (z.B. Skilifte) |
 
 `color` akzeptiert jeden gültigen CSS-Farbwert (`#hex`, `rgb()`, Farbnamen).
 
 Bei `type: 'icon'` wird `color` als `style.color` (statt `style.background`) auf das Glyph
 angewendet; `icon` ist dann erforderlich und enthält die vollständigen FontAwesome-Klassen
 (z.B. `'fa-solid fa-helicopter'`).
+
+## Line-Cased — Struktur
+
+`type: 'line-cased'` erzeugt statt eines einzelnen Indikator-Elements einen Wrapper mit zwei
+gestapelten Balken (Outline zuerst im DOM, Inner darüber — die DOM-Reihenfolge reicht für die
+Stapelung, kein `z-index` nötig):
+
+```
+.map-legend-line-cased
+├── .map-legend-line-cased-outline   (Außenfarbe, Höhe = outline_width, geclampt 2–8px)
+└── .map-legend-line-cased-inner     (Innenfarbe, Höhe = width, geclampt 1–6px, max. outline_width − 1)
+```
+
+| Element / Klasse | Zweck | Pflicht/Optional |
+|---|---|---|
+| `.map-legend-line-cased` | Wrapper, `position:relative`, Breite 24px, Höhe = geclampte `outline_width` | Pflicht |
+| `.map-legend-line-cased-outline` | Äußerer Balken, `position:absolute`, vertikal zentriert | Pflicht |
+| `.map-legend-line-cased-inner` | Innerer Balken, `position:absolute`, vertikal zentriert, liegt über der Outline (DOM-Reihenfolge) | Pflicht |
+
+Alle vier Felder (`color`, `width`, `outline_color`, `outline_width`) sind bei
+`type: 'line-cased'` Pflicht — fehlt eines, wirft `addEntry()` einen Fehler.
+
+---
 
 ## Topbar-Button
 
@@ -75,12 +103,29 @@ btn.addEventListener('click', () => {
 
 ```ts
 interface LegendEntry {
-  type: 'dot' | 'line' | 'area' | 'icon';
+  type: 'dot' | 'line' | 'area' | 'icon' | 'line-cased';
   color: string;
   label: string;
-  icon?: string; // FontAwesome-Klassen, nur bei type: 'icon' relevant, z.B. 'fa-solid fa-helicopter'
+  icon?: string;                 // nur type:'icon', vollständige FontAwesome-Klassen
+  width?: number;                // type:'line' (Höhe, geclampt 1–6px) | type:'line-cased' (Pflicht, Innenbreite)
+  dasharray?: [number, number];  // type:'line' — [Strich, Lücke], proportional normalisiert auf 8px-Zyklus
+  outline_color?: string;        // type:'area' (mit outline_width) | type:'line-cased' (Pflicht)
+  outline_width?: number;        // type:'area' (geclampt 1–3px, mit outline_color) | type:'line-cased' (Pflicht, geclampt 2–8px)
 }
 ```
+
+## Validierung
+
+`addEntry()` wirft einen Fehler in folgenden Fällen:
+
+| Fall | Fehlermeldung |
+|---|---|
+| `type` unbekannt (und nicht `line-cased`) | `unknown type "<type>"` |
+| `type:'area'` — nur eines von `outline_color`/`outline_width` gesetzt | `'area' benötigt outline_color UND outline_width zusammen` |
+| `type:'line'` — `dasharray` hat nicht genau 2 Werte | `dasharray muss genau 2 Werte [dash, gap] enthalten` |
+| `type:'line-cased'` — eines der 4 Pflichtfelder (`color`, `width`, `outline_color`, `outline_width`) fehlt | `type 'line-cased' benötigt color, width, outline_color, outline_width` |
+
+---
 
 Die `MapLegend`-Klasse kann direkt in TS importiert oder mit Typen annotiert werden.
 
