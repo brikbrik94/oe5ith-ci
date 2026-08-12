@@ -7,6 +7,16 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+### Added
+- `modal.css` / `MapLegend`: `type:'line'` bekommt optionale Felder `width` (Linienbreite,
+  geclampt 1–6px) und `dasharray` (Strichelung, proportional normalisiert auf 8px-Zyklus,
+  Rendering via `repeating-linear-gradient`). `type:'area'` bekommt optionale
+  `outline_color`/`outline_width` (Randlinie, geclampt 1–3px). Neuer Typ `type:'line-cased'`
+  für Linien mit Umrandung (z.B. Straßen-/Liftsymbole) — 3 neue CSS-Klassen
+  `.map-legend-line-cased`/`-outline`/`-inner`. Alle Erweiterungen additiv, bestehende
+  `addEntry()`-Aufrufe unverändert lauffähig. Angefragt aus `website-v3`
+  (`geodata-plugin-standard` v1.1.0, GitHub Issue #1).
+
 ---
 
 ## v1.24.0 - 2026-08-10
