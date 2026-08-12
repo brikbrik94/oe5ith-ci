@@ -168,8 +168,9 @@
     <div class="demo-section-title">Karten-Legende</div>
     <div class="demo-section-desc">
       Fixiertes Panel rechts unten. Befüllung per <code>MapLegend</code>-API.
-      Drei Eintragstypen: <code>dot</code>, <code>line</code>, <code>area</code>.
-      Beliebige CSS-Farben. Ein-/Ausblenden über <code>legend.toggle()</code>.
+      Fünf Eintragstypen: <code>dot</code>, <code>line</code> (optional <code>width</code>/<code>dasharray</code>),
+      <code>area</code> (optional <code>outline_color</code>/<code>outline_width</code>), <code>icon</code>,
+      <code>line-cased</code>. Beliebige CSS-Farben. Ein-/Ausblenden über <code>legend.toggle()</code>.
     </div>
     <div class="demo-row">
       <button class="demo-trigger" onclick="demoLegendToggle()">Legende ein-/ausblenden</button>
@@ -196,6 +197,25 @@
           <div class="map-legend-entry">
             <i class="fa-solid fa-helicopter map-legend-icon" style="color:var(--success);"></i>
             <span class="map-legend-label">Aktiv</span>
+          </div>
+          <div class="map-legend-entry">
+            <div class="map-legend-line" style="background:var(--accent); height:5px;"></div>
+            <span class="map-legend-label">Skiroute (width:5)</span>
+          </div>
+          <div class="map-legend-entry">
+            <div class="map-legend-line" style="background:transparent; background-image:repeating-linear-gradient(to right, var(--accent) 0 5.33px, transparent 5.33px 8px); height:3px;"></div>
+            <span class="map-legend-label">Wanderweg (dasharray:[2,1])</span>
+          </div>
+          <div class="map-legend-entry">
+            <div class="map-legend-area" style="background:#3b82f6; border:1px solid #1d4ed8;"></div>
+            <span class="map-legend-label">Bezirksgrenze (outline)</span>
+          </div>
+          <div class="map-legend-entry">
+            <div class="map-legend-line-cased" style="height:5px;">
+              <div class="map-legend-line-cased-outline" style="height:5px; background:#ffffff;"></div>
+              <div class="map-legend-line-cased-inner" style="height:3px; background:var(--accent);"></div>
+            </div>
+            <span class="map-legend-label">Skilift (Casing)</span>
           </div>
         </div>
       </div>
@@ -360,9 +380,13 @@ function demoLegendReset() {
   demoLegend.addEntry({ type: 'dot',  color: '#22c55e', label: 'Feuerwehr aktiv' });
   demoLegend.addEntry({ type: 'dot',  color: '#ef4444', label: 'Feuerwehr inaktiv' });
   demoLegend.addEntry({ type: 'line', color: '#3b82f6', label: 'Anfahrtsroute' });
+  demoLegend.addEntry({ type: 'line', color: '#3b82f6', width: 5, label: 'Skiroute (breit)' });
+  demoLegend.addEntry({ type: 'line', color: '#3b82f6', dasharray: [2, 1], label: 'Wanderweg (gestrichelt)' });
   demoLegend.addEntry({ type: 'area', color: '#f59e0b', label: 'Sperrzone' });
   demoLegend.addEntry({ type: 'area', color: '#8b5cf6', label: 'Einsatzgebiet' });
+  demoLegend.addEntry({ type: 'area', color: '#3b82f6', outline_color: '#1d4ed8', outline_width: 1, label: 'Bezirksgrenze' });
   demoLegend.addEntry({ type: 'icon', icon: 'fa-solid fa-helicopter', color: '#22c55e', label: 'Luftrettung aktiv' });
+  demoLegend.addEntry({ type: 'line-cased', color: '#3b82f6', width: 3, outline_color: '#ffffff', outline_width: 5, label: 'Skilift (Casing)' });
   demoLegend.show();
 }
 
