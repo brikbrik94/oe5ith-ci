@@ -247,27 +247,83 @@ class MapLegend {
     this._titleEl.style.display = text ? '' : 'none';
   }
 
-  addEntry({ type, color, label, icon }) {
-    const typeClass = { dot: 'map-legend-dot', line: 'map-legend-line', area: 'map-legend-area', icon: 'map-legend-icon' }[type];
-    if (!typeClass) throw new Error(`MapLegend.addEntry: unknown type "${type}"`);
+  addEntry({ type, color, label, icon, width, dasharray, outline_color, outline_width }) {
     const entry = document.createElement('div');
     entry.className = 'map-legend-entry';
 
-    const indicator = document.createElement(type === 'icon' ? 'i' : 'div');
-    indicator.className = type === 'icon' ? `${icon} ${typeClass}` : typeClass;
-    if (type === 'icon') {
-      indicator.style.color = color;
+    if (type === 'line-cased') {
+      if ([color, width, outline_color, outline_width].some(v => v == null)) {
+        throw new Error("MapLegend.addEntry: type 'line-cased' benötigt color, width, outline_color, outline_width");
+      }
+      entry.appendChild(this._buildLineCased({ color, width, outline_color, outline_width }));
     } else {
-      indicator.style.background = color;
+      const typeClass = { dot: 'map-legend-dot', line: 'map-legend-line', area: 'map-legend-area', icon: 'map-legend-icon' }[type];
+      if (!typeClass) throw new Error(`MapLegend.addEntry: unknown type "${type}"`);
+
+      const indicator = document.createElement(type === 'icon' ? 'i' : 'div');
+      indicator.className = type === 'icon' ? `${icon} ${typeClass}` : typeClass;
+      if (type === 'icon') {
+        indicator.style.color = color;
+      } else {
+        indicator.style.background = color;
+      }
+
+      if (type === 'line' && width != null) {
+        indicator.style.height = `${Math.max(1, Math.min(6, width))}px`;
+      }
+
+      if (type === 'line' && dasharray != null) {
+        if (dasharray.length !== 2) {
+          throw new Error('MapLegend.addEntry: dasharray muss genau 2 Werte [dash, gap] enthalten');
+        }
+        const [dash, gap] = dasharray;
+        const cycle = dash + gap;
+        const scale = 8 / cycle;
+        const dashPx = dash * scale;
+        const gapPx = gap * scale;
+        indicator.style.background = 'transparent';
+        indicator.style.backgroundImage =
+          `repeating-linear-gradient(to right, ${color} 0 ${dashPx}px, transparent ${dashPx}px ${dashPx + gapPx}px)`;
+      }
+
+      if (type === 'area' && (outline_color != null || outline_width != null)) {
+        if (outline_color == null || outline_width == null) {
+          throw new Error("MapLegend.addEntry: 'area' benötigt outline_color UND outline_width zusammen");
+        }
+        const w = Math.max(1, Math.min(3, outline_width));
+        indicator.style.border = `${w}px solid ${outline_color}`;
+      }
+
+      entry.appendChild(indicator);
     }
 
     const labelEl = document.createElement('span');
     labelEl.className = 'map-legend-label';
     labelEl.textContent = label;
-
-    entry.appendChild(indicator);
     entry.appendChild(labelEl);
+
     this._entriesEl.appendChild(entry);
+  }
+
+  _buildLineCased({ color, width, outline_color, outline_width }) {
+    const oW = Math.max(2, Math.min(8, outline_width));
+    let iW = Math.max(1, Math.min(6, width));
+    if (iW >= oW) iW = Math.max(1, oW - 1);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'map-legend-line-cased';
+    wrapper.style.height = `${oW}px`;
+
+    const outline = document.createElement('div');
+    outline.className = 'map-legend-line-cased-outline';
+    outline.style.cssText = `height:${oW}px; background:${outline_color};`;
+
+    const inner = document.createElement('div');
+    inner.className = 'map-legend-line-cased-inner';
+    inner.style.cssText = `height:${iW}px; background:${color};`;
+
+    wrapper.append(outline, inner);
+    return wrapper;
   }
 
   clearEntries() {
