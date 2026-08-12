@@ -120,10 +120,10 @@ interface LegendEntry {
 
 | Fall | Fehlermeldung |
 |---|---|
-| `type` unbekannt (und nicht `line-cased`) | `unknown type "<type>"` |
-| `type:'area'` — nur eines von `outline_color`/`outline_width` gesetzt | `'area' benötigt outline_color UND outline_width zusammen` |
-| `type:'line'` — `dasharray` hat nicht genau 2 Werte | `dasharray muss genau 2 Werte [dash, gap] enthalten` |
-| `type:'line-cased'` — eines der 4 Pflichtfelder (`color`, `width`, `outline_color`, `outline_width`) fehlt | `type 'line-cased' benötigt color, width, outline_color, outline_width` |
+| `type` unbekannt (und nicht `line-cased`) | `MapLegend.addEntry: unknown type "<type>"` |
+| `type:'area'` — nur eines von `outline_color`/`outline_width` gesetzt | `MapLegend.addEntry: 'area' benötigt outline_color UND outline_width zusammen` |
+| `type:'line'` — `dasharray` hat nicht genau 2 Werte | `MapLegend.addEntry: dasharray muss genau 2 Werte [dash, gap] enthalten` |
+| `type:'line-cased'` — eines der 4 Pflichtfelder (`color`, `width`, `outline_color`, `outline_width`) fehlt | `MapLegend.addEntry: type 'line-cased' benötigt color, width, outline_color, outline_width` |
 
 ---
 
