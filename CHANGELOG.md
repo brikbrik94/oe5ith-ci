@@ -7,6 +7,10 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+---
+
+## v1.25.0 - 2026-08-12
+
 ### Added
 - `modal.css` / `MapLegend`: `type:'line'` bekommt optionale Felder `width` (Linienbreite,
   geclampt 1–6px) und `dasharray` (Strichelung, proportional normalisiert auf 8px-Zyklus,
