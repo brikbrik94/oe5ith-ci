@@ -1,6 +1,10 @@
 # Superpowers visual companion sessions
 .superpowers/
 
+# Superpowers planning artifacts (scratch — not production files)
+docs/superpowers/
+/ci-*-request.md
+
 # macOS
 .DS_Store
 
