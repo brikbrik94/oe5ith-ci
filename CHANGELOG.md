@@ -22,6 +22,12 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
   bestehende 14 ORS-Icons und bestehende Konsumenten unverändert lauffähig. Angefragt aus
   `website-v3` (Valhalla-Routing-Provider, GitHub Issue #2).
 
+### Changed
+- `assets/maneuver-icons/icons.json`: `orsCode` ist nicht mehr Pflichtfeld, sondern optional
+  (nur noch bei ORS-gekoppelten Icons vorhanden) — Voraussetzung für die 16 neuen
+  Valhalla-Only-Icons ohne ORS-Entsprechung. Bestehende Konsumenten, die bei den 14
+  ORS-Icons weiterhin `orsCode` lesen, sind unverändert lauffähig.
+
 ---
 
 ## v1.25.0 - 2026-08-12

@@ -155,12 +155,15 @@ Line-Art-Stil, identisch zu bestehenden Custom-Icons in
 - **Kontext-Pfad-Konvention** (seit v1.26.0): Icons, die einen ungenommenen
   Straßen-/Gabelungsast oder eine Wasserlinie im Hintergrund zeigen müssen
   (`ramp-*`, `exit-*`, `stay-straight`, `becomes`, `ferry-enter`, `ferry-exit`), dimmen
-  diesen Kontext-Pfad statt ihn wegzulassen: `stroke-dasharray="1.5 1.5" opacity="0.4"`
-  für gestrichelte Kontext-Linien (fortlaufender Straßenverlauf bei Ramp/Exit/Becomes),
-  reines `opacity` (Icon-abhängiger Wert zwischen 0.35 und 0.6, kein Dasharray) für
-  durchgezogene, aber nachrangige Linien (Gabelungsäste bei Stay-straight, Wasserlinie
-  bei den Fähre-Icons). Der eigentliche Manöver-Pfad bleibt immer durchgezogen und voll
-  deckend — die Konvention ist ein Zusatz, keine Ersetzung der übrigen Stil-Regeln.
+  diesen Kontext-Pfad statt ihn wegzulassen: gestrichelt via `stroke-dasharray`
+  (Icon-abhängig, z. B. `1.5 1.5` oder `1 1.5`) mit `opacity` 0.4–0.5 für fortlaufenden
+  Straßenverlauf (Ramp/Exit/Becomes), reines `opacity` (Icon-abhängiger Wert zwischen
+  0.35 und 0.6, kein Dasharray) für durchgezogene, aber nachrangige Linien (Gabelungsäste
+  bei Stay-straight — bereits seit `v1.20.0` bei Keep-left/-right in gleicher Weise
+  verwendet —, Wasserlinie bei den Fähre-Icons). Der eigentliche Manöver-Pfad bleibt immer
+  durchgezogen und voll deckend — die Konvention ist ein Zusatz, keine Ersetzung der
+  übrigen Stil-Regeln; die genauen Dasharray-/Opacity-Werte sind pro Icon zu wählen, keine
+  einzelne feste Zahl ist über alle Icons hinweg bindend.
 - Kein eingebettetes Raster, keine `<filter>`, keine `<text>`.
 - Jede Datei ist eigenständig — keine Rotation/Spiegelung zur Laufzeit.
 
@@ -201,7 +204,9 @@ konsumierenden App — identisch zum bestehenden `byCode`-Muster im Konsumenten-
 
 ```js
 const manifest = await fetch('/assets/maneuver-icons/icons.json').then(r => r.json());
-const byCode = Object.fromEntries(manifest.icons.map(i => [i.orsCode, i]));
+const byCode = Object.fromEntries(
+  manifest.icons.filter(i => i.orsCode !== undefined).map(i => [i.orsCode, i])
+);
 
 async function iconMarkupFor(orsCode) {
   const icon = byCode[orsCode];
@@ -210,8 +215,18 @@ async function iconMarkupFor(orsCode) {
 }
 ```
 
+Der Filter ist notwendig: 16 Einträge haben kein `orsCode`-Feld, `i.orsCode` wäre dort
+`undefined` und würde ohne Filter alle unter dem Schlüssel `"undefined"` kollabieren
+(Last-Write-Wins). `!== undefined` statt eines Truthy-Checks, weil `orsCode: 0` (Left)
+sonst fälschlich herausgefiltert würde.
+
 Für Valhalla-Konsumenten identisch, nur nach `valhallaType` statt `orsCode` indiziert:
-`Object.fromEntries(manifest.icons.filter(i => i.valhallaType).map(i => [i.valhallaType, i]))`.
+
+```js
+const byValhallaType = Object.fromEntries(
+  manifest.icons.filter(i => i.valhallaType !== undefined).map(i => [i.valhallaType, i])
+);
+```
 
 In der Disclosure-Liste (`disclosure.css`):
 
@@ -234,7 +249,8 @@ In der Disclosure-Liste (`disclosure.css`):
 ## Regeln
 
 1. **Neues Icon:** SVG nach den Stil-Regeln erstellen → in
-   `assets/maneuver-icons/` ablegen → Eintrag in `icons.json` ergänzen →
+   `assets/maneuver-icons/` ablegen → Eintrag in `icons.json` ergänzen (genau eines von
+   `orsCode`/`valhallaType` setzen, nie beide, nie keins) →
    Galerie `components/maneuver-icons.html` um eine Karte erweitern.
 2. **Kein produktiver CSS-Code** außer `.disclosure-item-icon` in
    `disclosure.css` — keine neuen Tokens.
