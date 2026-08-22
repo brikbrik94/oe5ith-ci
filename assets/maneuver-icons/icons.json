@@ -15,6 +15,22 @@
     { "orsCode": 10, "name": "ci-maneuver-goal",             "file": "ci-maneuver-goal.svg",             "label": "Goal" },
     { "orsCode": 11, "name": "ci-maneuver-depart",           "file": "ci-maneuver-depart.svg",           "label": "Depart" },
     { "orsCode": 12, "name": "ci-maneuver-keep-left",        "file": "ci-maneuver-keep-left.svg",        "label": "Keep left" },
-    { "orsCode": 13, "name": "ci-maneuver-keep-right",       "file": "ci-maneuver-keep-right.svg",       "label": "Keep right" }
+    { "orsCode": 13, "name": "ci-maneuver-keep-right",       "file": "ci-maneuver-keep-right.svg",       "label": "Keep right" },
+    { "name": "ci-maneuver-uturn-left",    "valhallaType": "kUturnLeft",        "file": "ci-maneuver-uturn-left.svg",    "label": "U-turn left" },
+    { "name": "ci-maneuver-uturn-right",   "valhallaType": "kUturnRight",       "file": "ci-maneuver-uturn-right.svg",   "label": "U-turn right" },
+    { "name": "ci-maneuver-ramp-right",    "valhallaType": "kRampRight",        "file": "ci-maneuver-ramp-right.svg",    "label": "Ramp right" },
+    { "name": "ci-maneuver-ramp-left",     "valhallaType": "kRampLeft",         "file": "ci-maneuver-ramp-left.svg",     "label": "Ramp left" },
+    { "name": "ci-maneuver-ramp-straight", "valhallaType": "kRampStraight",     "file": "ci-maneuver-ramp-straight.svg", "label": "Ramp straight" },
+    { "name": "ci-maneuver-exit-right",    "valhallaType": "kExitRight",        "file": "ci-maneuver-exit-right.svg",    "label": "Exit right" },
+    { "name": "ci-maneuver-exit-left",     "valhallaType": "kExitLeft",         "file": "ci-maneuver-exit-left.svg",     "label": "Exit left" },
+    { "name": "ci-maneuver-stay-straight", "valhallaType": "kStayStraight",     "file": "ci-maneuver-stay-straight.svg", "label": "Stay straight" },
+    { "name": "ci-maneuver-merge",         "valhallaType": "kMerge",            "file": "ci-maneuver-merge.svg",         "label": "Merge" },
+    { "name": "ci-maneuver-ferry-enter",   "valhallaType": "kFerryEnter",       "file": "ci-maneuver-ferry-enter.svg",   "label": "Ferry enter" },
+    { "name": "ci-maneuver-ferry-exit",    "valhallaType": "kFerryExit",        "file": "ci-maneuver-ferry-exit.svg",    "label": "Ferry exit" },
+    { "name": "ci-maneuver-depart-right",  "valhallaType": "kStartRight",       "file": "ci-maneuver-depart-right.svg",  "label": "Depart right" },
+    { "name": "ci-maneuver-depart-left",   "valhallaType": "kStartLeft",        "file": "ci-maneuver-depart-left.svg",   "label": "Depart left" },
+    { "name": "ci-maneuver-goal-right",    "valhallaType": "kDestinationRight", "file": "ci-maneuver-goal-right.svg",    "label": "Goal right" },
+    { "name": "ci-maneuver-goal-left",     "valhallaType": "kDestinationLeft",  "file": "ci-maneuver-goal-left.svg",     "label": "Goal left" },
+    { "name": "ci-maneuver-becomes",       "valhallaType": "kBecomes",          "file": "ci-maneuver-becomes.svg",       "label": "Becomes" }
   ]
 }
