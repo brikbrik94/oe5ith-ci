@@ -2,16 +2,19 @@
 
 **Assets:** `assets/maneuver-icons/`
 **Referenz:** `components/maneuver-icons.html`
-**Status:** definiert · v1.20.0
+**Status:** definiert · v1.26.0
 
 ---
 
 ## Zweck & Abgrenzung
 
-`assets/maneuver-icons/` ist die **Source of Truth für Turn-by-Turn-Richtungssymbole**,
-1:1 zu den Manöver-Codes von **OpenRouteService (ORS)**. FontAwesome Free deckt
-Navigations-Pfeile (Slight/Sharp-Varianten, Kreisverkehr, Gabelung-Halten) nicht
-ausreichend ab — dieses Set schließt die Lücke mit eigenen, monochromen SVGs.
+`assets/maneuver-icons/` ist die **Source of Truth für Turn-by-Turn-Richtungssymbole**.
+14 Icons sind 1:1 zu den Manöver-Codes von **OpenRouteService (ORS)** gekoppelt
+(`orsCode`); seit `v1.26.0` kommen 16 weitere Icons für **Valhalla**-Konzepte hinzu, die
+keine ORS-Entsprechung haben (`valhallaType`, siehe „Valhalla-Only-Konzepte" unten).
+FontAwesome Free deckt Navigations-Pfeile (Slight/Sharp-Varianten, Kreisverkehr,
+Gabelung-Halten, Ramp/Exit, gerichtete Depart/Goal/U-Turn) nicht ausreichend ab — dieses
+Set schließt die Lücke mit eigenen, monochromen SVGs.
 
 **Bewusst nicht hier:**
 - **Kein SDF/MapLibre-Bezug.** Diese Icons sind reine UI-Icons für die
@@ -42,7 +45,23 @@ assets/maneuver-icons/
 ├── ci-maneuver-depart.svg
 ├── ci-maneuver-keep-left.svg
 ├── ci-maneuver-keep-right.svg
-└── icons.json                   ← Manifest = ORS-Code-Mapping
+├── ci-maneuver-uturn-left.svg
+├── ci-maneuver-uturn-right.svg
+├── ci-maneuver-ramp-right.svg
+├── ci-maneuver-ramp-left.svg
+├── ci-maneuver-ramp-straight.svg
+├── ci-maneuver-exit-right.svg
+├── ci-maneuver-exit-left.svg
+├── ci-maneuver-stay-straight.svg
+├── ci-maneuver-merge.svg
+├── ci-maneuver-ferry-enter.svg
+├── ci-maneuver-ferry-exit.svg
+├── ci-maneuver-depart-right.svg
+├── ci-maneuver-depart-left.svg
+├── ci-maneuver-goal-right.svg
+├── ci-maneuver-goal-left.svg
+├── ci-maneuver-becomes.svg
+└── icons.json                   ← Manifest = ORS-/Valhalla-Kopplung
 ```
 
 Das Verzeichnis wird vom Konsistenz-Check **nicht** erfasst (er prüft nur
@@ -52,7 +71,7 @@ Manifest. Die SVGs werden **nicht** einzeln in `registry.json` gelistet;
 
 ---
 
-## ORS-Code-Katalog
+## ORS-Code-Katalog (14 Icons)
 
 | Code | ORS-Manöver | Icon-ID | Form |
 |---|---|---|---|
@@ -78,6 +97,42 @@ Y-Gabelung mit betontem Ast).
 
 ---
 
+## Valhalla-Only-Konzepte (16 Icons)
+
+Diese 16 Icons haben **keinen** ORS-Code — sie decken Valhalla-Manöver-Typen ab, für die
+der 14er-ORS-Katalog kein Äquivalent hat. Kopplung über `valhallaType` (symbolischer
+Valhalla-Manöver-Typname, nicht der numerische Ordinal-Wert — siehe Manifest-Schema unten).
+
+| Icon-ID | Valhalla-Typ | Form |
+|---|---|---|
+| `ci-maneuver-uturn-left` | `kUturnLeft` | 180°-Haarnadel-Pfeil, gerichtet nach links |
+| `ci-maneuver-uturn-right` | `kUturnRight` | 180°-Haarnadel-Pfeil, gerichtet nach rechts |
+| `ci-maneuver-ramp-right` | `kRampRight` | Pfeil rechts abzweigend, gedimmte Gerade im Hintergrund (Auffahrt) |
+| `ci-maneuver-ramp-left` | `kRampLeft` | Pfeil links abzweigend, gedimmte Gerade im Hintergrund (Auffahrt) |
+| `ci-maneuver-ramp-straight` | `kRampStraight` | Gerader Pfeil, gedimmter Seitenast (Auffahrt geradeaus) |
+| `ci-maneuver-exit-right` | `kExitRight` | Pfeil rechts abzweigend, gedimmte Gerade im Hintergrund (Ausfahrt) |
+| `ci-maneuver-exit-left` | `kExitLeft` | Pfeil links abzweigend, gedimmte Gerade im Hintergrund (Ausfahrt) |
+| `ci-maneuver-stay-straight` | `kStayStraight` | Gerader Pfeil, zwei gedimmte Gabelungsäste im Hintergrund |
+| `ci-maneuver-merge` | `kMerge` | Zwei Linien laufen zu einem Pfeil zusammen |
+| `ci-maneuver-ferry-enter` | `kFerryEnter` | Pfeil nach unten auf gedimmte Wasserlinie |
+| `ci-maneuver-ferry-exit` | `kFerryExit` | Pfeil nach oben von gedimmter Wasserlinie |
+| `ci-maneuver-depart-right` | `kStartRight` | Start-Symbol (Punkt), Pfeil nach rechts versetzt |
+| `ci-maneuver-depart-left` | `kStartLeft` | Start-Symbol (Punkt), Pfeil nach links versetzt |
+| `ci-maneuver-goal-right` | `kDestinationRight` | Ziel-Symbol (Flagge) rechts versetzt |
+| `ci-maneuver-goal-left` | `kDestinationLeft` | Ziel-Symbol (Flagge) links versetzt |
+| `ci-maneuver-becomes` | `kBecomes` | Gerader Pfeil, gedimmte Querlinie (Straßenwechsel ohne Richtungsänderung) |
+
+**Abgrenzung Stay-straight vs. Slight/Keep:** „Stay straight" ist eine Gabelung, bei der
+man geradeaus bleibt — der ORS-Katalog kennt nur Keep-left/-right (Gabelung mit
+Seitenpräferenz), keine Geradeaus-Variante. Eigenständiges Icon statt Wiederverwendung von
+`ci-maneuver-straight`, da der Gabelungskontext (zwei sich trennende, gedimmte Äste im
+Hintergrund) visuell mitgeliefert werden muss.
+
+**Bewusst nicht abgedeckt:** die 7 Valhalla-Transit-Manöver-Typen (kein OE5ITH-Konsument
+kann sie mangels GTFS-Daten aktuell liefern).
+
+---
+
 ## Namensschema
 
 - **Icon-ID:** `ci-maneuver-<name>` — fester Präfix, Kollisionsschutz.
@@ -91,11 +146,21 @@ Y-Gabelung mit betontem Ast).
 Line-Art-Stil, identisch zu bestehenden Custom-Icons in
 `topbar.html`/`modal.html` (nicht der SDF-Stil aus `map-icons`):
 
-- **`viewBox="0 0 16 16"`** — festes Raster für alle 14 Icons.
+- **`viewBox="0 0 16 16"`** — festes Raster für alle 30 Icons.
 - **`fill="none"`, `stroke="currentColor"`, `stroke-width="1.5"`,
   `stroke-linecap="round"`, `stroke-linejoin="round"`**.
 - Ausnahmen mit `fill="currentColor"` nur wo zur Lesbarkeit nötig
-  (`ci-maneuver-goal`: Flaggenfläche; `ci-maneuver-depart`: Mittelpunkt).
+  (`ci-maneuver-goal`/`-goal-right`/`-goal-left`: Flaggenfläche;
+  `ci-maneuver-depart`/`-depart-right`/`-depart-left`: Mittelpunkt).
+- **Kontext-Pfad-Konvention** (seit v1.26.0): Icons, die einen ungenommenen
+  Straßen-/Gabelungsast oder eine Wasserlinie im Hintergrund zeigen müssen
+  (`ramp-*`, `exit-*`, `stay-straight`, `becomes`, `ferry-enter`, `ferry-exit`), dimmen
+  diesen Kontext-Pfad statt ihn wegzulassen: `stroke-dasharray="1.5 1.5" opacity="0.4"`
+  für gestrichelte Kontext-Linien (fortlaufender Straßenverlauf bei Ramp/Exit/Becomes),
+  reines `opacity` (Icon-abhängiger Wert zwischen 0.35 und 0.6, kein Dasharray) für
+  durchgezogene, aber nachrangige Linien (Gabelungsäste bei Stay-straight, Wasserlinie
+  bei den Fähre-Icons). Der eigentliche Manöver-Pfad bleibt immer durchgezogen und voll
+  deckend — die Konvention ist ein Zusatz, keine Ersetzung der übrigen Stil-Regeln.
 - Kein eingebettetes Raster, keine `<filter>`, keine `<text>`.
 - Jede Datei ist eigenständig — keine Rotation/Spiegelung zur Laufzeit.
 
@@ -108,17 +173,27 @@ Line-Art-Stil, identisch zu bestehenden Custom-Icons in
   "version": 1,
   "grid": [16, 16],
   "icons": [
-    { "orsCode": 0, "name": "ci-maneuver-turn-left", "file": "ci-maneuver-turn-left.svg", "label": "Left" }
+    { "orsCode": 0, "name": "ci-maneuver-turn-left", "file": "ci-maneuver-turn-left.svg", "label": "Left" },
+    { "name": "ci-maneuver-ramp-right", "valhallaType": "kRampRight", "file": "ci-maneuver-ramp-right.svg", "label": "Ramp right" }
   ]
 }
 ```
 
 | Feld | Pflicht | Bedeutung |
 |---|---|---|
-| `orsCode` | ja | Numerischer ORS-Manöver-Code (0–13) — Kopplungsschlüssel |
-| `name` | ja | Icon-ID, `ci-maneuver-`-präfixt |
+| `name` | ja | Icon-ID, `ci-maneuver-`-präfixt. Einziger providerneutraler Schlüssel — kein separates `id`-Feld. |
+| `orsCode` | optional | Numerischer ORS-Manöver-Code (0–13) — Kopplungsschlüssel. Nur vorhanden, wenn das Icon ORS-gekoppelt ist. |
+| `valhallaType` | optional | Symbolischer Valhalla-Manöver-Typ (String, z. B. `"kRampRight"`) — **nicht** der numerische Ordinal-Wert, da nur die Namen über Valhalla-Versionen hinweg stabil dokumentiert sind. Nur vorhanden, wenn das Icon ein Valhalla-Only-Konzept ist. |
 | `file` | ja | Dateiname relativ zu `assets/maneuver-icons/` |
-| `label` | ja | Kurzbezeichnung (Englisch, wie ORS-Doku) für Tooltip/Alt-Text |
+| `label` | ja | Kurzbezeichnung (Englisch, wie ORS-/Valhalla-Doku) für Tooltip/Alt-Text |
+
+**Feld-Absenz:** Nicht zutreffende Felder werden **weggelassen**, nicht auf `null`
+gesetzt — die 14 ORS-Icons haben kein `valhallaType`-Feld, die 16 Valhalla-Only-Icons
+haben kein `orsCode`-Feld.
+
+**Verantwortungsteilung:** `icons.json` liefert nur die Kopplungsdaten. Das tatsächliche
+Lookup/Mapping von einem Provider-Manöver-Code auf einen Icon-Eintrag bleibt Aufgabe der
+konsumierenden App — identisch zum bestehenden `byCode`-Muster im Konsumenten-Snippet unten.
 
 ---
 
@@ -134,6 +209,9 @@ async function iconMarkupFor(orsCode) {
   return svgText; // inline einsetzen, NICHT <img src> (sonst kein currentColor-Erben)
 }
 ```
+
+Für Valhalla-Konsumenten identisch, nur nach `valhallaType` statt `orsCode` indiziert:
+`Object.fromEntries(manifest.icons.filter(i => i.valhallaType).map(i => [i.valhallaType, i]))`.
 
 In der Disclosure-Liste (`disclosure.css`):
 
@@ -171,3 +249,4 @@ In der Disclosure-Liste (`disclosure.css`):
 | Datum | Änderung |
 |---|---|
 | 2026-07-07 | Initiale Definition. 14 Icons (`v1.20.0`), Manifest mit ORS-Code-Mapping, `.disclosure-item-icon`-Slot. |
+| 2026-08-22 | +16 Icons (`v1.26.0`) für Valhalla-Only-Konzepte (Ramp/Exit/Merge/Ferry/gerichtete Uturn+Depart+Goal/Becomes). Schema: `orsCode` optional, neues optionales Feld `valhallaType`. Kontext-Pfad-Stilkonvention (`stroke-dasharray`/`opacity`) eingeführt. |
