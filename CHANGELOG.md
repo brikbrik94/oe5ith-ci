@@ -7,6 +7,10 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+---
+
+## v1.26.0 - 2026-08-22
+
 ### Added
 - `assets/maneuver-icons/`: 16 neue Icons für Valhalla-Only-Turn-by-Turn-Konzepte ohne
   ORS-Entsprechung (gerichtete U-Turns, Ramp geradeaus/links/rechts, Exit links/rechts,
