@@ -7,6 +7,17 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+### Added
+- `assets/maneuver-icons/`: 16 neue Icons für Valhalla-Only-Turn-by-Turn-Konzepte ohne
+  ORS-Entsprechung (gerichtete U-Turns, Ramp geradeaus/links/rechts, Exit links/rechts,
+  Stay-straight, Merge, Ferry enter/exit, gerichtete Depart/Goal links/rechts, Becomes).
+  `icons.json`-Schema: `orsCode` wird optional, neues optionales Feld `valhallaType`
+  (symbolischer Valhalla-Manöver-Typname) für die 16 neuen Icons. `name` bleibt einziger
+  providerneutraler Schlüssel. Neue Kontext-Pfad-Stilkonvention
+  (`stroke-dasharray`/`opacity`) für Icons mit gedimmtem Hintergrund-Pfad. Additiv,
+  bestehende 14 ORS-Icons und bestehende Konsumenten unverändert lauffähig. Angefragt aus
+  `website-v3` (Valhalla-Routing-Provider, GitHub Issue #2).
+
 ---
 
 ## v1.25.0 - 2026-08-12
