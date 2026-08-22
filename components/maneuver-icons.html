@@ -18,12 +18,13 @@
 
   <!-- ═══ KATALOG ═══ -->
   <div class="demo-section">
-    <div class="demo-section-title">Maneuver-Icons — Katalog (ORS-Code 0–13)</div>
+    <div class="demo-section-title">Maneuver-Icons — Katalog (30 Icons: ORS + Valhalla-Only)</div>
     <div class="demo-section-desc">
-      14 Line-Art-Icons für Turn-by-Turn-Wegbeschreibungen, 1:1 zu den
-      Manöver-Codes von OpenRouteService (ORS). <code>viewBox 0 0 16 16</code>,
-      <code>stroke="currentColor"</code> — kein SDF/MapLibre-Bezug (siehe
-      <code>assets/map-icons/</code> für Karten-Marker).
+      30 Line-Art-Icons für Turn-by-Turn-Wegbeschreibungen: 14 sind 1:1 zu den
+      Manöver-Codes von OpenRouteService (ORS) gekoppelt, 16 decken Valhalla-Only-Konzepte
+      ab (kein ORS-Code, Kopplung über <code>valhallaType</code>).
+      <code>viewBox 0 0 16 16</code>, <code>stroke="currentColor"</code> — kein
+      SDF/MapLibre-Bezug (siehe <code>assets/map-icons/</code> für Karten-Marker).
     </div>
     <div class="demo-row" style="flex-wrap:wrap; gap:20px;">
 
@@ -143,6 +144,156 @@
           <path d="M8 9 Q8 6.5 6 5.5" opacity="0.35"/>
         </svg>
         <span class="mono" style="font-size:.7rem;">13 · Keep right</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 13 V6 A3 3 0 0 0 5 6 V9"/>
+          <path d="M2.8 7 L5 9.5 L7.2 7"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">U-turn left</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13 V6 A3 3 0 0 1 11 6 V9"/>
+          <path d="M13.2 7 L11 9.5 L8.8 7"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">U-turn right</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13 V9"/>
+          <path d="M8 9 Q8 6 11 5"/>
+          <path d="M12.8 3.5 L11 5 L11.8 7"/>
+          <path d="M8 9 V3" stroke-dasharray="1.5 1.5" opacity="0.4"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Ramp right</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13 V9"/>
+          <path d="M8 9 Q8 6 5 5"/>
+          <path d="M3.2 3.5 L5 5 L4.2 7"/>
+          <path d="M8 9 V3" stroke-dasharray="1.5 1.5" opacity="0.4"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Ramp left</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13 V3"/>
+          <path d="M5.5 5.5 L8 3 L10.5 5.5"/>
+          <path d="M11 11 Q11 8 9 6" stroke-dasharray="1.5 1.5" opacity="0.4"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Ramp straight</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13 Q8 11.5 12.2 11.5"/>
+          <path d="M14.4 10.5 L12.2 11.5 L12.6 9.2"/>
+          <path d="M8 13 V3" stroke-dasharray="1.5 1.5" opacity="0.4"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Exit right</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13 Q8 11.5 3.8 11.5"/>
+          <path d="M1.6 10.5 L3.8 11.5 L3.4 9.2"/>
+          <path d="M8 13 V3" stroke-dasharray="1.5 1.5" opacity="0.4"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Exit left</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13 V4"/>
+          <path d="M5.5 6.5 L8 4 L10.5 6.5"/>
+          <path d="M8 9 Q8 6 5.5 4.5" opacity="0.35"/>
+          <path d="M8 9 Q8 6.5 10 5.5" opacity="0.35"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Stay straight</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 13 Q4 9 8 8"/>
+          <path d="M12 13 Q12 9 8 8"/>
+          <path d="M8 8 V3"/>
+          <path d="M5.5 5.5 L8 3 L10.5 5.5"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Merge</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13 V6"/>
+          <path d="M5.5 8.5 L8 6 L10.5 8.5"/>
+          <path d="M2.5 13 Q8 15.5 13.5 13" opacity="0.6"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Ferry enter</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3 V10"/>
+          <path d="M5.5 7.5 L8 10 L10.5 7.5"/>
+          <path d="M2.5 13 Q8 15.5 13.5 13" opacity="0.6"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Ferry exit</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="8" r="4" stroke-width="1.3"/>
+          <circle cx="6" cy="8" r="1.8" fill="currentColor" stroke="none"/>
+          <path d="M11 8 H14"/>
+          <path d="M12.3 6.3 L14 8 L12.3 9.7"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Depart right</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="10" cy="8" r="4" stroke-width="1.3"/>
+          <circle cx="10" cy="8" r="1.8" fill="currentColor" stroke="none"/>
+          <path d="M5 8 H2"/>
+          <path d="M3.7 6.3 L2 8 L3.7 9.7"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Depart left</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 9 H6.5"/>
+          <path d="M4.8 7.3 L6.5 9 L4.8 10.7"/>
+          <path d="M10 14.5 V2.5"/>
+          <path d="M10 3 L15.5 5.2 L10 7.4 Z" fill="currentColor" stroke="none"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Goal right</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 9 H9.5"/>
+          <path d="M11.2 7.3 L9.5 9 L11.2 10.7"/>
+          <path d="M6 14.5 V2.5"/>
+          <path d="M6 3 L0.5 5.2 L6 7.4 Z" fill="currentColor" stroke="none"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Goal left</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:110px;">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13 V3"/>
+          <path d="M5.5 5.5 L8 3 L10.5 5.5"/>
+          <path d="M4.5 9 H11.5" stroke-dasharray="1 1.5" opacity="0.5"/>
+        </svg>
+        <span class="mono" style="font-size:.7rem;">Becomes</span>
       </div>
 
     </div>
