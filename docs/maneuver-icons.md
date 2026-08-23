@@ -2,7 +2,7 @@
 
 **Assets:** `assets/maneuver-icons/`
 **Referenz:** `components/maneuver-icons.html`
-**Status:** definiert · v1.26.0
+**Status:** definiert · v2.0.0
 
 ---
 
@@ -146,7 +146,11 @@ kann sie mangels GTFS-Daten aktuell liefern).
 Line-Art-Stil, identisch zu bestehenden Custom-Icons in
 `topbar.html`/`modal.html` (nicht der SDF-Stil aus `map-icons`):
 
-- **`viewBox="0 0 16 16"`** — festes Raster für alle 30 Icons.
+- **`viewBox="0 0 16 24"`** — festes, hochformatiges Raster für alle 30 Icons (seit
+  `v2.0.0`; zuvor `0 0 16 16`). Gerichtete Pfeile nutzen die zusätzliche Höhe für einen
+  längeren Pfeilschaft/-bogen; rotationssymmetrische/flächige Icons (Kreisverkehr, Goal,
+  Depart) behalten ihre native Proportion und sind im neuen Raster vertikal zentriert statt
+  gestreckt.
 - **`fill="none"`, `stroke="currentColor"`, `stroke-width="1.5"`,
   `stroke-linecap="round"`, `stroke-linejoin="round"`**.
 - Ausnahmen mit `fill="currentColor"` nur wo zur Lesbarkeit nötig
@@ -174,7 +178,7 @@ Line-Art-Stil, identisch zu bestehenden Custom-Icons in
 ```json
 {
   "version": 1,
-  "grid": [16, 16],
+  "grid": [16, 24],
   "icons": [
     { "orsCode": 0, "name": "ci-maneuver-turn-left", "file": "ci-maneuver-turn-left.svg", "label": "Left" },
     { "name": "ci-maneuver-ramp-right", "valhallaType": "kRampRight", "file": "ci-maneuver-ramp-right.svg", "label": "Ramp right" }
@@ -228,21 +232,84 @@ const byValhallaType = Object.fromEntries(
 );
 ```
 
-In der Disclosure-Liste (`disclosure.css`):
+## Turn-by-Turn-Liste (`.maneuver-item`)
+
+Eigene Zeilen-Definition für Turn-by-Turn-Listen — ersetzt `.disclosure-item` nur für
+diesen Spezialfall. Die generische `.disclosure`-Hülle (Header, Collapse, `<details>`/
+`<summary>`) wird unverändert weiterverwendet, siehe `docs/sidebar.md` Abschnitt
+„Disclosure (Single-Panel)".
+
+### Struktur
+
+```
+.disclosure-body
+└── .maneuver-item              (mehrfach, ersetzt .disclosure-item)
+    ├── .maneuver-item-icon     (Pflicht — inline <svg>, 16×24)
+    ├── .maneuver-item-text     (Pflicht — Anweisungstext)
+    └── .maneuver-item-meta     (Optional — Distanz, mono)
+```
+
+### Elemente
+
+| Element / Klasse | Zweck | Pflicht/Optional | Modifier |
+|---|---|---|---|
+| `.maneuver-item` | Zeilen-Wrapper: Flex-Row, Trennlinie unten (`--border`) | Pflicht | keine |
+| `.maneuver-item-icon` | Icon-Slot, 16×24px, `color: var(--text)` | Pflicht | keine |
+| `.maneuver-item-text` | Anweisungstext, `flex:1`, `--text` | Pflicht | keine |
+| `.maneuver-item-meta` | Distanz/Meta rechts, `--muted`, meist `.mono` | Optional | keine |
+
+### Reihenfolge
+
+Icon → Text → Meta, in dieser Reihenfolge als direkte Kinder von `.maneuver-item`. Kein
+Meta-Element, wenn keine Distanzangabe vorhanden ist (kein leerer Platzhalter).
+
+### Zustände/Varianten
+
+| Zustand | Klasse | Wann verwenden |
+|---|---|---|
+| Standard | `.maneuver-item` | Jede Zeile — kein Auswahlzustand, keine Varianten |
+| Letzte Zeile | `.maneuver-item:last-child` | Automatisch (kein manuelles Setzen) — entfernt die untere Trennlinie |
+
+### Einbindung (Konsumenten-Snippet)
+
+```js
+const manifest = await fetch('/assets/maneuver-icons/icons.json').then(r => r.json());
+const byCode = Object.fromEntries(
+  manifest.icons.filter(i => i.orsCode !== undefined).map(i => [i.orsCode, i])
+);
+
+async function iconMarkupFor(orsCode) {
+  const icon = byCode[orsCode];
+  const svgText = await fetch(`/assets/maneuver-icons/${icon.file}`).then(r => r.text());
+  return svgText; // inline einsetzen, NICHT <img src> (sonst kein currentColor-Erben)
+}
+```
+
+Der Filter ist notwendig: 16 Einträge haben kein `orsCode`-Feld, `i.orsCode` wäre dort
+`undefined` und würde ohne Filter alle unter dem Schlüssel `"undefined"` kollabieren
+(Last-Write-Wins). `!== undefined` statt eines Truthy-Checks, weil `orsCode: 0` (Left)
+sonst fälschlich herausgefiltert würde.
+
+Für Valhalla-Konsumenten identisch, nur nach `valhallaType` statt `orsCode` indiziert:
+
+```js
+const byValhallaType = Object.fromEntries(
+  manifest.icons.filter(i => i.valhallaType !== undefined).map(i => [i.valhallaType, i])
+);
+```
+
+Markup:
 
 ```html
-<div class="disclosure-item">
-  <svg class="disclosure-item-icon" viewBox="0 0 16 16" fill="none"
+<div class="maneuver-item">
+  <svg class="maneuver-item-icon" viewBox="0 0 16 24" fill="none"
        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
     <!-- ci-maneuver-turn-right Pfad -->
   </svg>
-  <span class="disclosure-item-text">Turn right onto Welser Straße</span>
-  <span class="disclosure-item-meta mono">1.2 km</span>
+  <span class="maneuver-item-text">Turn right onto Welser Straße</span>
+  <span class="maneuver-item-meta mono">1.2 km</span>
 </div>
 ```
-
-`.disclosure-item-icon` setzt `color: var(--text)` — gleiche Gewichtung wie
-`.disclosure-item-text`, da das Richtungssymbol navigatorisch relevant ist.
 
 ---
 
@@ -257,6 +324,9 @@ In der Disclosure-Liste (`disclosure.css`):
 3. **Konsistenz-Check** erfasst `assets/maneuver-icons/` nicht — Änderungen am
    Verzeichnis lösen keinen Check-Fehler aus. Der Check prüft aber
    `docs/maneuver-icons.md` als registrierte Dokumentation.
+4. **Turn-by-Turn-Listen** verwenden `.maneuver-item` (siehe oben), nicht das generische
+   `.disclosure-item` — eigene Zeilen-Definition für diesen Spezialfall, siehe
+   `docs/sidebar.md`.
 
 ---
 
@@ -264,5 +334,6 @@ In der Disclosure-Liste (`disclosure.css`):
 
 | Datum | Änderung |
 |---|---|
+| 2026-08-23 | **v2.0.0 (Breaking).** Alle 30 Icons auf `viewBox="0 0 16 24"` umgezeichnet (war `0 0 16 16`). Neue Komponente `.maneuver-item` (`disclosure.css`) ersetzt `.disclosure-item` für Turn-by-Turn-Listen. `icons.json`: `"grid"` von `[16,16]` auf `[16,24]`. Migration: `docs/migration-v2.md`. |
 | 2026-07-07 | Initiale Definition. 14 Icons (`v1.20.0`), Manifest mit ORS-Code-Mapping, `.disclosure-item-icon`-Slot. |
 | 2026-08-22 | +16 Icons (`v1.26.0`) für Valhalla-Only-Konzepte (Ramp/Exit/Merge/Ferry/gerichtete Uturn+Depart+Goal/Becomes). Schema: `orsCode` optional, neues optionales Feld `valhallaType`. Kontext-Pfad-Stilkonvention (`stroke-dasharray`/`opacity`) eingeführt. |
