@@ -89,6 +89,26 @@ Alle vier Felder (`color`, `width`, `outline_color`, `outline_width`) sind bei
 
 ---
 
+## Modifier: `.map-legend--wide`
+
+Das Panel hat standardmäßig `max-width: var(--sidebar-width)` (300px) — ausreichend für die
+Standard-Eintragstypen mit kurzem Label. Enthält ein Panel Einträge mit breiterem Inhalt (z.B.
+mehrere Farb-/Formvarianten pro Zeile, längere Labels), reicht 300px oft nicht aus.
+
+```html
+<div class="map-legend map-legend--wide" id="map-legend" style="display:none;">
+  <div class="map-legend-title"></div>
+  <div class="map-legend-entries"></div>
+</div>
+```
+
+`.map-legend--wide` setzt `max-width: var(--legend-width-wide)` (340px). Rein deklarativ im
+HTML gesetzt — keine JS-API dafür, `MapLegend` kennt die Klasse nicht. Die Darstellung von
+Mehrfach-Chip-/Varianten-Zeilen selbst (z.B. mehrere farbige Streifen in einem Eintrag) ist
+nicht Teil dieser Komponente — nur die Panel-Breite als Rahmen dafür.
+
+---
+
 ## Topbar-Button
 
 Standard `.topbar-toggle` ohne neues Styling:

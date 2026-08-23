@@ -7,6 +7,12 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+### Added
+- `css/common.css`: neuer Token `--legend-width-wide` (340px). `css/modal.css`: neuer Modifier
+  `.map-legend--wide` (`max-width: var(--legend-width-wide)`) für Legenden-Panels mit breiterem
+  Inhalt (z.B. mehrere Chips/Varianten pro Zeile), rein deklarativ per HTML-Klasse, keine
+  JS-API-Änderung an `MapLegend`. Angefragt aus `website-v3` (GitHub Issue #4).
+
 ### Fixed
 - `assets/maneuver-icons/ci-maneuver-uturn-left.svg`: war byte-identisch zu
   `ci-maneuver-uturn.svg` (Copy-Paste-Fehler bei der v1.26.0-Umsetzung). Neuer, eigenständiger

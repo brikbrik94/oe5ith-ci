@@ -171,6 +171,8 @@
       Fünf Eintragstypen: <code>dot</code>, <code>line</code> (optional <code>width</code>/<code>dasharray</code>),
       <code>area</code> (optional <code>outline_color</code>/<code>outline_width</code>), <code>icon</code>,
       <code>line-cased</code>. Beliebige CSS-Farben. Ein-/Ausblenden über <code>legend.toggle()</code>.
+      Modifier <code>.map-legend--wide</code> für Panels mit breiterem Inhalt (siehe zweites
+      Beispiel unten).
     </div>
     <div class="demo-row">
       <button class="demo-trigger" onclick="demoLegendToggle()">Legende ein-/ausblenden</button>
@@ -216,6 +218,23 @@
               <div class="map-legend-line-cased-inner" style="height:3px; background:var(--accent);"></div>
             </div>
             <span class="map-legend-label">Skilift (Casing)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modifier .map-legend--wide: breiteres Panel für langen/breiten Inhalt -->
+    <div style="margin-top:16px; padding:12px 14px; background:var(--panel-deep); border:1px solid var(--border); border-radius:8px; display:inline-block;">
+      <div class="map-legend map-legend--wide" style="position:static; box-shadow:none; min-width:0;">
+        <div class="map-legend-title">Kartenschlüssel (breit)</div>
+        <div class="map-legend-entries">
+          <div class="map-legend-entry">
+            <div class="map-legend-dot" style="background:var(--success);"></div>
+            <span class="map-legend-label">Sehr langes Label, das die Standardbreite sprengt</span>
+          </div>
+          <div class="map-legend-entry">
+            <div class="map-legend-area" style="background:#f59e0b;"></div>
+            <span class="map-legend-label">Ebenfalls ein deutlich längerer Beschreibungstext</span>
           </div>
         </div>
       </div>

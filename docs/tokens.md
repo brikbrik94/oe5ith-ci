@@ -191,6 +191,7 @@ keine CI-Änderung nötig.
 | `--badge-radius` | `4px` | Badges — eckig |
 | `--split-master-width` | `300px` | Breite der Master-Spalte (Split-View Typ 6, Desktop) |
 | `--split-master-max-h` | `320px` | max. Höhe der Master-Spalte im gestapelten Mobile-Layout (Split-View Typ 6) |
+| `--legend-width-wide` | `340px` | `max-width` für `.map-legend--wide` — Modifier für Legenden-Panels mit mehrzeiligem/breiterem Inhalt (z.B. mehrere Chips pro Eintrag), statt der Standardbreite `--sidebar-width` |
 
 ---
 
@@ -314,6 +315,7 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
   --topbar-height:        60px;
   --topbar-height-mobile: 52px;
   --sidebar-width:        300px;
+  --legend-width-wide:    340px;
   --container-max:        1000px;
   --card-radius:          12px;
   --card-padding:         20px;
@@ -371,6 +373,7 @@ html {
 
 | Datum | Änderung |
 |---|---|
+| 2026-08-23 | `--legend-width-wide` ergänzt — Modifier `.map-legend--wide` für breitere Legenden-Panels. |
 | 2026-06-06 | 10 Kalender-Farbslots (`--cal-color-1` bis `--cal-color-10`) mit Subtle- und Border-Varianten ergänzt. |
 | 2026-05-07 | `--sidebar-width` von 260px auf 300px erhöht. Globale Scrollbar-Stilisierung (`scrollbar-width: thin`, `--border-strong`/transparent) in `common.css` ergänzt. |
 | 2026-05-05 | `--sidebar-tab-width` und `--sidebar-tab-height` ergänzt. Z-Index-Bereichstabelle hinzugefügt. |
