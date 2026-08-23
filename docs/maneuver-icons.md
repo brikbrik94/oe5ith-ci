@@ -272,31 +272,8 @@ Meta-Element, wenn keine Distanzangabe vorhanden ist (kein leerer Platzhalter).
 
 ### Einbindung (Konsumenten-Snippet)
 
-```js
-const manifest = await fetch('/assets/maneuver-icons/icons.json').then(r => r.json());
-const byCode = Object.fromEntries(
-  manifest.icons.filter(i => i.orsCode !== undefined).map(i => [i.orsCode, i])
-);
-
-async function iconMarkupFor(orsCode) {
-  const icon = byCode[orsCode];
-  const svgText = await fetch(`/assets/maneuver-icons/${icon.file}`).then(r => r.text());
-  return svgText; // inline einsetzen, NICHT <img src> (sonst kein currentColor-Erben)
-}
-```
-
-Der Filter ist notwendig: 16 Einträge haben kein `orsCode`-Feld, `i.orsCode` wäre dort
-`undefined` und würde ohne Filter alle unter dem Schlüssel `"undefined"` kollabieren
-(Last-Write-Wins). `!== undefined` statt eines Truthy-Checks, weil `orsCode: 0` (Left)
-sonst fälschlich herausgefiltert würde.
-
-Für Valhalla-Konsumenten identisch, nur nach `valhallaType` statt `orsCode` indiziert:
-
-```js
-const byValhallaType = Object.fromEntries(
-  manifest.icons.filter(i => i.valhallaType !== undefined).map(i => [i.valhallaType, i])
-);
-```
+Manifest-Lookup (`byCode`/`byValhallaType`) siehe oben, Abschnitt „Einbindung
+(Konsumenten-Snippet)".
 
 Markup:
 
@@ -319,7 +296,7 @@ Markup:
    `assets/maneuver-icons/` ablegen → Eintrag in `icons.json` ergänzen (genau eines von
    `orsCode`/`valhallaType` setzen, nie beide, nie keins) →
    Galerie `components/maneuver-icons.html` um eine Karte erweitern.
-2. **Kein produktiver CSS-Code** außer `.disclosure-item-icon` in
+2. **Kein produktiver CSS-Code** außer `.disclosure-item-icon`/`.maneuver-item-icon` in
    `disclosure.css` — keine neuen Tokens.
 3. **Konsistenz-Check** erfasst `assets/maneuver-icons/` nicht — Änderungen am
    Verzeichnis lösen keinen Check-Fehler aus. Der Check prüft aber
