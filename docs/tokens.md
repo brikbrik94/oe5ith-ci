@@ -28,6 +28,7 @@ Dies ist die einzige Quelle der Wahrheit — nie Werte duplizieren oder hardcode
 | `--subtle` | `#555555` | Labels, Section-Titles, Metadaten |
 | `--border` | `#333333` | Alle Borders |
 | `--border-strong` | `#444444` | Hover-Borders, aktive Elemente |
+| `--border-subtle` | `#2a2a2a` | Neutraler Rand für Badges/Status ohne Semantik (`.badge-gray`, `.acc-status.unloaded`) |
 | `--surface-hover` | `rgba(255,255,255, 0.05)` | Subtiler Hover auf dunklen Hintergründen |
 | `--map-bg` | `#ffffff` | Hintergrund des Karten-Containers (`.full-map`), per Stylesheet überschreibbar |
 
@@ -263,6 +264,7 @@ App-spezifische Z-Index-Werte dürfen 999 nicht überschreiten damit CI-Overlays
   --subtle:           #555555;
   --border:           #333333;
   --border-strong:    #444444;
+  --border-subtle:    #2a2a2a;
   --map-bg:           #ffffff;
 
   /* Akzent */
@@ -373,6 +375,7 @@ html {
 
 | Datum | Änderung |
 |---|---|
+| 2026-08-23 | `--border-subtle` ergänzt — löst hardcodierten Border `#2a2a2a` in `.badge-gray` und `.acc-status.unloaded` ab (kein visueller Unterschied). |
 | 2026-08-23 | `--legend-width-wide` ergänzt — Modifier `.map-legend--wide` für breitere Legenden-Panels. |
 | 2026-06-06 | 10 Kalender-Farbslots (`--cal-color-1` bis `--cal-color-10`) mit Subtle- und Border-Varianten ergänzt. |
 | 2026-05-07 | `--sidebar-width` von 260px auf 300px erhöht. Globale Scrollbar-Stilisierung (`scrollbar-width: thin`, `--border-strong`/transparent) in `common.css` ergänzt. |

@@ -199,7 +199,7 @@ Eingesetzt für Layer-Steuerung auf Kartenseiten.
     ├── .acc-header          ← immer sichtbar, klickbar
     │   ├── .acc-dot         ← CI-Default: var(--accent); Overrides möglich
     │   ├── .acc-title
-    │   ├── .acc-status      ← unloaded / partial / all-on
+    │   ├── .acc-status      ← unloaded / partial / all-on; optional + .acc-status--dot (Punkt statt Text)
     │   └── .acc-chevron     ← rotiert bei .open
     ├── .acc-controls        ← nur bei .open sichtbar
     │   ├── "Alle an"
@@ -234,6 +234,33 @@ Site-spezifische Overrides sind per Inline-Style oder eigener CSS-Regel möglich
 | `.acc-status.all-on` | `alle aktiv` | Grün (--success) | Alle Layer aktiviert |
 
 Badge-Text-Regel: 0 aktiv → `nicht geladen` · 1–(n-1) aktiv → `n Layer` · alle aktiv → `alle aktiv`
+
+### Status-Badge — kompakte Punkt-Variante (optional)
+
+Modifier `.acc-status--dot`, kombiniert mit derselben Zustandsklasse (`.unloaded`/`.partial`/
+`.all-on`) statt eines Text-Badges — ein 8×8px farbiger Punkt anstelle der beschrifteten Pille.
+Für Sites mit vielen Accordion-Gruppen, wo die Text-Badges zu viel Breite beanspruchen.
+
+| Element / Klasse | Zweck | Pflicht/Optional | Modifier |
+|---|---|---|---|
+| `.acc-status--dot` | Kollabiert `.acc-status` zu einem 8×8px Kreis ohne Text/Border/Padding | Optional | kombiniert mit `.unloaded`/`.partial`/`.all-on` |
+
+| Zustand | Klasse | Farbe | Wann verwenden |
+|---|---|---|---|
+| Nicht geladen | `.acc-status--dot.unloaded` | Grau (`--subtle`), kein Glow | Keine Layer aktiv |
+| Teilweise geladen | `.acc-status--dot.partial` | Blau (`--accent`) mit Glow | 1 bis n-1 Layer aktiv |
+| Alle geladen | `.acc-status--dot.all-on` | Grün (`--success`) mit Glow | Alle Layer aktiviert |
+
+**Pflicht:** Das `title`-Attribut muss denselben Text tragen wie die Text-Badge-Variante
+(`nicht geladen` / `n Layer` / `alle aktiv`) — reine Farbcodierung ohne Text ist laut
+`for-coding-agents.md` nicht zulässig. Der Text erscheint als nativer Browser-Tooltip beim
+Hover und wird von Screenreadern vorgelesen.
+
+```html
+<span class="acc-status unloaded acc-status--dot" title="nicht geladen"></span>
+<span class="acc-status partial acc-status--dot" title="2 Layer"></span>
+<span class="acc-status all-on acc-status--dot" title="alle aktiv"></span>
+```
 
 ### Async-Zustände (Loading / Error)
 

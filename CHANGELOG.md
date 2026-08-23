@@ -7,6 +7,18 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+### Added
+- `css/sidebar.css`: neuer Modifier `.acc-status--dot`, kombinierbar mit den bestehenden
+  Accordion-Status-Klassen (`.unloaded`/`.partial`/`.all-on`) — kompakter 8×8px Punkt statt
+  Text-Badge für Layer-Steuerungen mit vielen Gruppen. Text bleibt als `title`-Attribut
+  erhalten (Tooltip + Screenreader), keine reine Farbcodierung. Dokumentiert in
+  `docs/sidebar.md`, Referenzbeispiel in `components/sidebar-types.html`.
+
+### Fixed
+- `css/common.css`: neuer Token `--border-subtle` (`#2a2a2a`) ersetzt den hardcodierten
+  Border-Wert in `.badge-gray` (`css/badges.css`) und `.acc-status.unloaded`
+  (`css/sidebar.css`) — kein visueller Unterschied, nur Token statt Rohwert.
+
 ---
 
 ## v1.27.0 - 2026-08-23
