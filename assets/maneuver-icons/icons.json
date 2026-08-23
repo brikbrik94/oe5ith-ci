@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "grid": [16, 16],
+  "grid": [16, 24],
   "icons": [
     { "orsCode": 0,  "name": "ci-maneuver-turn-left",        "file": "ci-maneuver-turn-left.svg",        "label": "Left" },
     { "orsCode": 1,  "name": "ci-maneuver-turn-right",       "file": "ci-maneuver-turn-right.svg",       "label": "Right" },
