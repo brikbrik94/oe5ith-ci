@@ -9,6 +9,26 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v2.0.0 - 2026-08-23
+
+### Breaking
+- `assets/maneuver-icons/`: alle 30 Icon-SVGs auf `viewBox="0 0 16 24"` umgezeichnet (war
+  `0 0 16 16`) — hochformatiges Raster, gerichtete Pfeile mit längerem Schaft,
+  rotationssymmetrische Icons (Kreisverkehr/Goal/Depart) vertikal zentriert statt
+  gestreckt. `icons.json`: `"grid"` von `[16, 16]` auf `[16, 24]`. Gleiche Dateinamen/IDs,
+  gleiches Eintrags-Schema — Konsumenten mit fest-quadratischem Icon-Container müssen ihn
+  auf 16×24 (oder proportional) umstellen. Migration: `docs/migration-v2.md`. Betrifft
+  bekannten Produktions-Konsumenten `website-v3`.
+
+### Added
+- `css/disclosure.css`: neue Komponente `.maneuver-item`/`.maneuver-item-icon`/
+  `-text`/`-meta` — eigene Zeilen-Definition für Turn-by-Turn-Listen, ersetzt
+  `.disclosure-item` nur für diesen Spezialfall (generische `.disclosure`-Hülle
+  unverändert weiterverwendet). Dokumentiert in `docs/maneuver-icons.md`, Referenzbeispiel
+  in `components/maneuver-icons.html`.
+
+---
+
 ## v1.28.0 - 2026-08-23
 
 ### Added
