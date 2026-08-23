@@ -7,6 +7,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+### Fixed
+- `assets/maneuver-icons/ci-maneuver-uturn-left.svg`: war byte-identisch zu
+  `ci-maneuver-uturn.svg` (Copy-Paste-Fehler bei der v1.26.0-Umsetzung). Neuer, eigenständiger
+  Pfad (kleinerer Radius, andere Position) macht das gerichtete Valhalla-Icon (`kUturnLeft`)
+  optisch unterscheidbar vom generischen ORS-U-Turn-Icon. Gemeldet aus `website-v3`
+  (GitHub Issue #3).
+
 ---
 
 ## v1.26.0 - 2026-08-22
