@@ -360,7 +360,8 @@ im Unterschied zum Accordion.
     └── .disclosure-chevron
 └── .disclosure-body
     └── .disclosure-item (mehrfach)
-        ├── .disclosure-item-icon (optional, siehe docs/maneuver-icons.md)
+        ├── .disclosure-item-icon (optional, generischer Icon-Slot — NICHT für
+        │   Turn-by-Turn verwenden, siehe .maneuver-item in docs/maneuver-icons.md)
         ├── .disclosure-item-text
         └── .disclosure-item-meta
 ```
