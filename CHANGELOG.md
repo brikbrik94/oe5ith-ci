@@ -7,6 +7,10 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+---
+
+## v1.27.0 - 2026-08-23
+
 ### Added
 - `css/common.css`: neuer Token `--legend-width-wide` (340px). `css/modal.css`: neuer Modifier
   `.map-legend--wide` (`max-width: var(--legend-width-wide)`) für Legenden-Panels mit breiterem
