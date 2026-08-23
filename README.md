@@ -104,6 +104,7 @@ docs/maneuver-icons.md
 docs/map-icons.md
 docs/map-legend.md
 docs/map-routes.md
+docs/migration-v2.md
 docs/modal.md
 docs/naming.md
 docs/page-stats.md

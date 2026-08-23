@@ -311,6 +311,6 @@ Markup:
 
 | Datum | Änderung |
 |---|---|
-| 2026-08-23 | **v2.0.0 (Breaking).** Alle 30 Icons auf `viewBox="0 0 16 24"` umgezeichnet (war `0 0 16 16`). Neue Komponente `.maneuver-item` (`disclosure.css`) ersetzt `.disclosure-item` für Turn-by-Turn-Listen. `icons.json`: `"grid"` von `[16,16]` auf `[16,24]`. Migration: `docs/migration-v2.md`. |
 | 2026-07-07 | Initiale Definition. 14 Icons (`v1.20.0`), Manifest mit ORS-Code-Mapping, `.disclosure-item-icon`-Slot. |
 | 2026-08-22 | +16 Icons (`v1.26.0`) für Valhalla-Only-Konzepte (Ramp/Exit/Merge/Ferry/gerichtete Uturn+Depart+Goal/Becomes). Schema: `orsCode` optional, neues optionales Feld `valhallaType`. Kontext-Pfad-Stilkonvention (`stroke-dasharray`/`opacity`) eingeführt. |
+| 2026-08-23 | **v2.0.0 (Breaking).** Alle 30 Icons auf `viewBox="0 0 16 24"` umgezeichnet (war `0 0 16 16`). Neue Komponente `.maneuver-item` (`disclosure.css`) ersetzt `.disclosure-item` für Turn-by-Turn-Listen. `icons.json`: `"grid"` von `[16,16]` auf `[16,24]`. Migration: `docs/migration-v2.md`. |

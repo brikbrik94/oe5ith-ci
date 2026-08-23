@@ -377,6 +377,7 @@ im Unterschied zum Accordion.
 | `.disclosure-chevron` | Rotiert bei `details[open]`, analog `.acc-chevron`. |
 | `.disclosure-body` | Inhaltscontainer. Kein JS-Höhen-Contract — `<details>` blendet nativ ein/aus. |
 | `.disclosure-item` | Einzelner Eintrag: Text · Meta. |
+| `.disclosure-item-icon` | Optionales Icon links — für Turn-by-Turn nicht mehr verwenden, siehe `.maneuver-item` in `docs/maneuver-icons.md`. |
 | `.disclosure-item-text` | Primärtext. |
 | `.disclosure-item-meta` | Sekundärtext rechts, `--muted`. |
 
@@ -397,6 +398,8 @@ im Unterschied zum Accordion.
   </div>
 </details>
 ```
+
+Für Turn-by-Turn-Zeilen mit Manöver-Icon `.maneuver-item` statt `.disclosure-item` verwenden, siehe `docs/maneuver-icons.md`.
 
 ### Regeln
 

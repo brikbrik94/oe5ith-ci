@@ -98,6 +98,6 @@
       "note": "SDF-Form-Quellen für MapLibre icon-color; keine produktiven CSS-Klassen" },
     { "id": "maneuver-icons", "title": "Maneuver-Icons (Turn-by-Turn)", "category": "asset",
       "css": [], "doc": ["maneuver-icons.md", "migration-v2.md"], "html": ["maneuver-icons.html"],
-      "note": "Line-Art-Richtungssymbole: 14 ORS-Manöver-Codes 0-13 + 16 Valhalla-Only-Konzepte (kein ORS-Code, valhallaType); .disclosure-item-icon lebt in disclosure.css" }
+      "note": "Line-Art-Richtungssymbole: 14 ORS-Manöver-Codes 0-13 + 16 Valhalla-Only-Konzepte (kein ORS-Code, valhallaType); .disclosure-item-icon/.maneuver-item* leben in disclosure.css" }
   ]
 }
