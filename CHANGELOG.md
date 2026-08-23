@@ -7,6 +7,10 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+---
+
+## v1.28.0 - 2026-08-23
+
 ### Added
 - `css/sidebar.css`: neuer Modifier `.acc-status--dot`, kombinierbar mit den bestehenden
   Accordion-Status-Klassen (`.unloaded`/`.partial`/`.all-on`) — kompakter 8×8px Punkt statt
