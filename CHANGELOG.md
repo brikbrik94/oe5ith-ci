@@ -9,6 +9,21 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ---
 
+## v2.1.0 - 2026-09-20
+
+### Added
+- `css/modal.css`: `.modal-footer` — additive Confirm-Variante für Modals mit
+  Footer-Buttons (`.btn.btn-primary`/`.btn.btn-ghost`). Dokumentiert in
+  `docs/modal.md`, Referenzbeispiel in `components/modal.html`. `.popup-kv` als
+  wiederverwendbares Key-Value-Pattern für `.modal-body` freigegeben.
+
+### Fixed
+- `css/topbar.css`: `.topbar-search-btn` nutzte hardcodiertes `#555` statt eines
+  Tokens (~2,06:1 Kontrast gegen `--card-bg`, unter WCAG-2.1-AA-Minimum) — jetzt
+  `var(--muted)` (~4,33:1).
+
+---
+
 ## v2.0.0 - 2026-08-23
 
 ### Breaking
