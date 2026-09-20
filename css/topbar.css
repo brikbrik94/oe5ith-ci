@@ -290,7 +290,7 @@
   right: 6px;
   background: none;
   border: none;
-  color: #555;
+  color: var(--muted);
   cursor: pointer;
   display: flex;
   align-items: center;
