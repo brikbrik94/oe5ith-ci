@@ -101,6 +101,32 @@
 .modal-body { flex: 1; overflow-y: auto; padding: 20px; }
 ```
 
+### Element-Tabelle
+
+| Element / Klasse | Zweck | Pflicht/Optional | Erlaubte Modifier |
+|---|---|---|---|
+| `.modal-backdrop` | Vollflächiger Hintergrund + Zentrierung | Pflicht | `.open` |
+| `.modal` | Dialog-Box | Pflicht | — |
+| `.modal-header` | Titelzeile mit Close-Button | Pflicht | — |
+| `.modal-title` | Titel-Text | Pflicht | — |
+| `.modal-close` | Schließen-Button | Pflicht | — |
+| `.modal-body` | Scrollbarer Inhaltsbereich | Pflicht | — |
+| `.modal-footer` | Fixierte Button-Zeile (Confirm-Variante) | Optional | — |
+
+### Struktur
+
+```text
+.modal-backdrop
+└── .modal
+    ├── .modal-header           (Pflicht)
+    │   ├── .modal-title
+    │   └── .modal-close
+    ├── .modal-body             (Pflicht)
+    └── .modal-footer           (Optional — nur Confirm-Variante)
+        ├── .btn.btn-primary    (bestätigende Aktion, zuerst/links)
+        └── .btn.btn-ghost      (Abbrechen, daneben)
+```
+
 ### Inhalt — Typen
 
 ```css
@@ -119,6 +145,11 @@
 /* Inline Code */
 .modal-body code { font-family: var(--font-mono); font-size: 0.78rem; background: var(--panel-deep); color: #e6e6e6; padding: 1px 5px; border-radius: 3px; border: 1px solid #1a1a1a; }
 ```
+
+Für Key-Value-Übersichten (Feld → gewählter Wert) innerhalb von `.modal-body` das
+bestehende `.popup-kv` (siehe Karten-Popup weiter unten) wiederverwenden — keine
+eigenständige Modal-Variante der Tabelle bauen, die Klasse ist nicht auf Popups
+beschränkt.
 
 ### JavaScript
 
@@ -145,10 +176,106 @@ document.addEventListener('keydown', e => {
 ### Regeln
 
 1. `role="dialog"` + `aria-modal="true"` + `aria-labelledby` — Pflicht
-2. Beim Öffnen Fokus auf `.modal-close` setzen
-3. Backdrop-Klick und Escape schließen
+2. Beim Öffnen Fokus auf `.modal-close` setzen (Info-Variante) bzw. auf den
+   sekundären Footer-Button (Confirm-Variante, siehe unten) — nie auf den
+   primären/bestätigenden Button
+3. Backdrop-Klick und Escape schließen — bei der Confirm-Variante gleichbedeutend
+   mit „Abbrechen"
 4. `.modal-body` scrollt — `max-height` bleibt immer `calc(100vh - 80px)`
-5. Vorerst nur Info-Variante — kein Footer mit Buttons
+5. `.modal-footer` ist optional und rein additiv (nur gerendert, wenn im Markup
+   vorhanden) — die Info-Variante ändert sich dadurch nicht
+
+### Confirm-Variante
+
+Für Aktionen, die vor dem Ausführen eine explizite Bestätigung brauchen (z. B.
+Job-Start). Erweitert die Info-Variante rein additiv um `.modal-footer`.
+
+#### CSS
+
+```css
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+```
+
+#### Struktur & Platzierung
+
+`.modal-footer` verhält sich wie `.modal-header`: `flex-shrink: 0`, bleibt fixiert,
+während `.modal-body` unabhängig scrollt. Buttons nutzen ausschließlich bestehende
+`buttons.css`-Klassen — **keine neuen Button-Klassen**. Es gilt die projektweite
+Button-Konvention (siehe `docs/doc-standard.md` G3): primäre/bestätigende Aktion
+zuerst/links als `.btn.btn-primary`, sekundär („Abbrechen") daneben als
+`.btn.btn-ghost`. Der Footer selbst ist rechtsbündig (`justify-content: flex-end`).
+
+#### HTML
+
+```html
+<div class="modal-backdrop" id="confirm-modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="confirm-modal-title" onclick="handleBackdropClick(event)">
+  <div class="modal">
+
+    <div class="modal-header">
+      <span class="modal-title" id="confirm-modal-title">Job starten?</span>
+      <button class="modal-close" onclick="closeConfirmModal()" aria-label="Modal schließen">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <table class="popup-kv">
+        <tr><td>Dienststellen</td><td>Feuerwehren.geojson</td></tr>
+        <tr><td>Backend</td><td>osrm</td></tr>
+      </table>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="confirmAndStart()">Job starten</button>
+      <button class="btn btn-ghost" id="confirm-modal-cancel" onclick="closeConfirmModal()">Abbrechen</button>
+    </div>
+
+  </div>
+</div>
+```
+
+#### JavaScript
+
+```js
+function openConfirmModal() {
+  const bd = document.getElementById('confirm-modal-backdrop');
+  bd.classList.add('open');
+  document.getElementById('confirm-modal-cancel').focus();   // Fokus auf Abbrechen, nicht auf Job starten
+}
+
+function closeConfirmModal() {
+  document.getElementById('confirm-modal-backdrop').classList.remove('open');
+}
+
+function handleBackdropClick(e) {
+  if (e.target === document.getElementById('confirm-modal-backdrop')) closeConfirmModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeConfirmModal();
+});
+```
+
+Der Fokus auf den sekundären Button ist bewusst der Default für Confirm-Modals mit
+folgenreicher Aktion — schützt vor versehentlichem Enter-Bestätigen. Da Modal-JS wie
+bei der Info-Variante Konsumenten-Sache bleibt (kein gemeinsames JS-Modul), ist dies
+ein empfohlenes Muster, kein erzwungenes Verhalten.
+
+#### Varianten
+
+| Variante | Merkmal | Wann verwenden |
+|---|---|---|
+| Info | Kein `.modal-footer`, Fokus auf `.modal-close` | Reine Anzeige, keine Aktion nötig (z. B. Copyright-Modal) |
+| Confirm | `.modal-footer` mit Buttons, Fokus auf sekundären Button | Vor einer folgenreichen Aktion (z. B. Job-Start), die der Nutzer bestätigen muss |
 
 ---
 
@@ -389,5 +516,6 @@ document.addEventListener('keydown', e => {
 
 | Datum | Änderung |
 |---|---|
+| 2026-09-20 | Confirm-Variante ergänzt: `.modal-footer` (additiv), `.popup-kv` für `.modal-body` freigegeben, Fokus-Default-Regel für Confirm-Variante. |
 | 2026-04-24 | Copyright-Modal, Sidebar-Footer © Button, Karten-Attribution ⓘ Button. |
 | 2026-04-22 | Initiale Definition. Modal (Info-Variante), Karten-Popup kompakt + detailliert. Leaflet + MapLibre Overrides. |

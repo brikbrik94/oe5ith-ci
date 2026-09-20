@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/topbar.css">
+<link rel="stylesheet" href="../css/buttons.css">
 <link rel="stylesheet" href="../css/modal.css">
 <link rel="stylesheet" href="../css/demo.css">
 </head>
@@ -49,6 +50,30 @@
   </div>
 </div>
 
+<!-- ═══ MODAL — CONFIRM-VARIANTE (versteckt, wird per JS geöffnet) ═══ -->
+<div class="modal-backdrop" id="confirm-modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="confirm-modal-title" onclick="handleConfirmBackdropClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="confirm-modal-title">Job starten?</span>
+      <button class="modal-close" onclick="closeConfirmModal()" aria-label="Modal schließen">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <table class="popup-kv">
+        <tr><td>Dienststellen</td><td>Feuerwehren.geojson</td></tr>
+        <tr><td>Zonen</td><td>Einsatzgebiete.geojson</td></tr>
+        <tr><td>Backend</td><td>osrm</td></tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="confirmAndStart()">Job starten</button>
+      <button class="btn btn-ghost" id="confirm-modal-cancel" onclick="closeConfirmModal()">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ MAP LEGEND ═══ -->
 <div class="map-legend" id="demo-legend" style="display:none;">
   <div class="map-legend-title"></div>
@@ -74,6 +99,20 @@
     </div>
     <button class="demo-trigger" onclick="openModal()">
       <i class="fa-solid fa-circle-info"></i> Info öffnen
+    </button>
+  </div>
+
+  <!-- ═══ MODAL CONFIRM ═══ -->
+  <div class="demo-section">
+    <div class="demo-section-title">Modal — Confirm-Variante</div>
+    <div class="demo-section-desc">
+      Erweitert die Info-Variante additiv um <code>.modal-footer</code> mit Buttons
+      (<code>.btn.btn-primary</code> zuerst/links, <code>.btn.btn-ghost</code> daneben).
+      Fokus liegt beim Öffnen auf dem sekundären Button ("Abbrechen"), nicht auf der
+      bestätigenden Aktion — schützt vor versehentlichem Enter-Bestätigen.
+    </div>
+    <button class="demo-trigger" onclick="openConfirmModal()">
+      <i class="fa-solid fa-play"></i> Confirm öffnen
     </button>
   </div>
 
@@ -431,8 +470,28 @@ function handleBackdropClick(e) {
   if (e.target === document.getElementById('modal-backdrop')) closeModal();
 }
 
+/* ── Modal Confirm-Variante ── */
+function openConfirmModal() {
+  const bd = document.getElementById('confirm-modal-backdrop');
+  bd.classList.add('open');
+  // Fokus auf sekundären Button (Abbrechen), nicht auf die bestätigende Aktion
+  document.getElementById('confirm-modal-cancel').focus();
+}
+
+function closeConfirmModal() {
+  document.getElementById('confirm-modal-backdrop').classList.remove('open');
+}
+
+function handleConfirmBackdropClick(e) {
+  if (e.target === document.getElementById('confirm-modal-backdrop')) closeConfirmModal();
+}
+
+function confirmAndStart() {
+  closeConfirmModal();
+}
+
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Escape') { closeModal(); closeConfirmModal(); }
 });
 </script>
 </body>
