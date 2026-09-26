@@ -7,6 +7,10 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+---
+
+## v2.2.0 - 2026-09-26
+
 ### Added
 - `css/progress.css`: neue Komponente `.progress`/`.progress-track`/`.progress-fill`/
   `.progress-label` — linearer "N von M"-Fortschrittsbalken für sequenzielle
