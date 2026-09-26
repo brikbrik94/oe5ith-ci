@@ -7,6 +7,13 @@ Format: `## vX.Y.Z - YYYY-MM-DD` · Neueste Version zuerst · Siehe `docs/versio
 
 ## [Unreleased]
 
+### Added
+- `css/progress.css`: neue Komponente `.progress`/`.progress-track`/`.progress-fill`/
+  `.progress-label` — linearer "N von M"-Fortschrittsbalken für sequenzielle
+  Job-Verarbeitung (z. B. `zonen-engine`), inkl. `.indeterminate`-Zustand und
+  `role="progressbar"`-Barrierefreiheit. Dokumentiert in `docs/progress.md`,
+  Referenzbeispiel in `components/progress.html`.
+
 ---
 
 ## v2.1.0 - 2026-09-20

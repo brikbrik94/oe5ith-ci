@@ -42,6 +42,7 @@
 @import "utils.css";
 @import "modal.css";
 @import "toast.css";
+@import "progress.css";
 
 /* 6. Service-Dashboard */
 @import "service-dashboard.css";

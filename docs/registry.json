@@ -47,6 +47,8 @@
       "css": ["service-dashboard.css"], "doc": ["service-dashboard.md"],
       "html": ["service-dashboard-overview.html", "service-dashboard-detail.html",
                "service-dashboard-config.html"] },
+    { "id": "progress", "title": "Progress-Bar", "category": "component",
+      "css": ["progress.css"], "doc": ["progress.md"], "html": ["progress.html"] },
 
     { "id": "tokens", "title": "Tokens / Reset / Layout", "category": "infra",
       "css": ["common.css"], "doc": ["tokens.md"], "html": ["tokens.html"],
